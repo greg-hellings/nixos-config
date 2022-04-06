@@ -1,11 +1,14 @@
-{ config, ... }:
+{ ... }:
 
 {
+	services.tailscale.enable = true;
+
 	networking = {
 		# This value is deprecated, you now set it per interface
 		useDHCP = false;
 		defaultGateway = "10.42.1.1";
-		nameservers = [ "127.0.0.1" ];
+		# 100.100.100.100 is the tailscale DNS
+		nameservers = [ "100.100.100.100" "127.0.0.1" ];
 		interfaces = {
 			eth0.ipv4.addresses = [ {
 				address = "10.42.1.2";
