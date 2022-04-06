@@ -9,6 +9,6 @@
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./base.nix
-      ./host/default.nix
+      ./host
     ];
 }
