@@ -6,7 +6,7 @@ let
 		"10.42.1.1 router"
 		"10.42.1.2 dns smart"
 		"10.42.1.3 printer"
-		"10.42.1.4 chronicles"
+		"10.42.1.4 chronicles nas"
 		"10.42.1.12 tv"
 	];
 
