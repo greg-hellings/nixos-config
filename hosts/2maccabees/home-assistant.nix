@@ -1,53 +1,9 @@
 { config, pkgs, ... }:
 
 let
-	#unstable-src = builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/nixos-unstable.tar.gz";
-	#unstable = import unstable-src {};
 	unstable = import <nixos-unstable> {};
 in
 {
-	#services.home-assistant = {
-	#	enable = true;
-	#	applyDefaultConfig = true;
-	#	configWritable = true;
-	#	configDir = "/var/lib/hass";
-	#	config = {
-	#		default_config = {};
-	#		met = {};
-	#		frontend = {};
-	#		http = {
-	#			use_x_forwarded_for = true;
-	#			trusted_proxies = [ "127.0.0.1" "::1" ];
-	#		};
-	#		"map" = {};
-	#		cloud = {};
-	#		mobile_app = {};
-	#	};
-
-	#	package = (unstable.home-assistant.override {
-	#		extraComponents = [
-	#			"accuweather"
-	#			"cast"
-	#			"cloud"
-	#			"default_config"
-	#			"esphome"
-	#			"google"
-	#			"google_assistant"
-	#			"roomba"
-	#			"synology_dsm"
-	#			"tplink"
-	#			"wiz"
-	#			"zwave_js"
-	#		];
-	#		extraPackages = py: with unstable.python39Packages; [
-	#			ifaddr
-	#		];
-	#	}).overrideAttrs (oldAttrs: {
-	#		doInstallCheck = false;
-	#	});
-	#	openFirewall = true;
-	#};
-
 	virtualisation.podman.enable = true;
 
 	virtualisation.oci-containers = {
