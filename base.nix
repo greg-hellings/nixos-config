@@ -23,6 +23,7 @@
 		wget
 		git
 		home-manager
+		htop
 		python3
 		tmux
 	];
