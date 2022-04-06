@@ -17,6 +17,27 @@
 	# Enable the OpenSSH daemon for remote control
 	services.openssh.enable = true;
 
+	services.syncthing = {
+		enable = true;
+		user = "greg";
+		group = "users";
+		dataDir = "/home/greg/sync";
+		devices = {
+			nas = {
+				addresses = [
+					"tcp://nas.thehellings.lan:51820"
+				];
+				id = "74JUTZG-77EPGO3-FEYCL2P-CHDWP5G-6EXWZVB-XTAH6O5-TUXCVY2-QNRHSQ4";
+			};
+			dns = {
+				addresses = [
+					"tcp://dns.thehellings.lan:51820"
+				];
+				id = "I242AI5-XBNN272-RA75Y35-BIROR5O-TIAUFGM-HC77CRU-TW3O74O-5VDKHQF";
+			};
+		};
+	};
+
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
 		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
