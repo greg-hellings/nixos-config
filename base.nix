@@ -1,5 +1,11 @@
 { config, pkgs, ... }:
 
+let
+	syncs = [
+		"nas"
+		"dns"
+	];
+in
 {
 	# I am a fan of network manager, myself
 	networking.networkmanager.enable = true;
@@ -25,15 +31,34 @@
 		devices = {
 			nas = {
 				addresses = [
-					"tcp://nas.thehellings.lan:51820"
+					"tcp://nas.thehellings.lan:22000"
+					"tcp://chronicles.greg-hellings.gmail.com.beta.tailscale.net:22000"
 				];
 				id = "74JUTZG-77EPGO3-FEYCL2P-CHDWP5G-6EXWZVB-XTAH6O5-TUXCVY2-QNRHSQ4";
 			};
 			dns = {
 				addresses = [
-					"tcp://dns.thehellings.lan:51820"
+					"tcp://dns.thehellings.lan:22000"
+					"tcp://2maccabees.greg-hellings.gmail.com.beta.tailscale.net:22000"
 				];
-				id = "I242AI5-XBNN272-RA75Y35-BIROR5O-TIAUFGM-HC77CRU-TW3O74O-5VDKHQF";
+				id = "C4XJCH7-3ZNW6XZ-R5DB2EU-OEGVVT2-WPHQAG7-UDWER36-6NO5KZR-4MN5VAK";
+			};
+		};
+		folders = {
+			"mkrvy-tc6x9" = {
+				enable = true;
+				path = "/home/greg/drive";
+				devices = syncs;
+			};
+			"xnjk7-vexga" = {
+				enable = true;
+				path = "/home/greg/.config/nixpkgs";
+				devices = syncs;
+			};
+			"pifvm-wdsh9" = {
+				enable = true;
+				path = "/home/greg/.ssh";
+				devices = syncs;
 			};
 		};
 	};
