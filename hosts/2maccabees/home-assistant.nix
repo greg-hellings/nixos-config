@@ -39,11 +39,14 @@ in
 		"podman-home-assistant" = {
 			serviceConfig = {
 				StateDirectory = "hass";
-				StateDirectoryMode = pkgs.lib.mkForce "0755";
+				StateDirectoryMode = pkgs.lib.mkForce "0777";
 			};
 		};
 
-		"podman-zwave".serviceConfig.StateDirectory = "zwave";
+		"podman-zwave".serviceConfig = {
+			StateDirectory = "zwave";
+			StateDirectoryMode = pkgs.lib.mkForce "0777";
+		};
 	};
 
 
