@@ -1,13 +1,18 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 {
 	services.postgresql = {
 		enable = true;
 		checkConfig = true;
-		ensureDatabases = [ "synapse" "nextcloud" ];
+		ensureDatabases = [ "nextcloud" ];
+		initialScript = pkgs.writeText "create-matrix-db.sql" ''
+			CREATE ROLE "matrix-synapse" WITH LOGIN;
+			CREATE DATABASE "synapse" WITH OWNER "matrix-synapse" TEMPLATE template0 LC_COLLATE = "C" LC_CTYPE = "C";
+			GRANT ALL PRIVILEGES ON DATABASE "synapse" TO "matrix-synapse";
+		'';  # These are done manually in order to set the LC_COLLATE values properly
 		ensureUsers = [ {
-			name = "synapse";
-			ensurePermissions."DATABASE synapse" = "ALL PRIVILEGES";
+			name = "nextcloud";
+			ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
 		} {
 			name = "root";
 			ensurePermissions."ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
@@ -18,7 +23,7 @@
 			logging_collector = true;
 		};
 		identMap = ''
-root root root
+root root postgres
 '';
 	};
 
