@@ -7,6 +7,7 @@
 {
   imports =
     [ # Include the results of the hardware scan.
+      "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/0.10.1.tar.gz"}/modules/age.nix"
       ./hardware-configuration.nix
       ./base.nix
       ./host

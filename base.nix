@@ -73,13 +73,15 @@ in
 
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
-		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-		wget
+		(pkgs.callPackage "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/0.10.1.tar.gz"}/pkgs/agenix.nix" {})
 		git
 		home-manager
 		htop
 		python3
+		pwgen
 		tmux
+		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+		wget
 	];
 
 	i18n.defaultLocale = "en_US.UTF-8";
