@@ -3,6 +3,7 @@
 {
 	imports = [
 		../../profiles/linode.nix
+		./postgres.nix
 	];
-    networking.hostName = "linode";
+	networking.hostName = "linode";
 }

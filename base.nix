@@ -4,6 +4,7 @@ let
 	syncs = [
 		"nas"
 		"dns"
+		"linode"
 	];
 in
 {
@@ -43,6 +44,12 @@ in
 					"tcp://2maccabees.greg-hellings.gmail.com.beta.tailscale.net:22000"
 				];
 				id = "C4XJCH7-3ZNW6XZ-R5DB2EU-OEGVVT2-WPHQAG7-UDWER36-6NO5KZR-4MN5VAK";
+			};
+			linode = {
+				addresses = [
+					"tcp://linode.thehellings.com:22000"
+				];
+				id = "3PHWAI5-ILAWGGD-S5FC5QM-M2WQ2FX-PZ3IXQF-QVRKANG-WXAACJC-2MZN3Q5";
 			};
 		};
 		folders = {
