@@ -2,7 +2,7 @@
 # them by the following commands:
 # nix run nixpkgs.matrix-synapse
 # register_new_matrix_user -k "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa" http://localhost:8448
-{ config, ... }:
+{ config, pkgs, ... }:
 let
 	domain = "${config.networking.domain}";
 	fqdn = "matrix.${domain}";
@@ -48,6 +48,21 @@ return 200 '${builtins.toJSON client}';
 
 				locations."/_matrix" = {
 					proxyPass = "http://127.0.0.1:8448"; # Lacking the trailing / is correct
+				};
+			};
+
+			# Run Element web
+			"chat.${fqdn}" = {
+				enableACME = true;
+				forceSSL = true;
+				serverAliases = [
+					"chat.${domain}"
+				];
+				root = pkgs.element-web.override {
+					conf.default_server_config."m.homeserver" = {
+						"base_url" = "https://${fqdn}";
+						"server_name" = "${fqdn}";
+					};
 				};
 			};
 		};
