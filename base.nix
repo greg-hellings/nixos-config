@@ -22,6 +22,7 @@ in
 
 	# Enable the OpenSSH daemon for remote control
 	services.openssh.enable = true;
+	#services.openssh.permitRootLogin = "yes";
 
 	services.syncthing = {
 		enable = true;
