@@ -6,6 +6,7 @@
 let
 	domain = "${config.networking.domain}";
 	fqdn = "matrix.${domain}";
+	fbRegistration = builtins.fromJSON ( builtins.readFile config.age.secrets.mautrixfacebook.path );
 in
 {
 	services.nginx = {
@@ -87,11 +88,38 @@ return 200 '${builtins.toJSON client}';
 				compress = false;  # Offload compressiong to Nginx
 			} ];
 		} ];
+		app_service_config_files = [
+			config.age.secrets.mautrixfacebook.path
+		];
 	};
 
 	# Open networking ports for the server
 	networking.firewall = {
 		enable = true;
 		allowedTCPPorts = [ 80 443 ];
+	};
+
+	# Enable Facebook bridge
+	age.secrets.mautrixfacebook = {
+		file = ../../secrets/mautrixfacebook.age;
+		owner = "matrix-synapse";
+	};
+	services.mautrix-facebook = {
+		enable = true;
+		settings = {
+			homeserver = {
+				address = "http://localhost:8448";
+				domain = "thehellings.com";
+			};
+			bridge.permissions = {
+				"@admin:thehellings.com" = "admin";
+				"thehellings.com" = "user";
+			};
+			appservice = {
+				as_token = fbRegistration.as_token;
+				hs_token = fbRegistration.hs_token;
+			};
+		};
+		registrationData = fbRegistration;
 	};
 }

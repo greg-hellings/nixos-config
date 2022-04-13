@@ -10,4 +10,5 @@ in
 	# At the point where you want to use it, put
 	# age.secrets.matrix.file = ../../secrets/matrix.age;
 	# Then you can reference the file at /run/agenix/matrix
+	"mautrixfacebook.age".publicKeys = [ linode user ];
 }
