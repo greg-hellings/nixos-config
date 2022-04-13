@@ -3,6 +3,7 @@
 {
 	imports = [
 		../../profiles/linode.nix
+		./nextcloud.nix
 		./nginx.nix
 		./postgres.nix
 		./synapse.nix

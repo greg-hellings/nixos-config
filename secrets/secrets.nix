@@ -11,4 +11,5 @@ in
 	# age.secrets.matrix.file = ../../secrets/matrix.age;
 	# Then you can reference the file at /run/agenix/matrix
 	"mautrixfacebook.age".publicKeys = [ linode user ];
+	"nextcloudadmin.age".publicKeys = [ linode user ];
 }
