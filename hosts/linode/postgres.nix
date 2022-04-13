@@ -44,4 +44,8 @@ root root postgres
 		enable = true;
 		devices = [ "nas" ];
 	};
+
+	services.cron.systemCronJobs = [
+		"59 2 * * * root chmod -R a+r ${config.services.postgresqlBackup.location} && find ${config.services.postgresqlBackup.location} -type d -exec chmod a+x '{}' \\;"
+	];
 }
