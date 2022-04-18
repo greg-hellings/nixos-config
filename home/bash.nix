@@ -26,14 +26,12 @@
 			ANSIBLE_COLLECTIONS_PATH="\${HOME}/src/";
 			CLICOLOR = "1";
 			EDITOR = "${pkgs.vim}/bin/vim";
-			GALAXY_API_KEY = "11498be21eb34b5776af72bcec59ddfdafcf27e5";
 			GIT_SSL_NO_VERIFY = "True";
 			LSCOLORS = "ExGxBxDxCxEgEdxbxgxcxd";
 			MAVEN_OPTS = " -Dmaven.wagon.http.ssl.insecure=true ";
 			OS_CLOUD = "default";
 			SWORD_PATH = "\${HOME}/.sword";
 			TIMEFORMAT = "%3Uu %3Ss %3lR %P%%";
-			VAGRANT_CLOUD_TOKEN = "zCQN8OBMy6Kl2g.atlasv1.JHsu0HsHMDdqCWqyUjJuCKDH0DyDzOHhbDBCrphUyjOP8OoM9i39SYmtk3Q4DKxfZXE";
 		};
 		profileExtra = ''
 if [ -e /etc/profile ]; then
