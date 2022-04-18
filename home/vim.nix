@@ -40,7 +40,6 @@ in
 			tabstop = 4;
 		};
 		extraConfig = ''
-set nocompatible
 syntax enable
 set preserveindent
 set softtabstop=0
@@ -53,6 +52,9 @@ set hlsearch
 " Shows non-printing characters
 set listchars=tab:→\ ,extends:→,precedes:←,trail:·,eol:¬
 set list
+
+" Set filetype to the way I want it
+let g:nix_recommended_style = 0
 
 " Highlights bad whitespace
 autocmd ColorScheme * highlight ExtraWhitespace ctermbg=red guibg=red
