@@ -8,6 +8,22 @@ let
 	];
 in
 {
+	# Enable flakes
+	nix = {
+		package = pkgs.nixFlakes;
+
+		# Keep freespace available, at a minimum, and enable Flakes
+		extraOptions = ''
+			experimental-features = nix-command flakes
+			min-free = ${toString (1024 * 1024 * 1024) }
+			max-free = ${toString (5 * 1024 * 1024 * 1024) }
+		'';
+
+		# Use hardlinking instead of copying when possible
+		autoOptimiseStore = true;
+	};
+	nixpkgs.config.allowUnfree = true;
+
 	# I am a fan of network manager, myself
 	networking.networkmanager.enable = true;
 
@@ -74,7 +90,10 @@ in
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
 		agenix.defaultPackage."${system}"
+		diffutils
 		git
+		gnupatch
+		findutils
 		home-manager
 		htop
 		python3
@@ -82,6 +101,8 @@ in
 		tmux
 		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 		wget
+		xonsh
+		yamllint  # Used in vim
 	];
 
 	i18n.defaultLocale = "en_US.UTF-8";
@@ -90,14 +111,6 @@ in
 		font = "Lat2-Terminus16";
 		keyMap = "us";
 	};
-
-	# Keep freespace available, at a minimum
-	nix.extraOptions = ''
-		min-free = ${toString (1024 * 1024 * 1024) }
-		max-free = ${toString (5 * 1024 * 1024 * 1024) }
-	'';
-	# Use hardlinking instead of copying when possible
-	nix.autoOptimiseStore = true;
 
 	# The set of default values, which allow syou to keep system defaults set
 	# to a predictable value as you upgrade the system

@@ -7,6 +7,10 @@
 	inputs = {
 		nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
 		agenix.url = "github:ryantm/agenix";
+		home-manager = {
+			url = "github:nix-community/home-manager/release-21.11";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
 	outputs = inputs:
@@ -15,7 +19,13 @@
 			inputs.agenix.nixosModule
 			./profiles/base.nix
 			./hosts/${hostname}
+			inputs.home-manager.nixosModules.home-manager {
+				home-manager.useGlobalPkgs = true;
+				home-manager.users.greg = import ./home/home.nix  "greg";
+				home-manager.users.root = import ./home/home.nix  "root";
+			}
 		];
+
 	in {
 		nixosConfigurations = {
 			"2maccabees" = inputs.nixpkgs.lib.nixosSystem {
