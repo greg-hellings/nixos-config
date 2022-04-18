@@ -5,6 +5,7 @@ name: pkgs:
 		./bash.nix
 		./git.nix
 		./vim.nix
+		./ssh.nix
 	];
 
 	home.username = name;
