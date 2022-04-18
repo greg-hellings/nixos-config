@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, agenix, ... }:
 
 let
 	syncs = [
@@ -73,7 +73,7 @@ in
 
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
-		(pkgs.callPackage "${builtins.fetchTarball "https://github.com/ryantm/agenix/archive/0.10.1.tar.gz"}/pkgs/agenix.nix" {})
+		agenix.defaultPackage."${system}"
 		git
 		home-manager
 		htop

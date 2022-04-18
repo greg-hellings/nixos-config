@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./hardware-configuration.nix
 		./dnsmasq.nix
 		./home-assistant.nix
 		./networking.nix
