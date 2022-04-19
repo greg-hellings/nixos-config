@@ -36,6 +36,15 @@
 				};
 				modules = mods "2maccabees";
 			};
+
+			"linode" = inputs.nixpkgs.lib.nixosSystem {
+			    system = "x86_64-linux";
+			    specialArgs = {
+			        nixpkgs = inputs.nixpkgs;
+			        agenix = inputs.agenix;
+			    };
+			    modules = mods "linode";
+			};
 		};
 	};
 }

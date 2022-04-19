@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./hardware-configuration.nix
 		../../profiles/linode.nix
 		./nextcloud.nix
 		./nginx.nix
