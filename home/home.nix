@@ -1,4 +1,4 @@
-name: pkgs:
+name: { pkgs, lib, ...}:
 
 {
 	imports = [
@@ -10,4 +10,5 @@ name: pkgs:
 
 	home.username = name;
 	home.homeDirectory = if name == "root" then "/root" else "/home/${name}";
+	home.packages = lib.mkForce [];
 }
