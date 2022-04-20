@@ -26,19 +26,17 @@
 			}
 		];
 
+		machine = system: name: inputs.nixpkgs.lib.nixosSystem {
+			system = system;
+			specialArgs = inputs;
+			modules = mods name;
+		};
+
 	in {
 		nixosConfigurations = {
-			"2maccabees" = inputs.nixpkgs.lib.nixosSystem {
-				system = "aarch64-linux";
-				specialArgs = inputs;
-				modules = mods "2maccabees";
-			};
+			"2maccabees" = machine "aarch64-linux" "2maccabees";
 
-			"linode" = inputs.nixpkgs.lib.nixosSystem {
-			    system = "x86_64-linux";
-			    specialArgs = inputs;
-			    modules = mods "linode";
-			};
+			"linode" = machine "x86_64-linux" "linode";
 		};
 	};
 }
