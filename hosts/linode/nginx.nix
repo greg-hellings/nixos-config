@@ -27,9 +27,8 @@ in
 			ports = [ "${homepage}:80" ];
 		};
 	};
-	services.nginx.virtualHosts = {
-		"thehellings.com" = {
-			locations."/".proxyPass = "http://${homepage}/";
-		};
+	greg.proxies."thehellings.com" = {
+		target = "http://${homepage}/";
+		ssl = true;
 	};
 }
