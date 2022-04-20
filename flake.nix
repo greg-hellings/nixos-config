@@ -30,19 +30,13 @@
 		nixosConfigurations = {
 			"2maccabees" = inputs.nixpkgs.lib.nixosSystem {
 				system = "aarch64-linux";
-				specialArgs = {
-					nixpkgs = inputs.nixpkgs;
-					agenix = inputs.agenix;
-				};
+				specialArgs = inputs;
 				modules = mods "2maccabees";
 			};
 
 			"linode" = inputs.nixpkgs.lib.nixosSystem {
 			    system = "x86_64-linux";
-			    specialArgs = {
-			        nixpkgs = inputs.nixpkgs;
-			        agenix = inputs.agenix;
-			    };
+			    specialArgs = inputs;
 			    modules = mods "linode";
 			};
 		};
