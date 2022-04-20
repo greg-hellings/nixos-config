@@ -17,6 +17,7 @@
 	let
 		mods = hostname: [
 			inputs.agenix.nixosModule
+			./modules
 			./profiles/base.nix
 			./hosts/${hostname}
 			inputs.home-manager.nixosModules.home-manager {

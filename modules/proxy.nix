@@ -1,0 +1,72 @@
+{ config, lib, pkgs, ... }:
+
+let
+	cfg = config.greg.proxies;
+
+	makeHost = name: dest: {
+		forceSSL = dest.ssl;
+		enableACME = dest.ssl;
+		locations."${dest.path}" = {
+			proxyPass = dest.target;
+			extraConfig = ''
+proxy_http_version 1.1;
+proxy_set_header Upgrade $http_upgrade;
+proxy_set_header Connection $connection_upgrade;
+'';
+		};
+	};
+
+in with lib; {
+	options = {
+		greg.proxies = mkOption {
+			default = {};
+			example = literalExpression ''
+				{ host-name = {
+					target = proxyLocation;
+					ssl = true;
+				};
+			'';
+			description = ''
+				Quick and simple Nginx proxy configurations.
+				Use this to configure a very simple proxy that does not
+				need any extra customization options other than SSL
+				enablement.
+			'';
+
+			type = with types; attrsOf (submodule (
+				{ name, config, options, ... }:
+				{
+					options = {
+						target = mkOption {
+							type = types.str;
+							description = ''The destination that is being proxied.'';
+							example = "http://localhost:8080";
+						};
+
+						ssl = mkOption {
+							type = types.bool;
+							description = "Whether to enable SSL in front of the proxy";
+							default = false;
+						};
+
+						path = mkOption {
+							type = types.str;
+							description = "The path prefix for this proxy";
+							default = "/";
+						};
+					};
+				}));
+		};
+	};
+
+	config.services.nginx = mkIf ( ( attrValues cfg ) != [] ) {
+		enable = true;
+
+		recommendedGzipSettings = true;
+		recommendedOptimisation = true;
+		recommendedProxySettings = true;
+		recommendedTlsSettings = true;
+
+		virtualHosts = mapAttrs makeHost cfg;
+	};
+}

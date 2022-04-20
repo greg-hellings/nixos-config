@@ -76,11 +76,6 @@ in
 				path = "/home/greg/drive";
 				devices = syncs;
 			};
-			"pifvm-wdsh9" = {
-				enable = true;
-				path = "/home/greg/.ssh";
-				devices = syncs;
-			};
 		};
 	};
 

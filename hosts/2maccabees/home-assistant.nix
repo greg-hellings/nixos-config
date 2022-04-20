@@ -93,18 +93,9 @@ in
 	# multiple layers of proxies, then add more of them in the list. The list also accepts subnet notation in case you have
 	# multiple potentially incoming connections. So you could do "10.88.0.1/24", according to the docs. However, that has not
 	# worked in my testing, as Home Assistant throws an error on start up saying that value is invalid
-	services.nginx = {
-		enable= true;
-		virtualHosts."smart.thehellings.lan".locations."/" = {
-			proxyPass = "http://127.0.0.1:8123";
-			extraConfig = ''
-				proxy_set_header Host $host;
-				proxy_http_version 1.1;
-				proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-				proxy_set_header Upgrade $http_upgrade;
-				proxy_set_header Connection $connection_upgrade;
-			'';
-		};
+	greg.proxies."smart.thehellings.lan" = {
+		target = "http://127.0.0.1:8123";
+		ssl = false;
 	};
 
 	# Ensure that both ports are up and running. We keep 8123 directly open because we are on the LAN and sometimes want to connect
