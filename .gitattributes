@@ -1,0 +1,2 @@
+#pattern  filter=crypt diff=crypt
+**/*.crypt  filter=crypt diff=crypt

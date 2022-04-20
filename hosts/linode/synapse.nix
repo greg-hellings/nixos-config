@@ -6,7 +6,8 @@
 let
 	domain = "${config.networking.domain}";
 	fqdn = "matrix.${domain}";
-	fbRegistration = builtins.fromJSON ( builtins.readFile config.age.secrets.mautrixfacebook.path );
+	fbRegistration = import ./synapse.nix.crypt {};
+	fbRegistrationFile = "matrix/mautrix-facebook.json";
 in
 {
 	services.nginx = {
@@ -69,6 +70,8 @@ return 200 '${builtins.toJSON client}';
 		};
 	};
 
+	environment.etc."${fbRegistrationFile}".text = builtins.toJSON fbRegistration;
+
 	services.matrix-synapse = {
 		enable = true;
 		database_name = "synapse";
@@ -89,7 +92,7 @@ return 200 '${builtins.toJSON client}';
 			} ];
 		} ];
 		app_service_config_files = [
-			config.age.secrets.mautrixfacebook.path
+			"/etc/${fbRegistrationFile}"
 		];
 	};
 
@@ -100,10 +103,6 @@ return 200 '${builtins.toJSON client}';
 	};
 
 	# Enable Facebook bridge
-	age.secrets.mautrixfacebook = {
-		file = ../../secrets/mautrixfacebook.age;
-		owner = "matrix-synapse";
-	};
 	services.mautrix-facebook = {
 		enable = true;
 		settings = {
