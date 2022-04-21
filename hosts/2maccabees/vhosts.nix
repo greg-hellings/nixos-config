@@ -7,7 +7,6 @@
 {
 	greg.proxies."dns.thehellings.lan" = {
 		target = "http://127.0.0.1:8384/";
-		ssl = false;
 		path = "/sync/";
 	};
 
