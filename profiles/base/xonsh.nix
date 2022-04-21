@@ -13,7 +13,7 @@ import os
 $TIMEFORMAT = '%3Uu %3Ss %3lR %P%%'
 $CLICOLOR = 1
 $LSCOLORS = 'ExGxBxDxCxEgEdxbxgxcxd'
-$EDITOR = '${pkgs.vim}/vim'
+$EDITOR = '${pkgs.vim}/bin/vim'
 $PKG_CONFIG_PATH = '/usr/local/lib/pkgconfig'
 # Tells vox where to find virtualenvs
 $VIRTUALENV_HOME = $HOME + '/venv/'
