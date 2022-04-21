@@ -38,6 +38,10 @@
 			"2maccabees" = machine "aarch64-linux" "2maccabees";
 
 			"linode" = machine "x86_64-linux" "linode";
+
+			"iso" = machine "x86_64-linux" "iso";
 		};
+
+		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
 	};
 }
