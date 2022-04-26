@@ -4,28 +4,28 @@
 { config, lib, pkgs, modulesPath, ... }:
 
 {
-  imports =
-    [ (modulesPath + "/installer/scan/not-detected.nix")
-    ];
+	imports =
+		[ (modulesPath + "/installer/scan/not-detected.nix")
+	];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "uas" ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ ];
-  boot.extraModulePackages = [ ];
+	boot.initrd.availableKernelModules = [ "xhci_pci" "usbhid" "usb_storage" "uas" ];
+	boot.initrd.kernelModules = [ ];
+	boot.kernelModules = [ ];
+	boot.extraModulePackages = [ ];
 
-  fileSystems."/" =
-    { device = "/dev/disk/by-uuid/35f9a49a-b557-4eb3-a013-2afca7a990e4";
-      fsType = "btrfs";
-    };
+	fileSystems."/" ={
+		device = "/dev/disk/by-uuid/35f9a49a-b557-4eb3-a013-2afca7a990e4";
+		fsType = "btrfs";
+	};
 
-  fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/A982-C8A3";
-      fsType = "vfat";
-    };
+	fileSystems."/boot" = {
+		device = "/dev/disk/by-uuid/A982-C8A3";
+		fsType = "vfat";
+	};
 
-  swapDevices =
-    [ { device = "/dev/disk/by-uuid/4b6f2dc4-d845-4ec4-81f2-4f61bb3f282d"; }
-    ];
+	swapDevices = [ {
+		device = "/dev/disk/by-uuid/4b6f2dc4-d845-4ec4-81f2-4f61bb3f282d";
+	} ];
 
-  powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
+	powerManagement.cpuFreqGovernor = lib.mkDefault "ondemand";
 }
