@@ -9,6 +9,7 @@
 		./postgres.nix
 		./synapse.nix
 	];
+	greg.home = false;
 	networking.hostName = "linode";
 	networking.domain = "thehellings.com";
 }

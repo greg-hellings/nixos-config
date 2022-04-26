@@ -7,7 +7,6 @@
 		./home-assistant.nix
 		./networking.nix
 		./vhosts.nix
-		../../profiles/home.nix
 	];
 	networking.hostName = "2maccabees";
 	greg.rpi4.enable = true;
