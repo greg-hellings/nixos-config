@@ -39,6 +39,8 @@
 
 			"linode" = machine "x86_64-linux" "linode";
 
+			"jude" = machine "x86_64-linux" "jude";
+
 			"iso" = machine "x86_64-linux" "iso";
 		};
 
