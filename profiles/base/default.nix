@@ -5,7 +5,6 @@
 		./nix.nix
 		./programs.nix
 		./syncthing.nix
-		./xonsh.nix
 	];
 
 

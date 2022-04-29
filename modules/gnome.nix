@@ -5,10 +5,12 @@ let
 
 in with lib; {
 	options = {
-		greg.gnome = mkEnableOption "Enable my default Gnome3 setup";
+		greg.gnome.enable = mkEnableOption "Enable my default Gnome3 setup";
 	};
 
-	config = mkIf cfg {
+	config = mkIf cfg.enable {
+		greg.xprograms.enable = true;
+
 		# Sets up a basic Gnome installation
 		services.xserver = {
 			enable = true;
@@ -21,16 +23,26 @@ in with lib; {
 
 		programs.dconf.enable = true;
 		programs.sway.enable = true;  # Gives us Wayland
-		xdg.portal.wlr.enable = true;  # Allows screen sharing in Wayland
+		xdg.portal = {
+			enable = true;
+			gtkUsePortal = true;
+			wlr.enable = true;  # Enables screen sharing in Wayland
+		};
 
 		# Enable some Gnome plugins that I like
 		environment.systemPackages = with pkgs; [
 			gnome3.adwaita-icon-theme
 			gnomeExtensions.appindicator
+			gnomeExtensions.dash-to-dock
 		];
 
 		services.udev.packages = with pkgs; [
 			gnome3.gnome-settings-daemon
 		];
+
+		services.pipewire.enable = true;
+
+		# Enablement for Firefox
+		services.gnome.chrome-gnome-shell.enable = true;
 	};
 }
