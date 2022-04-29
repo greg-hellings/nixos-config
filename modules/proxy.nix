@@ -3,6 +3,8 @@
 let
 	cfg = config.greg.proxies;
 
+	alias = name: with builtins; head (split "\\." name);
+
 	makeHost = name: dest: {
 		forceSSL = dest.ssl;
 		enableACME = dest.ssl;
@@ -14,6 +16,7 @@ proxy_set_header Upgrade $http_upgrade;
 proxy_set_header Connection $connection_upgrade;
 '';
 		};
+		serverAliases = [ "${alias name}" ];
 	};
 
 in with lib; {
