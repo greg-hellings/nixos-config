@@ -35,6 +35,11 @@
 			"src.fedoraproject.org pkgs.fedoraproject.org" = {
 				user = "greghellings";
 			};
+
+			"127.*".extraOptions = {
+				PubkeyAcceptedAlgorithms = "+ssh-rsa";
+				HostkeyAlgorithms = "+ssh-rsa";
+			};
 		};
 	};
 

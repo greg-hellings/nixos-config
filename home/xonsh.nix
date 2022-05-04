@@ -49,6 +49,8 @@ in {
 # $? == _.rtn
 
 import os
+
+xontrib load direnv
 '';
 
 #$PKG_CONFIG_PATH = '/usr/local/lib/pkgconfig'

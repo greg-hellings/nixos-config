@@ -8,6 +8,7 @@ in {
 	imports = [
 		./modules
 		./bash.nix
+		./direnv.nix
 		./git.nix
 		./ssh.nix
 		./vim.nix

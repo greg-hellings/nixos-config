@@ -17,8 +17,10 @@
 
 	outputs = inputs:
 	let
+		local_overlay = import ./overlays;
+
 		mods = hostname: [
-			{ nixpkgs.overlays = [ inputs.nur.overlay ]; }
+			{ nixpkgs.overlays = [ inputs.nur.overlay local_overlay ]; }
 			inputs.agenix.nixosModule
 			./modules
 			./profiles/base

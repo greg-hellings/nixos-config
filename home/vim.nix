@@ -15,13 +15,16 @@ in
 	programs.vim = {
 		enable = true;
 		plugins = with pkgs.vimPlugins; [
+			ansible-vim
 			bufexplorer
 			ctrlp
+			direnv-vim
 			nerdtree
 			vim-gitgutter
 			vim-flake8
 			vim-fugitive
 			vim-indent-guides
+			vim-packer
 			gruvbox
 			syntastic
 		];
