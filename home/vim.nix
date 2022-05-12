@@ -74,12 +74,13 @@ set wildignore+=*.swp,*.pyc,*.class,.tox
 let g:ctrlp_working_path_mode = 'arc'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_user_command = {
-	\'types': {
-		\1: ['.git', '${pkgs.git}/bin/git ls-files --cached --exclude-standard --others' ],
-	\},
-	\'fallback': '${pkgs.findutils}/bin/find . -type f | ${pkgs.gnugrep}/bin/grep -v -e "\.tox/" -e "\.git/"'
-\}
+let g:ctrlp_show_hidden = 1
+"let g:ctrlp_user_command = {
+"	\'types': {
+"		\1: ['.git', '${pkgs.git}/bin/git ls-files --cached --exclude-standard --others' ],
+"	\},
+"	\'fallback': '${pkgs.findutils}/bin/find . -type f | ${pkgs.gnugrep}/bin/grep -v -e "\.tox/" -e "\.git/"'
+"\}
 " let g:ctrpl_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " Settings for NerdTree
