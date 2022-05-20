@@ -41,9 +41,21 @@
 			modules = mods name;
 		};
 
+		unstableMachine = system: name: inputs.nixunstable.lib.nixosSystem {
+			system = system;
+			modules = mods name;
+			specialArgs = {
+				nixpkgs = inputs.nixunstable;
+				nixunstable = inputs.nixunstable;
+				agenix = inputs.agenix;
+				home-manager = inputs.home-manager;
+				nur = inputs.nur;
+			};
+		};
+
 	in {
 		nixosConfigurations = {
-			"2maccabees" = machine "aarch64-linux" "2maccabees";
+			"2maccabees" = unstableMachine "aarch64-linux" "2maccabees";
 
 			"linode" = machine "x86_64-linux" "linode";
 
