@@ -41,6 +41,7 @@ in {
 			devroles = "cd ~/src/ansible_collections/devroles";
 			molcol = "molecule -c ../../tests/molecule.yml";
 			pa = "cd ~/src/packaging";
+			dirflake = "nix flake new -t github:nix-community/nix-direnv";
 		};
 
 		configHeader = ''
