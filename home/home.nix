@@ -18,4 +18,5 @@ in {
 
 	home.username = name;
 	home.homeDirectory = if name == "root" then "/root" else "/home/${name}";
+	home.stateVersion = "21.11";
 }
