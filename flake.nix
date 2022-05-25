@@ -15,28 +15,29 @@
 		nur.url = "github:nix-community/NUR";
 	};
 
-	outputs = inputs:
+	outputs = {nixpkgs, nixunstable, agenix, home-manager, nur, self}@inputs:
 	let
 		local_overlay = import ./overlays;
 
 		mods = hostname: [
-			{ nixpkgs.overlays = [ inputs.nur.overlay local_overlay ]; }
-			inputs.agenix.nixosModule
+			{ nixpkgs.overlays = [ nur.overlay local_overlay ]; }
+			agenix.nixosModule
 			./modules
 			./profiles/base
 			./hosts/${hostname}
-			inputs.home-manager.nixosModules.home-manager {
+			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
+				home-manager.useUserPackages = true;
 				home-manager.users.greg = import ./home/home.nix  "greg";
 				home-manager.users.root = import ./home/home.nix  "root";
 				home-manager.extraSpecialArgs = {
-					nixunstable = inputs.nixunstable;
+					inherit nixunstable;
 				};
 			}
 		];
 
-		machine = system: name: inputs.nixpkgs.lib.nixosSystem {
-			system = system;
+		machine = system: name: nixpkgs.lib.nixosSystem {
+			inherit system;
 			specialArgs = inputs;
 			modules = mods name;
 		};
