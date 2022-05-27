@@ -7,6 +7,7 @@ let
 in {
 	imports = [
 		./modules
+		./ansible.nix
 		./bash.nix
 		./direnv.nix
 		./git.nix
