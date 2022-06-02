@@ -12,14 +12,20 @@
 	# Give my user access to the libvirtd process
 	users.users.greg.extraGroups = [ "libvirtd" ];
 
-	virtualisation.libvirtd = {
-		enable = true;
-		onBoot = "ignore";  # Do not auto-restart VMs on boot, unless they are marked autostart
+	virtualisation = {
+		libvirtd = {
+			enable = true;
+			onBoot = "ignore";  # Do not auto-restart VMs on boot, unless they are marked autostart
+		};
+
+		waydroid = {
+			enable = true;
+		};
+
+		virtualbox.host.enable = true;
 	};
 
-	virtualisation.waydroid = {
-		enable = true;
-	};
+	users.extraGroups.vboxusers.members = [ "greg" ];
 
 	boot.extraModprobeConfig = "options kvm_amd nested=1";
 }
