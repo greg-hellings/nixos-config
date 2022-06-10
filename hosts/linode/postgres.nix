@@ -31,10 +31,10 @@ root root postgres
 
 	services.logrotate = {
 		enable = true;
-		paths = {
+		settings = {
 			postgres = {
 				enable = true;
-				path = "${config.services.postgresqlBackup.location}/*.gz";
+				files = "${config.services.postgresqlBackup.location}/*.gz";
 			};
 		};
 	};
