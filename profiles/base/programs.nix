@@ -10,6 +10,7 @@ in {
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
 		agenix.defaultPackage."${system}"
+		bitwarden-cli
 		diffutils
 		git
 		gnupatch
