@@ -13,11 +13,16 @@ in with lib;
 {
 	programs.firefox = {
 		enable = true;
-		enableGnomeExtensions = true;
+		package = pkgs.firefox-wayland.override {
+			cfg = {
+				enableGnomeExtensions = true;
+			};
+		};
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 			keepassxc-browser
 			octotree
 			refined-github
+			tree-style-tab
 			ublock-origin
 		];
 		profiles = {

@@ -5,38 +5,39 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
 		home-manager = {
-			url = "github:nix-community/home-manager/release-21.11";
+			url = "github:nix-community/home-manager/release-22.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		nur.url = "github:nix-community/NUR";
 	};
 
-	outputs = inputs:
+	outputs = {nixpkgs, nixunstable, agenix, home-manager, nur, self}@inputs:
 	let
 		local_overlay = import ./overlays;
 
 		mods = hostname: [
-			{ nixpkgs.overlays = [ inputs.nur.overlay local_overlay ]; }
-			inputs.agenix.nixosModule
+			{ nixpkgs.overlays = [ nur.overlay local_overlay ]; }
+			agenix.nixosModule
 			./modules
 			./profiles/base
 			./hosts/${hostname}
-			inputs.home-manager.nixosModules.home-manager {
+			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
+				home-manager.useUserPackages = true;
 				home-manager.users.greg = import ./home/home.nix  "greg";
 				home-manager.users.root = import ./home/home.nix  "root";
 				home-manager.extraSpecialArgs = {
-					nixunstable = inputs.nixunstable;
+					inherit nixunstable;
 				};
 			}
 		];
 
-		machine = system: name: inputs.nixpkgs.lib.nixosSystem {
-			system = system;
+		machine = system: name: nixpkgs.lib.nixosSystem {
+			inherit system;
 			specialArgs = inputs;
 			modules = mods name;
 		};
