@@ -78,7 +78,7 @@ return 200 '${builtins.toJSON client}';
 		settings = {
 			database.args = {
 				user = "matrix-synapse";
-				name = "synapse";
+				database = "synapse";
 			};
 			server_name = "thehellings.com";
 			#registration_shared_secret = "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa";
