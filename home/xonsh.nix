@@ -44,6 +44,8 @@ in {
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
 			tsup = "sudo tailscale up";
 			tspub = "sudo tailscale up --exit-node=linode";
+			tsclear = "sudo tailscale up --exit-node=''";
+			rebuild = "sudo nixos-rebuild switch";
 		};
 
 		configHeader = ''
