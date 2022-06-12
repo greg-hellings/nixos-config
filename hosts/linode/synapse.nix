@@ -74,26 +74,30 @@ return 200 '${builtins.toJSON client}';
 
 	services.matrix-synapse = {
 		enable = true;
-		database_name = "synapse";
-		database_user = "matrix-synapse";
 		# Identify ourselves as the root of our own domain
-		server_name = "thehellings.com";
-		#registration_shared_secret = "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa";
-		# Bind a single listener to localhost only, disable SSL/TLS, and put
-		# it behind an nginx proxy
-		listeners = [ {
-			port = 8448;
-			bind_address = "127.0.0.1";
-			type = "http";  # Offload SSL/TLS to Nginx
-			tls = false;
-			resources = [ {
-				names = [ "client" "federation" ];
-				compress = false;  # Offload compressiong to Nginx
+		settings = {
+			database.args = {
+				user = "matrix-synapse";
+				database = "synapse";
+			};
+			server_name = "thehellings.com";
+			#registration_shared_secret = "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa";
+			# Bind a single listener to localhost only, disable SSL/TLS, and put
+			# it behind an nginx proxy
+			listeners = [ {
+				port = 8448;
+				bind_addresses = ["127.0.0.1"];
+				type = "http";  # Offload SSL/TLS to Nginx
+				tls = false;
+				resources = [ {
+					names = [ "client" "federation" ];
+					compress = false;  # Offload compressiong to Nginx
+				} ];
 			} ];
-		} ];
-		app_service_config_files = [
-			"/etc/${fbRegistrationFile}"
-		];
+			app_service_config_files = [
+				"/etc/${fbRegistrationFile}"
+			];
+		};
 	};
 
 	# Open networking ports for the server
