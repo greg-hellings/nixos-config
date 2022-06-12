@@ -42,6 +42,8 @@ in {
 			molcol = "molecule -c ../../tests/molecule.yml";
 			pa = "cd ~/src/packaging";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
+			tsup = "tailscale up";
+			tspub = "tailscale up --exit-node=linode";
 		};
 
 		configHeader = ''
