@@ -5,11 +5,13 @@ let
 		"10.42.0.1 switch"
 		"10.42.1.1 router"
 		"10.42.1.2 dns dns.thehellings.lan smart smart.thehellings.lan"
-		"100.99.244.92 dns.me.ts"
 		"10.42.1.3 printer"
 		"10.42.1.4 chronicles nas"
-		"100.119.228.115 nas.me.ts"
 		"10.42.1.12 tv"
+		"100.99.244.92 2maccabees.me.ts dns.me.ts"
+		"100.119.228.115 chronicles.me.ts nas.me.ts"
+		"100.90.74.19 jude.me.ts"
+		"100.115.57.8 linode.me.ts"
 	];
 
 	extraConfig = builtins.concatStringsSep "\n" [
