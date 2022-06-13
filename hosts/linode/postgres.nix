@@ -27,7 +27,13 @@ root root postgres
 '';
 	};
 
-	services.postgresqlBackup.enable = true;
+	services.postgresqlBackup = {
+		enable = true;
+		databases = [
+			"nextcloud"
+			"matrix-synapse"
+		];
+	};
 
 	services.logrotate = {
 		enable = true;
