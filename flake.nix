@@ -51,6 +51,8 @@
 			"jude" = machine "x86_64-linux" "jude";
 
 			"iso" = machine "x86_64-linux" "iso";
+
+			"icdm" = machine "x86_64-linux" "icdm";
 		};
 
 		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
