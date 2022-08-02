@@ -4,12 +4,13 @@ let
 	extraHosts = builtins.concatStringsSep "\n" [
 		"10.42.0.1 switch"
 		"10.42.1.1 router"
-		"10.42.1.2 dns dns.thehellings.lan smart smart.thehellings.lan"
-		"100.99.244.92 dns.me.ts"
+		"10.42.1.2 2maccabees 2maccabees.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan"
+		"100.99.244.92 dns.me.ts 2maccabees.me.ts smart.me.ts"
 		"10.42.1.3 printer"
 		"10.42.1.4 chronicles nas"
 		"100.119.228.115 nas.me.ts"
 		"10.42.1.12 tv"
+		"100.90.74.19 jude.me.ts"
 	];
 
 	extraConfig = builtins.concatStringsSep "\n" [
