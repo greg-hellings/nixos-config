@@ -1,7 +1,7 @@
-name: { pkgs, lib, nixosConfig, ...}:
+name: { pkgs, lib, gui, ...}:
 
 let
-	guiImports = if nixosConfig.greg.gnome.enable then
+	guiImports = if gui then
 		[ ./gui ] else [];
 
 in {
@@ -17,7 +17,8 @@ in {
 	] ++ guiImports;
 
 
-	home.username = name;
-	home.homeDirectory = if name == "root" then "/root" else "/home/${name}";
-	home.stateVersion = "21.11";
+	home.stateVersion = "22.05";
+	home.packages = [
+		pkgs.hms
+	];
 }

@@ -15,6 +15,7 @@ in {
 		git
 		gnupatch
 		findutils
+		hms # My own home manager switcher
 		home-manager
 		htop
 		myPython
