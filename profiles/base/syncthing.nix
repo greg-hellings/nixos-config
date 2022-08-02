@@ -10,9 +10,9 @@ in
 {
 	services.syncthing = {
 		enable = true;
-		user = "greg";
-		group = "users";
-		dataDir = "/home/greg/sync";
+		user = "root";
+		group = "root";
+		dataDir = "/root/sync";
 		devices = {
 			nas = {
 				addresses = [
@@ -32,14 +32,7 @@ in
 				addresses = [
 					"tcp://linode.thehellings.com:22000"
 				];
-				id = "3PHWAI5-ILAWGGD-S5FC5QM-M2WQ2FX-PZ3IXQF-QVRKANG-WXAACJC-2MZN3Q5";
-			};
-		};
-		folders = {
-			"mkrvy-tc6x9" = {
-				enable = true;
-				path = "/home/greg/drive";
-				devices = syncs;
+				id = "ROZPUG5-G4IAXYA-JNRQXRD-5PFU2BQ-WVJTOGZ-DFMGJ5E-Q4IGXCJ-JHSNDQ6";
 			};
 		};
 	};

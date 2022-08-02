@@ -12,15 +12,15 @@
 			url = "github:nix-community/home-manager/release-22.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
-		nur.url = "github:nix-community/NUR";
+		nurpkgs.url = "github:nix-community/NUR";
 	};
 
-	outputs = {nixpkgs, nixunstable, agenix, home-manager, nur, self}@inputs:
+	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self}@inputs:
 	let
 		local_overlay = import ./overlays;
 
 		mods = hostname: [
-			{ nixpkgs.overlays = [ nur.overlay local_overlay ]; }
+			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
 			agenix.nixosModule
 			./modules
 			./profiles/base
@@ -28,8 +28,6 @@
 			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
 				home-manager.useUserPackages = true;
-				home-manager.users.greg = import ./home/home.nix  "greg";
-				home-manager.users.root = import ./home/home.nix  "root";
 				home-manager.extraSpecialArgs = {
 					inherit nixunstable;
 				};
@@ -66,5 +64,14 @@
 		};
 
 		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
+
+		homeConfigurations = (
+			import ./home {
+				inherit nixpkgs nixunstable agenix home-manager nurpkgs;
+			}
+		);
+
+		overlay = local_overlay;
+		modules = import ./modules;
 	};
 }

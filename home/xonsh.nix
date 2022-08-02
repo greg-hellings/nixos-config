@@ -1,8 +1,6 @@
-{ pkgs, config, nixosConfig, lib, ... }:
+{ pkgs, config, lib, ... }:
 
-let
-	enable = nixosConfig.greg.gnome.enable;
-in {
+{
 	programs.xonsh = {
 		enable = true;
 
@@ -42,6 +40,11 @@ in {
 			molcol = "molecule -c ../../tests/molecule.yml";
 			pa = "cd ~/src/packaging";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
+			tsup = "sudo tailscale up";
+			tspub = "sudo tailscale up --exit-node=linode";
+			tshome = "sudo tailscale up --exit-node=2maccabees";
+			tsclear = "sudo tailscale up --exit-node=''";
+			rebuild = "sudo nixos-rebuild switch";
 		};
 
 		configHeader = ''

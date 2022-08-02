@@ -27,6 +27,13 @@
 		];
 	};
 
+	users.users.test = {
+		isNormalUser = true;
+		createHome = true;
+		extraGroups = [ ];
+		shell = pkgs.xonsh;
+	};
+
 	i18n.defaultLocale = "en_US.UTF-8";
 
 	console = {

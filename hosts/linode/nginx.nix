@@ -5,7 +5,7 @@ in
 {
 	security.acme = {
 		acceptTerms = true;
-		email = "greg.hellings@gmail.com";
+		defaults.email = "greg.hellings@gmail.com";
 	};
 
 	services.nginx = {
@@ -30,5 +30,6 @@ in
 	greg.proxies."thehellings.com" = {
 		target = "http://${homepage}/";
 		ssl = true;
+		genAliases = false;
 	};
 }

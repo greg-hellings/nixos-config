@@ -9,5 +9,6 @@
 		./virt.nix
 	];
 	networking.hostName = "jude";
+	greg.tailscale.enable = true;
 	greg.gnome.enable= true;
 }

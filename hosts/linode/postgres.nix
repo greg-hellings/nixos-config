@@ -27,14 +27,20 @@ root root postgres
 '';
 	};
 
-	services.postgresqlBackup.enable = true;
+	services.postgresqlBackup = {
+		enable = true;
+		databases = [
+			"nextcloud"
+			"matrix-synapse"
+		];
+	};
 
 	services.logrotate = {
 		enable = true;
-		paths = {
+		settings = {
 			postgres = {
 				enable = true;
-				path = "${config.services.postgresqlBackup.location}/*.gz";
+				files = "${config.services.postgresqlBackup.location}/*.gz";
 			};
 		};
 	};
@@ -44,8 +50,4 @@ root root postgres
 		enable = true;
 		devices = [ "nas" ];
 	};
-
-	services.cron.systemCronJobs = [
-		"59 2 * * * root chmod -R a+r ${config.services.postgresqlBackup.location} && find ${config.services.postgresqlBackup.location} -type d -exec chmod a+x '{}' \\;"
-	];
 }
