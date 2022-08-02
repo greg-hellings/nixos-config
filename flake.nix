@@ -58,5 +58,7 @@
 				inherit nixpkgs nixunstable agenix home-manager nurpkgs;
 			}
 		);
+
+		overlay = local_overlay;
 	};
 }
