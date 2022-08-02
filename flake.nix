@@ -60,5 +60,6 @@
 		);
 
 		overlay = local_overlay;
+		modules = import ./modules;
 	};
 }
