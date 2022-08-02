@@ -11,6 +11,8 @@ let
 		"100.119.228.115 nas.me.ts"
 		"10.42.1.12 tv"
 		"100.90.74.19 jude.me.ts"
+
+		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
 	];
 
 	extraConfig = builtins.concatStringsSep "\n" [
