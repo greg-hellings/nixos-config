@@ -1,16 +1,6 @@
 { config, pkgs, agenix, ... }:
 
 {
-	imports = [
-		./nix.nix
-		./programs.nix
-		./syncthing.nix
-	];
-
-
-	# I am a fan of network manager, myself
-	networking.networkmanager.enable = true;
-
 	# Enable the OpenSSH daemon for remote control
 	services.openssh.enable = true;
 	#services.openssh.permitRootLogin = "yes";
@@ -27,21 +17,10 @@
 		];
 	};
 
-	users.users.test = {
-		isNormalUser = true;
-		createHome = true;
-		extraGroups = [ ];
-		shell = pkgs.xonsh;
-	};
-
 	i18n.defaultLocale = "en_US.UTF-8";
 
 	console = {
 		font = "Lat2-Terminus16";
 		keyMap = "us";
 	};
-
-	# The set of default values, which allow syou to keep system defaults set
-	# to a predictable value as you upgrade the system
-	system.stateVersion = "21.11";
 }

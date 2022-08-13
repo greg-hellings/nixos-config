@@ -23,7 +23,6 @@
 			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
 			agenix.nixosModule
 			./modules
-			./profiles/base
 			./hosts/${hostname}
 			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
