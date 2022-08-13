@@ -48,6 +48,8 @@
 
 			"jude" = machine "x86_64-linux" "jude";
 
+			"lappy" = machine "x86_64-linux" "lappy";
+
 			"iso" = machine "x86_64-linux" "iso";
 		};
 
