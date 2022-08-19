@@ -10,5 +10,6 @@
 	home.packages = with pkgs; [
 		bitwarden
 		onlyoffice-bin
+		synology-drive-client
 	];
 }

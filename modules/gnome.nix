@@ -12,13 +12,28 @@ in with lib; {
 		greg.xprograms.enable = true;
 
 		# Sets up a basic Gnome installation
-		services.xserver = {
-			enable = true;
-			displayManager.gdm.enable = true;
-			desktopManager.gnome.enable = true;
-			layout = "us";
-			# Trackpad support
-			libinput.enable = true;
+		services = {
+			xserver = {
+				enable = true;
+				displayManager.gdm.enable = true;
+				desktopManager.gnome.enable = true;
+				layout = "us";
+				# Trackpad support
+				libinput.enable = true;
+			};
+
+			udev.packages = with pkgs; [
+				gnome3.gnome-settings-daemon
+			];
+
+			pipewire.enable = true;
+
+			# Enablement for Firefox
+			gnome = {
+				chrome-gnome-shell.enable = true;
+				sushi.enable = true;
+				gnome-online-accounts.enable = true;
+			};
 		};
 
 		programs.dconf.enable = true;
@@ -35,14 +50,5 @@ in with lib; {
 			gnomeExtensions.appindicator
 			gnomeExtensions.dash-to-dock
 		];
-
-		services.udev.packages = with pkgs; [
-			gnome3.gnome-settings-daemon
-		];
-
-		services.pipewire.enable = true;
-
-		# Enablement for Firefox
-		services.gnome.chrome-gnome-shell.enable = true;
 	};
 }
