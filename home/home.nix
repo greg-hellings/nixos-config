@@ -18,7 +18,11 @@ in {
 
 
 	home.stateVersion = "22.05";
-	home.packages = [
-		pkgs.hms
+	home.packages = with pkgs; [
+		cdrtools
+		ffmpeg
+		hms
+		libtheora
+		x265
 	];
 }

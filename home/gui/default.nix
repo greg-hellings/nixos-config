@@ -11,5 +11,6 @@
 		bitwarden
 		onlyoffice-bin
 		synology-drive-client
+		vlc
 	];
 }
