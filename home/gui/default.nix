@@ -9,6 +9,7 @@
 
 	home.packages = with pkgs; [
 		bitwarden
+		handbrake
 		onlyoffice-bin
 		synology-drive-client
 		vlc
