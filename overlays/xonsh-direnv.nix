@@ -2,11 +2,11 @@
 
 buildPythonPackage rec {
 	pname = "xonsh-direnv";
-	version = "1.5.0";
+	version = "1.6.1";
 
 	src = fetchPypi {
 		inherit pname version;
-		sha256 = "OLjtGD2lX4Yf3aHrxCWmAbSPZnf8OuVrBu0VFbsna1Y=";
+		sha256 = "Nt8Da1EtMVWZ9mbBDjys7HDutLYifwoQ1HVmI5CN2Ww=";
 	};
 
 	meta = with lib; {

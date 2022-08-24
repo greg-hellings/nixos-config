@@ -19,7 +19,7 @@ in with lib;
 			};
 		};
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-			keepassxc-browser
+			bitwarden
 			octotree
 			refined-github
 			tree-style-tab

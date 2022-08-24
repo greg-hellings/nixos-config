@@ -20,4 +20,5 @@ keep-derivations = true
 		autoOptimiseStore = true;
 	};
 	nixpkgs.config.allowUnfree = true;
+	system.stateVersion = "22.05";
 }

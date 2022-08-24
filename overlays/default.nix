@@ -8,4 +8,8 @@ self: super:
 	xonsh = super.xonsh.overridePythonAttrs (old: rec{
 		propagatedBuildInputs = old.propagatedBuildInputs ++ [ self.xonsh-direnv ];
 	});
+
+	hms = super.callPackage ./hms.nix {
+		pkgs = self.pkgs;
+	};
 }

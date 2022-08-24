@@ -1,8 +1,6 @@
-{ pkgs, config, nixosConfig, lib, ... }:
+{ pkgs, config, lib, ... }:
 
-let
-	enable = nixosConfig.greg.gnome.enable;
-in {
+{
 	programs.xonsh = {
 		enable = true;
 
