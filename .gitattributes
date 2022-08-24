@@ -1,3 +1,4 @@
 #pattern  filter=crypt diff=crypt
 **/*.crypt  filter=crypt diff=crypt
 home/ssh/id_rsa* filter=crypt diff=crypt
+hosts/linode/ssh/id_* filter=crypt diff=crypt

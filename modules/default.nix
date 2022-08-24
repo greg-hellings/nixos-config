@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./backup.nix
 		./home.nix
 		./gnome.nix
 		./linode.nix
