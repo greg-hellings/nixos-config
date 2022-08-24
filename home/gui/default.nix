@@ -9,6 +9,7 @@
 
 	home.packages = with pkgs; [
 		bitwarden
+		gnucash
 		handbrake
 		onlyoffice-bin
 		synology-drive-client
