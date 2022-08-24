@@ -31,7 +31,7 @@ root root postgres
 		enable = true;
 		databases = [
 			"nextcloud"
-			"matrix-synapse"
+			"synapse"
 		];
 	};
 
