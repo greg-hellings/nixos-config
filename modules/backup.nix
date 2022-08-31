@@ -30,7 +30,7 @@ ${job.post}
 '';
 	in {
 		inherit script;
-		cron = "0 0 1 * * ${job.user} ${script}/bin/${binName}";
+		cron = "0 1 * * * ${job.user} ${script}/bin/${binName}";
 	};
 
 in with lib; {
