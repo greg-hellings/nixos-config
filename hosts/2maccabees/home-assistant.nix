@@ -74,19 +74,6 @@ in
 	# directly for troubleshooting Nginx configuration
 	networking.firewall = {
 		enable = true;
-		allowedTCPPorts = [ 80 8123 ];
-	};
-
-	# No data is secure unless it is backed up! So we back up the data on this node to our NAS using Syncthing, from there we will
-	# handle things like off site
-	services.syncthing = {
-		enable = true;
-		folders = {
-			"zwave-live" = {
-				enable = true;
-				path = "/var/lib/zwave";
-				devices = [ "nas" ];
-			};
-		};
+		allowedTCPPorts = [ 80 8091 8123 ];
 	};
 }
