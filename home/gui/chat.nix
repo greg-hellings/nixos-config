@@ -1,5 +1,8 @@
 { pkgs, ... }:
 
 {
-	home.packages = [ pkgs.element-desktop pkgs.nheko ];
+	home.packages = with pkgs; [
+		element-desktop
+		nheko
+	];
 }

@@ -31,23 +31,27 @@ root root postgres
 		enable = true;
 		databases = [
 			"nextcloud"
-			"matrix-synapse"
+			"synapse"
 		];
 	};
 
 	services.logrotate = {
 		enable = true;
 		settings = {
-			postgres = {
+			postgresBackup = {
 				enable = true;
 				files = "${config.services.postgresqlBackup.location}/*.gz";
+			};
+			postgresLog = {
+				enable = true;
+				files = "/var/lib/postgresql/*/log/*.log";
 			};
 		};
 	};
 
-	services.syncthing.folders."postgres-backups" = {
-		path = "${config.services.postgresqlBackup.location}";
-		enable = true;
-		devices = [ "nas" ];
+	greg.backup.jobs.postgresql = {
+		src = "/var/backup/postgresql";
+		dest = "linode-postgres";
+		user = "postgres";
 	};
 }

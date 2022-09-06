@@ -23,7 +23,6 @@
 			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
 			agenix.nixosModule
 			./modules
-			./profiles/base
 			./hosts/${hostname}
 			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
@@ -59,6 +58,8 @@
 			"linode" = machine "x86_64-linux" "linode";
 
 			"jude" = machine "x86_64-linux" "jude";
+
+			"lappy" = machine "x86_64-linux" "lappy";
 
 			"iso" = machine "x86_64-linux" "iso";
 		};

@@ -25,9 +25,9 @@
 		enableACME = true;
 	};
 
-	services.syncthing.folders."nextcloud-backup" = {
-		path = "${config.services.nextcloud.datadir}";
-		enable = true;
-		devices = [ "nas" ];
+	greg.backup.jobs.nextcloud = {
+		src = "/var/lib/nextcloud";
+		dest = "nextcloud-backup";
+		user = "nextcloud";
 	};
 }
