@@ -5,34 +5,40 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+		nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
+		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
 		home-manager = {
-			url = "github:nix-community/home-manager/release-21.11";
+			url = "github:nix-community/home-manager/release-22.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		nurpkgs.url = "github:nix-community/NUR";
 	};
 
-	outputs = inputs:
+	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self}@inputs:
 	let
+		local_overlay = import ./overlays;
+
 		mods = hostname: [
-			inputs.agenix.nixosModule
+			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
+			agenix.nixosModule
 			./modules
-			./profiles/linux
 			./hosts/${hostname}
-			inputs.home-manager.nixosModules.home-manager {
+			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
-				home-manager.users.greg = import ./home/home.nix  "greg";
-				home-manager.users.root = import ./home/home.nix  "root";
+				home-manager.useUserPackages = true;
+				home-manager.extraSpecialArgs = {
+					inherit nixunstable;
+				};
 			}
 		];
 
-		machine = system: name: inputs.nixpkgs.lib.nixosSystem {
-			system = system;
+		machine = system: name: nixpkgs.lib.nixosSystem {
+			inherit system;
 			specialArgs = inputs;
 			modules = mods name;
 		};
@@ -43,11 +49,27 @@
 			./hosts/${hostname}
 		];
 
+		unstableMachine = system: name: inputs.nixunstable.lib.nixosSystem {
+			system = system;
+			modules = mods name;
+			specialArgs = {
+				nixpkgs = inputs.nixunstable;
+				nixunstable = inputs.nixunstable;
+				agenix = inputs.agenix;
+				home-manager = inputs.home-manager;
+				nur = inputs.nur;
+			};
+		};
+
 	in {
 		nixosConfigurations = {
-			"2maccabees" = machine "aarch64-linux" "2maccabees";
+			"2maccabees" = unstableMachine "aarch64-linux" "2maccabees";
 
 			"linode" = machine "x86_64-linux" "linode";
+
+			"jude" = machine "x86_64-linux" "jude";
+
+			"lappy" = machine "x86_64-linux" "lappy";
 
 			"iso" = machine "x86_64-linux" "iso";
 		};
@@ -62,5 +84,14 @@
 
 		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
 		defaultPackage."x86_64-darwin" = inputs.self.darwinConfigurations.C02G48H8MD6R.system;
+
+		homeConfigurations = (
+			import ./home {
+				inherit nixpkgs nixunstable agenix home-manager nurpkgs;
+			}
+		);
+
+		overlay = local_overlay;
+		modules = import ./modules;
 	};
 }

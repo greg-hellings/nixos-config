@@ -3,6 +3,8 @@
 let
 	cfg = config.greg.proxies;
 
+	alias = name: with builtins; head (split "\\." name);
+
 	makeHost = name: dest: {
 		forceSSL = dest.ssl;
 		enableACME = dest.ssl;
@@ -14,6 +16,7 @@ proxy_set_header Upgrade $http_upgrade;
 proxy_set_header Connection $connection_upgrade;
 '';
 		};
+		serverAliases = lib.mkIf dest.genAliases [ "${alias name}" ];
 	};
 
 in with lib; {
@@ -37,6 +40,12 @@ in with lib; {
 				{ name, config, options, ... }:
 				{
 					options = {
+						genAliases = mkOption {
+							type = types.bool;
+							description = "Whether to auto-generate short alias name";
+							default = true;
+						};
+
 						target = mkOption {
 							type = types.str;
 							description = ''The destination that is being proxied.'';

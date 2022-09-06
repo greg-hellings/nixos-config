@@ -20,20 +20,11 @@
 				address = "192.168.66.2";
 				prefixLength = 24;
 			} ];
-
-			vlan67.ipv4.addresses = [ {
-				address = "192.168.67.2";
-				prefixLength = 24;
-			} ];
 		};
 
 		vlans = {
 			vlan66 = {
 				id = 66;
-				interface = "eth0";
-			};
-			vlan67 = {
-				id = 67;
 				interface = "eth0";
 			};
 		};

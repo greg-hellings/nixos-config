@@ -2,14 +2,22 @@
 
 let
 	extraHosts = builtins.concatStringsSep "\n" [
+		# Local hosts
 		"10.42.0.1 switch"
 		"10.42.1.1 router"
-		"10.42.1.2 dns smart"
-		"100.99.244.92 dns.me.ts"
+		"10.42.1.2 2maccabees 2maccabees.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan"
 		"10.42.1.3 printer"
 		"10.42.1.4 chronicles nas"
-		"100.119.228.115 nas.me.ts"
 		"10.42.1.12 tv"
+
+		# Tailscale hosts
+		"100.90.74.19 jude.me.ts"
+		"100.99.244.92 dns.me.ts 2maccabees.me.ts smart.me.ts"
+		"100.119.228.115 chronicles.me.ts nas.me.ts"
+		"100.115.57.8 linode.me.ts"
+
+		# Dev hosts
+		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
 	];
 
 	extraConfig = builtins.concatStringsSep "\n" [

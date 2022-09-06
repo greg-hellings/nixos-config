@@ -15,14 +15,16 @@ in
 	programs.vim = {
 		enable = true;
 		plugins = with pkgs.vimPlugins; [
+			ansible-vim
 			bufexplorer
 			ctrlp
+			direnv-vim
 			nerdtree
 			vim-gitgutter
 			vim-flake8
 			vim-fugitive
 			vim-indent-guides
-			#vim-stabs
+			vim-packer
 			gruvbox
 			syntastic
 		];
@@ -72,12 +74,13 @@ set wildignore+=*.swp,*.pyc,*.class,.tox
 let g:ctrlp_working_path_mode = 'arc'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_user_command = {
-	\'types': {
-		\1: ['.git', 'git ls-files --cached --exclude-standard --others' ],
-	\},
-	\'fallback': 'find . -type f | grep -v -e "\.tox/" -e "\.git/"'
-\}
+let g:ctrlp_show_hidden = 1
+"let g:ctrlp_user_command = {
+"	\'types': {
+"		\1: ['.git', '${pkgs.git}/bin/git ls-files --cached --exclude-standard --others' ],
+"	\},
+"	\'fallback': '${pkgs.findutils}/bin/find . -type f | ${pkgs.gnugrep}/bin/grep -v -e "\.tox/" -e "\.git/"'
+"\}
 " let g:ctrpl_match_func = { 'match': 'pymatcher#PyMatch' }
 
 " Settings for NerdTree
@@ -88,6 +91,7 @@ autocmd! BufWritePost .vimrc source $MYVIMRC
 " Tell syntastic to use yamllint
 let g:syntastic_yaml_checkers = ['yamllint']
 let g:syntastic_yaml_yamllint_args = []
+let g:syntastic_shell = "${pkgs.bash}/bin/bash"
 " Shortcuts for resolving git diff conflicts
 let g:diffget_local_map = 'gl'
 let g:diffget_upstream_map = 'gu'

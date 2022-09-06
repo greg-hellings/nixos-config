@@ -27,25 +27,31 @@ root root postgres
 '';
 	};
 
-	services.postgresqlBackup.enable = true;
+	services.postgresqlBackup = {
+		enable = true;
+		databases = [
+			"nextcloud"
+			"synapse"
+		];
+	};
 
 	services.logrotate = {
 		enable = true;
-		paths = {
-			postgres = {
+		settings = {
+			postgresBackup = {
 				enable = true;
-				path = "${config.services.postgresqlBackup.location}/*.gz";
+				files = "${config.services.postgresqlBackup.location}/*.gz";
+			};
+			postgresLog = {
+				enable = true;
+				files = "/var/lib/postgresql/*/log/*.log";
 			};
 		};
 	};
 
-	services.syncthing.folders."postgres-backups" = {
-		path = "${config.services.postgresqlBackup.location}";
-		enable = true;
-		devices = [ "nas" ];
+	greg.backup.jobs.postgresql = {
+		src = "/var/backup/postgresql";
+		dest = "linode-postgres";
+		user = "postgres";
 	};
-
-	services.cron.systemCronJobs = [
-		"59 2 * * * root chmod -R a+r ${config.services.postgresqlBackup.location} && find ${config.services.postgresqlBackup.location} -type d -exec chmod a+x '{}' \\;"
-	];
 }
