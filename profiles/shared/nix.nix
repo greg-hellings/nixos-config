@@ -11,9 +11,6 @@ experimental-features = nix-command flakes
 min-free = ${toString (1024 * 1024 * 1024) }
 max-free = ${toString (5 * 1024 * 1024 * 1024) }
 '';
-
-		# Use hardlinking instead of copying when possible
-		autoOptimiseStore = true;
 	};
 	nixpkgs.config.allowUnfree = true;
 }

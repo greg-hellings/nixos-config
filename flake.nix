@@ -11,6 +11,10 @@
 			url = "github:nix-community/home-manager/release-21.11";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		darwin = {
+			url = "github:lnl7/nix-darwin/master";
+			inputs.nixpkgs.follows = "nixpkgs";
+		};
 	};
 
 	outputs = inputs:
@@ -18,7 +22,7 @@
 		mods = hostname: [
 			inputs.agenix.nixosModule
 			./modules
-			./profiles/base
+			./profiles/linux
 			./hosts/${hostname}
 			inputs.home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
@@ -33,6 +37,12 @@
 			modules = mods name;
 		};
 
+		darwinMods = hostname: [
+			inputs.agenix.nixosModule
+			./profiles/darwin
+			./hosts/${hostname}
+		];
+
 	in {
 		nixosConfigurations = {
 			"2maccabees" = machine "aarch64-linux" "2maccabees";
@@ -42,6 +52,15 @@
 			"iso" = machine "x86_64-linux" "iso";
 		};
 
+		darwinConfigurations = {
+			"C02G48H8MD6R" = inputs.darwin.lib.darwinSystem {
+				system = "x86_64-darwin";
+				specialArgs = inputs;
+				modules = darwinMods "work";
+			};
+		};
+
 		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
+		defaultPackage."x86_64-darwin" = inputs.self.darwinConfigurations.C02G48H8MD6R.system;
 	};
 }

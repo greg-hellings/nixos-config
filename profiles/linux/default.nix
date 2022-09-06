@@ -2,12 +2,15 @@
 
 {
 	imports = [
-		./nix.nix
+		../shared
 		./programs.nix
 		./syncthing.nix
 		./xonsh.nix
 	];
 
+
+	# Use hardlinking instead of copying when possible
+	nix.autoOptimiseStore = true;
 
 	# I am a fan of network manager, myself
 	networking.networkmanager.enable = true;
