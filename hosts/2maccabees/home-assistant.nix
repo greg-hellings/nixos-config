@@ -76,4 +76,10 @@ in
 		enable = true;
 		allowedTCPPorts = [ 80 8091 8123 ];
 	};
+
+	greg.backup.jobs.zwave = {
+		src = "/var/lib/zwave";
+		dest = "zwave";
+		user = "root";
+	};
 }

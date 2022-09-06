@@ -10,7 +10,6 @@ in {
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
 		agenix.defaultPackage."${system}"
-		bitwarden-cli
 		diffutils
 		git
 		gnupatch
@@ -20,11 +19,9 @@ in {
 		htop
 		myPython
 		pwgen
-		tmux
 		transcrypt
 		unzip
 		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 		wget
-		yamllint  # Used in vim
 	];
 }
