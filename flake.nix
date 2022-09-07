@@ -19,7 +19,7 @@
 		nurpkgs.url = "github:nix-community/NUR";
 	};
 
-	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self}@inputs:
+	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
 	let
 		local_overlay = import ./overlays;
 
@@ -45,7 +45,7 @@
 
 		darwinMods = hostname: [
 			inputs.agenix.nixosModule
-			./profiles/darwin
+			./modules
 			./hosts/${hostname}
 		];
 

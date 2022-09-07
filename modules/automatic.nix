@@ -5,8 +5,6 @@
 		./automatic/nix.nix
 		./automatic/programs.nix
 		./automatic/syncthing.nix
-		./automatic/users.nix
+		# Users imported only for Linux machines
 	];
-	# I am a fan of network manager, myself
-	networking.networkmanager.enable = true;
 }

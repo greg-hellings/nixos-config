@@ -5,6 +5,8 @@
 	nix = {
 		package = pkgs.nixFlakes;
 
+		autoOptimiseStore = true;
+
 		# Keep freespace available, at a minimum, and enable Flakes
 		extraOptions = ''
 experimental-features = nix-command flakes
@@ -17,5 +19,4 @@ keep-derivations = true
 '';
 	};
 	nixpkgs.config.allowUnfree = true;
-	system.stateVersion = "22.05";
 }

@@ -2,7 +2,7 @@
 
 {
 	imports = [
-		profiles/darwin
-		hosts/work
+		./modules
+		./hosts/work
 	];
 }
