@@ -119,7 +119,7 @@ builtins.true = True
 builtins.false = False
 builtins.null = None
 
-if not $__NIX_DARWIN_SET_ENVIRONMENT_DONE:
+if  '__NIX_DARWIN_SET_ENVIRONMENT_DONE' not in ''${...} or not $__NIX_DARWIN_SET_ENVIRONMENT_DONE:
     source-bash /etc/bashrc
 '';
 	};
