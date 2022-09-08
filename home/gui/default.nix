@@ -8,11 +8,17 @@
 	];
 
 	home.packages = with pkgs; [
-		bitwarden
-		gnucash
-		handbrake
-		onlyoffice-bin
 		synology-drive-client
-		vlc
-	];
+	] ++ ( if pkgs.system == "x86_64-darwin" then
+		[
+			libreoffice-bin
+		] else
+		[
+			bitwarden
+			gnucash
+			handbrake
+			onlyoffice-bin
+			vlc
+		]
+	);
 }

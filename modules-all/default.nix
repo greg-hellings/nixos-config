@@ -1,0 +1,8 @@
+{ ... }:
+
+{
+	imports = [
+		./automatic
+		./xprograms.nix
+	];
+}

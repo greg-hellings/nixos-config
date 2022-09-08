@@ -1,8 +1,9 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
-	home.packages = with pkgs; [
+	home.packages = with pkgs; ( if ( lib.hasSuffix "-darwin" pkgs.system) then
+		[] else
+	[
 		element-desktop
-		nheko
-	];
+	]);
 }

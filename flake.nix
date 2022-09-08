@@ -14,7 +14,7 @@
 		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
-			inputs.nixpkgs.follows = "nixpkgs";
+			inputs.nixpkgs.follows = "nixunstable";
 		};
 		nurpkgs.url = "github:nix-community/NUR";
 	};
@@ -26,7 +26,8 @@
 		mods = hostname: [
 			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
 			agenix.nixosModule
-			./modules
+			./modules-all
+			./modules-linux
 			./hosts/${hostname}
 			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
@@ -44,8 +45,10 @@
 		};
 
 		darwinMods = hostname: [
+			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
 			inputs.agenix.nixosModule
-			./modules
+			./modules-all
+			./modules-darwin
 			./hosts/${hostname}
 		];
 

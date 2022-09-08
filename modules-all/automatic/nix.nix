@@ -5,8 +5,6 @@
 	nix = {
 		package = pkgs.nixFlakes;
 
-		autoOptimiseStore = true;
-
 		# Keep freespace available, at a minimum, and enable Flakes
 		extraOptions = ''
 experimental-features = nix-command flakes
