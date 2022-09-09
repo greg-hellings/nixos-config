@@ -17,4 +17,8 @@ buildPythonPackage rec {
 	};
 
 	doCheck = false;
+
+	nativeBuildInputs = [
+		pkgs.git
+	];
 }
