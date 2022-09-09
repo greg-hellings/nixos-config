@@ -95,6 +95,11 @@
 		);
 
 		overlay = local_overlay;
-		modules = import ./modules;
+		modules = import [
+			./modules-all
+			./modules-linux
+			./modules-darwin
+		];
+		packages = import ./overlays/packages.nix { pkgs = nixpkgs; };
 	};
 }
