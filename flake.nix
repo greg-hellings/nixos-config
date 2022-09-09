@@ -22,9 +22,16 @@
 	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
 	let
 		local_overlay = import ./overlays;
+		overlays = [
+			local_overlay
+			nurpkgs.overlay
+		];
+		overlaid = system: import nixpkgs {
+			inherit overlays system;
+		};
 
 		mods = hostname: [
-			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
+			{ nixpkgs.overlays = overlays; }
 			agenix.nixosModule
 			./modules-all
 			./modules-linux
@@ -45,7 +52,7 @@
 		};
 
 		darwinMods = hostname: [
-			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
+			{ nixpkgs.overlays = overlays; }
 			inputs.agenix.nixosModule
 			./modules-all
 			./modules-darwin
@@ -94,7 +101,7 @@
 			}
 		);
 
-		overlay = local_overlay;
+		overlays = local_overlay;
 		modules = import [
 			./modules-all
 			./modules-linux
