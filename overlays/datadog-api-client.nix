@@ -1,6 +1,15 @@
 { lib, buildPythonPackage, fetchPypi, pkgs}:
 
-buildPythonPackage rec {
+let
+	pydeps = pypkgs: with pypkgs; [
+		certifi
+		dateutils
+		python-dateutil
+		typing-extensions
+		urllib3
+	];
+
+in buildPythonPackage rec {
 	pname = "datadog-api-client";
 	version = "2.3.0";
 
@@ -17,4 +26,13 @@ buildPythonPackage rec {
 	};
 
 	doCheck = false;
+
+	buildInputs = with pkgs; [
+		(python3.withPackages pydeps)
+	];
+
+	nativeBuildInputs = with pkgs; [
+		(python3.withPackages pydeps)
+		git
+	];
 }
