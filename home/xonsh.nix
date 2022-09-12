@@ -47,6 +47,9 @@
 		};
 
 		configHeader = ''
+if  '__NIX_DARWIN_SET_ENVIRONMENT_DONE' not in ''${...} or not $__NIX_DARWIN_SET_ENVIRONMENT_DONE:
+    source-bash /etc/bashrc
+
 # set -e == $RAISE_SUBPROC_ERROR = True
 # set -x == trace on; $XONSH_TRACE_SUBPROC = True
 # $? == _.rtn
@@ -126,9 +129,6 @@ import builtins
 builtins.true = True
 builtins.false = False
 builtins.null = None
-
-if  '__NIX_DARWIN_SET_ENVIRONMENT_DONE' not in ''${...} or not $__NIX_DARWIN_SET_ENVIRONMENT_DONE:
-    source-bash /etc/bashrc
 '';
 	};
 }

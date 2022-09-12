@@ -2,7 +2,16 @@
 
 let
 	myPackages = pypackages: with pypackages; [
+		pkgs.datadog-api-client
 		pkgs.xonsh-direnv
+		datadog
+		dateutil
+		ipython
+		pyyaml
+		responses
+		ruamel-yaml
+		typing-extensions
+		virtualenv
 	];
 
 	myPython = pkgs.python3.withPackages myPackages;
