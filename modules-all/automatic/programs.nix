@@ -19,6 +19,7 @@ in {
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
 		agenix.defaultPackage."${system}"
+		android-file-transfer
 		bitwarden-cli
 		diffutils
 		git
