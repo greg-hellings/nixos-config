@@ -3,6 +3,7 @@
 {
 	imports = [
 		./chat.nix
+		./gnome.nix
 		./firefox.nix
 		./terminal.nix
 	];
@@ -17,6 +18,7 @@
 			bitwarden
 			gnucash
 			handbrake
+			nextcloud-client
 			onlyoffice-bin
 			vlc
 		]

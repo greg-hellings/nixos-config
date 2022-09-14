@@ -11,7 +11,6 @@ in with lib; {
 	config = mkIf cfg.enable {
 		environment.systemPackages = with pkgs; [
 			keepassxc
-			nextcloud-client
 		];
 	};
 }
