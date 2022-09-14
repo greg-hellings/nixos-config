@@ -12,17 +12,29 @@
 			url = "github:nix-community/home-manager/release-22.05";
 			inputs.nixpkgs.follows = "nixpkgs";
 		};
+		darwin = {
+			url = "github:lnl7/nix-darwin/master";
+			inputs.nixpkgs.follows = "nixunstable";
+		};
 		nurpkgs.url = "github:nix-community/NUR";
 	};
 
-	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self}@inputs:
+	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
 	let
 		local_overlay = import ./overlays;
+		overlays = [
+			local_overlay
+			nurpkgs.overlay
+		];
+		overlaid = system: import nixpkgs {
+			inherit overlays system;
+		};
 
 		mods = hostname: [
-			{ nixpkgs.overlays = [ nurpkgs.overlay local_overlay ]; }
+			{ nixpkgs.overlays = overlays; }
 			agenix.nixosModule
-			./modules
+			./modules-all
+			./modules-linux
 			./hosts/${hostname}
 			home-manager.nixosModules.home-manager {
 				home-manager.useGlobalPkgs = true;
@@ -38,6 +50,14 @@
 			specialArgs = inputs;
 			modules = mods name;
 		};
+
+		darwinMods = hostname: [
+			{ nixpkgs.overlays = overlays; }
+			inputs.agenix.nixosModule
+			./modules-all
+			./modules-darwin
+			./hosts/${hostname}
+		];
 
 		unstableMachine = system: name: inputs.nixunstable.lib.nixosSystem {
 			system = system;
@@ -64,7 +84,16 @@
 			"iso" = machine "x86_64-linux" "iso";
 		};
 
+		darwinConfigurations = {
+			"C02G48H8MD6R" = inputs.darwin.lib.darwinSystem {
+				system = "x86_64-darwin";
+				specialArgs = inputs;
+				modules = darwinMods "work";
+			};
+		};
+
 		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
+		defaultPackage."x86_64-darwin" = inputs.self.darwinConfigurations.C02G48H8MD6R.system;
 
 		homeConfigurations = (
 			import ./home {
@@ -72,7 +101,12 @@
 			}
 		);
 
-		overlay = local_overlay;
-		modules = import ./modules;
+		overlays = local_overlay;
+		modules = import [
+			./modules-all
+			./modules-linux
+			./modules-darwin
+		];
+		packages = import ./overlays/packages.nix { pkgs = nixpkgs; };
 	};
 }

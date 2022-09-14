@@ -44,10 +44,12 @@
 			tspub = "sudo tailscale up --exit-node=linode";
 			tshome = "sudo tailscale up --exit-node=2maccabees";
 			tsclear = "sudo tailscale up --exit-node=''";
-			rebuild = "sudo nixos-rebuild switch";
 		};
 
 		configHeader = ''
+if  '__NIX_DARWIN_SET_ENVIRONMENT_DONE' not in ''${...} or not $__NIX_DARWIN_SET_ENVIRONMENT_DONE:
+    source-bash /etc/bashrc
+
 # set -e == $RAISE_SUBPROC_ERROR = True
 # set -x == trace on; $XONSH_TRACE_SUBPROC = True
 # $? == _.rtn
@@ -61,6 +63,14 @@ xontrib load direnv
 #$GOPATH = $HOME + '/.go'
 #$JAVA_HOME = '/etc/alternatives/java_sdk'
 		configFooter = ''
+def _rebuild(args):
+    import os
+    system = os.uname()
+    if system.sysname == 'Darwin':
+        darwin-rebuild --flake ~/.config/nix switch
+    else:
+        sudo nixos-rebuild switch
+
 def _yaml2json(args, stdin=None, stdout=None):
     import sys, yaml, json
     from yaml import CLoader
@@ -95,6 +105,7 @@ def _newdock(args):
 def _unknown_host(args):
     sed -i -e @(args[0])d ~/.ssh/known_hosts
 
+aliases['rebuild'] = _rebuild
 aliases['yaml2json'] = _yaml2json
 aliases['py2env'] = _py2env
 aliases['py3env'] = _py3env

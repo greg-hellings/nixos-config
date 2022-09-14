@@ -1,9 +1,10 @@
 { lib, pkgs, ... }:
 
 let
-	ffPkgs = wayland: if wayland
-		then [ pkgs.firefox-wayland ]
-		else [ pkgs.firefox ];
+	# For now, we ignore this and don't install it
+	ffPkgs = if ( lib.hasSuffix "-darwin" pkgs.system )
+		then pkgs.firefox-unwrapped
+		else pkgs.firefox-wayland.override { cfg.enableGnomeExtensions = true; };
 
 	vars = {
 		MOZ_ENABLE_WAYLAND = "1";
@@ -12,12 +13,8 @@ let
 in with lib;
 {
 	programs.firefox = {
-		enable = true;
-		package = pkgs.firefox-wayland.override {
-			cfg = {
-				enableGnomeExtensions = true;
-			};
-		};
+		enable = (if (lib.hasSuffix "-darwin" pkgs.system) then false else true);
+		package = ffPkgs;
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 			bitwarden
 			octotree

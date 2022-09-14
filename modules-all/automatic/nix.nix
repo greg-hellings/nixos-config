@@ -15,10 +15,6 @@ max-free = ${toString (5 * 1024 * 1024 * 1024) }
 keep-outputs = true
 keep-derivations = true
 '';
-
-		# Use hardlinking instead of copying when possible
-		autoOptimiseStore = true;
 	};
 	nixpkgs.config.allowUnfree = true;
-	system.stateVersion = "22.05";
 }

@@ -5,6 +5,8 @@
 		enable = true;
 		serverAliveInterval = 60;
 
+		includes = ["config.local"];
+
 		matchBlocks =
 		let
 			nas = { user = "admin"; };

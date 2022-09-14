@@ -2,7 +2,16 @@
 
 let
 	myPackages = pypackages: with pypackages; [
+		pkgs.datadog-api-client
 		pkgs.xonsh-direnv
+		datadog
+		dateutil
+		ipython
+		pyyaml
+		responses
+		ruamel-yaml
+		typing-extensions
+		virtualenv
 	];
 
 	myPython = pkgs.python3.withPackages myPackages;
@@ -10,6 +19,8 @@ in {
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
 		agenix.defaultPackage."${system}"
+		android-file-transfer
+		bitwarden-cli
 		diffutils
 		git
 		gnupatch

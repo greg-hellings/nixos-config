@@ -1,4 +1,6 @@
-{ config, pkgs, agenix, ... }:
+# Only imported from the Linux modules
+
+{ pkgs, ... }:
 
 {
 	# Enable the OpenSSH daemon for remote control
