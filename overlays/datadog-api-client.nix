@@ -5,6 +5,8 @@ let
 		certifi
 		dateutils
 		python-dateutil
+		setuptools
+		setuptools_scm
 		typing-extensions
 		urllib3
 	];
