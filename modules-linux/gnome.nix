@@ -13,6 +13,8 @@ in with lib; {
 
 		# Sets up a basic Gnome installation
 		services = {
+			accounts-daemon.enable = true;
+
 			xserver = {
 				enable = true;
 				displayManager.gdm.enable = true;
