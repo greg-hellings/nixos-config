@@ -2,15 +2,7 @@
 
 let
 	myPackages = pypackages: with pypackages; [
-		pkgs.datadog-api-client
 		pkgs.xonsh-direnv
-		datadog
-		dateutil
-		ipython
-		pyyaml
-		responses
-		ruamel-yaml
-		typing-extensions
 		virtualenv
 	];
 
@@ -29,10 +21,10 @@ in {
 		home-manager
 		htop
 		myPython
+		nano
 		pwgen
 		transcrypt
 		unzip
-		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
 		wget
 	];
 }

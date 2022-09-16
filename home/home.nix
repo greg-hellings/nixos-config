@@ -4,6 +4,24 @@ let
 	guiImports = if gui then
 		[ ./gui ] else [];
 
+	myPackages = pypackages: with pypackages; [
+		pkgs.datadog-api-client
+		pkgs.xonsh-direnv
+		black
+		datadog
+		dateutil
+		flake8
+		ipython
+		pyyaml
+		responses
+		ruamel-yaml
+		tox
+		typing-extensions
+		virtualenv
+	];
+
+	myPython = pkgs.python3.withPackages myPackages;
+
 in {
 	imports = [
 		./modules
@@ -27,7 +45,9 @@ in {
 		git
 		gnupatch
 		hms
+		htop
 		libtheora
+		myPython
 		nano
 		tmux
 		transcrypt
