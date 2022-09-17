@@ -17,6 +17,7 @@ in with lib;
 		package = ffPkgs;
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 			bitwarden
+			multi-account-containers
 			octotree
 			refined-github
 			tree-style-tab
