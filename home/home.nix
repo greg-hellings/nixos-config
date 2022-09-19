@@ -35,6 +35,15 @@ in {
 	] ++ guiImports;
 
 
+	programs.tmux = {
+		enable = true;
+		keyMode = "vi";
+		shell = "${pkgs.xonsh}/bin/xonsh";
+		terminal = "xterm-256color";
+		customPaneNavigationAndResize = true;
+		extraConfig = "set-option -g default-command ${pkgs.xonsh}/bin/xonsh";
+	};
+
 	home.stateVersion = "22.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
