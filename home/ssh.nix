@@ -20,6 +20,7 @@
 			"chronicles.thehellings.lan" = lib.hm.dag.entryBefore [ "*.thehellings.lan"] nas;
 
 			gh = { user = "git"; hostname = "github.com"; };
+			"src" = { user = "gitea"; hostname = "src.thehellings.com"; };
 
 			"*.thehellings.lan" = owned;
 			"10.42.*" = owned;
