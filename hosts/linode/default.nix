@@ -2,6 +2,7 @@
 
 {
 	imports = [
+		./git.nix
 		./hardware-configuration.nix
 		./nextcloud.nix
 		./nginx.nix

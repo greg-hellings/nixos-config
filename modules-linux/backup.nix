@@ -39,7 +39,7 @@ in with lib; {
 			key = mkOption {
 				type = types.path;
 				description = "SSH key to use";
-				default = ./ssh/id_ed25519;
+				default = ../ssh/id_ed25519;
 			};
 
 			jobs = mkOption {

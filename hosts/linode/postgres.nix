@@ -4,7 +4,7 @@
 	services.postgresql = {
 		enable = true;
 		checkConfig = true;
-		ensureDatabases = [ "nextcloud" ];
+		ensureDatabases = [ "nextcloud" "gitea" ];
 		initialScript = pkgs.writeText "create-matrix-db.sql" ''
 			CREATE ROLE "matrix-synapse" WITH LOGIN;
 			CREATE DATABASE "synapse" WITH OWNER "matrix-synapse" TEMPLATE template0 LC_COLLATE = "C" LC_CTYPE = "C";
@@ -16,6 +16,9 @@
 		} {
 			name = "root";
 			ensurePermissions."ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+		} {
+			name = "gitea";
+			ensurePermissions."DATABASE gitea" = "ALL PRIVILEGES";
 		} ];
 		settings = {
 			log_connections = true;
@@ -30,6 +33,7 @@ root root postgres
 	services.postgresqlBackup = {
 		enable = true;
 		databases = [
+			"gitea"
 			"nextcloud"
 			"synapse"
 		];
