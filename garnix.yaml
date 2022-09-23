@@ -1,10 +1,10 @@
 builds:
   include:
     - '*.x86_64-linux.*'
-    - nixosConfiguration.*
+    - nixosConfigurations.*
     - defaultPackage.x86_64-linux
-    - homeConfigurations.*
+    - homeConfigurations.*.activationPackage
     - darwinConfigurations.*
   exclude:
-    - nixosConfiguration.linode  # Requires decrypted files
-    - nixosConfiguration.2maccabees  # Raspberry Pi 4
+    - nixosConfigurations.linode  # Requires decrypted files
+    - nixosConfigurations.2maccabees  # Raspberry Pi 4
