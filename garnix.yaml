@@ -3,7 +3,8 @@ builds:
     - '*.x86_64-linux.*'
     - nixosConfigurations.*
     - defaultPackage.x86_64-linux
-    - homeConfigurations.*.activationPackage
+    - homeConfigurations.x86_64-gui
+    - homeConfigurations.x86_64-nogui
     - darwinConfigurations.*
   exclude:
     - nixosConfigurations.linode  # Requires decrypted files
