@@ -51,6 +51,7 @@ in {
 		diffutils
 		ffmpeg
 		findutils
+		gh
 		git
 		gnupatch
 		hms

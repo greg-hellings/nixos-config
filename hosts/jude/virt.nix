@@ -2,7 +2,6 @@
 
 {
 	environment.systemPackages = with pkgs; [
-		ansible
 		libguestfs
 		packer
 		virt-manager
