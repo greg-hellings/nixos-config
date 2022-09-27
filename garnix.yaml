@@ -8,4 +8,4 @@ builds:
     - darwinConfigurations.*
   exclude:
     - nixosConfigurations.linode  # Requires decrypted files
-    - nixosConfigurations.2maccabees  # Raspberry Pi 4
+    #- nixosConfigurations.2maccabees  # Raspberry Pi 4
