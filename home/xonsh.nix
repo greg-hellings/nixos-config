@@ -27,23 +27,27 @@
 		};
 
 		aliases = {
-			ll = "ls -l";
-			vup = "vagrant up --provision --provider libvirt";
-			vos = "vagrant up --provision --provider openstack";
-			vssh = "vagrant ssh";
-			vhalt = "vagrant halt";
-			vprov = "vagrant provision";
-			vdown = "vagrant destroy";
 			ac = "vox activate";
+			cblack = "compass workspace run src/python3/uc/tools:run_black --";
+			cci = "./scripts/circleci-checks.py";
+			crun = "compass workspace run";
+			cylint = "./scripts/run_yaml_lint.py";
 			d = "vox deactivate";
 			devroles = "cd ~/src/ansible_collections/devroles";
+			dirflake = "nix flake new -t github:nix-community/nix-direnv";
+			ll = "ls -l";
 			molcol = "molecule -c ../../tests/molecule.yml";
 			pa = "cd ~/src/packaging";
-			dirflake = "nix flake new -t github:nix-community/nix-direnv";
 			tsup = "sudo tailscale up";
 			tspub = "sudo tailscale up --exit-node=linode";
 			tshome = "sudo tailscale up --exit-node=2maccabees";
 			tsclear = "sudo tailscale up --exit-node=''";
+			vdown = "vagrant destroy";
+			vhalt = "vagrant halt";
+			vos = "vagrant up --provision --provider openstack";
+			vprov = "vagrant provision";
+			vup = "vagrant up --provision --provider libvirt";
+			vssh = "vagrant ssh";
 		};
 
 		configHeader = ''
