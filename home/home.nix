@@ -59,6 +59,7 @@ in {
 		libtheora
 		myPython
 		nano
+		openssl
 		tmux
 		transcrypt
 		unzip
