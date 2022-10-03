@@ -77,7 +77,7 @@
 
 			"linode" = machine "x86_64-linux" "linode";
 
-			"jude" = machine "x86_64-linux" "jude";
+			"jude" = unstableMachine "x86_64-linux" "jude";
 
 			"lappy" = machine "x86_64-linux" "lappy";
 
