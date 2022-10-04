@@ -29,24 +29,29 @@
 		vscode = let
 			codepkg = pkgs.vscode-with-extensions.override {
 				vscodeExtensions = with pkgs.vscode-extensions; [
-					coenraads.bracket-pair-colorizer-2
 					eamodio.gitlens
+					file-icons.file-icons
 					formulahendry.auto-rename-tag
 					golang.go
+					johnpapa.vscode-peacock
 					jnoortheen.nix-ide
+					kamikillerto.vscode-colorize
 					ms-azuretools.vscode-docker
 					ms-python.python
 					redhat.vscode-yaml
+					ritwickdey.liveserver
+					streetsidesoftware.code-spell-checker
+					vscodevim.vim
 					yzhang.markdown-all-in-one
 				];
 			};
 		in {
 			enable = true;
-			userSettings = {
-				"update.channel" = "none";
-				"editor.renderWhitespace" = "all";
-				"editor.tabWidth" = "8";
-			};
+			# userSettings = {
+			# 	"update.channel" = "none";
+			# 	"editor.renderWhitespace" = "all";
+			# 	"editor.tabWidth" = "8";
+			# };
 			package = codepkg;
 		};
 	};
