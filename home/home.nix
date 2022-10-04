@@ -46,6 +46,8 @@ in {
 
 	home.stateVersion = "22.05";
 	home.packages = with pkgs; [
+		bazel
+		bazel-buildtools
 		bitwarden-cli
 		cdrtools
 		diffutils

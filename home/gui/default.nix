@@ -39,11 +39,19 @@
 					kamikillerto.vscode-colorize
 					ms-azuretools.vscode-docker
 					ms-python.python
+					redhat.java
 					redhat.vscode-yaml
 					ritwickdey.liveserver
 					streetsidesoftware.code-spell-checker
 					vscodevim.vim
 					yzhang.markdown-all-in-one
+				] ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
+					{
+						name = "vscode-bazel";
+						publisher = "BazelBuild";
+						version = "0.5.0";
+						sha256 = "sha256-JJQSwU3B5C2exENdNsWEcxFSgWHnImYas4t/KLsgTj4=";
+					}
 				];
 			};
 		in {
