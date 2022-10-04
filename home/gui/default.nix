@@ -32,6 +32,7 @@
 					eamodio.gitlens
 					file-icons.file-icons
 					formulahendry.auto-rename-tag
+					github.vscode-pull-request-github
 					golang.go
 					johnpapa.vscode-peacock
 					jnoortheen.nix-ide
