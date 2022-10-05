@@ -1,7 +1,6 @@
 { config, pkgs, ... }:
 
 let
-	unstable = import <nixos-unstable> {};
 	service_list = [ "podman-home-assistant.service" ];
 in
 {
@@ -54,6 +53,7 @@ in
 			volumes = [ "/var/lib/zwave:/usr/src/app/store" ];
 			extraOptions = [
 				"--device" "/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
+				"--pull=newer"
 			];
 		};
 	};
@@ -74,7 +74,7 @@ in
 	# directly for troubleshooting Nginx configuration
 	networking.firewall = {
 		enable = true;
-		allowedTCPPorts = [ 80 8091 8123 ];
+		allowedTCPPorts = [ 80 443 8091 8123 ];
 	};
 
 	greg.backup.jobs.zwave = {
