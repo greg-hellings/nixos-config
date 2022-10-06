@@ -4,6 +4,7 @@
 	imports = [
 		./git.nix
 		./hardware-configuration.nix
+		./podman.nix
 		./nextcloud.nix
 		./nginx.nix
 		./postgres.nix
