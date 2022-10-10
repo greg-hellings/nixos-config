@@ -58,6 +58,7 @@ in {
 		gnupatch
 		hms
 		htop
+		jq
 		libtheora
 		myPython
 		nano

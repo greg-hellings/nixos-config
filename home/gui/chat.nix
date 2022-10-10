@@ -5,5 +5,6 @@
 		[] else
 	[
 		element-desktop
+		slack
 	]);
 }

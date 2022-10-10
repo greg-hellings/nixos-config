@@ -10,6 +10,7 @@
 
 	home.packages = with pkgs; [
 		gopls
+		jellyfin-media-player
 		synology-drive-client
 	] ++ ( if pkgs.system == "x86_64-darwin" then
 		[
