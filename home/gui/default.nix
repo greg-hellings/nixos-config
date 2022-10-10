@@ -12,6 +12,7 @@
 		gopls
 		jellyfin-media-player
 		synology-drive-client
+		zoom-us
 	] ++ ( if pkgs.system == "x86_64-darwin" then
 		[
 			libreoffice-bin

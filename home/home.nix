@@ -58,6 +58,7 @@ in {
 		gnupatch
 		hms
 		htop
+		jdk11
 		jq
 		libtheora
 		myPython
