@@ -35,4 +35,15 @@
 	# networking.firewall.allowedUDPPorts = [ ... ];
 	# Or disable the firewall altogether.
 	# networking.firewall.enable = false;
+
+	fileSystems."/media" = {
+		device = "10.42.1.4:/volume1/video/";
+		fsType = "nfs";
+		options = [ "ro" ];
+	};
+
+	services.jellyfin = {
+		enable = true;
+		openFirewall = true;
+	};
 }
