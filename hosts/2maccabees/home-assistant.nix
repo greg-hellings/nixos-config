@@ -12,9 +12,11 @@ in
 		package = (pkgs.home-assistant.override {
 			extraComponents = [
 				"accuweather"
+				"calendar"
 				"cast"
 				"eufy"
 				"lovelace"
+				"nextcloud"
 				"tplink"
 				"wiz"
 				"zwave_js"
