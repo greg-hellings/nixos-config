@@ -5,8 +5,16 @@ let
 	ciDomain = "ci.thehellings.com";
 	ciPort = "17080";
 	droneDir = "/var/lib/drone";
+	execWorkDir = "/var/lib/drone-exec";
+	droneWorkerEnvironment = {
+		DRONE_RPC_PROTO = "https";
+		DRONE_RPC_HOST = ciDomain;
+		DRONE_RUNNER_CAPACITY = "2";
+		DRONE_RUNNER_NAME = "docker";
+	};
 in {
 
+	environment.systemPackages = [ pkgs.drone-runner-exec ];
 	##########################################################################################
 	###########
 	#                       GIT SERVICES
@@ -91,18 +99,65 @@ in {
 				ports = [ "${ciPort}:80" ];
 				volumes = [ "${droneDir}:/data" ];
 			};
+
+			"drone-docker" = {
+				environment = droneWorkerEnvironment;
+				environmentFiles = [
+					"/run/agenix/drone"
+				];
+				extraOptions = [ "--pull=newer" ];
+				image = "drone/drone-runner-docker:1.8";
+				volumes = [ "/run/podman/podman.sock:/var/run/docker.sock" ];
+			};
 		};
 	};
 
-	systemd.services."podman-drone".serviceConfig = {
-		StateDirectory = "drone";
-		StateDirectoryMode = pkgs.lib.mkForce "0777";
-		WorkingDirectory = droneDir;
+	systemd.services = {
+		"podman-drone".serviceConfig = {
+			StateDirectory = "drone";
+			StateDirectoryMode = pkgs.lib.mkForce "0777";
+			WorkingDirectory = droneDir;
+		};
+
+		"drone-exec-runner" = {
+			environment = droneWorkerEnvironment;
+			description = "Drone pipeline runner that executes locally";
+			after = [ "network.target" ];
+			wantedBy = [ "multi-user.target" ];
+			path = with pkgs; [
+				bash
+				drone-runner-exec
+				git
+				podman
+			];
+
+			preStart = ''
+				mkdir -p ${execWorkDir}
+				cat /run/agenix/drone > ${execWorkDir}/conf.env
+				echo "" >> ${execWorkDir}/conf.env
+			'';
+			script = "exec ${pkgs.drone-runner-exec}/bin/drone-runner-exec daemon ${execWorkDir}/conf.env";
+
+			serviceConfig = {
+				StateDirectory = "drone-exec";
+				StateDirectoryMode = pkgs.lib.mkForce "0777";
+			};
+		};
 	};
 
 	greg.proxies."${ciDomain}" = {
 		target = "http://localhost:${ciPort}";
 		ssl = true;
 		genAliases = false;
+	};
+
+	##########################################################################################
+	###########
+	#                       CI WORKERS
+	##########
+	##########################################################################################
+	virtualisation.podman = {
+		enable = true;
+		dockerCompat = true;
 	};
 }
