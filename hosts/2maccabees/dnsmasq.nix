@@ -5,14 +5,14 @@ let
 		# Local hosts
 		"10.42.0.1 switch"
 		"10.42.1.1 router"
-		"10.42.1.2 2maccabees 2maccabees.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan"
+		"10.42.1.2 2maccabees 2maccabees.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan"
 		"10.42.1.3 printer"
 		"10.42.1.4 chronicles nas"
 		"10.42.1.12 tv"
 
 		# Tailscale hosts
 		"100.90.74.19 jude.me.ts"
-		"100.99.244.92 dns.me.ts 2maccabees.me.ts smart.me.ts"
+		"100.99.244.92 dns.me.ts 2maccabees.me.ts smart.me.ts jellyfin.me.ts"
 		"100.119.228.115 chronicles.me.ts nas.me.ts"
 		"100.115.57.8 linode.me.ts"
 

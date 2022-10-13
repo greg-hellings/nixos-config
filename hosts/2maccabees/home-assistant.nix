@@ -17,7 +17,6 @@ in
 				"eufy"
 				"lovelace"
 				"nextcloud"
-				"synology"
 				"tplink"
 				"wiz"
 				"zwave_js"

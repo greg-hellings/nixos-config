@@ -46,4 +46,7 @@
 		enable = true;
 		openFirewall = true;
 	};
+
+	greg.proxies."jellyfin.thehellings.lan".target = "http://localhost:8096";
+	greg.proxies."jellyfin.me.ts".target = "http://localhost:8096";
 }
