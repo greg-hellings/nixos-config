@@ -18,6 +18,7 @@
 			".tox" # Tox temp directory
 		];
 		extraConfig = {
+			init.defaultBranch = "main";
 			push.default = "upstream";
 			pull.rebase = "false";
 		};
