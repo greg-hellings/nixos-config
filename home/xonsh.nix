@@ -109,6 +109,14 @@ def _newdock(args):
 def _unknown_host(args):
     sed -i -e @(args[0])d ~/.ssh/known_hosts
 
+def _bake(args):
+    from pathlib import Path
+    templates = Path("~/.copier-templates/").expanduser()
+    if not templates.exists():
+        git clone src:greg/copier-templates.git ~/.copier-templates
+    copier copy @(str(templates / args[0])) .
+
+aliases['bake'] = _bake
 aliases['rebuild'] = _rebuild
 aliases['yaml2json'] = _yaml2json
 aliases['py2env'] = _py2env

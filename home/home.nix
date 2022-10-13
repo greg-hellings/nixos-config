@@ -30,6 +30,7 @@ in {
 		./direnv.nix
 		./git.nix
 		./ssh.nix
+		./templates.nix
 		./vim.nix
 		./xonsh.nix
 	] ++ guiImports;
