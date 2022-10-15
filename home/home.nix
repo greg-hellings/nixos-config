@@ -4,11 +4,11 @@ let
 	guiImports = if gui then
 		[ ./gui ] else [];
 
-	myPackages = pypackages: with pypackages; [
-		pkgs.datadog-api-client
-		pkgs.xonsh-direnv
+	myPackages = pypackages: with pypackages; with pkgs.my-py-addons; [
 		black
+		copier
 		datadog
+		datadog-api-client
 		dateutil
 		flake8
 		ipython
@@ -18,6 +18,7 @@ let
 		tox
 		typing-extensions
 		virtualenv
+		xonsh-direnv
 	];
 
 	myPython = pkgs.python3.withPackages myPackages;

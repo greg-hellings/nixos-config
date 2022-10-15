@@ -20,7 +20,7 @@ else
 fi
 
 # Build and switch
-echo "Building $(uname -m)-$target"
+echo "Building $target"
 dest=$(mktemp -d)
 pushd "$dest" > /dev/null
 nix build --impure "$src#homeConfigurations.$target.activationPackage"

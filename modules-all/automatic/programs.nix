@@ -2,7 +2,7 @@
 
 let
 	myPackages = pypackages: with pypackages; [
-		pkgs.xonsh-direnv
+		pkgs.my-py-addons.xonsh-direnv
 		virtualenv
 	];
 
