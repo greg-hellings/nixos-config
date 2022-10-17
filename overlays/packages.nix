@@ -4,6 +4,7 @@ let
 	callPackage = pkgs.lib.callPackageWith pkgs;
 	lib = pkgs.lib;
 	python = pkgs.packages.python3;
+	cp = pkgs.packages.python3.pkgs.callPackage;
 in {
 	datadog-api-client = callPackage ./datadog-api-client.nix {
 		inherit pkgs lib;

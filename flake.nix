@@ -102,7 +102,7 @@
 			}
 		);
 
-		overlays = local_overlay;
+		overlays.default = local_overlay;
 		modules = import [
 			./modules-all
 			./modules-linux
