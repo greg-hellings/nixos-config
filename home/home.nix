@@ -76,5 +76,6 @@ in {
 		wget
 		x265
 		yamllint
+		yawsso
 	];
 }
