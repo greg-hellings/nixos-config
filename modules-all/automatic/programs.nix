@@ -1,4 +1,4 @@
-{ pkgs, agenix, ... }:
+{ pkgs, ... }:
 
 let
 	myPackages = pypackages: with pypackages; [
@@ -10,7 +10,7 @@ let
 in {
 	# Base packages that need to be in all my hosts
 	environment.systemPackages = with pkgs; [
-		agenix.defaultPackage."${system}"
+		agenix
 		android-file-transfer
 		bitwarden-cli
 		diffutils

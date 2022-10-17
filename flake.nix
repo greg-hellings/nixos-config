@@ -5,12 +5,12 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
+		stable.url = "github:nixos/nixpkgs/nixos-22.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
 		home-manager = {
 			url = "github:nix-community/home-manager/release-22.05";
-			inputs.nixpkgs.follows = "nixpkgs";
+			inputs.nixpkgs.follows = "stable";
 		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
@@ -19,69 +19,69 @@
 		nurpkgs.url = "github:nix-community/NUR";
 	};
 
-	outputs = {nixpkgs, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
+	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
 	let
 		local_overlay = import ./overlays;
 		overlays = [
+			agenix.overlay
 			local_overlay
 			nurpkgs.overlay
 		];
-		overlaid = system: import nixpkgs {
-			inherit overlays system;
-		};
-
-		mods = hostname: [
-			{ nixpkgs.overlays = overlays; }
-			agenix.nixosModule
-			./modules-all
-			./modules-linux
-			./hosts/${hostname}
-			home-manager.nixosModules.home-manager {
-				home-manager.useGlobalPkgs = true;
-				home-manager.useUserPackages = true;
-				home-manager.extraSpecialArgs = {
-					inherit nixunstable;
-				};
-			}
-		];
-
-		machine = system: name: nixpkgs.lib.nixosSystem {
-			inherit system;
-			specialArgs = inputs;
-			modules = mods name;
-		};
 
 		darwinMods = hostname: [
-			{ nixpkgs.overlays = overlays; }
+			{ stable.overlays = overlays; }
 			inputs.agenix.nixosModule
 			./modules-all
 			./modules-darwin
 			./hosts/${hostname}
 		];
 
-		unstableMachine = system: name: inputs.nixunstable.lib.nixosSystem {
-			system = system;
-			modules = mods name;
+		machine = {
+			system ? "x86_64-linux",
+			name,
+			channel ? stable
+		}:
+		let
+			nixpkgs = channel;
+		in nixpkgs.lib.nixosSystem {
+			inherit system;
+			modules = [
+				{ nixpkgs.overlays = overlays; }
+				agenix.nixosModule
+				./modules-all
+				./modules-linux
+				./hosts/${name}
+				home-manager.nixosModules.home-manager {
+					home-manager.useGlobalPkgs = true;
+					home-manager.useUserPackages = true;
+					home-manager.extraSpecialArgs = {
+						inherit nixpkgs;
+					};
+				}
+			];
 			specialArgs = {
-				nixpkgs = inputs.nixunstable;
-				nixunstable = inputs.nixunstable;
-				agenix = inputs.agenix;
 				home-manager = inputs.home-manager;
-				nur = inputs.nur;
+				inherit nixpkgs;
 			};
 		};
 
 	in {
 		nixosConfigurations = {
-			"2maccabees" = unstableMachine "aarch64-linux" "2maccabees";
+			"2maccabees" = machine {
+				system = "aarch64-linux";
+				name = "2maccabees";
+				channel = nixunstable;
+			};
 
-			"linode" = machine "x86_64-linux" "linode";
 
-			"jude" = unstableMachine "x86_64-linux" "jude";
+			jude = machine {
+				name = "jude";
+				channel = nixunstable;
+			};
 
-			"lappy" = machine "x86_64-linux" "lappy";
-
-			"iso" = machine "x86_64-linux" "iso";
+			"linode" = machine { name = "linode"; };
+			"lappy" = machine { name = "lappy"; };
+			"iso" = machine { name = "iso"; };
 		};
 
 		darwinConfigurations = {
@@ -97,7 +97,8 @@
 
 		homeConfigurations = (
 			import ./home {
-				inherit nixpkgs nixunstable agenix home-manager nurpkgs;
+				inherit nixunstable agenix home-manager nurpkgs;
+				nixpkgs = nixunstable;
 			}
 		);
 
@@ -107,6 +108,6 @@
 			./modules-linux
 			./modules-darwin
 		];
-		packages = import ./overlays/packages.nix { pkgs = nixpkgs; };
+		packages = import ./overlays/packages.nix { pkgs = stable; };
 	};
 }
