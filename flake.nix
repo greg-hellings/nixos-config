@@ -103,7 +103,9 @@
 		);
 
 		overlays.default = local_overlay;
-		modules = (import ./modules-all) // (import ./modules-linux) // (import ./modules-darwin);
+		modules = (import ./modules-all {}) //
+		          (import ./modules-linux {}) //
+		          (import ./modules-darwin {});
 		packages = import ./overlays/packages.nix { pkgs = stable; };
 	};
 }
