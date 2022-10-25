@@ -64,6 +64,7 @@ in {
 		jq
 		libtheora
 		myPython
+		nmap
 		nano
 		openssl
 		tmux
