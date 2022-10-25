@@ -103,7 +103,7 @@
 		);
 
 		overlays.default = local_overlay;
-		modules = [
+		modules = stable.lib.foldr (a: b: a ++ b) [
 			(import ./modules-all)
 			(import ./modules-linux)
 			(import ./modules-darwin)
