@@ -49,4 +49,27 @@
 
 	greg.proxies."jellyfin.thehellings.lan".target = "http://localhost:8096";
 	greg.proxies."jellyfin.me.ts".target = "http://localhost:8096";
+
+	#########
+	# Blind service proxy behind the walls of the VPN
+	########
+	services._3proxy = {
+		enable = true;
+		services = [ {
+			type = "socks";
+			auth = [ "strong" ];
+			bindPort = 3128;
+			acl = [ {
+				rule = "allow";
+				users = [ "greg" ];
+			} ];
+		} ];
+		usersFile = "/run/agenix/3proxy";
+		denyPrivate = false;
+	};
+	age.secrets."3proxy" = {
+		file = ../../secrets/3proxy.age;
+		mode = "777";
+	};
+	networking.firewall.allowedTCPPorts = [ 3128 ];
 }
