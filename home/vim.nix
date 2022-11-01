@@ -17,14 +17,15 @@ in
 		plugins = with pkgs.vimPlugins; [
 			ansible-vim
 			bufexplorer
-			ctrlp
 			direnv-vim
+			fzf-vim
 			nerdtree
 			vim-gitgutter
 			vim-flake8
 			vim-fugitive
 			vim-indent-guides
 			vim-packer
+			vim-rooter
 			gruvbox
 			syntastic
 		];
@@ -67,22 +68,6 @@ autocmd BufWinLeave * call clearmatches()
 
 " Settings for CtrlP
 set wildignore+=*.swp,*.pyc,*.class,.tox
-" Base of search is ordered as
-" r - searching up from here to the nearest  marker (.git, .hg, .svn, etc)
-" a - dir of current file, unless that's a subdirectory of CWD
-" c - dir of current file
-let g:ctrlp_working_path_mode = 'arc'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_cmd = 'CtrlPMixed'
-let g:ctrlp_show_hidden = 1
-let g:ctrlp_user_command = {
-	\'types': {
-		\1: ['.git', '${pkgs.git}/bin/git ls-files --cached --exclude-standard --others' ],
-	\},
-	\'fallback': '${pkgs.findutils}/bin/find . -type f | ${pkgs.gnugrep}/bin/grep -v -e "\.tox/" -e "\.git/"',
-\}
-" let g:ctrpl_match_func = { 'match': 'pymatcher#PyMatch' }
-
 " Settings for NerdTree
 let NERDTreeIgnore = ['\.pyc$', '\.o$', '\.class$']
 " indent guides
@@ -99,7 +84,14 @@ let g:diffget_upstream_map = 'gu'
 " Key mappings
 map <F2> <Esc>\be
 map <F4> <Esc>:NERDTreeToggle<Cr>
-map <F6> <Esc>:CtrlP<Cr>
+silent !${pkgs.git}/bin/git rev-parse --is-inside-work-tree
+if v:shell_error == 0
+	map <C-p> :GFiles --cached --others --exclude-standard<CR>
+	map <C-o> :GFiles?
+else
+	map <C-p> :Files<CR>
+endif
+map <F6> <Esc>:Files<Cr>
 " Allows navigating splits
 map <C-j> <C-w>j<C-w><Cr>
 map <C-k> <C-w>k<C-w><Cr>
@@ -165,6 +157,30 @@ endfunction
 command! -nargs=? -range=% Space2Tab call IndentConvert(<line1>,<line2>,0,<q-args>)
 command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,<q-args>)
 command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
+
+
+"""""""""
+""" Unused, but kept in case I end up on a system where I can't use my preferred plugins
+"""""""""
+
+
+
+" Base of search is ordered as
+" r - searching up from here to the nearest  marker (.git, .hg, .svn, etc)
+" a - dir of current file, unless that's a subdirectory of CWD
+" c - dir of current file
+let g:ctrlp_working_path_mode = 'arc'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_cmd = 'CtrlPMixed'
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_user_command = {
+	\'types': {
+		\1: ['.git', '${pkgs.git}/bin/git ls-files --cached --exclude-standard --others' ],
+	\},
+	\'fallback': '${pkgs.findutils}/bin/find . -type f | ${pkgs.gnugrep}/bin/grep -v -e "\.tox/" -e "\.git/"',
+\}
+" let g:ctrpl_match_func = { 'match': 'pymatcher#PyMatch' }
+" map <F6> <Esc>:CtrlP<Cr>
 '';
 	};
 }
