@@ -9,6 +9,7 @@
 			st = "status";
 			ci = "commit";
 			co = "checkout";
+			ups = "push -u origin HEAD";
 		};
 		ignores = [
 			".*.swp" ".*.swo" ".*.swn" # vim
