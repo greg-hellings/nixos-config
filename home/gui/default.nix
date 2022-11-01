@@ -10,7 +10,6 @@
 
 	home.packages = with pkgs; [
 		gopls
-		jellyfin-media-player
 		synology-drive-client
 		zoom-us
 	] ++ ( if pkgs.system == "x86_64-darwin" then
@@ -21,6 +20,7 @@
 			bitwarden
 			gnucash
 			handbrake
+			jellyfin-media-player
 			nextcloud-client
 			onlyoffice-bin
 			vlc

@@ -3,7 +3,7 @@
 let
 	# For now, we ignore this and don't install it
 	ffPkgs = if ( lib.hasSuffix "-darwin" pkgs.system )
-		then pkgs.firefox-unwrapped
+		then pkgs.firefox-bin
 		else pkgs.firefox-wayland.override { cfg.enableGnomeExtensions = true; };
 
 	vars = {
@@ -13,7 +13,7 @@ let
 in with lib;
 {
 	programs.firefox = {
-		enable = (if (lib.hasSuffix "-darwin" pkgs.system) then false else true);
+		enable = true;
 		package = ffPkgs;
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 			bitwarden
@@ -25,10 +25,12 @@ in with lib;
 		];
 		profiles = {
 			default.settings = {
+				"app.update.auto" = false;
 				"browser.startup.page" = 3;
 				"browser.startup.homepage" = "https://thehellings.com";
 				"doh-rollout.doorhanger-decision" = "UIDisabled";
 				"doh-rollout.doneFirstRun" = true;
+				"signon.rememberSignons" = false;
 			};
 		};
 	};

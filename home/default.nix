@@ -1,4 +1,10 @@
-{ nixpkgs, nurpkgs, home-manager, username ? builtins.getEnv "USER", ... }:
+{
+	nixpkgs,
+	overlays,
+	home-manager,
+	username ? builtins.getEnv "USER",
+	...
+}:
 
 let
 	home = system:
@@ -12,25 +18,16 @@ let
 			configDir = "${homeDirectory}/.config";
 
 			pkgs = import nixpkgs {
+				inherit overlays;
 				config.allowUnfree = true;
 				config.xdg.configHome = configDir;
-				overlays = [
-					nurpkgs.overlay
-					(import ../overlays)
-				];
 			};
-
-			nur = import nurpkgs {
-				inherit pkgs;
-				nur = pkgs;
-			};
-
 
 		in home-manager.lib.homeManagerConfiguration rec {
 			inherit pkgs system username homeDirectory;
 			stateVersion = "22.05";
 			configuration = import ./home.nix username {
-				inherit nur pkgs gui;
+				inherit pkgs gui;
 				inherit (pkgs) config lib stdenv;
 			};
 		};

@@ -4,25 +4,6 @@ let
 	guiImports = if gui then
 		[ ./gui ] else [];
 
-	myPackages = pypackages: with pypackages; with pkgs.my-py-addons; [
-		black
-		copier
-		datadog
-		datadog-api-client
-		dateutil
-		flake8
-		ipython
-		pyyaml
-		responses
-		ruamel-yaml
-		tox
-		typing-extensions
-		virtualenv
-		xonsh-direnv
-	];
-
-	myPython = pkgs.python3.withPackages myPackages;
-
 in {
 	imports = [
 		./modules
@@ -61,12 +42,12 @@ in {
 		gh
 		git
 		gnupatch
+		gregpy
 		hms
 		htop
 		jdk11
 		jq
 		libtheora
-		myPython
 		nmap
 		nano
 		openssl
@@ -76,6 +57,6 @@ in {
 		wget
 		x265
 		yamllint
-		yawsso
+		#yawsso
 	];
 }

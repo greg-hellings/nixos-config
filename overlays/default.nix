@@ -3,7 +3,28 @@ self: super:
 let
 	cp = super.python3.pkgs.callPackage;
 
+	myPackages = pypackages: with pypackages; with pkgs.my-py-addons; [
+		black
+		copier
+		datadog
+		datadog-api-client
+		dateutil
+		flake8
+		ipython
+		pyyaml
+		responses
+		ruamel-yaml
+		tox
+		typing-extensions
+		virtualenv
+		xonsh-direnv
+	];
+
+	myPython = super.python3.withPackages myPackages;
+
 in rec {
+	gregpy = myPython;
+
 	my-py-addons = rec {
 		copier =  cp ./copier.nix {
 			inherit iteration-utilities

@@ -17,6 +17,7 @@
 			inputs.nixpkgs.follows = "nixunstable";
 		};
 		nurpkgs.url = "github:nix-community/NUR";
+		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 	};
 
 	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
@@ -26,14 +27,7 @@
 			agenix.overlay
 			local_overlay
 			nurpkgs.overlay
-		];
-
-		darwinMods = hostname: [
-			{ stable.overlays = overlays; }
-			inputs.agenix.nixosModule
-			./modules-all
-			./modules-darwin
-			./hosts/${hostname}
+			inputs.ffmac.overlay
 		];
 
 		machine = {
@@ -84,11 +78,24 @@
 			"iso" = machine { name = "iso"; };
 		};
 
-		darwinConfigurations = {
+		darwinConfigurations =
+		let
+			nixpkgs = stable {
+				overlays = overlays;
+			};
+		in {
 			"C02G48H8MD6R" = inputs.darwin.lib.darwinSystem {
 				system = "x86_64-darwin";
-				specialArgs = inputs;
-				modules = darwinMods "work";
+				specialArgs = {
+					nixpkgs = stable;
+				};
+				modules = [
+					{ nixpkgs.overlays = overlays; }
+					inputs.agenix.nixosModule
+					./modules-all
+					./modules-darwin
+					./hosts/work
+				];
 			};
 		};
 
@@ -97,7 +104,7 @@
 
 		homeConfigurations = (
 			import ./home {
-				inherit nixunstable agenix home-manager nurpkgs;
+				inherit nixunstable agenix home-manager overlays;
 				nixpkgs = nixunstable;
 			}
 		);

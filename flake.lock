@@ -39,6 +39,24 @@
         "type": "github"
       }
     },
+    "ffmac": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1666832804,
+        "narHash": "sha256-RodK149KQi2k5JtmjtFaPDSKvklRyTR3+DhWFTZNn2k=",
+        "owner": "bandithedoge",
+        "repo": "nixpkgs-firefox-darwin",
+        "rev": "19b6537ac95a2402e850799a52e3c8ed62f2db2a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "bandithedoge",
+        "repo": "nixpkgs-firefox-darwin",
+        "type": "github"
+      }
+    },
     "home-manager": {
       "inputs": {
         "nixpkgs": [
@@ -72,6 +90,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1639237670,
+        "narHash": "sha256-RTdL4rEQcgaZGpvtDgkp3oK/V+1LM3I53n0ACPSroAQ=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "edfb969386ebe6c3cf8f878775a7975cd88f926d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -111,6 +145,7 @@
       "inputs": {
         "agenix": "agenix",
         "darwin": "darwin",
+        "ffmac": "ffmac",
         "home-manager": "home-manager",
         "nixunstable": "nixunstable",
         "nurpkgs": "nurpkgs",
