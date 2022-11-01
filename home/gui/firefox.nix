@@ -26,6 +26,7 @@ in with lib;
 		profiles = {
 			default.settings = {
 				"app.update.auto" = false;
+				"browser.ctrlTab.sortByRecentlyUsed" = true;
 				"browser.startup.page" = 3;
 				"browser.startup.homepage" = "https://thehellings.com";
 				"doh-rollout.doorhanger-decision" = "UIDisabled";
