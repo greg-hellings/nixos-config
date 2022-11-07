@@ -24,6 +24,9 @@
 			LESS_TERMCAP_se = "\\033[0m";         # end standout-mode
 			LESS_TERMCAP_us = "\\033[00;36m";     # begin underline
 			LESS_TERMCAP_ue = "\\033[0m";         # end underline
+
+			GOPATH = "${config.home.homeDirectory}/src/go";
+			GOBIN  = "${config.home.homeDirectory}/src/bin";
 		};
 
 		aliases = {
@@ -63,10 +66,11 @@ if  '__NIX_DARWIN_SET_ENVIRONMENT_DONE' not in ''${...} or not $__NIX_DARWIN_SET
 import os
 
 xontrib load direnv
+
+$PATH.append("${config.home.homeDirectory}/src/bin")
 '';
 
 #$PKG_CONFIG_PATH = '/usr/local/lib/pkgconfig'
-#$GOPATH = $HOME + '/.go'
 #$JAVA_HOME = '/etc/alternatives/java_sdk'
 		configFooter = ''
 def _rebuild(args):
