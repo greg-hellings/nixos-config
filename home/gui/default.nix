@@ -16,6 +16,7 @@
 		ffmpeg
 		gnucash
 		gopls
+		handbrake
 		jdk11
 		libtheora
 		synology-drive-client
@@ -26,7 +27,6 @@
 			libreoffice-bin
 		] else
 		[
-			handbrake
 			jellyfin-media-player
 			nextcloud-client
 			onlyoffice-bin
