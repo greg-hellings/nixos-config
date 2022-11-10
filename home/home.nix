@@ -32,12 +32,8 @@ in {
 
 	home.stateVersion = "22.05";
 	home.packages = with pkgs; [
-		bazel
-		bazel-buildtools
 		bitwarden-cli
-		cdrtools
 		diffutils
-		ffmpeg
 		findutils
 		gh
 		git
@@ -45,9 +41,7 @@ in {
 		gregpy
 		hms
 		htop
-		jdk11
 		jq
-		libtheora
 		nmap
 		nano
 		openssl
@@ -55,7 +49,6 @@ in {
 		transcrypt
 		unzip
 		wget
-		x265
 		yamllint
 		#yawsso
 	];

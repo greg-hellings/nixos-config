@@ -9,8 +9,15 @@
 	];
 
 	home.packages = with pkgs; [
+		bazel
+		bazel-buildtools
+		cdrtools
+		ffmpeg
 		gopls
+		jdk11
+		libtheora
 		synology-drive-client
+		x265
 		zoom-us
 	] ++ ( if pkgs.system == "x86_64-darwin" then
 		[
