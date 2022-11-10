@@ -31,17 +31,20 @@
 
 		aliases = {
 			ac = "vox activate";
+
 			cblack = "compass workspace run src/python3/uc/tools:run_black --";
 			cbuild = "compass workspace build";
 			cci = "./scripts/circleci-checks.py";
 			crun = "compass workspace run";
 			ctest = "compass workspace test";
 			cylint = "./scripts/run_yaml_lint.py";
+
 			d = "vox deactivate";
 			devroles = "cd ~/src/ansible_collections/devroles";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
 			ll = "ls -l";
 			molcol = "molecule -c ../../tests/molecule.yml";
+			nixup = "nix flake lock --update-input";
 			pa = "cd ~/src/packaging";
 			tsup = "sudo tailscale up";
 			tspub = "sudo tailscale up --exit-node=linode";

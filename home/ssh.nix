@@ -12,8 +12,15 @@
 			nas = { user = "admin"; };
 			owned = { user = "greg"; };
 		in {
+			inherit nas;
+
+			"*" = {
+				dynamicForwards = [ {
+					port = 10240;
+				} ];
+			};
+
 			"10.42.1.4" = lib.hm.dag.entryBefore ["10.42.*"] nas;
-			nas = nas;
 			"nas.thehellings.lan" = nas;
 			"nas.greg-hellings.gmail.com.beta.tailscale.net" = nas;
 			chronicles = nas;
