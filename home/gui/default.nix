@@ -20,6 +20,7 @@
 		jdk11
 		libtheora
 		synology-drive-client
+		vlc
 		x265
 		zoom-us
 	] ++ ( if pkgs.system == "x86_64-darwin" then
@@ -30,7 +31,6 @@
 			jellyfin-media-player
 			nextcloud-client
 			onlyoffice-bin
-			vlc
 		]
 	);
 
