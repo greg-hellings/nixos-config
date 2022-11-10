@@ -32,7 +32,7 @@ in with lib; {
 
 			# Enablement for Firefox
 			gnome = {
-				chrome-gnome-shell.enable = true;
+				gnome-browser-connector.enable = true;
 				sushi.enable = true;
 				gnome-online-accounts.enable = true;
 			};
@@ -42,7 +42,6 @@ in with lib; {
 		programs.sway.enable = true;  # Gives us Wayland
 		xdg.portal = {
 			enable = true;
-			gtkUsePortal = true;
 			wlr.enable = true;  # Enables screen sharing in Wayland
 		};
 
