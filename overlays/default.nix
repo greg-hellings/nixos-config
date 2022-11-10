@@ -60,4 +60,5 @@ in rec {
 		propagatedBuildInputs = old.propagatedBuildInputs ++ [ my-py-addons.xonsh-direnv ];
 	});
 
+	bitwarden = if super.stdenv.isDarwin then (super.callPackage ./mac/bitwarden.nix {}) else super.bitwarden;
 }

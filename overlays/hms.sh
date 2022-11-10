@@ -27,8 +27,14 @@ popd > /dev/null
 rm -r "${dest}"
 
 if [ "$(uname -s)" == "Darwin" ]; then
-	for app in ~/.nix-profile/Applications/*.app; do
-		echo "Copying '${app}' to Applications"
-		cp -r "${app}" "${HOME}/Applications"
+	cd ~/.nix-profile/Applications
+	for app in *.app; do
+		echo "Updating permissions on '${app}'"
+		chmod -R u+w "${HOME}/Applications/${app}"
+		echo "Copying new version to Applications"
+		cp -r "${app}" "${HOME}/Applications" 2>&1 > /dev/null || true
+		if [ "$?" != "0" ]; then
+			echo "An error occurred, proceeding anyway"
+		fi
 	done
 fi

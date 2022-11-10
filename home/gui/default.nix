@@ -11,6 +11,7 @@
 	home.packages = with pkgs; [
 		bazel
 		bazel-buildtools
+		bitwarden
 		cdrtools
 		ffmpeg
 		gopls
@@ -24,7 +25,6 @@
 			libreoffice-bin
 		] else
 		[
-			bitwarden
 			gnucash
 			handbrake
 			jellyfin-media-player
