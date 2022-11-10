@@ -56,6 +56,7 @@ in rec {
 	};
 
 	xonsh = super.xonsh.overridePythonAttrs (old: rec{
+		python3 = self.gregpy;
 		propagatedBuildInputs = old.propagatedBuildInputs ++ [ my-py-addons.xonsh-direnv ];
 	});
 

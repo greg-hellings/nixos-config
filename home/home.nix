@@ -1,4 +1,4 @@
-name: { pkgs, lib, gui, ...}:
+name: { pkgs, lib, gui, config, ...}:
 
 let
 	guiImports = if gui then
@@ -21,11 +21,11 @@ in {
 	programs.tmux = {
 		enable = true;
 		keyMode = "vi";
-		shell = "${pkgs.xonsh}/bin/xonsh";
+		shell = "~/.nix-profile/bin/xonsh";
 		terminal = "xterm-256color";
 		customPaneNavigationAndResize = true;
 		extraConfig = (lib.strings.concatStringsSep "\n" [
-			"set-option -g default-command ${pkgs.xonsh}/bin/xonsh"
+			"set-option -g default-command ~/.nix-profile/bin/xonsh"
 			"bind P paste-buffer"
 		]);
 	};
