@@ -30,7 +30,7 @@ let
 #		"dhcp-range=eth0,10.42.0.1,10.42.1.255,255.255.0.0,static"
 		"dhcp-range=eth0,10.42.2.1,10.42.2.255,255.255.0.0,12h"
 		"dhcp-option=eth0,option:router,10.42.1.1"
-		"dhcp-option=eth0,option:dns-server,10.42.1.2"
+		"dhcp-option=eth0,option:dns-server,10.42.1.2,1.1.1.1"
 		"dhcp-option=eth0,option:domain-search,thehellings.lan"
 
 		"dhcp-range=vlan66@eth0,192.168.66.3,192.168.66.150,255.255.255.0,12h"
