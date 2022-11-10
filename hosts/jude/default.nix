@@ -10,6 +10,7 @@
 	];
 	programs.steam.enable = true;
 	networking.hostName = "jude";
+	networking.enableIPv6 = false;
 	greg.tailscale.enable = true;
 	greg.gnome.enable= true;
 }
