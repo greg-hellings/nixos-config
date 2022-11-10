@@ -14,6 +14,7 @@
 		bitwarden
 		cdrtools
 		ffmpeg
+		gnucash
 		gopls
 		jdk11
 		libtheora
@@ -25,7 +26,6 @@
 			libreoffice-bin
 		] else
 		[
-			gnucash
 			handbrake
 			jellyfin-media-player
 			nextcloud-client

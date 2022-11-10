@@ -21,6 +21,10 @@ let
 	];
 
 	myPython = super.python3.withPackages myPackages;
+	macOver = file: og:
+		if super.stdenv.isDarwin then
+		(super.callPackage file {}) else
+		super."${og}";
 
 in rec {
 	gregpy = myPython;
@@ -60,5 +64,6 @@ in rec {
 		propagatedBuildInputs = old.propagatedBuildInputs ++ [ my-py-addons.xonsh-direnv ];
 	});
 
-	bitwarden = if super.stdenv.isDarwin then (super.callPackage ./mac/bitwarden.nix {}) else super.bitwarden;
+	bitwarden = macOver ./mac/bitwarden.nix "bitwarden";
+	gnucash = macOver ./mac/gnucash.nix "gnucash";
 }

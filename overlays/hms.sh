@@ -30,7 +30,7 @@ if [ "$(uname -s)" == "Darwin" ]; then
 	cd ~/.nix-profile/Applications
 	for app in *.app; do
 		echo "Updating permissions on '${app}'"
-		chmod -R u+w "${HOME}/Applications/${app}"
+		chmod -R u+w "${HOME}/Applications/${app}" || true
 		echo "Copying new version to Applications"
 		cp -r "${app}" "${HOME}/Applications" 2>&1 > /dev/null || true
 		if [ "$?" != "0" ]; then
