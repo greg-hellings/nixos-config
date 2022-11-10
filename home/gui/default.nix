@@ -19,18 +19,17 @@
 		handbrake
 		jdk11
 		libtheora
+			onlyoffice-bin
 		synology-drive-client
 		vlc
 		x265
 		zoom-us
 	] ++ ( if pkgs.system == "x86_64-darwin" then
 		[
-			libreoffice-bin
 		] else
 		[
 			jellyfin-media-player
 			nextcloud-client
-			onlyoffice-bin
 		]
 	);
 

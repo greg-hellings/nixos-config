@@ -67,5 +67,6 @@ in rec {
 	bitwarden = macOver ./mac/bitwarden.nix "bitwarden";
 	gnucash = macOver ./mac/gnucash.nix "gnucash";
 	handbrake = macOver ./mac/handbrake.nix "handbrake";
+	onlyoffice-bin = macOver ./mac/onlyoffice-bin.nix "onlyoffice-bin";
 	vlc = macOver ./mac/vlc.nix "vlc";
 }
