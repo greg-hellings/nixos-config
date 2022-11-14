@@ -24,9 +24,7 @@
 		vlc
 		x265
 		zoom-us
-	] ++ ( if pkgs.system == "x86_64-darwin" then
-		[
-		] else
+	] ++ ( if pkgs.system != "x86_64-darwin" then
 		[
 			jellyfin-media-player
 			nextcloud-client
