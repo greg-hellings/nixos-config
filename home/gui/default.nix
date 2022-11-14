@@ -12,14 +12,17 @@
 		bazel
 		bazel-buildtools
 		bitwarden
+		cargo # Rustc
 		cdrtools
 		ffmpeg
+		gcc
 		gnucash
+		go
 		gopls
 		handbrake
 		jdk11
 		libtheora
-			onlyoffice-bin
+		onlyoffice-bin
 		synology-drive-client
 		vlc
 		x265
