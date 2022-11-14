@@ -17,9 +17,8 @@
 			onBoot = "ignore";  # Do not auto-restart VMs on boot, unless they are marked autostart
 		};
 
-		waydroid = {
-			enable = true;
-		};
+		waydroid.enable = true;
+		lxd.enable = true;  # Needed for waydroid
 
 		virtualbox.host.enable = true;
 	};
