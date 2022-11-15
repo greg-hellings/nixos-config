@@ -10,6 +10,16 @@ let
 			sha256 = "0hi1c5zv38hwxbyrf11fz97r728jgbppz4is7fwzwhfrzhwbw0ga";
 		};
 	};
+
+	vim-xonsh = pkgs.vimUtils.buildVimPlugin {
+		name = "vim-xonsh";
+		src = pkgs.fetchFromGitHub {
+			owner = "meatballs";
+			repo = "vim-xonsh";
+			rev = "2028aac";
+			sha256 = "sha256-0+dqtlz8LeyOoSiS12rv8aLdzOMj31PuYAyDYWnpNzw=";
+		};
+	};
 in
 {
 	programs.vim = {
@@ -26,6 +36,7 @@ in
 			vim-indent-guides
 			vim-packer
 			vim-rooter
+			vim-xonsh
 			gruvbox
 			syntastic
 		];

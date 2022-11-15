@@ -31,7 +31,7 @@
 		[
 			jellyfin-media-player
 			nextcloud-client
-		]
+		] else []
 	);
 
 	programs = {
