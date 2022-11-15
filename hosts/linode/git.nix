@@ -34,6 +34,10 @@ in {
 			enable = true;
 			type = "tar.xz";
 		};
+		httpPort = 3001;
+		log = {
+			level = "Info";
+		};
 		rootUrl = "https://${domain}/";
 	};
 
