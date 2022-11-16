@@ -19,6 +19,10 @@ set cursorline
 set lazyredraw
 set showmatch
 set hlsearch
+
+set nobackup
+set nowritebackup
+set signcolumn=yes
 " Shows non-printing characters
 set listchars=tab:→\ ,extends:→,precedes:←,trail:·,eol:¬
 set list
