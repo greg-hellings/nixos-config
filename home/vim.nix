@@ -40,7 +40,7 @@ in
 			coc-lists
 			coc-markdownlint
 			coc-nvim
-			coc-python
+			coc-pyright
 			coc-tslint
 			coc-vimtex
 			coc-yaml
@@ -48,6 +48,7 @@ in
 			direnv-vim
 			fzf-vim
 			nerdtree
+			vim-airline
 			vim-gitgutter
 			vim-flake8
 			vim-fugitive
