@@ -30,6 +30,20 @@ in
 		plugins = with pkgs.vimPlugins; [
 			ansible-vim
 			bufexplorer
+			coc-cmake
+			coc-css
+			coc-go
+			coc-highlight
+			coc-html
+			coc-java
+			coc-json
+			coc-lists
+			coc-markdownlint
+			coc-nvim
+			coc-python
+			coc-tslint
+			coc-vimtex
+			coc-yaml
 			context-vim
 			direnv-vim
 			fzf-vim

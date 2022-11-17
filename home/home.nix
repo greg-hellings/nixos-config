@@ -42,8 +42,9 @@ in {
 		hms
 		htop
 		jq
-		nmap
 		nano
+		nmap
+		nodejs
 		openssl
 		tmux
 		transcrypt
