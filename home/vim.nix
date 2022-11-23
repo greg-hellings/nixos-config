@@ -53,7 +53,6 @@ in
 			vim-flake8
 			vim-fugitive
 			vim-indent-guides
-			vim-nix
 			vim-packer
 			vim-rooter
 			vim-xonsh
