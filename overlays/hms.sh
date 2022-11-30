@@ -30,9 +30,10 @@ if [ "$(uname -s)" == "Darwin" ]; then
 	cd ~/.nix-profile/Applications
 	for app in *.app; do
 		echo "Updating permissions on '${app}'"
+		mkdir -p "${HOME}/Applications/${app}"
 		chmod -R u+w "${HOME}/Applications/${app}" || true
 		echo "Copying new version to Applications"
-		rsync -rptgoDv "${app}" "${HOME}/Applications" 2>&1 > /dev/null || true
+		rsync -rptgoDv "${app}/" "${HOME}/Applications/${app}/" 2>&1 > /dev/null || true
 		if [ "$?" != "0" ]; then
 			echo "An error occurred, proceeding anyway"
 		fi

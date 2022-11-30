@@ -2,7 +2,7 @@
 
 let
 	# For now, we ignore this and don't install it
-	ffPkgs = if ( lib.hasSuffix "-darwin" pkgs.system )
+	ffPkgs = if ( pkgs.stdenv.hostPlatform.isDarwin )
 		then pkgs.firefox-bin
 		else pkgs.firefox-wayland.override { cfg.enableGnomeExtensions = true; };
 
