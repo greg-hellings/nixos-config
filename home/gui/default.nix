@@ -3,15 +3,12 @@
 {
 	imports = [
 		./chat.nix
-		./gnome.nix
 		./firefox.nix
-		./terminal.nix
 	];
 
 	home.packages = with pkgs; [
 		bazel
 		bazel-buildtools
-		bitwarden
 		cargo # Rustc
 		cdrtools
 		ffmpeg
@@ -22,15 +19,19 @@
 		handbrake
 		jdk11
 		libtheora
-		onlyoffice-bin
-		synology-drive-client
 		vlc
 		x265
-		zoom-us
-	] ++ ( if pkgs.system != "x86_64-darwin" then
+	] ++ ( if ( pkgs.system != "x86_64-darwin" && pkgs.system != "aarch64-linux" ) then
 		[
 			jellyfin-media-player
 			nextcloud-client
+		] else []
+	) ++ ( if ( pkgs.system != "aarch64-linux" ) then
+		[
+			bitwarden
+			onlyoffice-bin
+			synology-drive-client
+			zoom-us
 		] else []
 	);
 }

@@ -11,7 +11,11 @@ let
 		if username == "root" then "/root" else
 			( if ( nixpkgs.lib.hasSuffix "-darwin" system ) then "/Users/${username}" else "/home/${username}" );
 
-	mkhome = system: gui:
+	mkhome = {
+		system,
+		gui,
+		gnome
+	}:
 		let
 			homeDirectory = home system;
 
@@ -26,15 +30,35 @@ let
 		in home-manager.lib.homeManagerConfiguration rec {
 			inherit pkgs system username homeDirectory;
 			stateVersion = "22.05";
-			configuration = import ./home.nix username {
-				inherit pkgs gui;
+			configuration = import ./home.nix {
+				inherit pkgs gui gnome;
 				inherit (pkgs) config lib stdenv;
 			};
 		};
+
+	gdm = {
+		gui = true;
+		gnome = true;
+	};
+
+	cli = {
+		gui = false;
+		gnome = false;
+	};
+
+	gui = {
+		gui = true;
+		gnome = false;
+	};
+
+	arch = { system = "aarch64-linux"; };
+	x86 = { system = "x86_64-linux"; };
+	darwin = { system = "x86_64-darwin"; };
 in {
-	"aarch64-gui" = mkhome "aarch64-linux" true;
-	"aarch64-nogui" = mkhome "aarch64-linux" false;
-	"x86_64-gui" = mkhome "x86_64-linux" true;
-	"x86_64-nogui" = mkhome "x86_64-linux" false;
-	"x86_64-darwin" = mkhome "x86_64-darwin" true;
+	"wsl" = mkhome (gui // arch);
+	"aarch64-gui" = mkhome (gdm // arch);
+	"aarch64-nogui" = mkhome (cli // arch);
+	"x86_64-gui" = mkhome (gdm // x86);
+	"x86_64-nogui" = mkhome (cli // x86);
+	"x86_64-darwin" = mkhome (gdm // darwin);
 }
