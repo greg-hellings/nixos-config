@@ -16,11 +16,15 @@
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
+		wsl = {
+			url = "github:nix-community/NixOS-WSL";
+			inputs.nixpkgs.follows = "nixunstable";
+		};
 		nurpkgs.url = "github:nix-community/NUR";
 		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 	};
 
-	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
+	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, wsl, ...}@inputs:
 	let
 		local_overlay = import ./overlays;
 		overlays = [
@@ -42,6 +46,7 @@
 			modules = [
 				{ nixpkgs.overlays = overlays; }
 				agenix.nixosModule
+				wsl.nixosModules.wsl
 				./modules-all
 				./modules-linux
 				./hosts/${name}
@@ -76,6 +81,10 @@
 			"linode" = machine { name = "linode"; };
 			"lappy" = machine { name = "lappy"; };
 			"iso" = machine { name = "iso"; };
+			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
+			"wsl" = machine { name = "wsl"; };
+			# nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
+			"wsl-aarch" = machine { name = "wsl"; system = "aarch64-linux"; };
 		};
 
 		darwinConfigurations =
