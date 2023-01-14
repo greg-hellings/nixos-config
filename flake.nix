@@ -82,9 +82,9 @@
 			"lappy" = machine { name = "lappy"; };
 			"iso" = machine { name = "iso"; };
 			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
-			"wsl" = machine { name = "wsl"; };
+			"nixos" = machine { name = "wsl"; system = "aarch64-linux"; };
 			# nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
-			"wsl-aarch" = machine { name = "wsl"; system = "aarch64-linux"; };
+			"nixos-arm" = machine { name = "wsl"; system = "aarch64-linux"; };
 		};
 
 		darwinConfigurations =
