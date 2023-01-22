@@ -3,6 +3,7 @@
 let
 	darwinPkgs = [];
 	x86Pkgs = with pkgs; [
+		discord
 		element-desktop
 		slack
 	];
