@@ -9,7 +9,7 @@ let
 in
 {
 	services.syncthing = {
-		enable = true;
+		enable = false;
 		user = "greg";
 		group = "users";
 		dataDir = "/home/greg/sync";

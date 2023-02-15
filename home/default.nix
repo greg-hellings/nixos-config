@@ -51,14 +51,14 @@ let
 		gnome = false;
 	};
 
-	arch = { system = "aarch64-linux"; };
+	arm = { system = "aarch64-linux"; };
 	x86 = { system = "x86_64-linux"; };
 	darwin = { system = "x86_64-darwin"; };
 in {
-	"wsl" = mkhome (gui // arch);
-	"aarch64-gui" = mkhome (gdm // arch);
-	"aarch64-nogui" = mkhome (cli // arch);
+	"wsl" = mkhome (gui // arm);
+	"aarch64-gui" = mkhome (gdm // arm);
+	"aarch64-nogui" = mkhome (cli // arm);
 	"x86_64-gui" = mkhome (gdm // x86);
 	"x86_64-nogui" = mkhome (cli // x86);
-	"x86_64-darwin" = mkhome (gdm // darwin);
+	"x86_64-darwin" = mkhome (gui // darwin);
 }

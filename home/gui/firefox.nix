@@ -13,7 +13,7 @@ let
 in with lib;
 {
 	programs.firefox = {
-		enable = true;
+		enable = (! pkgs.stdenv.hostPlatform.isDarwin);
 		package = ffPkgs;
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 			bitwarden

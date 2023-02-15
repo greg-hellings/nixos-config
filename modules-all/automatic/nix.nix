@@ -4,6 +4,17 @@
 	# Enable flakes
 	nix = {
 		package = pkgs.nixFlakes;
+		buildMachines = [
+			{
+				hostName = "dns.me.ts";
+				system = "aarch64-linux";
+			}
+
+			{
+				hostName = "jude.me.ts";
+				system = "x86_64-linux";
+			}
+		];
 
 		settings = {
 			experimental-features = "nix-command flakes";
