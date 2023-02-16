@@ -17,6 +17,8 @@ in
 				"eufy"
 				"lovelace"
 				"nextcloud"
+				"smart_meter_texas"
+				"solaredge"
 				"tplink"
 				"wiz"
 				"zwave_js"

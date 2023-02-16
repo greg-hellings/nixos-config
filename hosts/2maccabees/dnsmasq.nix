@@ -21,25 +21,6 @@ let
 	];
 
 	extraConfig = builtins.concatStringsSep "\n" [
-		"expand-hosts"
-		"domain=thehellings.lan"
-		"log-dhcp"
-		"log-queries"
-		"addn-hosts=/etc/adblock_hosts"
-
-#		"dhcp-range=eth0,10.42.0.1,10.42.1.255,255.255.0.0,static"
-		"dhcp-range=eth0,10.42.2.1,10.42.2.255,255.255.0.0,12h"
-		"dhcp-option=eth0,option:router,10.42.1.1"
-		"dhcp-option=eth0,option:dns-server,10.42.1.2,1.1.1.1"
-		"dhcp-option=eth0,option:domain-search,thehellings.lan"
-
-		"dhcp-range=vlan66@eth0,192.168.66.3,192.168.66.150,255.255.255.0,12h"
-		"dhcp-option=vlan66@eth0,option:router,192.168.66.1"
-		"dhcp-option=vlan66@eth0,option:dns-server,192.168.66.2"
-
-		"dhcp-range=vlan67@eth0,192.168.67.3,192.168.67.150,12h"
-		"dhcp-option=vlan67@eth0,option:router,192.168.67.1"
-		"dhcp-option=vlan67@eth0,option:dns-server,192.168.67.2"
 	];
 in
 {
@@ -47,10 +28,34 @@ in
 	services.dnsmasq = {
 		enable = true;
 		# Public AdGuard DNS servers
-		servers = [
-			"94.140.14.14"
-			"94.140.15.15"
-		];
+		settings = {
+			domain = "thehellings.lan";
+			dhcp-range = [
+		#		"eth0,10.42.0.1,10.42.1.255,255.255.0.0,static"
+				"eth0,10.42.2.1,10.42.2.255,255.255.0.0,12h"
+				"vlan66@eth0,192.168.66.3,192.168.66.150,255.255.255.0,12h"
+				"vlan67@eth0,192.168.67.3,192.168.67.150,12h"
+			];
+			dhcp-option = [
+				"eth0,option:router,10.42.1.1"
+				"eth0,option:dns-server,10.42.1.2,1.1.1.1"
+				"eth0,option:domain-search,thehellings.lan"
+
+				"vlan66@eth0,option:router,192.168.66.1"
+				"vlan66@eth0,option:dns-server,192.168.66.2"
+
+				"vlan67@eth0,option:router,192.168.67.1"
+				"vlan67@eth0,option:dns-server,192.168.67.2"
+			];
+			expand-hosts = true;
+			log-dhcp = true;
+			log-queries = true;
+			addn-hosts = "/etc/adblock_hosts";
+			server = [
+				"94.140.14.14"
+				"94.140.15.15"
+			];
+		};
 		extraConfig = "${extraConfig}";
 	};
 	environment.systemPackages = [ pkgs.curl ];
