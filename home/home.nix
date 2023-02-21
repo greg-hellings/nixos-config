@@ -33,7 +33,6 @@
 		bitwarden-cli
 		diffutils
 		findutils
-		gh
 		git
 		gnupatch
 		gregpy
@@ -42,13 +41,10 @@
 		jq
 		nano
 		nmap
-		nodejs
 		openssl
 		tmux
 		transcrypt
 		unzip
 		wget
-		yamllint
-		#yawsso
 	];
 }
