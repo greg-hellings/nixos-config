@@ -7,17 +7,10 @@
 	];
 
 	home.packages = with pkgs; [
-		bazel
-		bazel-buildtools
-		cargo # Rustc
 		cdrtools
 		ffmpeg
-		gcc
 		gnucash
-		go
-		gopls
 		handbrake
-		jdk11
 		libtheora
 		vlc
 		x265
