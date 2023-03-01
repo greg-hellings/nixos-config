@@ -22,6 +22,7 @@
 			init.defaultBranch = "main";
 			push.default = "upstream";
 			pull.rebase = "false";
+			tag.sort = "version:refname";
 		};
 	};
 }
