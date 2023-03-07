@@ -1,6 +1,7 @@
 builds:
   include:
     - '*.x86_64-linux.*'
+    - '*.aarch64-linux.*'
     - nixosConfigurations.*
     - defaultPackage.x86_64-linux
     - homeConfigurations.x86_64-gui
