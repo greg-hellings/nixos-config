@@ -24,6 +24,7 @@
 			log_connections = true;
 			log_statement = "all";
 			logging_collector = true;
+			log_filename = "postgresql.log";
 		};
 		identMap = ''
 root root postgres
