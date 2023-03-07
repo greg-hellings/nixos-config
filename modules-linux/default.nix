@@ -6,6 +6,7 @@
 		./backup.nix
 		./gnome.nix
 		./home.nix
+		./kiwix-serve.nix
 		./linode.nix
 		./linux.nix
 		./proxy.nix

@@ -58,9 +58,12 @@ in rec {
 		xonsh-direnv = cp ./xonsh-direnv.nix {};
 	};
 
+	enwiki-dump = super.callPackage ./enwiki-dump.nix {};
 	hms = super.callPackage ./hms.nix {
 		pkgs = self.pkgs;
 	};
+	kiwix-tools = super.callPackage ./kiwix-tools.nix {};
+	libkiwix = super.callPackage ./libkiwix.nix {};
 
 	xonsh = super.xonsh.overridePythonAttrs (old: rec{
 		python3 = self.gregpy;

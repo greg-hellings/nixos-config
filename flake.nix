@@ -69,6 +69,7 @@
 		nixosConfigurations = {
 			"2maccabees" = machine { system = "aarch64-linux"; name = "2maccabees"; channel = nixunstable; };
 			jude = machine { name = "jude"; channel = nixunstable; };
+			"icdm-root" = machine { name = "icdm-root"; };
 			"linode" = machine { name = "linode"; };
 			"lappy" = machine { name = "lappy"; };
 			"iso" = machine { name = "iso"; };
