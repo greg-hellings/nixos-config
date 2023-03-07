@@ -67,25 +67,15 @@
 
 	in {
 		nixosConfigurations = {
-			"2maccabees" = machine {
-				system = "aarch64-linux";
-				name = "2maccabees";
-				channel = nixunstable;
-			};
-
-
-			jude = machine {
-				name = "jude";
-				channel = nixunstable;
-			};
-
+			"2maccabees" = machine { system = "aarch64-linux"; name = "2maccabees"; channel = nixunstable; };
+			jude = machine { name = "jude"; channel = nixunstable; };
 			"linode" = machine { name = "linode"; };
 			"lappy" = machine { name = "lappy"; };
 			"iso" = machine { name = "iso"; };
 			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
-			"nixos" = machine { name = "wsl"; system = "aarch64-linux"; };
+			"nixos" = machine { name = "wsl"; system = "aarch64-linux"; channel = nixunstable; };
 			# nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
-			"nixos-arm" = machine { name = "wsl"; system = "aarch64-linux"; };
+			"nixos-arm" = machine { name = "wsl"; system = "aarch64-linux"; channel = nixunstable; };
 		};
 
 		darwinConfigurations =
