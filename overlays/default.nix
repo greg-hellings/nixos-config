@@ -11,6 +11,9 @@ let
 		dateutil
 		flake8
 		ipython
+		jedi
+		mypy
+		pylint
 		pyyaml
 		responses
 		ruamel-yaml

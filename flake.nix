@@ -8,6 +8,7 @@
 		stable.url = "github:nixos/nixpkgs/nixos-22.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
+		flake-utils.url = "github:numtide/flake-utils";
 		home-manager = {
 			url = "github:nix-community/home-manager/release-22.05";
 			inputs.nixpkgs.follows = "stable";
@@ -16,11 +17,15 @@
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
+		wsl = {
+			url = "github:nix-community/NixOS-WSL";
+			inputs.nixpkgs.follows = "nixunstable";
+		};
 		nurpkgs.url = "github:nix-community/NUR";
 		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 	};
 
-	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, ...}@inputs:
+	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, wsl, flake-utils, ...}@inputs:
 	let
 		local_overlay = import ./overlays;
 		overlays = [
@@ -42,6 +47,7 @@
 			modules = [
 				{ nixpkgs.overlays = overlays; }
 				agenix.nixosModule
+				wsl.nixosModules.wsl
 				./modules-all
 				./modules-linux
 				./hosts/${name}
@@ -61,21 +67,15 @@
 
 	in {
 		nixosConfigurations = {
-			"2maccabees" = machine {
-				system = "aarch64-linux";
-				name = "2maccabees";
-				channel = nixunstable;
-			};
-
-
-			jude = machine {
-				name = "jude";
-				channel = nixunstable;
-			};
-
+			"2maccabees" = machine { system = "aarch64-linux"; name = "2maccabees"; channel = nixunstable; };
+			jude = machine { name = "jude"; channel = nixunstable; };
 			"linode" = machine { name = "linode"; };
 			"lappy" = machine { name = "lappy"; };
 			"iso" = machine { name = "iso"; };
+			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
+			"nixos" = machine { name = "wsl"; system = "aarch64-linux"; channel = nixunstable; };
+			# nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
+			"nixos-arm" = machine { name = "wsl"; system = "aarch64-linux"; channel = nixunstable; };
 		};
 
 		darwinConfigurations =
@@ -99,12 +99,11 @@
 			};
 		};
 
-		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
-		defaultPackage."x86_64-darwin" = inputs.self.darwinConfigurations.C02G48H8MD6R.system;
+		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);
 
 		homeConfigurations = (
 			import ./home {
-				inherit nixunstable agenix home-manager overlays;
+				inherit nixunstable agenix home-manager overlays flake-utils;
 				nixpkgs = nixunstable;
 			}
 		);

@@ -2,23 +2,31 @@
 	nixpkgs,
 	overlays,
 	home-manager,
-	username ? builtins.getEnv "USER",
+	flake-utils,
 	...
 }:
 
 let
-	home = system:
+	# I'm "greg" everywhere except Darwin where I'm "gregory.hellings"
+	user = system:
+		( if ( nixpkgs.lib.hasSuffix "-darwin" system ) then "gregory.hellings" else "greg" );
+	home = system: username:
 		if username == "root" then "/root" else
 			( if ( nixpkgs.lib.hasSuffix "-darwin" system ) then "/Users/${username}" else "/home/${username}" );
 
-	mkhome = system: gui:
+	mkhome = {
+		system,
+		gui,
+		gnome,
+		username
+	}:
 		let
-			homeDirectory = home system;
+			homeDirectory = home system username;
 
 			configDir = "${homeDirectory}/.config";
 
 			pkgs = import nixpkgs {
-				inherit overlays;
+				inherit overlays system;
 				config.allowUnfree = true;
 				config.xdg.configHome = configDir;
 			};
@@ -26,15 +34,29 @@ let
 		in home-manager.lib.homeManagerConfiguration rec {
 			inherit pkgs system username homeDirectory;
 			stateVersion = "22.05";
-			configuration = import ./home.nix username {
-				inherit pkgs gui;
+			configuration = import ./home.nix {
+				inherit pkgs gui gnome;
 				inherit (pkgs) config lib stdenv;
 			};
 		};
-in {
-	"aarch64-gui" = mkhome "aarch64-linux" true;
-	"aarch64-nogui" = mkhome "aarch64-linux" false;
-	"x86_64-gui" = mkhome "x86_64-linux" true;
-	"x86_64-nogui" = mkhome "x86_64-linux" false;
-	"x86_64-darwin" = mkhome "x86_64-darwin" true;
-}
+
+in flake-utils.lib.eachDefaultSystem (system: {
+	gui = mkhome {
+		inherit system;
+		gui = true;
+		gnome = false;
+		username = user system;
+	};
+	gdm = mkhome {
+		inherit system;
+		gui = true;
+		gnome = true;
+		username = user system;
+	};
+	cli = mkhome {
+		inherit system;
+		gui = false;
+		gnome = false;
+		username = user system;
+	};
+})

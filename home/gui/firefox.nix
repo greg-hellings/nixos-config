@@ -2,7 +2,7 @@
 
 let
 	# For now, we ignore this and don't install it
-	ffPkgs = if ( lib.hasSuffix "-darwin" pkgs.system )
+	ffPkgs = if ( pkgs.stdenv.hostPlatform.isDarwin )
 		then pkgs.firefox-bin
 		else pkgs.firefox-wayland.override { cfg.enableGnomeExtensions = true; };
 
@@ -13,7 +13,7 @@ let
 in with lib;
 {
 	programs.firefox = {
-		enable = true;
+		enable = (! pkgs.stdenv.hostPlatform.isDarwin);
 		package = ffPkgs;
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 			bitwarden

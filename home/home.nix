@@ -1,10 +1,6 @@
-name: { pkgs, lib, gui, config, ...}:
+{ pkgs, lib, gui, gnome, ...}:
 
-let
-	guiImports = if gui then
-		[ ./gui ] else [];
-
-in {
+{
 	imports = [
 		./modules
 		./ansible.nix
@@ -15,8 +11,10 @@ in {
 		./templates.nix
 		./vim.nix
 		./xonsh.nix
-	] ++ guiImports;
+	] ++ ( if gui then [ ./gui ] else []);
 
+
+	greg.gnome = gnome;
 
 	programs.tmux = {
 		enable = true;
@@ -35,21 +33,18 @@ in {
 		bitwarden-cli
 		diffutils
 		findutils
-		gh
 		git
 		gnupatch
 		gregpy
 		hms
 		htop
 		jq
-		nmap
 		nano
+		nmap
 		openssl
 		tmux
 		transcrypt
 		unzip
 		wget
-		yamllint
-		#yawsso
 	];
 }

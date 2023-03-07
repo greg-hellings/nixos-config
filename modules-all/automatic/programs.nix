@@ -14,6 +14,7 @@
 		hms # My own home manager switcher
 		home-manager
 		htop
+		killall
 		nano
 		pwgen
 		transcrypt
