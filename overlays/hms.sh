@@ -6,25 +6,25 @@ arch="$(uname -m)"
 if [ "$(uname -s)" == "Darwin" ]; then
 	# On macOS
 	src="${HOME}/.config/nix/"
-	target="${arch}-darwin"
+	flavor="gui"
 elif [ x"${WSL_DISTRO_NAME}" != "x" ]; then
 	src=/etc/nixos
-	target="wsl"
+	flavor="cli"
 else
-	# On Linux/WSL2 systems
+	# On Linux systems
 	if [ -z "${DISPLAY}" ]; then
-		target="${arch}-nogui"
+		flavor="cli"
 	else
-		target="${arch}-gui"
+		flavor="gdm"
 	fi
 	src=/etc/nixos
 fi
 
 # Build and switch
-echo "Building ${target}"
+echo "Building ${flavor}.${arch}"
 dest=$(mktemp -d)
 pushd "${dest}" > /dev/null
-nix build --impure "${src}#homeConfigurations.${target}.activationPackage"
+nix build "${src}#homeConfigurations.${flavor}.${arch}.activationPackage"
 ./result/activate
 popd > /dev/null
 rm -r "${dest}"

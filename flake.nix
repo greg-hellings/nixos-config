@@ -8,6 +8,7 @@
 		stable.url = "github:nixos/nixpkgs/nixos-22.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
+		flake-utils.url = "github:numtide/flake-utils";
 		home-manager = {
 			url = "github:nix-community/home-manager/release-22.05";
 			inputs.nixpkgs.follows = "stable";
@@ -24,7 +25,7 @@
 		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 	};
 
-	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, wsl, ...}@inputs:
+	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, wsl, flake-utils, ...}@inputs:
 	let
 		local_overlay = import ./overlays;
 		overlays = [
@@ -108,17 +109,11 @@
 			};
 		};
 
-		#"x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
-		#"x86_64-darwin" = inputs.self.darwinConfigurations.C02G48H8MD6R.system;
-		defaultPackage = {
-			"x86_64-linux" = inputs.self.homeConfigurations."x86_64-gui".activationPackage;
-			"aarch64-linux" = inputs.self.homeConfigurations."aarch64-gui".activationPackage;
-			"x86_64-darwin" = inputs.self.homeConfigurations."x86_64-darwin".activationPackage;
-		};
+		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);
 
 		homeConfigurations = (
 			import ./home {
-				inherit nixunstable agenix home-manager overlays;
+				inherit nixunstable agenix home-manager overlays flake-utils;
 				nixpkgs = nixunstable;
 			}
 		);

@@ -6,6 +6,6 @@ builds:
     - defaultPackage.x86_64-linux
     - defaultPackage.aarch64-linux
     - defaultPackage.x86_64-darwin
-    - darwinConfigurations.C02G48H8MD6R
+    - defaultPackage.aarch64-darwin
   exclude:
     - nixosConfigurations.linode  # Requires decrypted files
