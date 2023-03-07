@@ -4,9 +4,8 @@ builds:
     - '*.aarch64-linux.*'
     - nixosConfigurations.*
     - defaultPackage.x86_64-linux
-    - homeConfigurations.x86_64-gui
-    - homeConfigurations.x86_64-nogui.activationPackage
-    - darwinConfigurations.*
+    - defaultPackage.aarch64-linux
+    - defaultPackage.x86_64-darwin
+    - darwinConfigurations.C02G48H8MD6R
   exclude:
     - nixosConfigurations.linode  # Requires decrypted files
-    #- nixosConfigurations.2maccabees  # Raspberry Pi 4

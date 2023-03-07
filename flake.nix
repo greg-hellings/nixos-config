@@ -108,8 +108,13 @@
 			};
 		};
 
-		defaultPackage."x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
-		defaultPackage."x86_64-darwin" = inputs.self.darwinConfigurations.C02G48H8MD6R.system;
+		#"x86_64-linux" = inputs.self.nixosConfigurations.iso.config.system.build.isoImage;
+		#"x86_64-darwin" = inputs.self.darwinConfigurations.C02G48H8MD6R.system;
+		defaultPackage = {
+			"x86_64-linux" = inputs.self.homeConfigurations."x86_64-gui".activationPackage;
+			"aarch64-linux" = inputs.self.homeConfigurations."aarch64-gui".activationPackage;
+			"x86_64-darwin" = inputs.self.homeConfigurations."x86_64-darwin".activationPackage;
+		};
 
 		homeConfigurations = (
 			import ./home {
