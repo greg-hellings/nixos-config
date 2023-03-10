@@ -13,7 +13,7 @@
 
 stdenv.mkDerivation rec {
 	pname = "kiwix-tools";
-	version = "3.1.2";
+	version = "3.4.0";
 
 	src = pkgs.fetchFromGitHub {
 		owner = "kiwix";

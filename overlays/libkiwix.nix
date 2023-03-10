@@ -18,7 +18,7 @@
 
 stdenv.mkDerivation rec {
 	pname = "libkiwix";
-	version = "9.4.1";
+	version = "12.0.0";
 
 	src = pkgs.fetchFromGitHub {
 		owner = "kiwix";
