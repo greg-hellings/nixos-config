@@ -24,7 +24,7 @@ stdenv.mkDerivation rec {
 		owner = "kiwix";
 		repo = pname;
 		rev = version;
-		sha256 = "sha256-vE8bJrNx0oojTgcDhlr+SyfzdpigCZ0pQ2cPYaiZlgw=";
+		sha256 = "sha256-4FxLxJxVhqbeNqX4vorHkROUuRURvE6AXlteIZCEBtc=";
 	};
 
 	nativeBuildInputs = [
@@ -47,10 +47,10 @@ stdenv.mkDerivation rec {
 		zlib
 	];
 
-	mesonFlags = [ "--debug" ];
+	mesonFlags = [ "--debug" "-Dc_args=-I${zimlib}/include/" ];
 
 	# Built-in python script uses /usr/bin/env
-	patchPhase = "patchShebangs --build scripts/kiwix-compile-resources";
+	patchPhase = "patchShebangs --build scripts/*";
 
 	meta = with lib; {
 		description = "Kiwix file library for use by other applications";
