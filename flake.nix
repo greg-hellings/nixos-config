@@ -35,10 +35,12 @@
 			inputs.ffmac.overlay
 		];
 
+		unstable = args: (machine (args // { channel = nixunstable; }));
 		machine = {
 			system ? "x86_64-linux",
 			name,
-			channel ? stable
+			channel ? stable,
+			extraMods ? []
 		}:
 		let
 			nixpkgs = channel;
@@ -47,7 +49,6 @@
 			modules = [
 				{ nixpkgs.overlays = overlays; }
 				agenix.nixosModule
-				wsl.nixosModules.wsl
 				./modules-all
 				./modules-linux
 				./hosts/${name}
@@ -58,7 +59,7 @@
 						inherit nixpkgs;
 					};
 				}
-			];
+			] ++ extraMods;
 			specialArgs = {
 				home-manager = inputs.home-manager;
 				inherit nixpkgs;
@@ -67,16 +68,16 @@
 
 	in {
 		nixosConfigurations = {
-			"2maccabees" = machine { system = "aarch64-linux"; name = "2maccabees"; channel = nixunstable; };
-			jude = machine { name = "jude"; channel = nixunstable; };
-			"icdm-root" = machine { name = "icdm-root"; };
+			"2maccabees" = unstable { system = "aarch64-linux"; name = "2maccabees"; };
+			jude = unstable { name = "jude"; };
+			"icdm-root" = unstable { name = "icdm-root"; };
 			"linode" = machine { name = "linode"; };
 			"lappy" = machine { name = "lappy"; };
 			"iso" = machine { name = "iso"; };
 			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
-			"nixos" = machine { name = "wsl"; system = "aarch64-linux"; channel = nixunstable; };
+			"nixos" = unstable { name = "wsl"; system = "aarch64-linux"; extraMods = [ wsl.nixosModules.wsl ]; };
 			# nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
-			"nixos-arm" = machine { name = "wsl"; system = "aarch64-linux"; channel = nixunstable; };
+			"nixos-arm" = unstable { name = "wsl"; system = "aarch64-linux"; extraMods = [ wsl.nixosModules.wsl ]; };
 		};
 
 		darwinConfigurations =

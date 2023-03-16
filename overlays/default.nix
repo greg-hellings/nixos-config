@@ -64,6 +64,7 @@ in rec {
 	};
 	kiwix-tools = super.callPackage ./kiwix-tools.nix {};
 	libkiwix = super.callPackage ./libkiwix.nix {};
+	zimlib = super.callPackage ./zimlib.nix {};
 
 	xonsh = super.xonsh.overridePythonAttrs (old: rec{
 		python3 = self.gregpy;
