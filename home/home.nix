@@ -42,6 +42,7 @@
 		nano
 		nmap
 		openssl
+		setup-ssh
 		tmux
 		transcrypt
 		unzip

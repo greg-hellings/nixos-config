@@ -1,4 +1,2 @@
 #pattern  filter=crypt diff=crypt
 hosts/linode/synapse.nix.crypt  filter=crypt diff=crypt
-home/ssh/id_rsa* filter=crypt diff=crypt
-modules/ssh/id_* filter=crypt diff=crypt

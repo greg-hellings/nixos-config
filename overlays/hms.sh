@@ -7,9 +7,11 @@ if [ "$(uname -s)" == "Darwin" ]; then
 	# On macOS
 	src="${HOME}/.config/nix/"
 	flavor="gui"
+	arch="${arch}-darwin"
 elif [ x"${WSL_DISTRO_NAME}" != "x" ]; then
 	src=/etc/nixos
 	flavor="cli"
+	arch="${arch}-linux"
 else
 	# On Linux systems
 	if [ -z "${DISPLAY}" ]; then
@@ -18,6 +20,7 @@ else
 		flavor="gdm"
 	fi
 	src=/etc/nixos
+	arch="${arch}-linux"
 fi
 
 # Build and switch

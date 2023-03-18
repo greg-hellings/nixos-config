@@ -62,6 +62,9 @@ in rec {
 	hms = super.callPackage ./hms.nix {
 		pkgs = self.pkgs;
 	};
+	setup-ssh = super.callPackage ./setup-ssh.nix {
+		pkgs = self.pkgs;
+	};
 	kiwix-tools = super.callPackage ./kiwix-tools.nix {};
 	libkiwix = super.callPackage ./libkiwix.nix {};
 	zimlib = super.callPackage ./zimlib.nix {};

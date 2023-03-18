@@ -52,9 +52,4 @@
 			};
 		};
 	};
-
-	home.file = {
-		".ssh/id_rsa".text = builtins.readFile ./ssh/id_rsa;
-		".ssh/id_rsa.pub".text = builtins.readFile ./ssh/id_rsa.pub;
-	};
 }
