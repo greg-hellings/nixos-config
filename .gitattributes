@@ -1,2 +1,1 @@
 #pattern  filter=crypt diff=crypt
-hosts/linode/synapse.nix.crypt  filter=crypt diff=crypt
