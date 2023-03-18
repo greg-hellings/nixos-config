@@ -4,12 +4,12 @@
 	services.postgresql = {
 		enable = true;
 		checkConfig = true;
-		ensureDatabases = [ "nextcloud" "gitea" ];
-		initialScript = pkgs.writeText "create-matrix-db.sql" ''
-			CREATE ROLE "matrix-synapse" WITH LOGIN;
-			CREATE DATABASE "synapse" WITH OWNER "matrix-synapse" TEMPLATE template0 LC_COLLATE = "C" LC_CTYPE = "C";
-			GRANT ALL PRIVILEGES ON DATABASE "synapse" TO "matrix-synapse";
-		'';  # These are done manually in order to set the LC_COLLATE values properly
+		ensureDatabases = [ "nextcloud" "gitea" "dendrite" ];
+		#initialScript = pkgs.writeText "create-matrix-db.sql" ''
+		#	CREATE ROLE "matrix-synapse" WITH LOGIN;
+		#	CREATE DATABASE "synapse" WITH OWNER "matrix-synapse" TEMPLATE template0 LC_COLLATE = "C" LC_CTYPE = "C";
+		#	GRANT ALL PRIVILEGES ON DATABASE "synapse" TO "matrix-synapse";
+		#'';  # These are done manually in order to set the LC_COLLATE values properly
 		ensureUsers = [ {
 			name = "nextcloud";
 			ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
@@ -19,6 +19,9 @@
 		} {
 			name = "gitea";
 			ensurePermissions."DATABASE gitea" = "ALL PRIVILEGES";
+		} {
+			name = "dendrite";
+			ensurePermissions."DATABASE dendrite" = "ALL PRIVILEGES";
 		} ];
 		settings = {
 			log_connections = true;
@@ -36,7 +39,7 @@ root root postgres
 		databases = [
 			"gitea"
 			"nextcloud"
-			"synapse"
+			"dendrite"
 		];
 	};
 

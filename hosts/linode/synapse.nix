@@ -6,8 +6,6 @@
 let
 	domain = "${config.networking.domain}";
 	fqdn = "matrix.${domain}";
-	fbRegistration = import ./synapse.nix.crypt {};
-	fbRegistrationFile = "matrix/mautrix-facebook.json";
 in
 {
 	services.nginx = {
@@ -70,33 +68,29 @@ return 200 '${builtins.toJSON client}';
 		};
 	};
 
-	environment.etc."${fbRegistrationFile}".text = builtins.toJSON fbRegistration;
-
-	services.matrix-synapse = {
+	services.dendrite = {
 		enable = true;
+		httpPort = 8448;
 		# Identify ourselves as the root of our own domain
 		settings = {
-			database.args = {
-				user = "matrix-synapse";
-				database = "synapse";
+			global = {
+				database.args = {
+					connection_string = "postgresql://dendrite@localhost/dendrite?sslmode=disable";
+					max_open_conns = 90;
+					max_idle_conns = 5;
+					conn_max_lifetime = -1;
+				};
+				server_name = "thehellings.com";
+				trusted_third_party_id_servers = [
+					"matrix.org"
+					"vector.im"
+					"jupiterbroadcasting.com"
+				];
+				# Generate this with {path-to-dendrite}/bin/generate-keys --private-key /etc/dendrite.pem
+				private_key = "/etc/dendrite.pem";
 			};
-			server_name = "thehellings.com";
+			client_api.registration_enabled = false;
 			#registration_shared_secret = "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa";
-			# Bind a single listener to localhost only, disable SSL/TLS, and put
-			# it behind an nginx proxy
-			listeners = [ {
-				port = 8448;
-				bind_addresses = ["127.0.0.1"];
-				type = "http";  # Offload SSL/TLS to Nginx
-				tls = false;
-				resources = [ {
-					names = [ "client" "federation" ];
-					compress = false;  # Offload compressiong to Nginx
-				} ];
-			} ];
-			app_service_config_files = [
-				"/etc/${fbRegistrationFile}"
-			];
 		};
 	};
 
@@ -104,25 +98,5 @@ return 200 '${builtins.toJSON client}';
 	networking.firewall = {
 		enable = true;
 		allowedTCPPorts = [ 80 443 ];
-	};
-
-	# Enable Facebook bridge
-	services.mautrix-facebook = {
-		enable = true;
-		settings = {
-			homeserver = {
-				address = "http://localhost:8448";
-				domain = "thehellings.com";
-			};
-			bridge.permissions = {
-				"@admin:thehellings.com" = "admin";
-				"thehellings.com" = "user";
-			};
-			appservice = {
-				as_token = fbRegistration.as_token;
-				hs_token = fbRegistration.hs_token;
-			};
-		};
-		registrationData = fbRegistration;
 	};
 }

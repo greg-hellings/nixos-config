@@ -25,7 +25,7 @@ let
 exec 1> >(systemd-cat -t $(basename $0)) 2>&1
 set -ex
 ${job.pre}
-${pkgs.rsync}/bin/rsync -avz --delete -e "${pkgs.openssh}/bin/ssh -i /etc/${backup_key} -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'" ${job.src}/* backup@nas.me.ts:/volume1/NetBackup/${job.dest}/
+${pkgs.rsync}/bin/rsync -avz --delete -e "${pkgs.openssh}/bin/ssh -i /etc/${backup_key} -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'" ${job.src}/* backup@chronicles:/volume1/NetBackup/${job.dest}/
 ${job.post}
 '';
 	in {
@@ -86,20 +86,9 @@ in with lib; {
 		jobs = attrValues ( mapAttrs cronJob cfg.jobs );
 	in mkIf ( ( attrValues cfg.jobs ) != [] )
 	{
-		#services.borgbackup = {
-		#	jobs = mapAttrs makeJob cfg.jobs;
-		#};
 		services.cron = {
 			enable = true;
 			systemCronJobs = map (e: e.cron) jobs;
-		};
-
-		environment.etc = mkIf ( cfg.key != null ) {
-			"${backup_key}" = {
-				user = "nobody";
-				mode = "0777";
-				source = cfg.key;
-			};
 		};
 
 		environment.systemPackages = map (e: e.script) jobs;
