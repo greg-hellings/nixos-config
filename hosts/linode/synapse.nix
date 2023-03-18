@@ -68,8 +68,25 @@ return 200 '${builtins.toJSON client}';
 		};
 	};
 
+	# Environment secrets
+	age.secrets.dendrite = {
+		file = ../../secrets/dendrite.age;
+		owner = "dendrite";
+	};
+
+	users.users.dendrite = {
+		isSystemUser = true;
+		group = "dendrite";
+	};
+	users.groups.dendrite = {};
+
+	systemd.services.dendrite.serviceConfig = {
+		User = "dendrite";
+	};
+
 	services.dendrite = {
 		enable = true;
+		environmentFile = "/run/agenix/dendrite";
 		httpPort = 8448;
 		# Identify ourselves as the root of our own domain
 		settings = {
@@ -89,8 +106,10 @@ return 200 '${builtins.toJSON client}';
 				# Generate this with {path-to-dendrite}/bin/generate-keys --private-key /etc/dendrite.pem
 				private_key = "/etc/dendrite.pem";
 			};
-			client_api.registration_enabled = false;
-			#registration_shared_secret = "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa";
+			client_api = {
+				egistration_enabled = false;
+				registration_shared_secret = "\${REGISTRATION_SHARED_SECRET}";
+			};
 		};
 	};
 
