@@ -8,6 +8,7 @@
 		bitwarden-cli
 		diffutils
 		git
+		gh
 		gnupatch
 		gregpy
 		findutils
