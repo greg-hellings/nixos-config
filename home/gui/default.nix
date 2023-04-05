@@ -8,6 +8,7 @@
 
 	home.packages = with pkgs; [
 		cdrtools
+		endeavour
 		ffmpeg
 		gnucash
 		handbrake
