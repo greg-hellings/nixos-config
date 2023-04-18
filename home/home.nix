@@ -38,6 +38,7 @@
 		gregpy
 		hms
 		htop
+		inetutils
 		jq
 		nano
 		nmap
