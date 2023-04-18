@@ -72,6 +72,7 @@
 			jude = unstable { name = "jude"; };
 			"icdm-root" = unstable { name = "icdm-root"; };
 			"linode" = machine { name = "linode"; };
+			"linodeeu" = machine { name = "linodeeu"; };
 			"lappy" = machine { name = "lappy"; };
 			"iso" = machine { name = "iso"; };
 			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
