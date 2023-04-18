@@ -39,6 +39,7 @@
 			ctest = "compass workspace test";
 			cylint = "./scripts/run_yaml_lint.py";
 
+			cleanup = "nix-collect-garbage -d && nix store optimise";
 			d = "vox deactivate";
 			devroles = "cd ~/src/ansible_collections/devroles";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
