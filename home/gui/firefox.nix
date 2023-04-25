@@ -17,12 +17,14 @@ in with lib;
 		package = ffPkgs;
 		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 			bitwarden
+			pkgs.bypass-paywalls-clean
 			foxyproxy-standard
 			multi-account-containers
 			octotree
 			refined-github
 			tree-style-tab
 			ublock-origin
+			unpaywall
 		];
 		profiles = {
 			default.settings = {

@@ -29,6 +29,26 @@ let
 		(super.callPackage file {}) else
 		super."${og}";
 
+	buildFirefoxXpiAddon = super.lib.makeOverridable ({ stdenv ? super.stdenv
+	, fetchurl ? super.fetchurl, pname, version, addonId, url, sha256, meta, ...
+	}:
+	stdenv.mkDerivation {
+		name = "${pname}-${version}";
+
+		inherit meta;
+
+		src = fetchurl { inherit url sha256; };
+
+		preferLocalBuild = true;
+		allowSubstitutes = true;
+
+		buildCommand = ''
+			dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+			mkdir -p "$dst"
+			install -v -m644 "$src" "$dst/${addonId}.xpi"
+		'';
+	});
+
 in rec {
 	gregpy = myPython;
 
@@ -56,6 +76,21 @@ in rec {
 		pydantic = cp ./pydantic.nix {};
 		pyyaml-include = cp ./pyyaml-include.nix {};
 		xonsh-direnv = cp ./xonsh-direnv.nix {};
+	};
+
+	bypass-paywalls-clean = let version = "3.1.5.0";
+	in buildFirefoxXpiAddon {
+		pname = "bypass-paywalls-clean";
+		inherit version;
+		addonId = "{d133e097-46d9-4ecc-9903-fa6a722a6e0e}";
+		url = "https://gitlab.com/magnolia1234/bpc-uploads/-/raw/master/bypass_paywalls_clean-${version}.xpi";
+		sha256 = "sha256-mBJkX8neimU5nwr1GEccCEr6Zy1Ku3JEH2A3LmPF3SU=";
+		meta = with super.lib; {
+			homepage = "https://gitlab.com/magnolia1234/bypass-paywalls-firefox-clean";
+			description = "Bypass Paywalls of (custom) news sites";
+			license = licenses.mit;
+			platforms = platforms.all;
+		};
 	};
 
 	enwiki-dump = super.callPackage ./enwiki-dump.nix {};
