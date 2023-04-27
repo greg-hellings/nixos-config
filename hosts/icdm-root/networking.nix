@@ -30,7 +30,7 @@ in
 			allowedUDPPorts = [ 53 67 ];
 		};
 
-		extraHosts = "${dns_hosts}";
+		extraHosts = "${dnsHosts}";
 	};
 
 	services.dnsmasq = {
