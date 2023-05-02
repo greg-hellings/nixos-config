@@ -78,7 +78,7 @@ in rec {
 		xonsh-direnv = cp ./xonsh-direnv.nix {};
 	};
 
-	fcitx-engines = if super.stdenv.isDarwin then self.fcitx else self.fcitx5;
+	fcitx-engines = self.fcitx5;
 
 	enwiki-dump = super.callPackage ./enwiki-dump.nix {};
 	hms = super.callPackage ./hms.nix {
