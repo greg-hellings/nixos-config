@@ -78,6 +78,8 @@ in rec {
 		xonsh-direnv = cp ./xonsh-direnv.nix {};
 	};
 
+	fcitx-engines = self.fcitx5;
+
 	enwiki-dump = super.callPackage ./enwiki-dump.nix {};
 	hms = super.callPackage ./hms.nix {
 		pkgs = self.pkgs;
