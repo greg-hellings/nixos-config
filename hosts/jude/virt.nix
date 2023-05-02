@@ -5,7 +5,6 @@
 		libguestfs
 		packer
 		virt-manager
-		vagrant
 	];
 
 	# Give my user access to the libvirtd process
@@ -16,9 +15,6 @@
 			enable = true;
 			onBoot = "ignore";  # Do not auto-restart VMs on boot, unless they are marked autostart
 		};
-
-		waydroid.enable = true;
-		lxd.enable = true;  # Needed for waydroid
 
 		virtualbox.host.enable = true;
 	};

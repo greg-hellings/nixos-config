@@ -9,8 +9,6 @@ in with lib; {
 	};
 
 	config = mkIf cfg.enable {
-		greg.xprograms.enable = true;
-
 		# Sets up a basic Gnome installation
 		services = {
 			accounts-daemon.enable = true;
