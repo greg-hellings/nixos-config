@@ -20,6 +20,7 @@ in with lib;
 			bypass-paywalls-clean
 			foxyproxy-standard
 			multi-account-containers
+			plasma-integration
 			octotree
 			refined-github
 			tree-style-tab
