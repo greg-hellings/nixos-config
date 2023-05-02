@@ -1,5 +1,11 @@
 { pkgs, ... }:
 
+let
+	excludes = systems: opts: (
+		if ( builtins.all (x: pkgs.system != x) systems ) then opts else []
+	);
+
+in
 {
 	imports = [
 		./chat.nix
@@ -8,26 +14,26 @@
 
 	home.packages = with pkgs; [
 		cdrtools
-		endeavour
 		ffmpeg
 		gnucash
 		handbrake
 		libtheora
 		vlc
 		x265
-	] ++ ( if ( pkgs.system != "x86_64-darwin" && pkgs.system != "aarch64-linux" ) then
-		[
-			jellyfin-media-player
-			libreoffice
-			logseq
-			nextcloud-client
-		] else []
-	) ++ ( if ( pkgs.system != "aarch64-linux" ) then
-		[
-			bitwarden
-			onlyoffice-bin
-			synology-drive-client
-			zoom-us
-		] else []
-	);
+	] ++
+	( excludes ["x86_64-darwin" "aarch64-darwin" "aarch64-linux"]
+	[
+		endeavour
+		jellyfin-media-player
+		libreoffice
+		logseq
+		nextcloud-client
+	]) ++
+	( excludes ["aarch64-linux"]
+	[
+		bitwarden
+		onlyoffice-bin
+		synology-drive-client
+		zoom-us
+	]);
 }
