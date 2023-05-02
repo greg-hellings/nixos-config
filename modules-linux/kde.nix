@@ -36,6 +36,7 @@ in with lib; {
 		};
 
 		environment.systemPackages = with pkgs; [
+			kalendar
 			korganizer
 			plasma-pa
 		];
