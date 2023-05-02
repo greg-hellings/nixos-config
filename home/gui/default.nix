@@ -13,6 +13,7 @@
 		gnucash
 		handbrake
 		libtheora
+		logseq
 		vlc
 		x265
 	] ++ ( if ( pkgs.system != "x86_64-darwin" && pkgs.system != "aarch64-linux" ) then
