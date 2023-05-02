@@ -21,6 +21,8 @@ in
 		vlc
 		x265
 	] ++
+
+	# Items that cannot be outside of x86_64-linux at all
 	( excludes ["x86_64-darwin" "aarch64-darwin" "aarch64-linux"]
 	[
 		endeavour
@@ -29,11 +31,18 @@ in
 		logseq
 		nextcloud-client
 	]) ++
+
+	# Items that just cannot be outside of x86_64 at all
+	( excludes ["aarch64-darwin" "aarch64-linux"]
+	[
+		synology-drive-client
+	]) ++
+
+	# Items that are not supported on ARM/Linux
 	( excludes ["aarch64-linux"]
 	[
 		bitwarden
 		onlyoffice-bin
-		synology-drive-client
 		zoom-us
 	]);
 }
