@@ -27,9 +27,15 @@
 
 	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, wsl, flake-utils, ...}@inputs:
 	let
+		pkg-sets = (
+			final: prev: {
+				unstable = import inputs.nixunstable { system = final.system; };
+			}
+		);
 		local_overlay = import ./overlays;
 		overlays = [
 			agenix.overlay
+			pkg-sets
 			local_overlay
 			nurpkgs.overlay
 			inputs.ffmac.overlay
@@ -111,7 +117,9 @@
 			}
 		);
 
-		overlays.default = local_overlay;
+		overlays = {
+			default = import ./overlays;
+		};
 		modules = (import ./modules-all {}) //
 		          (import ./modules-linux {}) //
 		          (import ./modules-darwin {});

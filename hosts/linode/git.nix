@@ -89,6 +89,7 @@ in {
 			"drone" = {
 				environment = {
 					DRONE_GITEA_SERVER = "https://${srcDomain}";
+					DRONE_LOGS_DEBUG = "true";
 					DRONE_SERVER_HOST = ciDomain;
 					DRONE_SERVER_PROTO = "https";
 					DRONE_SERVER_PROXY_HOST = ciDomain;
