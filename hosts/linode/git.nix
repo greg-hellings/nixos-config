@@ -99,7 +99,7 @@ in {
 					"/run/agenix/drone"
 				];
 				extraOptions = [ "--pull=newer" ];
-				image = "drone/drone:2.13";
+				image = "drone/drone:2.17";
 				ports = [ "${ciPort}:80" ];
 				volumes = [ "${droneDir}:/data" ];
 			};
