@@ -26,8 +26,7 @@ in
 	networking = {
 		hostName = "mm";
 		domain = "mindmazeroom.lan";
-		nameservers = [ "127.0.0.1" ];
-		networkmanager.enable = true;
+		nameservers = [ lanIpAddress ];
 		interfaces = {
 			"${wanInterface}".useDHCP = true;
 			"${lanInterface}" = {
@@ -51,16 +50,10 @@ in
 		lan = [ lanInterface ];
 	};
 	services = {
-		dnsmasq = {
-			enable = true;
-			settings = {
-				expand-hosts = true;
-				log-queries = true;
-				server = [
-					"1.1.1.1"
-					"8.8.4.4"
-				];
-			};
+		bind = {
+			enable = false;
+			cacheNetworks = [ "127.0.0.1/24" "${lanIpAddress}/24" ];
+			listenOn = [ lanInterface ];
 		};
 		create_ap = {
 			enable = false;
