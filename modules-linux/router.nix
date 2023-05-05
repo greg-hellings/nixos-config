@@ -7,17 +7,18 @@ let
 		let
 			lanList = names lan;
 			allLan = names (lan ++ limitedLan);
-			wanName = ''"${wan}"'';
+			wanName = names wan;
 		in
 ''
 table ip filter {
 	chain input {
 		type filter hook input priority 0; policy drop;
 
+		iifname lo accept
 		iifname { ${lanList} } accept comment "Allows LAN traffic and outgoing"
-		iifname ${wanName} ct state { established, related } accept comment "Allows existing connections"
-		iifname ${wanName} icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow some ICMP traffic"
-		iifname ${wanName} counter drop comment "Drop other incoming traffic, and count how much"
+		iifname { ${wanName} } ct state { established, related } accept comment "Allows existing connections"
+		iifname { ${wanName} } icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow some ICMP traffic"
+		iifname { ${wanName} } counter drop comment "Drop other incoming traffic, and count how much"
 	}
 	chain forward {
 		type filter hook forward priority 0; policy drop;
@@ -29,7 +30,7 @@ table ip filter {
 table ip nat {
 	chain postrouting {
 		type nat hook postrouting priority 100; policy accept;
-		oifname "${wan}" masquerade
+		oifname { ${wanName} } masquerade
 	}
 }
 
@@ -48,7 +49,7 @@ in with lib; {
 	options.greg.router = {
 		enable = mkEnableOption "Enable NFTables and routing";
 		wan = mkOption {
-			type = types.str;
+			type = (types.listOf types.str);
 			description = "The name of the network interface that is the WAN connection";
 		};
 		lan = mkOption {

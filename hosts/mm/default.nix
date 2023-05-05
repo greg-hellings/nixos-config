@@ -26,7 +26,7 @@ in
 	networking = {
 		hostName = "mm";
 		domain = "mindmazeroom.lan";
-		nameservers = [ lanIpAddress ];
+		#nameservers = [ "127.0.0.53" ];
 		interfaces = {
 			"${wanInterface}".useDHCP = true;
 			"${lanInterface}" = {
@@ -46,14 +46,21 @@ in
 	# Serves as the router, DHCP, and DNS for the site
 	greg.router = {
 		enable = true;
-		wan = wanInterface;
+		wan = [ wanInterface "tailscale0" ];
 		lan = [ lanInterface ];
 	};
+	greg.tailscale.enable = true;
 	services = {
-		bind = {
-			enable = false;
-			cacheNetworks = [ "127.0.0.1/24" "${lanIpAddress}/24" ];
-			listenOn = [ lanInterface ];
+		dnsmasq = {
+			enable = true;
+			settings = {
+				domain = "mindmazeroom.lan";
+				server = [
+					"1.1.1.1"
+					"100.100.100.100"
+					"8.8.8.8"
+				];
+			};
 		};
 		create_ap = {
 			enable = false;
