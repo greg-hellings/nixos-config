@@ -18,15 +18,22 @@
 	system.stateVersion = "22.05";
 
 	# I am a fan of network manager, myself
-	networking.networkmanager.enable = true;
+	networking = {
+		search = [
+			"thehellings.lan"
+			"shire-zebra.ts.net"
+		];
+		networkmanager.enable = true;
+	};
 
 	programs = {
 		xonsh.enable = true;
 	};
 
 	# Enable the OpenSSH daemon for remote control
-	services.openssh.enable = true;
-	#services.openssh.permitRootLogin = "yes";
+	services = {
+		openssh.enable = true;
+	};
 
 	# Define a user account. Don't forget to set a password with ‘passwd’.
 	users.users.greg = {
