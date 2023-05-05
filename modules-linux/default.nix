@@ -10,6 +10,7 @@
 		./linode.nix
 		./linux.nix
 		./proxy.nix
+		./router.nix
 		./rpi4.nix
 		./tailscale.nix
 	];

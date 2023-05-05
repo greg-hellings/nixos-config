@@ -1,84 +1,130 @@
 # Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
+# your system.	Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
 { config, pkgs, ... }:
+let
+	wanInterface = "enp2s0";
+	lanInterface = "enp1s0";
+	lanIpAddress = "10.177.1.1";
+in
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+	imports =
+		[ # Include the results of the hardware scan.
+			./hardware-configuration.nix
+		];
 
 
-  greg.home = false;
+	greg.home = false;
 
-  # Bootloader.
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.efi.efiSysMountPoint = "/boot/efi";
+	# Bootloader.
+	boot.loader.systemd-boot.enable = true;
+	boot.loader.efi.canTouchEfiVariables = true;
+	boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
-  networking.hostName = "mm"; # Define your hostname.
-  networking.domain = "mindmazeroom.com";
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
+	networking = {
+		hostName = "mm";
+		domain = "mindmazeroom.lan";
+		nameservers = [ "127.0.0.1" ];
+		networkmanager.enable = true;
+		interfaces = {
+			"${wanInterface}".useDHCP = true;
+			"${lanInterface}" = {
+				useDHCP = false;
+				ipv4.addresses = [{
+					address = lanIpAddress;
+					prefixLength = 24;
+				}];
+			};
+		};
+		firewall = {  # Might not strictly be necessary?
+			allowedTCPPorts = [ 53 ];
+			allowedUDPPorts = [ 53 67 ];
+		};
+	};
 
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+	# Serves as the router, DHCP, and DNS for the site
+	greg.router = {
+		enable = true;
+		wan = wanInterface;
+		lan = [ lanInterface ];
+	};
+	services = {
+		dnsmasq = {
+			enable = true;
+			settings = {
+				expand-hosts = true;
+				log-queries = true;
+				server = [
+					"1.1.1.1"
+					"8.8.4.4"
+				];
+			};
+		};
+		create_ap = {
+			enable = false;
+			settings = {
+				INTERNET_IFACE = "";
+				WIFI_IFACE = "wlan0";
+				SSID = "MM_Test";
+				PASSPHRASE = "MindMaze2023";
+			};
+		};
+		kea.dhcp4 = {
+			enable = true;
+			settings = {
+				interfaces-config = {
+					interfaces = [ lanInterface ];
+				};
+				lease-database = {
+					name = "/var/lib/kea/dhcp4.leases";
+					persist = true;
+					type = "memfile";
+				};
+				renew-timer = 1000;
+				rebind-timer = 2000;
+				valid-lifetime = 4000;
+				option-data = [{
+					name = "domain-name-servers";
+					data = "${lanIpAddress}";
+				} {
+					name = "routers";
+					data = "10.177.1.1";
+				}];
+				subnet4 = [{
+					subnet = "10.177.1.0/24";
+					pools = [{
+						pool = "10.177.1.10-10.177.1.250";
+					}];
+				}];
+			};
+		};
 
-  # Enable networking
-  networking.networkmanager.enable = true;
+		# Configure keymap in X11
+		xserver = {
+			layout = "us";
+			xkbVariant = "";
+		};
+	};
 
-  # Set your time zone.
-  time.timeZone = "America/Chicago";
+	# Set your time zone.
+	time.timeZone = "America/Chicago";
 
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
+	# Define a user account. Don't forget to set a password with ‘passwd’.
+	users.users.greg = {
+		isNormalUser = true;
+		description = "Greg Hellings";
+		extraGroups = [ "networkmanager" "wheel" ];
+		packages = with pkgs; [];
+	};
 
-  # Define a user account. Don't forget to set a password with ‘passwd’.
-  users.users.greg = {
-    isNormalUser = true;
-    description = "Greg Hellings";
-    extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [];
-  };
+	# Allow unfree packages
+	nixpkgs.config.allowUnfree = true;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-  ];
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  # programs.gnupg.agent = {
-  #   enable = true;
-  #   enableSSHSupport = true;
-  # };
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
-
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
-
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "22.05"; # Did you read the comment?
-
+	environment.systemPackages = with pkgs; [
+		vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+		wget
+	];
+	system.stateVersion = "22.05";
 }
