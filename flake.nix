@@ -80,6 +80,7 @@
 			"linode" = machine { name = "linode"; };
 			"linodeeu" = machine { name = "linodeeu"; };
 			"lappy" = machine { name = "lappy"; };
+			mm = unstable { name = "mm"; };
 			"iso" = machine { name = "iso"; };
 			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
 			"nixos" = unstable { name = "wsl"; system = "aarch64-linux"; extraMods = [ wsl.nixosModules.wsl ]; };
