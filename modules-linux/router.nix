@@ -3,46 +3,51 @@
 let
 	names = mylist: (lib.strings.concatMapStringsSep "," (x: ''"${x}"'') mylist);
 	# Pass the names of the wan/lan ports
-	nftConfig = { wan, lan, limitedLan ? [] }:
-		let
+	nftConfig = {
+		wan,
+		lan,
+		limitedLan ? [],
+		openPorts ? [ "ssh" "67" "53" ]  # ssh, dhcpd, dns
+	}: let
 			lanList = names lan;
 			allLan = names (lan ++ limitedLan);
 			wanName = names wan;
-		in
-''
-table ip filter {
-	chain input {
-		type filter hook input priority 0; policy drop;
+			portsString = lib.strings.concatMapStringsSep "\n" (x: "iifname { ${lanList}, \"tailscale0\" } tcp dport ${x} accept") openPorts;
+	in lib.strings.concatStringsSep "\n" [
+		"table ip filter {"
+		"	chain input {"
+		"		type filter hook input priority 0; policy drop;"
 
-		iifname lo accept
-		iifname { ${lanList} } accept comment "Allows LAN traffic and outgoing"
-		iifname { ${wanName} } ct state { established, related } accept comment "Allows existing connections"
-		iifname { ${wanName} } icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow some ICMP traffic"
-		iifname { ${wanName} } counter drop comment "Drop other incoming traffic, and count how much"
-	}
-	chain forward {
-		type filter hook forward priority 0; policy drop;
-		iifname { ${allLan} } oifname { ${wanName} } accept comment "Forward LAN to WAN"
-		iifname { ${wanName} } oifname { ${allLan} } ct state established, related accept comment "Allow incoming established traffic"
-	}
-}
+		"		iifname lo accept"
+		portsString
+		"		iifname { ${lanList} } accept comment \"Allows LAN traffic and outgoing\""
+		"		iifname { ${wanName} } ct state { established, related } accept comment \"Allows existing connections\""
+		"		iifname { ${wanName} } icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment \"Allow some ICMP traffic\""
+		"		iifname { ${wanName} } counter drop comment \"Drop other incoming traffic, and count how much\""
+		"	}"
+		"	chain forward {"
+		"		type filter hook forward priority 0; policy drop;"
+		"		iifname { ${allLan} } oifname { ${wanName} } accept comment \"Forward LAN to WAN\""
+		"		iifname { ${wanName} } oifname { ${allLan} } ct state established, related accept comment \"Allow incoming established traffic\""
+		"	}"
+		"}"
 
-table ip nat {
-	chain postrouting {
-		type nat hook postrouting priority 100; policy accept;
-		oifname { ${wanName} } masquerade
-	}
-}
+		"table ip nat {"
+		"	chain postrouting {"
+		"		type nat hook postrouting priority 100; policy accept;"
+		"		oifname { ${wanName} } masquerade"
+		"	}"
+		"}"
 
-table ip6 filter {
-	chain input {
-		type filter hook input priority 0; policy drop;
-	}
-	chain forward {
-		type filter hook forward priority 0; policy drop;
-	}
-}
-'';
+		"table ip6 filter {"
+		"	chain input {"
+		"		type filter hook input priority 0; policy drop;"
+		"	}"
+		"	chain forward {"
+		"		type filter hook forward priority 0; policy drop;"
+		"	}"
+		"}"
+	];
 	cfg = config.greg.router;
 
 in with lib; {
