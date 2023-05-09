@@ -6,7 +6,7 @@ def _rebuild(args):
     import os
     system = os.uname()
     if system.sysname == 'Darwin':
-        darwin-rebuild --flake ~/.config/nix switch
+        darwin-rebuild --flake ~/.config/darwin switch
     else:
         sudo nixos-rebuild switch
 

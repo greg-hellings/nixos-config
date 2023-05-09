@@ -15,27 +15,29 @@ in with lib;
 	programs.firefox = {
 		enable = (! pkgs.stdenv.hostPlatform.isDarwin);
 		package = ffPkgs;
-		extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-			bitwarden
-			bypass-paywalls-clean
-			foxyproxy-standard
-			multi-account-containers
-			plasma-integration
-			octotree
-			refined-github
-			tree-style-tab
-			ublock-origin
-			unpaywall
-		];
 		profiles = {
-			default.settings = {
-				"app.update.auto" = false;
-				"browser.ctrlTab.sortByRecentlyUsed" = true;
-				"browser.startup.page" = 3;
-				"browser.startup.homepage" = "https://thehellings.com";
-				"doh-rollout.doorhanger-decision" = "UIDisabled";
-				"doh-rollout.doneFirstRun" = true;
-				"signon.rememberSignons" = false;
+			default = {
+				settings = {
+					"app.update.auto" = false;
+					"browser.ctrlTab.sortByRecentlyUsed" = true;
+					"browser.startup.page" = 3;
+					"browser.startup.homepage" = "https://thehellings.com";
+					"doh-rollout.doorhanger-decision" = "UIDisabled";
+					"doh-rollout.doneFirstRun" = true;
+					"signon.rememberSignons" = false;
+				};
+				extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+					bitwarden
+					bypass-paywalls-clean
+					foxyproxy-standard
+					multi-account-containers
+					plasma-integration
+					octotree
+					refined-github
+					tree-style-tab
+					ublock-origin
+					unpaywall
+				];
 			};
 		};
 	};

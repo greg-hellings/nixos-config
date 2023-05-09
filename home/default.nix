@@ -21,7 +21,9 @@ let
 		username
 	}:
 		let
+			stateVersion = "22.05";
 			homeDirectory = home system username;
+			cfg = { home = { inherit username homeDirectory stateVersion; }; };
 
 			configDir = "${homeDirectory}/.config";
 
@@ -32,12 +34,14 @@ let
 			};
 
 		in home-manager.lib.homeManagerConfiguration rec {
-			inherit pkgs system username homeDirectory;
-			stateVersion = "22.05";
-			configuration = import ./home.nix {
-				inherit pkgs gui gnome;
-				inherit (pkgs) config lib stdenv;
-			};
+			inherit pkgs;
+			modules = [
+				(import ./home.nix {
+					inherit pkgs gui gnome;
+					inherit (pkgs) config lib stdenv;
+				})
+				cfg
+			];
 		};
 
 in flake-utils.lib.eachDefaultSystem (system: {

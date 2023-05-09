@@ -10,7 +10,7 @@
 		agenix.url = "github:ryantm/agenix";
 		flake-utils.url = "github:numtide/flake-utils";
 		home-manager = {
-			url = "github:nix-community/home-manager/release-22.05";
+			url = "github:nix-community/home-manager/master";
 			inputs.nixpkgs.follows = "stable";
 		};
 		darwin = {
@@ -72,6 +72,26 @@
 			};
 		};
 
+		mac = {
+			system ? "aarch64-darwin",
+			name,
+			channel ? unstable,
+			extraMods ? []
+		}:
+		let
+			nixpkgs = channel;
+		in inputs.darwin.lib.darwinSystem {
+			inherit system;
+			specialArgs = { inherit nixpkgs; };
+			modules = [
+				{ nixpkgs.overlays = overlays; }
+				inputs.agenix.nixosModule
+				./modules-all
+				./modules-darwin
+				./hosts/${name}
+			] ++ extraMods;
+		};
+
 	in {
 		nixosConfigurations = {
 			"2maccabees" = unstable { system = "aarch64-linux"; name = "2maccabees"; };
@@ -107,6 +127,7 @@
 					./hosts/work
 				];
 			};
+			la23002 = mac { name = "ivr"; };
 		};
 
 		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);

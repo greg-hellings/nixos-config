@@ -5,8 +5,11 @@ set -eo pipefail
 arch="$(uname -m)"
 if [ "$(uname -s)" == "Darwin" ]; then
 	# On macOS
-	src="${HOME}/.config/nix/"
+	src="${HOME}/.config/darwin/"
 	flavor="gui"
+	if [ "${arch}" == "arm64" ]; then
+		arch=aarch64
+	fi
 	arch="${arch}-darwin"
 elif [ x"${WSL_DISTRO_NAME}" != "x" ]; then
 	src=/etc/nixos
@@ -31,17 +34,3 @@ nix build "${src}#homeConfigurations.${flavor}.${arch}.activationPackage"
 ./result/activate
 popd > /dev/null
 rm -r "${dest}"
-
-if [ "$(uname -s)" == "Darwin" ]; then
-	cd ~/.nix-profile/Applications
-	for app in *.app; do
-		echo "Updating permissions on '${app}'"
-		mkdir -p "${HOME}/Applications/${app}"
-		chmod -R u+w "${HOME}/Applications/${app}" || true
-		echo "Copying new version to Applications"
-		rsync -rptgoDv "${app}/" "${HOME}/Applications/${app}/" 2>&1 > /dev/null || true
-		if [ "$?" != "0" ]; then
-			echo "An error occurred, proceeding anyway"
-		fi
-	done
-fi
