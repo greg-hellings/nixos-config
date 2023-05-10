@@ -1,10 +1,7 @@
 # vim: set ft=python :
 
-#$PKG_CONFIG_PATH = '/usr/local/lib/pkgconfig'
-#$JAVA_HOME = '/etc/alternatives/java_sdk'
 def _rebuild(args):
-    import os
-    system = os.uname()
+    system = uname()
     if system.sysname == 'Darwin':
         darwin-rebuild --flake ~/.config/darwin switch
     else:
@@ -22,7 +19,7 @@ def _py3env(args):
     vox new @(args[0])
 
 def _rundock(args):
-    if os.path.exists('/usr/bin/podman'):
+    if Path('/usr/bin/podman').exists():
         e = 'podman'
     else:
         e = 'docker'
@@ -34,11 +31,11 @@ def _pip_extras(args):
 
 # Container stuff
 def _newdock(args):
-    if os.path.exists('/usr/bin/podman'):
+    if Path('/usr/bin/podman').exists():
         e = 'podman'
     else:
         e = 'docker'
-    @(e) run -P --privileged=true -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v @(os.getcwd()):/dmnt -v /etc/pki:/etc/pki:ro -d --name @(args[1]) @(args[0]) /sbin/init
+    @(e) run -P --privileged=true -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix -v @(getcwd()):/dmnt -v /etc/pki:/etc/pki:ro -d --name @(args[1]) @(args[0]) /sbin/init
     rundock @(args[1])
 
 def _unknown_host(args):
