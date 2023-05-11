@@ -1,7 +1,7 @@
 {
 	nixpkgs,
 	overlays,
-	home-manager,
+	hm,
 	flake-utils,
 	...
 }:
@@ -33,7 +33,7 @@ let
 				config.xdg.configHome = configDir;
 			};
 
-		in home-manager.lib.homeManagerConfiguration rec {
+		in hm.lib.homeManagerConfiguration rec {
 			inherit pkgs;
 			modules = [
 				(import ./home.nix {

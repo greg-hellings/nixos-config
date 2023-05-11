@@ -5,13 +5,13 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		stable.url = "github:nixos/nixpkgs/nixos-22.05";
+		nixstable.url = "github:nixos/nixpkgs/nixos-22.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
 		flake-utils.url = "github:numtide/flake-utils";
-		home-manager = {
+		hm = {
 			url = "github:nix-community/home-manager/master";
-			inputs.nixpkgs.follows = "stable";
+			inputs.nixpkgs.follows = "nixstable";
 		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
@@ -25,7 +25,7 @@
 		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 	};
 
-	outputs = {stable, nixunstable, agenix, home-manager, nurpkgs, self, wsl, flake-utils, ...}@inputs:
+	outputs = {nixstable, nixunstable, agenix, hm, nurpkgs, self, wsl, flake-utils, darwin, ...}@inputs:
 	let
 		pkg-sets = (
 			final: prev: {
@@ -41,110 +41,25 @@
 			inputs.ffmac.overlay
 		];
 
-		unstable = args: (machine (args // { channel = nixunstable; }));
-		machine = {
-			system ? "x86_64-linux",
-			name,
-			channel ? stable,
-			extraMods ? []
-		}:
-		let
-			nixpkgs = channel;
-		in nixpkgs.lib.nixosSystem {
-			inherit system;
-			modules = [
-				{ nixpkgs.overlays = overlays; }
-				agenix.nixosModule
-				./modules-all
-				./modules-linux
-				./hosts/${name}
-				home-manager.nixosModules.home-manager {
-					home-manager.useGlobalPkgs = true;
-					home-manager.useUserPackages = true;
-					home-manager.extraSpecialArgs = {
-						inherit nixpkgs;
-					};
-				}
-			] ++ extraMods;
-			specialArgs = {
-				home-manager = inputs.home-manager;
-				inherit nixpkgs;
-			};
-		};
-
-		mac = {
-			system ? "aarch64-darwin",
-			name,
-			channel ? unstable,
-			extraMods ? []
-		}:
-		let
-			nixpkgs = channel;
-		in inputs.darwin.lib.darwinSystem {
-			inherit system;
-			specialArgs = { inherit nixpkgs; };
-			modules = [
-				{ nixpkgs.overlays = overlays; }
-				inputs.agenix.nixosModule
-				./modules-all
-				./modules-darwin
-				./hosts/${name}
-			] ++ extraMods;
-		};
 
 	in {
-		nixosConfigurations = {
-			"2maccabees" = unstable { system = "aarch64-linux"; name = "2maccabees"; };
-			jude = unstable { name = "jude"; };
-			"icdm-root" = unstable { name = "icdm-root"; };
-			"linode" = machine { name = "linode"; };
-			"linodeeu" = machine { name = "linodeeu"; };
-			"lappy" = machine { name = "lappy"; };
-			mm = unstable { name = "mm"; };
-			"iso" = machine { name = "iso"; };
-			# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
-			"nixos" = unstable { name = "wsl"; system = "aarch64-linux"; extraMods = [ wsl.nixosModules.wsl ]; };
-			# nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
-			"nixos-arm" = unstable { name = "wsl"; system = "aarch64-linux"; extraMods = [ wsl.nixosModules.wsl ]; };
-		};
+		nixosConfigurations = (import ./hosts { inherit nixstable nixunstable overlays wsl agenix; });
 
-		darwinConfigurations =
-		let
-			nixpkgs = stable {
-				overlays = overlays;
-			};
-		in {
-			"C02G48H8MD6R" = inputs.darwin.lib.darwinSystem {
-				system = "x86_64-darwin";
-				specialArgs = {
-					nixpkgs = stable;
-				};
-				modules = [
-					{ nixpkgs.overlays = overlays; }
-					inputs.agenix.nixosModule
-					./modules-all
-					./modules-darwin
-					./hosts/work
-				];
-			};
-			la23002 = mac { name = "ivr"; };
-		};
+		darwinConfigurations = (import ./darwin { inherit agenix darwin nixstable nixunstable overlays; });
 
 		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);
 
 		homeConfigurations = (
 			import ./home {
-				inherit nixunstable agenix home-manager overlays flake-utils;
+				inherit nixunstable agenix hm overlays flake-utils;
 				nixpkgs = nixunstable;
 			}
 		);
 
-		overlays = {
-			default = import ./overlays;
-		};
+		overlays = { default = local_overlay; };
 		modules = (import ./modules-all {}) //
 		          (import ./modules-linux {}) //
 		          (import ./modules-darwin {});
-		packages = import ./overlays/packages.nix { pkgs = stable; };
+		packages = import ./overlays/packages.nix { pkgs = nixstable; };
 	};
 }
