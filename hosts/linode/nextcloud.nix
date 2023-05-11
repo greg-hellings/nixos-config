@@ -6,7 +6,7 @@
 
 	services.nextcloud = {
 		enable = true;
-		package = pkgs.nextcloud24;
+		package = pkgs.nextcloud25;
 		appstoreEnable = true;
 		hostName = "next.${config.networking.domain}";
 		https = true;

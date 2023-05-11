@@ -34,7 +34,9 @@ in {
 			enable = true;
 			type = "tar.xz";
 		};
-		httpPort = 3001;
+		settings = {
+			server.HTTP_PORT = 3001;
+		};
 		log = {
 			level = "Info";
 		};
@@ -42,7 +44,7 @@ in {
 	};
 
 	greg.proxies."${srcDomain}" = {
-		target = "http://localhost:${toString config.services.gitea.httpPort}";
+		target = "http://localhost:${toString config.services.gitea.settings.server.HTTP_PORT}";
 		ssl = true;
 		genAliases = false;
 	};
