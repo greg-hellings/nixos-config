@@ -11,6 +11,7 @@ from pathlib import Path
 # $? == _.rtn
 
 xontrib load direnv
+xontrib load coreutils
 
 # Insert to the front, because when we spawn xonsh in tmux we have raw python3
 # paths added before these. That ends up screwing with finding the python3 version
