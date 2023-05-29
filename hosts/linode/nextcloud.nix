@@ -6,9 +6,10 @@
 
 	services.nextcloud = {
 		enable = true;
-		package = pkgs.nextcloud24;
+		package = pkgs.nextcloud26;
 		appstoreEnable = true;
 		hostName = "next.${config.networking.domain}";
+		enableBrokenCiphersForSSE = false;
 		https = true;
 		config = {
 			adminpassFile = config.age.secrets.nextcloudadmin.path;

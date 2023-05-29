@@ -5,7 +5,7 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		nixstable.url = "github:nixos/nixpkgs/nixos-22.05";
+		nixstable.url = "github:nixos/nixpkgs/nixos-23.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
 		flake-utils.url = "github:numtide/flake-utils";

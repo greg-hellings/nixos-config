@@ -23,26 +23,27 @@ in {
 	services.gitea = rec {
 		enable = true;
 		appName = "Greg's Sources";
-		cookieSecure = true;
 		database = {
 			type = "postgres";
 			user = "gitea";
 		};
-		disableRegistration = true;
-		domain = srcDomain;
 		dump = {
 			enable = true;
 			type = "tar.xz";
 		};
-		httpPort = 3001;
-		log = {
-			level = "Info";
+		settings = {
+			server = rec {
+				ROOT_URL = "https://${DOMAIN}/";
+				DOMAIN = srcDomain;
+			};
+			service.DISABLE_REGISTRATION = pkgs.lib.mkForce true;
+			session.COOKIE_SECURE = pkgs.lib.mkForce true;
+			log.level = "Info";
 		};
-		rootUrl = "https://${domain}/";
 	};
 
 	greg.proxies."${srcDomain}" = {
-		target = "http://localhost:${toString config.services.gitea.httpPort}";
+		target = "http://localhost:${toString config.services.gitea.settings.server.HTTP_PORT}";
 		ssl = true;
 		genAliases = false;
 	};

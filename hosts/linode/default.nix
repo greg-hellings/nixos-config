@@ -8,6 +8,7 @@
 		./nextcloud.nix
 		./nginx.nix
 		./postgres.nix
+		./rei.nix
 		./synapse.nix
 	];
 	greg.home = false;
