@@ -36,6 +36,7 @@
 		allowUnfree = true;
 		permittedInsecurePackages = [
 			"qtwebkit-5.212.0-alpha4"
+			"openssl-1.1.1t"
 		];
 	};
 

@@ -53,10 +53,8 @@ root root postgres
 			postgresLog = {
 				enable = true;
 				files = "/var/lib/postgresql/*/log/*.log";
-				extraConfig = (lib.strings.concatStringsSep "\n" [
-					"compress"
-					"compresscmd=${pkgs.xz}/bin/xz"
-				]);
+				compress = true;
+				compresscmd = "${pkgs.xz}/bin/xz";
 			};
 		};
 	};

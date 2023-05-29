@@ -50,8 +50,7 @@ let
 	});
 
 in rec {
-	#gitea = super.unstable.gitea;
-
+	#python3 = self.unstable.python3;
 	gregpy = myPython;
 
 	my-py-addons = rec {

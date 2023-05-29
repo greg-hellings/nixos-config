@@ -23,22 +23,19 @@ in {
 	services.gitea = rec {
 		enable = true;
 		appName = "Greg's Sources";
-		cookieSecure = true;
 		database = {
 			type = "postgres";
 			user = "gitea";
 		};
-		disableRegistration = true;
 		domain = srcDomain;
 		dump = {
 			enable = true;
 			type = "tar.xz";
 		};
 		settings = {
-			server.HTTP_PORT = 3001;
-		};
-		log = {
-			level = "Info";
+			service.DISABLE_REGISTRATION = pkgs.lib.mkForce true;
+			session.COOKIE_SECURE = pkgs.lib.mkForce true;
+			log.level = "Info";
 		};
 		rootUrl = "https://${domain}/";
 	};
