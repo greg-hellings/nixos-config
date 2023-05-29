@@ -27,17 +27,19 @@ in {
 			type = "postgres";
 			user = "gitea";
 		};
-		domain = srcDomain;
 		dump = {
 			enable = true;
 			type = "tar.xz";
 		};
 		settings = {
+			server = rec {
+				ROOT_URL = "https://${DOMAIN}/";
+				DOMAIN = srcDomain;
+			};
 			service.DISABLE_REGISTRATION = pkgs.lib.mkForce true;
 			session.COOKIE_SECURE = pkgs.lib.mkForce true;
 			log.level = "Info";
 		};
-		rootUrl = "https://${domain}/";
 	};
 
 	greg.proxies."${srcDomain}" = {
