@@ -35,6 +35,7 @@ in {
 			server = rec {
 				ROOT_URL = "https://${DOMAIN}/";
 				DOMAIN = srcDomain;
+				HTTP_PORT = 3001;
 			};
 			service.DISABLE_REGISTRATION = pkgs.lib.mkForce true;
 			session.COOKIE_SECURE = pkgs.lib.mkForce true;
@@ -43,7 +44,7 @@ in {
 	};
 
 	greg.proxies."${srcDomain}" = {
-		target = "http://localhost:${toString config.services.gitea.settings.server.HTTP_PORT}";
+		target = "${config.services.gitea.settings.server.PROTOCOL}://${config.services.gitea.settings.server.DOMAIN}:${toString config.services.gitea.settings.server.HTTP_PORT}";
 		ssl = true;
 		genAliases = false;
 	};
