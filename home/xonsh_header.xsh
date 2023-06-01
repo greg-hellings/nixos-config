@@ -1,6 +1,7 @@
 # vim: set ft=python:
 from os import getcwd, uname
 from pathlib import Path
+from sys import platform
 
 
 #if  uname().sysname == 'Darwin' and ('__NIX_DARWIN_SET_ENVIRONMENT_DONE' not in ${...} or not $__NIX_DARWIN_SET_ENVIRONMENT_DONE):
@@ -19,3 +20,6 @@ xontrib load coreutils
 $PATH.insert(0, Path("~/.nix-profile/bin").expanduser())
 $PATH.insert(0, Path("~/src/bin").expanduser())
 $PATH.insert(0, Path("~/.local/bin").expanduser())
+
+if platform == "darwin":
+    $PATH.append(Path("/opt/homebrew/bin/"))

@@ -80,6 +80,7 @@ in rec {
 	};
 
 	#fcitx-engines = if ! super.stdenv.isDarwin then super.fcitx5 else super.fcitx-engines;
+	brew = super.callPackage ./homebrew.nix {};
 
 	enwiki-dump = super.callPackage ./enwiki-dump.nix {};
 	hms = super.callPackage ./hms.nix {
