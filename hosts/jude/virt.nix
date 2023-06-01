@@ -17,6 +17,9 @@
 		};
 
 		virtualbox.host.enable = true;
+
+		waydroid.enable = true;
+		lxd.enable = true;
 	};
 
 	users.extraGroups.vboxusers.members = [ "greg" ];
