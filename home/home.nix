@@ -28,6 +28,15 @@
 		]);
 	};
 
+	home.file.".pip/pip.conf" = (lib.strings.concatStringsSep "\n" [
+		"[global]"
+		"retries = 1"
+		"index-url = https://pypi.python.org/simple"
+		"extra-index-url ="
+		"    https://pypi.ivrtechnlology.com/simple/"
+		"    https://pypiev.ivrtechnology.com/simple/"
+	];
+
 	home.stateVersion = "22.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
