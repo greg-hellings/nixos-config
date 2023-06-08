@@ -6,8 +6,6 @@ let
 	myPackages = pypackages: with pypackages; with pkgs.my-py-addons; [
 		black
 		copier
-		datadog
-		datadog-api-client
 		dateutil
 		flake8
 		ipython
@@ -61,7 +59,6 @@ in rec {
 			        pyyaml-include
 			;
 		};
-		datadog-api-client = cp ./datadog-api-client.nix {};
 		iteration-utilities = cp ./iteration-utilities.nix {};
 		jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
 		molecule = cp ./molecule.nix {};
