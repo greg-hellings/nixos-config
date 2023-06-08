@@ -55,6 +55,7 @@
 		htop
 		killall
 		nano
+		pciutils
 		pwgen
 		transcrypt
 		unzip

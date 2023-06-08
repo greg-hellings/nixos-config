@@ -43,6 +43,7 @@
 		brew
 		diffutils
 		findutils
+		gimp
 		git
 		gnupatch
 		gregpy

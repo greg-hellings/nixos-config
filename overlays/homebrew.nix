@@ -37,7 +37,7 @@ stdenv.mkDerivation rec {
 		description = "Runs the homebrew installer";
 		homepage = "https://github.com/Homebrew/";
 		license = licenses.bsd2;
-		platforms = [ "aarch64-darwin" "x86_64-darwin" ];
+		platforms = [ "aarch64-darwin" "x86_64-darwin" "x86_64-linux" "aarch64-linux" ];
 		maintainers = [ maintainers.greg ];
 	};
 }
