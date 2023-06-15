@@ -61,16 +61,6 @@ in rec {
 		};
 		iteration-utilities = cp ./iteration-utilities.nix {};
 		jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
-		molecule = cp ./molecule.nix {};
-		molecule-containers = cp ./molecule-containers.nix {
-			inherit molecule molecule-docker molecule-podman;
-		};
-		molecule-docker = cp ./molecule-docker.nix {
-			inherit molecule;
-		};
-		molecule-podman = cp ./molecule-podman.nix {
-			inherit molecule;
-		};
 		pydantic = cp ./pydantic.nix {};
 		pyyaml-include = cp ./pyyaml-include.nix {};
 		xonsh-direnv = cp ./xonsh-direnv.nix {};
