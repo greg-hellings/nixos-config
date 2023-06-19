@@ -55,6 +55,8 @@ in rec {
 	pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
 		(python-final: python-prev: {
 			django-rapyd-modernauth = python-final.callPackage ./django-rapyd-modernauth.nix {};
+			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
+			xonsh-direnv = cp ./xonsh-direnv.nix {};
 		})
 	];
 
@@ -78,8 +80,6 @@ in rec {
 			inherit molecule;
 		};
 		pyyaml-include = cp ./pyyaml-include.nix {};
-		xonsh-apipenv = cp ./xonsh-apipenv.nix {};
-		xonsh-direnv = cp ./xonsh-direnv.nix {};
 	};
 
 	#fcitx-engines = if ! prev.stdenv.isDarwin then prev.fcitx5 else prev.fcitx-engines;
@@ -95,9 +95,9 @@ in rec {
 
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
-		propagatedBuildInputs = old.propagatedBuildInputs ++ [
-			my-py-addons.xonsh-apipenv
-			my-py-addons.xonsh-direnv
+		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
+			xonsh-apipenv
+			xonsh-direnv
 		];
 	});
 

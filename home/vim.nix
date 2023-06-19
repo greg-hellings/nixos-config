@@ -59,7 +59,7 @@ in
 		#extraConfig = builtins.readFile ./vimrc;
 		extraLuaConfig = builtins.readFile ./init.lua;
 		coc = {
-			enable = false;
+			enable = true;
 		};
 	};
 }
