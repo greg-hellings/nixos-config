@@ -1,4 +1,5 @@
-{ pkgs, lib, gui, gnome, ...}:
+{ pkgs, lib, gui, gnome,
+  ...}:
 
 {
 	imports = [
