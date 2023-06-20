@@ -37,7 +37,7 @@
 		"    https://pypiev.ivrtechnology.com/simple/"
 	]);
 
-	home.stateVersion = "22.05";
+	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
 		brew

@@ -1,4 +1,4 @@
-{ agenix, darwin, nixstable, nixunstable, overlays, ... }:
+{ agenix, darwin, nixstable, nixunstable, overlays, hm, ... }:
 let
 	mac = {
 		system ? "aarch64-darwin",
@@ -13,7 +13,18 @@ let
 		specialArgs = { inherit nixpkgs; };
 		modules = [
 			{ nixpkgs.overlays = overlays; }
-			agenix.nixosModule
+			agenix.nixosModules.default
+			hm.darwinModules.home-manager
+			{
+				home-manager.useGlobalPkgs = true;
+				home-manager.useUserPackages = true;
+				home-manager.users."gregory.hellings" = import ../home/home.nix {
+					inherit (nixunstable) lib;
+					pkgs = nixunstable;
+					gui = true;
+					gnome = false;
+				};
+			}
 			../modules-all
 			../modules-darwin
 			./${name}

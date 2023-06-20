@@ -11,7 +11,7 @@
 		flake-utils.url = "github:numtide/flake-utils";
 		hm = {
 			url = "github:nix-community/home-manager/master";
-			inputs.nixpkgs.follows = "nixstable";
+			inputs.nixpkgs.follows = "nixunstable";
 		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
@@ -34,7 +34,7 @@
 		);
 		local_overlay = import ./overlays;
 		overlays = [
-			agenix.overlay
+			agenix.overlays.default
 			pkg-sets
 			local_overlay
 			nurpkgs.overlay
@@ -45,7 +45,7 @@
 	in {
 		nixosConfigurations = (import ./hosts { inherit nixstable nixunstable overlays wsl agenix; });
 
-		darwinConfigurations = (import ./darwin { inherit agenix darwin nixstable nixunstable overlays; });
+		darwinConfigurations = (import ./darwin { inherit agenix darwin nixstable nixunstable overlays hm; });
 
 		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);
 

@@ -21,7 +21,7 @@ let
 		username
 	}:
 		let
-			stateVersion = "22.05";
+			stateVersion = "23.05";
 			homeDirectory = home system username;
 			cfg = { home = { inherit username homeDirectory stateVersion; }; };
 
