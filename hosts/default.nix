@@ -14,7 +14,7 @@ let
 		inherit system;
 		modules = [
 			{ nixpkgs.overlays = overlays; }
-			agenix.nixosModule
+			agenix.nixosModules.default
 			../modules-all
 			../modules-linux
 			./${name}
