@@ -10,8 +10,8 @@
 		agenix.url = "github:ryantm/agenix";
 		flake-utils.url = "github:numtide/flake-utils";
 		hm = {
-			url = "github:nix-community/home-manager/master";
-			inputs.nixpkgs.follows = "nixunstable";
+			url = "github:nix-community/home-manager/release-23.05";
+			inputs.nixpkgs.follows = "nixstable";
 		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
@@ -41,11 +41,10 @@
 			inputs.ffmac.overlay
 		];
 
-
 	in {
 		nixosConfigurations = (import ./hosts { inherit nixstable nixunstable overlays wsl agenix; });
 
-		darwinConfigurations = (import ./darwin { inherit agenix darwin nixstable nixunstable overlays hm; });
+		darwinConfigurations = (import ./darwin { inherit agenix darwin nixstable nixunstable overlays hm flake-utils; });
 
 		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);
 
