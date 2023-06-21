@@ -1,27 +1,27 @@
-{ agenix, darwin, nixstable, nixunstable, overlays, hm, flake-utils, ... }:
+{ inputs, overlays, ... }:
 let
 	mac = {
 		system ? "aarch64-darwin",
 		name,
-		channel ? nixunstable,
+		channel ? inputs.nixunstable,
 		extraMods ? []
 	}:
 	let
 		nixpkgs = import channel {
 			inherit system overlays;
 		};
-	in darwin.lib.darwinSystem {
+	in inputs.darwin.lib.darwinSystem {
 		inherit system;
 		specialArgs = { inherit nixpkgs; };
 		modules = [
 			{ nixpkgs.overlays = overlays; }
-			agenix.nixosModules.default
-			hm.darwinModules.home-manager
+			inputs.hm.darwinModules.home-manager
 			{
 				home-manager = {
 					useGlobalPkgs = true;
 					users."gregory.hellings" = import ../home/home.nix;
 					extraSpecialArgs = {
+						inherit inputs;
 						gnome = false;
 						gui = true;
 						home = "/Users/gregory.hellings";

@@ -1,8 +1,10 @@
 { pkgs, lib, gui, gnome,
+  inputs,
   ...}:
 
 {
 	imports = [
+		inputs.nixneovim.nixosModules.default
 		./modules
 		./ansible.nix
 		./bash.nix
