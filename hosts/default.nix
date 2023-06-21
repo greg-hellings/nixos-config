@@ -10,7 +10,7 @@ let
 	}:
 	let
 		nixpkgs = channel;
-	in inputs.nixpkgs.lib.nixosSystem {
+	in nixpkgs.lib.nixosSystem {
 		inherit system;
 		modules = [
 			{ nixpkgs.overlays = overlays; }
