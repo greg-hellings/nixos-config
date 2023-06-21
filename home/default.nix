@@ -1,18 +1,16 @@
 {
-	nixpkgs,
+	inputs,
 	overlays,
-	hm,
-	flake-utils,
 	...
 }:
 
 let
 	# I'm "greg" everywhere except Darwin where I'm "gregory.hellings"
 	user = system:
-		( if ( nixpkgs.lib.hasSuffix "-darwin" system ) then "gregory.hellings" else "greg" );
+		( if ( inputs.nixstable.lib.hasSuffix "-darwin" system ) then "gregory.hellings" else "greg" );
 	home = system: username:
 		if username == "root" then "/root" else
-			( if ( nixpkgs.lib.hasSuffix "-darwin" system ) then "/Users/${username}" else "/home/${username}" );
+			( if ( inputs.nixstable.lib.hasSuffix "-darwin" system ) then "/Users/${username}" else "/home/${username}" );
 
 	mkhome = {
 		system,
@@ -27,24 +25,24 @@ let
 
 			configDir = "${homeDirectory}/.config";
 
-			pkgs = import nixpkgs {
+			pkgs = import inputs.nixstable {
 				inherit overlays system;
 				config.allowUnfree = true;
 				config.xdg.configHome = configDir;
 			};
 
-		in hm.lib.homeManagerConfiguration rec {
+		in inputs.hm.lib.homeManagerConfiguration rec {
 			inherit pkgs;
 			modules = [
 				(import ./home.nix {
-					inherit pkgs gui gnome;
+					inherit inputs pkgs gui gnome;
 					inherit (pkgs) config lib stdenv;
 				})
 				cfg
 			];
 		};
 
-in flake-utils.lib.eachDefaultSystem (system: {
+in inputs.flake-utils.lib.eachDefaultSystem (system: {
 	gui = mkhome {
 		inherit system;
 		gui = true;
