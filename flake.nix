@@ -61,8 +61,6 @@
 
 		darwinConfigurations = (import ./darwin { inherit inputs overlays; });
 
-		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);
-
 		homeConfigurations = (
 			import ./home {
 				inherit inputs overlays;
