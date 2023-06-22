@@ -51,6 +51,7 @@ in rec {
 			iteration-utilities = cp ./iteration-utilities.nix {};
 			jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
 			pyyaml-include = cp ./pyyaml-include.nix {};
+			xonsh-vox = cp ./xonsh-vox.nix {};
 		})
 	];
 
