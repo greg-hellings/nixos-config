@@ -65,7 +65,9 @@ in rec {
 		pkgs = final.pkgs;
 	};
 
-	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
+	xonsh = (prev.callPackage ./xonsh.nix {
+		#inherit (final) lib coreutils python3Packages git;
+	}).overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
 		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
 			xonsh-apipenv
