@@ -78,6 +78,7 @@
 				gzip
 				inject
 				sudo
+				tmux
 				xonsh
 			];
 		}));
