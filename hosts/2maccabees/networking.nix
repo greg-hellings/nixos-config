@@ -1,7 +1,7 @@
 { ... }:
 
 {
-	services.tailscale.enable = true;
+	greg.tailscale.enable = true;
 
 	networking = {
 		# This value is deprecated, you now set it per interface
