@@ -1,4 +1,16 @@
-{ lib, buildPythonPackage, fetchPypi, pkgs}:
+{
+	lib,
+	buildPythonPackage,
+	fetchPypi,
+
+	click,
+	django,
+	python-dotenv,
+	pytz,
+	setuptools,
+	sqlparse,
+	zipp
+}:
 
 let
     pydeps = pypkgs: with pypkgs; [
@@ -28,8 +40,7 @@ in buildPythonPackage rec {
 
     doCheck = false;
 
-    buildInputs = with pkgs; [
-        #(python3.withPackages pydeps)
+    buildInputs = [
         click
         django
         python-dotenv
@@ -39,7 +50,6 @@ in buildPythonPackage rec {
         zipp
     ];
 
-    nativeBuildInputs = with pkgs; [
-        #(python3.withPackages pydeps)
+    nativeBuildInputs = [
     ];
 }

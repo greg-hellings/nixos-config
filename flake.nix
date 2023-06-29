@@ -61,13 +61,6 @@
 
 		darwinConfigurations = (import ./darwin { inherit inputs overlays; });
 
-		homeConfigurations = (
-			import ./home {
-				inherit inputs overlays;
-				nixpkgs = nixunstable;
-			}
-		);
-
 		devShell = (flake-utils.lib.eachSystemMap flake-utils.lib.allSystems (system: let
 			pkgs = import nixunstable { inherit system overlays; };
 		in pkgs.mkShell {
