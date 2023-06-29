@@ -73,6 +73,7 @@ in rec {
 	hms = prev.callPackage ./hms.nix {
 		pkgs = final.pkgs;
 	};
+	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
 	setup-ssh = prev.callPackage ./setup-ssh.nix {
 		pkgs = final.pkgs;
 	};
