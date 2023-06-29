@@ -77,7 +77,6 @@
 				gnutar
 				gzip
 				inject
-				sudo
 				tmux
 				xonsh
 			];

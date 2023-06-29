@@ -9,8 +9,8 @@ fi
 
 ${pkgs.curl}/bin/curl -L -o "''${HOME}/nixos-config.tar.gz" https://github.com/greg-hellings/nixos-config/archive/refs/heads/main.tar.gz
 ${pkgs.gnutar}/bin/tar xaf "''${HOME}/nixos-config.tar.gz" -C "''${HOME}"
-${pkgs.sudo}/bin/sudo mv /etc/nixos /etc/nixos.bk
-${pkgs.sudo}/bin/sudo mv "''${HOME}/nixos-config-main/" /etc/nixos
+mv /etc/nixos /etc/nixos.bk
+mv "''${HOME}/nixos-config-main/" /etc/nixos
 mkdir -p "/etc/nixos/hosts/''${hostname}"
 
 # Prepares everything for the flake usage
