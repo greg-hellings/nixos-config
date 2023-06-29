@@ -1,11 +1,11 @@
-{ nixstable, nixunstable, overlays, wsl, agenix, ... }:
+{ inputs, overlays, ... }:
 let
-	wsl = args: (unstable (args // { extraMods = [ wsl.nixosModules.wsl ]; }));
-	unstable = args: (machine (args // { channel = nixunstable; }));
+	wsl = args: (unstable (args // { extraMods = [ inputs.wsl.nixosModules.wsl ]; }));
+	unstable = args: (machine (args // { channel = inputs.nixunstable; }));
 	machine = {
 		system ? "x86_64-linux",
 		name,
-		channel ? nixstable,
+		channel ? inputs.nixstable,
 		extraMods ? []
 	}:
 	let
@@ -14,7 +14,7 @@ let
 		inherit system;
 		modules = [
 			{ nixpkgs.overlays = overlays; }
-			agenix.nixosModule
+			inputs.agenix.nixosModules.default
 			../modules-all
 			../modules-linux
 			./${name}

@@ -1,25 +1,45 @@
-{ agenix, darwin, nixstable, nixunstable, overlays, ... }:
+{ inputs, overlays, ... }:
 let
 	mac = {
 		system ? "aarch64-darwin",
 		name,
-		channel ? nixunstable,
+		channel ? inputs.nixunstable,
 		extraMods ? []
 	}:
 	let
-		nixpkgs = channel;
-	in darwin.lib.darwinSystem {
+		nixpkgs = import channel {
+			inherit system overlays;
+		};
+	in inputs.darwin.lib.darwinSystem {
 		inherit system;
 		specialArgs = { inherit nixpkgs; };
 		modules = [
 			{ nixpkgs.overlays = overlays; }
-			agenix.nixosModule
+			inputs.hm.darwinModules.home-manager
+			{
+				home-manager = {
+					useGlobalPkgs = true;
+					users."gregory.hellings" = import ../home/home.nix;
+					extraSpecialArgs = {
+						inherit inputs;
+						gnome = false;
+						gui = true;
+						home = "/Users/gregory.hellings";
+					};
+				};
+				users.users."gregory.hellings".home = "/Users/gregory.hellings";
+			}
 			../modules-all
 			../modules-darwin
 			./${name}
 		] ++ extraMods;
 	};
-in {
-	"C02G48H8MD6R" = mac { system = "x86_64-darwin"; name = "work"; };
+in rec {
+	# Duplicate all the things, because nix-darwin does different things with case sensitivity
+	# depending on where you live
+	C02G48H8MD6R = mac { system = "x86_64-darwin"; name = "work"; };
+	c02g48h8md6r = C02G48H8MD6R;
+
 	la23002 = mac { name = "ivr"; };
+	LA23002 = la23002;
 }

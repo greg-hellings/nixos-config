@@ -5,27 +5,41 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		nixstable.url = "github:nixos/nixpkgs/nixos-23.05";
-		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		agenix.url = "github:ryantm/agenix";
-		flake-utils.url = "github:numtide/flake-utils";
-		hm = {
-			url = "github:nix-community/home-manager/master";
-			inputs.nixpkgs.follows = "nixstable";
-		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
+		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
+		flake-utils.url = "github:numtide/flake-utils";
+		hm = {
+			url = "github:nix-community/home-manager/release-23.05";
+			inputs.nixpkgs.follows = "nixstable";
+		};
+		nixneovim.url = "github:NixNeovim/NixNeovim";
+		nixstable.url = "github:nixos/nixpkgs/nixos-23.05";
+		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
+		nurpkgs.url = "github:nix-community/NUR";
 		wsl = {
 			url = "github:nix-community/NixOS-WSL";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
-		nurpkgs.url = "github:nix-community/NUR";
-		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 	};
 
-	outputs = {nixstable, nixunstable, agenix, hm, nurpkgs, self, wsl, flake-utils, darwin, ...}@inputs:
+	outputs = {
+		agenix,
+		darwin,
+		ffmac,
+		flake-utils,
+		hm,
+		nixneovim,
+		nixstable,
+		nixunstable,
+		nurpkgs,
+		wsl,
+
+		self,
+		...}@inputs:
 	let
 		pkg-sets = (
 			final: prev: {
@@ -34,24 +48,22 @@
 		);
 		local_overlay = import ./overlays;
 		overlays = [
-			agenix.overlay
+			agenix.overlays.default
 			pkg-sets
 			local_overlay
+			nixneovim.overlays.default
 			nurpkgs.overlay
-			inputs.ffmac.overlay
+			ffmac.overlay
 		];
 
-
 	in {
-		nixosConfigurations = (import ./hosts { inherit nixstable nixunstable overlays wsl agenix; });
+		nixosConfigurations = (import ./hosts { inherit inputs overlays; });
 
-		darwinConfigurations = (import ./darwin { inherit agenix darwin nixstable nixunstable overlays; });
-
-		defaultPackage = flake-utils.lib.eachDefaultSystemMap (system: inputs.self.homeConfigurations.gui."${system}".activationPackage);
+		darwinConfigurations = (import ./darwin { inherit inputs overlays; });
 
 		homeConfigurations = (
 			import ./home {
-				inherit nixunstable agenix hm overlays flake-utils;
+				inherit inputs overlays;
 				nixpkgs = nixunstable;
 			}
 		);
