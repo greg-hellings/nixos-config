@@ -1,8 +1,9 @@
-{ pkgs, nixpkgs, lib, ... }:
+{ pkgs, lib, modulesPath, ... }:
 {
 
 	imports = [
-		"${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
+		"${modulesPath}/installer/cd-dvd/installation-cd-graphical-calamares-gnome.nix"
+		"${modulesPath}/installer/cd-dvd/channel.nix"
 	];
 
 	networking.networkmanager.enable = lib.mkForce false;
