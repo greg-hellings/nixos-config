@@ -8,12 +8,6 @@ flake-utils.lib.eachDefaultSystemMap (system:
 		python = pkgs.packages.python3;
 		cp = pkgs.packages.python3.pkgs.callPackage;
 	in {
-		datadog-api-client = callPackage ./datadog-api-client.nix {
-			inherit pkgs lib;
-			buildPythonPackage = python.pkgs.buildPythonPackage;
-			fetchPypi = pkgs.python.pkgs.fetchPypi;
-		};
-
 		hms = pkgs.callPackage ./hms.nix {
 			inherit pkgs;
 		};

@@ -1,13 +1,11 @@
-self: super:
+final: prev:
 
 let
-	cp = super.python3.pkgs.callPackage;
+	cp = prev.python3.pkgs.callPackage;
 
 	myPackages = pypackages: with pypackages; with pkgs.my-py-addons; [
 		black
 		copier
-		datadog
-		datadog-api-client
 		dateutil
 		flake8
 		ipython
@@ -23,14 +21,14 @@ let
 		xonsh-direnv
 	];
 
-	myPython = super.python3.withPackages myPackages;
+	myPython = prev.python3.withPackages myPackages;
 	macOver = file: og:
-		if super.stdenv.isDarwin then
-		(super.callPackage file {}) else
-		super."${og}";
+		if prev.stdenv.isDarwin then
+		(prev.callPackage file {}) else
+		prev."${og}";
 
-	buildFirefoxXpiAddon = super.lib.makeOverridable ({ stdenv ? super.stdenv
-	, fetchurl ? super.fetchurl, pname, version, addonId, url, sha256, meta, ...
+	buildFirefoxXpiAddon = prev.lib.makeOverridable ({ stdenv ? prev.stdenv
+	, fetchurl ? prev.fetchurl, pname, version, addonId, url, sha256, meta, ...
 	}:
 	stdenv.mkDerivation {
 		name = "${pname}-${version}";
@@ -50,7 +48,7 @@ let
 	});
 
 in rec {
-	#python3 = self.unstable.python3;
+	#python3 = final.unstable.python3;
 	gregpy = myPython;
 
 	my-py-addons = rec {
@@ -61,40 +59,26 @@ in rec {
 			        pyyaml-include
 			;
 		};
-		datadog-api-client = cp ./datadog-api-client.nix {};
 		iteration-utilities = cp ./iteration-utilities.nix {};
 		jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
-		molecule = cp ./molecule.nix {};
-		molecule-containers = cp ./molecule-containers.nix {
-			inherit molecule molecule-docker molecule-podman;
-		};
-		molecule-docker = cp ./molecule-docker.nix {
-			inherit molecule;
-		};
-		molecule-podman = cp ./molecule-podman.nix {
-			inherit molecule;
-		};
 		pydantic = cp ./pydantic.nix {};
 		pyyaml-include = cp ./pyyaml-include.nix {};
 		xonsh-direnv = cp ./xonsh-direnv.nix {};
 	};
 
-	#fcitx-engines = if ! super.stdenv.isDarwin then super.fcitx5 else super.fcitx-engines;
-	brew = super.callPackage ./homebrew.nix {};
+	#fcitx-engines = if ! prev.stdenv.isDarwin then prev.fcitx5 else prev.fcitx-engines;
+	brew = prev.callPackage ./homebrew.nix {};
 
-	enwiki-dump = super.callPackage ./enwiki-dump.nix {};
-	hms = super.callPackage ./hms.nix {
-		pkgs = self.pkgs;
+	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
+	hms = prev.callPackage ./hms.nix {
+		pkgs = final.pkgs;
 	};
-	setup-ssh = super.callPackage ./setup-ssh.nix {
-		pkgs = self.pkgs;
+	setup-ssh = prev.callPackage ./setup-ssh.nix {
+		pkgs = final.pkgs;
 	};
-	kiwix-tools = super.callPackage ./kiwix-tools.nix {};
-	libkiwix = super.callPackage ./libkiwix.nix {};
-	zimlib = super.callPackage ./zimlib.nix {};
 
-	xonsh = super.xonsh.overridePythonAttrs (old: rec{
-		python3 = self.gregpy;
+	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
+		python3 = final.gregpy;
 		propagatedBuildInputs = old.propagatedBuildInputs ++ [ my-py-addons.xonsh-direnv ];
 	});
 
