@@ -36,7 +36,15 @@ let
 		] ++ extraMods;
 	};
 in {
-	"2maccabees" = unstable { name = "2maccabees"; system = "aarch64-linux"; };
+	"2maccabees" = unstable {
+		system = "aarch64-linux";
+		name = "2maccabees";
+	};
+	genesis = unstable {
+		name = "genesis";
+		gnome = true;
+		gui = true;
+	};
 	jude = unstable {
 		name = "jude";
 		gnome = true;
