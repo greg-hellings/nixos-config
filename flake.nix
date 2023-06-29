@@ -74,10 +74,12 @@
 			buildInputs = with pkgs; [
 				bashInteractive
 				curl
+				git
 				gnutar
 				gzip
 				inject
 				tmux
+				vim
 				xonsh
 			];
 		}));
