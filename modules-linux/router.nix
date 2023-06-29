@@ -7,12 +7,14 @@ let
 		wan,
 		lan,
 		limitedLan ? [],
-		openPorts ? [ "ssh" "67" "53" ]  # ssh, dhcpd, dns
+		openPorts ? [ "ssh" "67" "53" ],  # ssh, dhcpd, dns
+		openUDPPorts ? [ "67" "53" ] # dhcpd, dns
 	}: let
 			lanList = names lan;
 			allLan = names (lan ++ limitedLan);
 			wanName = names wan;
-			portsString = lib.strings.concatMapStringsSep "\n" (x: "iifname { ${lanList}, \"tailscale0\" } tcp dport ${x} accept") openPorts;
+			portsString = lib.strings.concatMapStringsSep "\n" (x: "iifname { ${lanList}, \"tailscale0\" } tcp dport ${toString x} accept") openPorts;
+			udpPortsString = lib.strings.concatMapStringsSep "\n" (x: "iifname { ${lanList}, \"tailscale0\" } udp dport ${toString x} accept") openUDPPorts;
 	in lib.strings.concatStringsSep "\n" [
 		"table ip filter {"
 		"	chain input {"
@@ -20,6 +22,7 @@ let
 
 		"		iifname lo accept"
 		portsString
+		udpPortsString
 		"		iifname { ${lanList} } accept comment \"Allows LAN traffic and outgoing\""
 		"		iifname { ${wanName} } ct state { established, related } accept comment \"Allows existing connections\""
 		"		iifname { ${wanName} } icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment \"Allow some ICMP traffic\""
@@ -71,7 +74,11 @@ in with lib; {
 	config = mkIf cfg.enable {
 		networking.nftables = {
 			enable = true;
-			ruleset = (nftConfig { lan = cfg.lan; wan = cfg.wan; });
+			ruleset = (nftConfig {
+				inherit (cfg) lan wan;
+				openPorts = config.networking.firewall.allowedTCPPorts;
+				openUDPPorts = config.networking.firewall.allowedUDPPorts;
+			});
 		};
 
 		environment.systemPackages = [

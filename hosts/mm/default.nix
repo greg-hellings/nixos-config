@@ -38,18 +38,27 @@ in
 			};
 		};
 		firewall = {  # Might not strictly be necessary?
-			allowedTCPPorts = [ 53 ];
+			allowedTCPPorts = [ 53 80 443 8123 ]; # 8091 8123
 			allowedUDPPorts = [ 53 67 ];
 		};
+		extraHosts = (builtins.concatStringsSep "\n" [
+			"${lanIpAddress} store.mindmazeroom.com"
+		]);
 	};
 
 	# Serves as the router, DHCP, and DNS for the site
-	greg.router = {
-		enable = true;
-		wan = [ wanInterface "tailscale0" ];
-		lan = [ lanInterface ];
+	greg = {
+		router = {
+			enable = true;
+			wan = [ wanInterface "tailscale0" ];
+			lan = [ lanInterface ];
+		};
+		tailscale.enable = true;
+		proxies = {
+			"mm.shire-zebra.ts.net".target = "http://127.0.0.1:8123";
+			"store.mindmazeroom.com".target = "http://127.0.0.1:8123";
+		};
 	};
-	greg.tailscale.enable = true;
 	services = {
 		dnsmasq = {
 			enable = true;
@@ -69,6 +78,39 @@ in
 				WIFI_IFACE = "wlan0";
 				SSID = "MM_Test";
 				PASSPHRASE = "MindMaze2023";
+			};
+		};
+		home-assistant = {
+			enable = true;
+			configDir = "/var/lib/hass";
+			package = (pkgs.home-assistant.override {
+				extraComponents = [
+					"accuweather"
+					"calendar"
+					"cast"
+					"lovelace"
+				];
+			}).overrideAttrs (oldAttrs: {
+				doInstallCheck = false;
+			});
+			config = {
+				logger.default = "info";
+				default_config = {};
+				esphome = {};  # Get these things loaded, even if not configured
+				met = {};
+				my = {};
+				tts = [ { platform = "google_translate"; } ];
+				http = {
+					use_x_forwarded_for = true;
+					trusted_proxies = [ "127.0.0.1" "::1" ];
+					server_host = "127.0.0.1";
+				};
+				"automation manual" = [];
+				"automation ui" = "!include automations.yaml";
+				"script manual" = [];
+				"script ui" = "!include scripts.yaml";
+				"scene manual" = [];
+				"scene ui" = "!include scenes.yaml";
 			};
 		};
 		kea.dhcp4 = {
@@ -96,6 +138,19 @@ in
 					subnet = "10.177.1.0/24";
 					pools = [{
 						pool = "10.177.1.10-10.177.1.250";
+					}];
+					reservations = [{
+						hw-address = "9c:8e:cd:3f:3f:8c";
+						hostname = "madscientist";
+						ip-address = "10.177.1.249";
+					} {
+						hw-address = "9c:8e:cd:3f:40:a4";
+						hostname = "saloon";
+						ip-address = "10.177.1.248";
+					} {
+						hw-address = "9c:8e:cd:3f:40:d3";
+						hostname = "jail";
+						ip-address = "10.177.1.247";
 					}];
 				}];
 			};
