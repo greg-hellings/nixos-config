@@ -14,6 +14,10 @@ flake-utils.lib.eachDefaultSystemMap (system:
 
 		brew = pkgs.callPackage ./homebrew.nix {};
 
+		django-rapyd-modernauth = pkgs.callPackage ./django-rapyd-modernauth.nix {
+			buildPythonPackage = pkgs.python3.pkgs.buildPythonPackage;
+		};
+
 		xonsh-direnv = pkgs.callPackage ./xonsh-direnv.nix {
 			buildPythonPackage = pkgs.python3.pkgs.buildPythonPackage;
 			fetchPypi = pkgs.python.pkgs.fetchPypi;

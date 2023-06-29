@@ -10,6 +10,7 @@ let
 		flake8
 		ipython
 		jedi
+		jedi-language-server
 		mypy
 		pylint
 		pyyaml
@@ -48,14 +49,21 @@ let
 	});
 
 in rec {
-	#python3 = final.unstable.python3;
 	gregpy = myPython;
+
+	## Testing adding python packages in the correct manner
+	pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
+		(python-final: python-prev: {
+			django-rapyd-modernauth = python-final.callPackage ./django-rapyd-modernauth.nix {};
+			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
+			xonsh-direnv = cp ./xonsh-direnv.nix {};
+		})
+	];
 
 	my-py-addons = rec {
 		copier =  cp ./copier.nix {
 			inherit iteration-utilities
 			        jinja2-ansible-filters
-			        pydantic
 			        pyyaml-include
 			;
 		};
@@ -63,7 +71,6 @@ in rec {
 		jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
 		pydantic = cp ./pydantic.nix {};
 		pyyaml-include = cp ./pyyaml-include.nix {};
-		xonsh-direnv = cp ./xonsh-direnv.nix {};
 	};
 
 	#fcitx-engines = if ! prev.stdenv.isDarwin then prev.fcitx5 else prev.fcitx-engines;
@@ -79,7 +86,10 @@ in rec {
 
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
-		propagatedBuildInputs = old.propagatedBuildInputs ++ [ my-py-addons.xonsh-direnv ];
+		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
+			xonsh-apipenv
+			xonsh-direnv
+		];
 	});
 
 	bitwarden = macOver ./mac/bitwarden.nix "bitwarden";

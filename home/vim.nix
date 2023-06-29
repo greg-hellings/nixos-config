@@ -22,6 +22,11 @@ let
 	};
 in
 {
+	home.packages = with pkgs; [
+		ansible-language-server
+		pyright
+	];
+
 	programs.neovim = {
 		enable = true;
 		viAlias = true;
@@ -30,24 +35,17 @@ in
 		plugins = with pkgs.vimPlugins; [
 			ansible-vim
 			bufexplorer
-			coc-cmake
-			coc-css
-			coc-go
-			coc-highlight
-			coc-html
-			coc-java
-			coc-json
-			coc-lists
-			coc-markdownlint
-			coc-nvim
-			coc-pyright
-			coc-tslint
-			coc-vimtex
-			coc-yaml
+
+			#cmp-nvim-lsp
+			#cmp-vsnip
+			#nvim-lspconfig
+			#nvim-cmp
+
 			context-vim
 			direnv-vim
 			fzf-vim
 			nerdtree
+			nvim-notify
 			vim-airline
 			vim-gitgutter
 			vim-flake8
@@ -58,6 +56,10 @@ in
 			vim-xonsh
 			gruvbox
 		];
-		extraConfig = builtins.readFile ./vimrc;
+		#extraConfig = builtins.readFile ./vimrc;
+		extraLuaConfig = builtins.readFile ./init.lua;
+		coc = {
+			enable = true;
+		};
 	};
 }
