@@ -30,8 +30,8 @@ in with lib; {
 
 			# Enablement for Firefox
 			gnome = {
-				#gnome-browser-connector.enable = true;
-				chrome-gnome-shell.enable = true;
+				gnome-browser-connector.enable = true;
+				#chrome-gnome-shell.enable = true;
 				sushi.enable = true;
 				gnome-online-accounts.enable = true;
 			};

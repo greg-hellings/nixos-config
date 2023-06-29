@@ -1,9 +1,7 @@
 final: prev:
 
 let
-	cp = prev.python3.pkgs.callPackage;
-
-	myPackages = pypackages: with pypackages; with pkgs.my-py-addons; [
+	myPackages = pypackages: with pypackages; [
 		black
 		copier
 		dateutil
@@ -53,27 +51,22 @@ in rec {
 
 	## Testing adding python packages in the correct manner
 	pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
-		(python-final: python-prev: {
-			django-rapyd-modernauth = python-final.callPackage ./django-rapyd-modernauth.nix {};
+		(python-final: python-prev: let cp = python-final.callPackage; in {
+			django-rapyd-modernauth = cp ./django-rapyd-modernauth.nix {};
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
 			xonsh-direnv = cp ./xonsh-direnv.nix {};
+			copier =  cp ./copier.nix {
+				inherit (python-final)
+				    iteration-utilities
+				    jinja2-ansible-filters
+				    pyyaml-include;
+			};
+			iteration-utilities = cp ./iteration-utilities.nix {};
+			jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
+			pyyaml-include = cp ./pyyaml-include.nix {};
 		})
 	];
 
-	my-py-addons = rec {
-		copier =  cp ./copier.nix {
-			inherit iteration-utilities
-			        jinja2-ansible-filters
-			        pyyaml-include
-			;
-		};
-		iteration-utilities = cp ./iteration-utilities.nix {};
-		jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
-		pydantic = cp ./pydantic.nix {};
-		pyyaml-include = cp ./pyyaml-include.nix {};
-	};
-
-	#fcitx-engines = if ! prev.stdenv.isDarwin then prev.fcitx5 else prev.fcitx-engines;
 	brew = prev.callPackage ./homebrew.nix {};
 
 	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
