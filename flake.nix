@@ -74,10 +74,10 @@
 			buildInputs = with pkgs; [
 				bashInteractive
 				curl
+				gnutar
 				gzip
 				inject
 				sudo
-				tar
 				xonsh
 			];
 		}));
