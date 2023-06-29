@@ -68,6 +68,20 @@
 			}
 		);
 
+		devShell = (flake-utils.lib.eachSystemMap flake-utils.lib.allSystems (system: let
+			pkgs = import nixunstable { inherit system overlays; };
+		in pkgs.mkShell {
+			buildInputs = with pkgs; [
+				bashInteractive
+				curl
+				gzip
+				inject
+				sudo
+				tar
+				xonsh
+			];
+		}));
+
 		overlays = { default = local_overlay; };
 		modules = (import ./modules-all {}) //
 		          (import ./modules-linux {}) //
