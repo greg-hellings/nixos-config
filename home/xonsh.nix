@@ -43,7 +43,8 @@
 			d = "vox deactivate";
 			devroles = "cd ~/src/ansible_collections/devroles";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
-			ll = "ls -l";
+			ls = "ls --color";
+			ll = "ls -l --color";
 			molcol = "molecule -c ../../tests/molecule.yml";
 			nixup = "nix flake lock --update-input";
 			pa = "cd ~/src/packaging";
