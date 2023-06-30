@@ -60,6 +60,7 @@
 		setup-ssh
 		tmux
 		transcrypt
+		tree
 		unzip
 		wget
 	];
