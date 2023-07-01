@@ -15,7 +15,6 @@ in
 	home.packages = with pkgs; [
 		cdrtools
 		ffmpeg
-		gnucash
 		handbrake
 		libtheora
 		makemkv
@@ -45,5 +44,10 @@ in
 		bitwarden
 		onlyoffice-bin
 		zoom-us
+	]) ++
+
+	( excludes ["aarch64-darwin" "x86_64-darwin"]
+	[
+		gnucash
 	]);
 }

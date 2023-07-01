@@ -22,6 +22,8 @@ buildPythonPackage rec {
 		maintainers = [];
 	};
 
+	patchPhase = "sed -i -e 's/^dependencies.*$/dependencies = []/' pyproject.toml";
+
 	doCheck = false;
 
 	nativeBuildInputs = [
