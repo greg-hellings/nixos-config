@@ -6,5 +6,6 @@
 		wslConf.automount.root = "/mnt";
 		defaultUser = "greg";
 		startMenuLaunchers = true;
+		nativeSystemd = true;
 	};
 }
