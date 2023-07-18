@@ -36,8 +36,8 @@
 		"retries = 1"
 		"index-url = https://pypi.python.org/simple"
 		"extra-index-url ="
-		"    https://pypi.ivrtechnlology.com/simple/"
-		"    https://pypiev.ivrtechnology.com/simple/"
+		"    https://pypi.ivrtechnology.com/simple/"
+		"    https://pypidev.ivrtechnology.com/simple/"
 	]);
 
 	home.stateVersion = "23.05";
