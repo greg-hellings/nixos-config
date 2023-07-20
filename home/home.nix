@@ -62,6 +62,7 @@
 		transcrypt
 		tree
 		unzip
+		vagrant
 		wget
 	];
 }
