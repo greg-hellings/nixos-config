@@ -22,11 +22,11 @@
 	programs.tmux = {
 		enable = true;
 		keyMode = "vi";
-		shell = "~/.nix-profile/bin/xonsh";
+		shell = "${pkgs.xonsh}/bin/xonsh";
 		terminal = "xterm-256color";
 		customPaneNavigationAndResize = true;
+			#"set-option -g default-command ${pkgs.xonsh}/bin/xonsh"
 		extraConfig = (lib.strings.concatStringsSep "\n" [
-			"set-option -g default-command ~/.nix-profile/bin/xonsh"
 			"bind P paste-buffer"
 		]);
 	};
