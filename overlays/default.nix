@@ -17,7 +17,6 @@ let
 		tox
 		typing-extensions
 		virtualenv
-		xonsh-direnv
 	];
 
 	myPython = prev.python3.withPackages myPackages;
@@ -42,6 +41,7 @@ in rec {
 			django-rapyd-modernauth = cp ./django-rapyd-modernauth.nix {};
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
 			xonsh-direnv = cp ./xonsh-direnv.nix {};
+			xontrib-vox = cp ./xonsh-vox.nix {};
 			copier =  cp ./copier.nix {
 				inherit (python-final)
 				    iteration-utilities
@@ -70,6 +70,7 @@ in rec {
 		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
 			xonsh-apipenv
 			xonsh-direnv
+			xontrib-vox
 		];
 	});
 
