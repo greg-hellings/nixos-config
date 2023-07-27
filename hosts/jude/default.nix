@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
 	imports = [
@@ -15,4 +15,8 @@
 	greg.tailscale.enable = true;
 	greg.gnome.enable = true;
 	greg.kde.enable = false;
+
+	environment.systemPackages = with pkgs; [
+		oathToolkit
+	];
 }

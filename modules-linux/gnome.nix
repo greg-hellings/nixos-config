@@ -52,6 +52,7 @@ in with lib; {
 			gnomeExtensions.appindicator
 			gnomeExtensions.clipboard-indicator
 			gnomeExtensions.dash-to-dock
+			gnomeExtensions.vitals
 		];
 	};
 }

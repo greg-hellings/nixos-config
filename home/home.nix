@@ -45,6 +45,7 @@
 		bitwarden-cli
 		brew
 		diffutils
+		dmidecode
 		findutils
 		gimp
 		git
