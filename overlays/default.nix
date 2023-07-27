@@ -26,28 +26,15 @@ let
 		(prev.callPackage file {}) else
 		prev."${og}";
 
-	buildFirefoxXpiAddon = prev.lib.makeOverridable ({ stdenv ? prev.stdenv
-	, fetchurl ? prev.fetchurl, pname, version, addonId, url, sha256, meta, ...
-	}:
-	stdenv.mkDerivation {
-		name = "${pname}-${version}";
-
-		inherit meta;
-
-		src = fetchurl { inherit url sha256; };
-
-		preferLocalBuild = true;
-		allowSubstitutes = true;
-
-		buildCommand = ''
-			dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-			mkdir -p "$dst"
-			install -v -m644 "$src" "$dst/${addonId}.xpi"
-		'';
-	});
+	buildFirefoxXpiAddon = final.nur.repos.rycee.lib.buildFirefoxXpiAddon;
 
 in rec {
 	gregpy = myPython;
+	bypass-paywalls = final.nur.repos.rycee.firefox-addons.bypass-paywalls-clean.override {
+		version = "3.2.6.0";
+		url = "https://gitlab.com/magnolia1234/bpc-uploads/-/raw/master/bypass_paywalls_clean-3.2.6.0-custom.xpi";
+		sha256 = "sha256-dEdqg0q4w+evky7oZ4l33GPEBEc/PFG2dCsQkVY9/3g=";
+	};
 
 	## Testing adding python packages in the correct manner
 	pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [

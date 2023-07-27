@@ -28,7 +28,7 @@ in with lib;
 				};
 				extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 					bitwarden
-					#bypass-paywalls-firefox-clean
+					pkgs.bypass-paywalls
 					foxyproxy-standard
 					multi-account-containers
 					plasma-integration
