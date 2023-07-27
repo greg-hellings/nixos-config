@@ -2,6 +2,7 @@
 
 {
 	environment.systemPackages = with pkgs; [
+		guestfs-tools
 		libguestfs
 		packer
 		virt-manager
