@@ -35,6 +35,7 @@
 			cblack = "compass workspace run src/python3/uc/tools:run_black --";
 			cbuild = "compass workspace build";
 			cci = "./scripts/circleci-checks.py";
+			cgh = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/compass\" gh";
 			crun = "compass workspace run";
 			ctest = "compass workspace test";
 			cylint = "./scripts/run_yaml_lint.py";
@@ -43,6 +44,7 @@
 			d = "vox deactivate";
 			devroles = "cd ~/src/ansible_collections/devroles";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
+			gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
 			ls = "ls --color";
 			ll = "ls -l --color";
 			molcol = "molecule -c ../../tests/molecule.yml";
