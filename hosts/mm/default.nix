@@ -155,7 +155,16 @@ in
 				}];
 			};
 		};
-
+		minidlna = {
+			enable = true;
+			openFirewall = true;
+			settings = {
+				inotify = "yes";
+				media_dir = [
+					"/mm-video"
+				];
+			};
+		};
 		# Configure keymap in X11
 		xserver = {
 			layout = "us";
