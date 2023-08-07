@@ -44,6 +44,9 @@ in with lib; {
 			wlr.enable = true;  # Enables screen sharing in Wayland
 		};
 
+		# Used by gsconnect
+		networking.firewall.allowedTCPPorts = [ 1716 ];
+
 		# Enable some Gnome plugins that I like
 		environment.systemPackages = with pkgs; [
 			gnome3.adwaita-icon-theme
@@ -52,6 +55,7 @@ in with lib; {
 			gnomeExtensions.appindicator
 			gnomeExtensions.clipboard-indicator
 			gnomeExtensions.dash-to-dock
+			gnomeExtensions.gsconnect
 			gnomeExtensions.vitals
 		];
 	};

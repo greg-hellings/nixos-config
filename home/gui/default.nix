@@ -18,6 +18,7 @@ in
 		gnucash
 		handbrake
 		libtheora
+		makemkv
 		vlc
 		x265
 	] ++

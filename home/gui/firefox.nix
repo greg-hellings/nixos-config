@@ -29,6 +29,7 @@ in with lib;
 				extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 					bitwarden
 					pkgs.bypass-paywalls
+					gsconnect
 					foxyproxy-standard
 					multi-account-containers
 					plasma-integration
