@@ -54,8 +54,8 @@ in {
 				workspaces-only-on-primary = true;
 			};
 			"org/virt-manager/virt-manager/connections" = {
-				autoconnect = [ "qemu://session" "qemu://system" ];
-				uris = [ "qemu://session" "qemu://system" ];
+				autoconnect = [ "qemu:///session" "qemu:///system" ];
+				uris = [ "qemu:///session" "qemu:///system" ];
 			};
 		};
 	});
