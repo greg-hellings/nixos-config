@@ -6,6 +6,7 @@
 		libguestfs
 		packer
 		virt-manager
+		vmware-workstation
 	];
 
 	# Give my user access to the libvirtd process
