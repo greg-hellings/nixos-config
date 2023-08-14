@@ -36,7 +36,6 @@
 		bitwarden-cli
 		brew
 		diffutils
-		dmidecode
 		findutils
 		gimp
 		git
@@ -47,6 +46,7 @@
 		inetutils
 		jq
 		nano
+		nix-prefetch
 		nmap
 		openssl
 		setup-ssh
