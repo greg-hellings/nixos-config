@@ -19,4 +19,14 @@
 	environment.systemPackages = with pkgs; [
 		oathToolkit
 	];
+	fileSystems =  {
+		"/boot" = {
+			device = "/dev/nvme0n1p1";
+			fsType = "auto";
+		};
+		"/windows" = {
+			device = "/dev/nvme0n1p3";
+			fsType = "ntfs-3g";
+		};
+	};
 }
