@@ -25,8 +25,8 @@
 			enableExtensionPack = true;
 		};
 
-		waydroid.enable = true;
-		lxd.enable = true;
+		waydroid.enable = false;
+		lxd.enable = false;
 	};
 
 	users.extraGroups.vboxusers.members = [ "greg" ];
