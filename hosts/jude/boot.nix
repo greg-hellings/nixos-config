@@ -9,7 +9,7 @@
 		menuentry "Windows" --class windows --class os {
 		  insmod nfts
 		  search --no-floppy --set=root --fs-uuid A41B-5963
-		  chainloader (${root})/EFI/Microsoft/Boot/bootmgfw.efi
+		  chainloader (''${root})/EFI/Microsoft/Boot/bootmgfw.efi
 		}
 	'';
 	boot.loader.efi.canTouchEfiVariables = true;
