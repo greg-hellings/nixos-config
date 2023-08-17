@@ -4,9 +4,11 @@
 	environment.systemPackages = with pkgs; [
 		guestfs-tools
 		libguestfs
+		ovftool
 		packer
 		virt-manager
 		vmware-workstation
+		vmfs-tools
 	];
 
 	# Give my user access to the libvirtd process
