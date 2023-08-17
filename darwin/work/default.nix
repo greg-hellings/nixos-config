@@ -11,7 +11,6 @@
 			"onlyoffice"
 			"postman"
 			"vagrant"
-			"vmware-fusion"
 		];
 	};
 }
