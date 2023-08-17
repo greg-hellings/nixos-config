@@ -14,6 +14,7 @@ in
 
 	home.packages = with pkgs; [
 		cdrtools
+		dconf2nix
 		ffmpeg
 		gnucash
 		handbrake

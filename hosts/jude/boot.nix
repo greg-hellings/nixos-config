@@ -7,7 +7,7 @@
 		supportedFilesystems = [ "ntfs" ];
 		loader = {
 			systemd-boot = {
-				enable = true;
+				enable = false;
 				configurationLimit = 10;
 				extraEntries = {
 					"Windows.conf" = (lib.strings.concatStringsSep "\n" [
@@ -17,7 +17,7 @@
 				};
 			};
 			grub = {
-				enable = false;
+				enable = true;
 				device = "/dev/nvme0n1";
 				useOSProber = true;
 				efiSupport = true;
