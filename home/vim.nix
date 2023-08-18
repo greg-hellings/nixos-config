@@ -27,43 +27,6 @@ in
 		pyright
 	];
 
-	#programs.neovim = {
-	#	enable = true;
-	#	viAlias = true;
-	#	vimAlias = true;
-	#	vimdiffAlias = true;
-	#	plugins = with pkgs.vimPlugins; [
-	#		ansible-vim
-	#		bufexplorer
-#
-#			#cmp-nvim-lsp
-#			#cmp-vsnip
-#			#nvim-lspconfig
-#			nvim-cmp
-#
-#			jedi-vim
-#
-#			context-vim
-#			direnv-vim
-#			fzf-vim
-#			nerdtree
-#			nvim-notify
-#			vim-airline
-#			vim-gitgutter
-#			vim-flake8
-#			vim-fugitive
-#			vim-indent-guides
-#			vim-packer
-#			vim-rooter
-#			vim-xonsh
-#			gruvbox
-#		];
-#		extraLuaConfig = builtins.readFile ./init.lua;
-#		coc = {
-#			# Currently waiting on resolution of https://github.com/NixOS/nixpkgs/issues/236560
-#			enable = false;
-#		};
-#	};
 	programs.nixneovim = {
 		enable = true;
 		colorscheme = "gruvbox";
@@ -135,7 +98,7 @@ in
 			nerdtree
 			nvim-cmp
 
-			jedi-vim
+			#jedi-vim
 
 			context-vim
 			direnv-vim

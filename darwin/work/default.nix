@@ -13,4 +13,5 @@
 			"vagrant"
 		];
 	};
+	environment.loginShell = "${pkgs.xonsh}/bin/xonsh";
 }
