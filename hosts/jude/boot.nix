@@ -7,17 +7,17 @@
 		supportedFilesystems = [ "ntfs" ];
 		loader = {
 			systemd-boot = {
-				enable = false;
+				enable = true;
 				configurationLimit = 10;
 				extraEntries = {
 					"Windows.conf" = (lib.strings.concatStringsSep "\n" [
 						"title Windows"
-						"efi /EFI/Windows/bootmgfw.efi"
+						"efi /EFI/Microsoft/EFI/bootmgfw.efi"
 					]);
 				};
 			};
 			grub = {
-				enable = true;
+				enable = false;
 				device = "/dev/nvme0n1";
 				useOSProber = true;
 				efiSupport = true;
