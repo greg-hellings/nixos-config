@@ -4,17 +4,27 @@
 	greg.tailscale.enable = true;
 
 	networking = {
-		# This value is deprecated, you now set it per interface
-		useDHCP = false;
-		defaultGateway = "10.42.1.1";
+		enableIPv6 = false;
+		#defaultGateway = "10.42.1.1";
 		# 100.100.100.100 is the tailscale DNS
-		nameservers = [ "100.100.100.100" "127.0.0.1" ];
+		nameservers = [
+			"1.1.1.1"
+			#"100.100.100.100"
+			"127.0.0.1"
+		];
 		interfaces = {
-			eth0.ipv4.addresses = [ {
-				address = "10.42.1.2";
+			# This is our WAN port
+			enp2s0 = {
+				useDHCP = true;
+				name = "wan";
+			};
+
+			# This is our LAN port
+			enp1s0.ipv4.addresses = [ {
+				address = "10.43.1.1";
 				prefixLength = 16;
 			} ];
-			wlan0.useDHCP = true;
+			wlan0.useDHCP = false;
 
 			vlan66.ipv4.addresses = [ {
 				address = "192.168.66.2";
@@ -25,7 +35,7 @@
 		vlans = {
 			vlan66 = {
 				id = 66;
-				interface = "eth0";
+				interface = "enp2s0";
 			};
 		};
 	};
@@ -47,8 +57,10 @@
 		openFirewall = true;
 	};
 
-	greg.proxies."jellyfin.thehellings.lan".target = "http://localhost:8096";
-	greg.proxies."jellyfin.me.ts".target = "http://localhost:8096";
+	greg.proxies = {
+		"jellyfin.thehellings.lan".target = "http://localhost:8096";
+		"jellyfin.me.ts".target = "http://localhost:8096";
+	};
 
 	#########
 	# Blind service proxy behind the walls of the VPN
@@ -64,12 +76,12 @@
 				users = [ "greg" ];
 			} ];
 		} ];
-		usersFile = "/run/agenix/3proxy";
+		#usersFile = "/run/agenix/3proxy";
 		denyPrivate = false;
 	};
-	age.secrets."3proxy" = {
-		file = ../../secrets/3proxy.age;
-		mode = "777";
-	};
+	#age.secrets."3proxy" = {
+	#	file = ../../secrets/3proxy.age;
+	#	mode = "776";
+	#};
 	networking.firewall.allowedTCPPorts = [ 3128 ];
 }

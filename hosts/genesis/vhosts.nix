@@ -5,11 +5,6 @@
 { ... }:
 
 {
-	greg.proxies."dns.thehellings.lan" = {
-		target = "http://127.0.0.1:8384/";
-		path = "/sync/";
-	};
-
 	# The module doesn't handle this
 	services.nginx.virtualHosts."dns.thehellings.lan".serverAliases = [ "dns" ];
 }

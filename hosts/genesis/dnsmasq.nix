@@ -22,35 +22,37 @@ let
 
 	extraConfig = builtins.concatStringsSep "\n" [
 	];
+
+	lanDevice = "enp1s0";
 in
 {
 	# Enable the service with its own configuration
 	services.dnsmasq = {
 		enable = true;
-		# Public AdGuard DNS servers
 		settings = {
 			domain = "thehellings.lan";
 			dhcp-range = [
-		#		"eth0,10.42.0.1,10.42.1.255,255.255.0.0,static"
-				"eth0,10.42.2.1,10.42.2.255,255.255.0.0,12h"
-				"vlan66@eth0,192.168.66.3,192.168.66.150,255.255.255.0,12h"
-				"vlan67@eth0,192.168.67.3,192.168.67.150,12h"
+		#		"${lanDevice},10.42.0.1,10.42.1.255,255.255.0.0,static"
+				"${lanDevice},10.42.2.1,10.42.2.255,255.255.0.0,12h"
+				"vlan66@${lanDevice},192.168.66.3,192.168.66.150,255.255.255.0,12h"
+				"vlan67@${lanDevice},192.168.67.3,192.168.67.150,12h"
 			];
 			dhcp-option = [
-				"eth0,option:router,10.42.1.1"
-				"eth0,option:dns-server,10.42.1.2,1.1.1.1"
-				"eth0,option:domain-search,thehellings.lan"
+				"${lanDevice},option:router,10.42.1.1"
+				"${lanDevice},option:dns-server,10.42.1.2,1.1.1.1"
+				"${lanDevice},option:domain-search,thehellings.lan"
 
-				"vlan66@eth0,option:router,192.168.66.1"
-				"vlan66@eth0,option:dns-server,192.168.66.2"
+				"vlan66@${lanDevice},option:router,192.168.66.1"
+				"vlan66@${lanDevice},option:dns-server,192.168.66.2"
 
-				"vlan67@eth0,option:router,192.168.67.1"
-				"vlan67@eth0,option:dns-server,192.168.67.2"
+				"vlan67@${lanDevice},option:router,192.168.67.1"
+				"vlan67@${lanDevice},option:dns-server,192.168.67.2"
 			];
 			expand-hosts = true;
 			log-dhcp = true;
 			log-queries = true;
 			addn-hosts = "/etc/adblock_hosts";
+			# Public AdGuard DNS servers
 			server = [
 				"94.140.14.14"
 				"94.140.15.15"
