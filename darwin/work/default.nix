@@ -1,13 +1,16 @@
 { pkgs, ... }:
 
 {
-	#greg.pypackages = with pkgs; [
-	#	dateutil
-	#	ipython
-	#	pyyaml
-	#	responses
-	#	ruamel-yaml
-	#	typing-extensions
-	#	virtualenv
-	#];
+	homebrew = {
+		enable = true;
+		brews = [
+			"packer"
+		];
+		casks = [
+			"gnucash"
+			"onlyoffice"
+			"postman"
+			"vagrant"
+		];
+	};
 }

@@ -48,6 +48,7 @@
 		inetutils
 		jq
 		nano
+		nix-prefetch
 		nmap
 		openssl
 		setup-ssh
