@@ -61,6 +61,10 @@ in rec {
 		pkgs = final.pkgs;
 	};
 	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
+	libbluray = prev.libbluray.override {
+		withAACS = true;
+		withBDplus = true;
+	};
 	setup-ssh = prev.callPackage ./setup-ssh.nix {
 		pkgs = final.pkgs;
 	};
@@ -73,9 +77,9 @@ in rec {
 		];
 	});
 
-	bitwarden = macOver ./mac/bitwarden.nix "bitwarden";
-	gnucash = macOver ./mac/gnucash.nix "gnucash";
-	handbrake = macOver ./mac/handbrake.nix "handbrake";
-	onlyoffice-bin = macOver ./mac/onlyoffice-bin.nix "onlyoffice-bin";
-	vlc = macOver ./mac/vlc.nix "vlc";
+	#bitwarden = macOver ./mac/bitwarden.nix "bitwarden";
+	#gnucash = macOver ./mac/gnucash.nix "gnucash";
+	#handbrake = macOver ./mac/handbrake.nix "handbrake";
+	#onlyoffice-bin = macOver ./mac/onlyoffice-bin.nix "onlyoffice-bin";
+	#vlc = macOver ./mac/vlc.nix "vlc";
 }
