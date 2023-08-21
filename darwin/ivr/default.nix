@@ -31,5 +31,8 @@ in {
 			}
 			"virt-manager"
 		];
+		casks = [
+			"synology-drive"
+		];
 	};
 }

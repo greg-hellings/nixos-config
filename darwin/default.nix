@@ -23,8 +23,9 @@ let
 					extraSpecialArgs = {
 						inherit inputs;
 						gnome = false;
-						gui = true;
+						gui = false;
 						home = "/Users/gregory.hellings";
+						host = name;
 					};
 				};
 				users.users."gregory.hellings".home = "/Users/gregory.hellings";
