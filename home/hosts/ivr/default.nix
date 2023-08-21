@@ -1,6 +1,9 @@
 { pkgs, lib, ...}:
 
 {
+	home.packages = with pkgs; [
+		brew
+	];
 	home.file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 		"[global]"
 		"retries = 1"

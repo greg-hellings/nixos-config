@@ -36,10 +36,8 @@
 	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
-		brew
 		diffutils
 		findutils
-		gimp
 		git
 		gnupatch
 		gregpy
@@ -56,7 +54,6 @@
 		transcrypt
 		tree
 		unzip
-		vagrant
 		wget
 	];
 }
