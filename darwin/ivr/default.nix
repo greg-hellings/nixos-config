@@ -25,6 +25,7 @@ in {
 		brews = [
 			"qemu"
 			"gcc"
+			"libaacs"
 			{
 				name = "libvirt";
 				restart_service = true;
@@ -33,6 +34,7 @@ in {
 		];
 		casks = [
 			"synology-drive"
+			"handbrake"
 		];
 	};
 }

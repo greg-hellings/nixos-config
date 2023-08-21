@@ -2,6 +2,7 @@
 
 {
 	home.packages = with pkgs; [
+		aacs
 		brew
 	];
 	home.file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [

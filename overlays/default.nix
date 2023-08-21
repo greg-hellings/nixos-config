@@ -54,8 +54,8 @@ in rec {
 		})
 	];
 
+	aacs = prev.callPackage ./aacs.nix {};
 	brew = prev.callPackage ./homebrew.nix {};
-
 	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
 	hms = prev.callPackage ./hms.nix {
 		pkgs = final.pkgs;
@@ -64,7 +64,6 @@ in rec {
 	setup-ssh = prev.callPackage ./setup-ssh.nix {
 		pkgs = final.pkgs;
 	};
-
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
 		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
