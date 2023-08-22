@@ -15,7 +15,7 @@
 	];
 	
 	greg.home = true;
-	greg.gnome.enable = true;
+	greg.gnome.enable = false;
 	
 	# Bootloader.
 	boot.loader = {

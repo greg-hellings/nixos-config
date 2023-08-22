@@ -1,10 +1,22 @@
-{ ... }:
-
-{
+{ pkgs, config, ... }:
+let
+	lan = "enp1s0";
+	wan = "enp2s0";
+	iot = "vlan66";
+in {
 	greg.tailscale.enable = true;
+
+	# Really, why do I still have to force-disable this crap?
+	boot.kernel.sysctl = {
+		"net.ipv6.conf.${lan}.disable_ipv6" = true;
+		"net.ipv6.conf.${wan}.disable_ipv6" = true;
+		"net.ipv6.conf.${iot}.disable_ipv6" = true;
+		"net.ipv6.conf.lo.disable_ipv6" = true;
+	};
 
 	networking = {
 		enableIPv6 = false;
+		networkmanager.enable = pkgs.lib.mkForce false;
 		#defaultGateway = "10.42.1.1";
 		# 100.100.100.100 is the tailscale DNS
 		nameservers = [
@@ -14,37 +26,52 @@
 		];
 		interfaces = {
 			# This is our WAN port
-			enp2s0 = {
+			"${wan}" = {
 				useDHCP = true;
-				name = "wan";
 			};
 
 			# This is our LAN port
-			enp1s0.ipv4.addresses = [ {
-				address = "10.43.1.1";
-				prefixLength = 16;
-			} ];
+			"${lan}" = {
+				ipv4.addresses = [ {
+					address = "10.42.1.1";
+					prefixLength = 16;
+				} ];
+				useDHCP = false;
+			};
 			wlan0.useDHCP = false;
 
-			vlan66.ipv4.addresses = [ {
-				address = "192.168.66.2";
-				prefixLength = 24;
-			} ];
+			"${iot}" = {
+				useDHCP = false;
+				ipv4.addresses = [ {
+					address = "192.168.66.2";
+					prefixLength = 24;
+				} ];
+			};
 		};
 
 		vlans = {
-			vlan66 = {
+			"${iot}" = {
 				id = 66;
-				interface = "enp2s0";
+				interface = lan;
 			};
+		};
+
+		firewall.enable = false;
+		# Router portion here
+		nftables = let
+			myvars = {
+				lanInterfaces = [ lan ];
+				wanInterface = wan;
+				limitedLan = [ iot ];
+				tcpPorts = config.networking.firewall.allowedTCPPorts;
+				udpPorts = config.networking.firewall.allowedUDPPorts;
+			};
+		in {
+			enable = true;
+			rulesetFile = pkgs.template "router.nft" myvars ./nftables.nft;
 		};
 	};
 
-	# Open ports in the firewall.
-	# networking.firewall.allowedTCPPorts = [ ... ];
-	# networking.firewall.allowedUDPPorts = [ ... ];
-	# Or disable the firewall altogether.
-	# networking.firewall.enable = false;
 
 	fileSystems."/media" = {
 		device = "10.42.1.4:/volume1/video/";

@@ -78,7 +78,6 @@ in
 	# Ensure that both ports are up and running. We keep 8123 directly open because we are on the LAN and sometimes want to connect
 	# directly for troubleshooting Nginx configuration
 	networking.firewall = {
-		enable = true;
 		allowedTCPPorts = [ 80 443 8091 8123 ];
 	};
 

@@ -44,10 +44,10 @@
 	home.packages = with pkgs; [
 		bitwarden-cli
 		brew
+		copier
 		diffutils
 		dmidecode
 		findutils
-		gimp
 		git
 		gnupatch
 		gregpy

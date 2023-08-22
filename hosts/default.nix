@@ -16,7 +16,7 @@ let
 		};
 	in channel.lib.nixosSystem {
 		inherit system;
-		specialArgs = { inherit nixpkgs; };
+		specialArgs = { inherit nixpkgs inputs; };
 		modules = [
 			{
 				nixpkgs.overlays = overlays;

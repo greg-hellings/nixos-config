@@ -1,0 +1,47 @@
+#!/usr/bin/env nft -f
+
+table ip filter {
+	chain output {
+		type filter hook output priority 100; policy accept;
+	}
+
+	chain input {
+		type filter hook input priority 0; policy drop;
+
+		iifname lo accept
+
+		# Open the specific ports that we allow
+		{% for port in tcpPorts %}
+		iifname { {{ lanInterfaces | join(", ") }}, "tailscale0" } tcp dport {{ port }} accept
+		{% endfor %}
+		{% for port in udpPorts %}
+		iifname { {{ lanInterfaces | join(", ") }}, "tailscale0" } udp dport {{ port }} accept
+		{% endfor %}
+
+		iifname { {{ lanInterfaces | join(", ") }} } accept comment "Allows LAN traffic and outgoing"
+		iifname { {{ wanInterface }} } ct state { established, related } accept comment "Allows existing connections"
+		iifname { {{ wanInterface }} } icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow some ICMP traffic"
+		iifname { {{ wanInterface }} } counter drop comment "Drop other incoming traffic, and count how much"
+	}
+	chain forward {
+		type filter hook forward priority 0; policy drop;
+		iifname { {{ (lanInterfaces + limitedLan) | join(", ") }} } oifname { {{ wanInterface }} } accept comment "Forward LAN to WAN"
+		iifname { {{ wanInterface }} } oifname { {{ (lanInterfaces + limitedLan) | join(", ") }} } ct state established, related accept comment "Allow incoming established traffic"
+	}
+}
+
+table ip nat {
+	chain postrouting {
+		type nat hook postrouting priority 100; policy accept;
+		oifname { {{ wanInterface }} } masquerade
+	}
+}
+
+table ip6 filter {
+	chain input {
+		type filter hook input priority 0; policy drop;
+	}
+	chain forward {
+		type filter hook forward priority 0; policy drop;
+	}
+}

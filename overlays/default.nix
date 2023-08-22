@@ -3,7 +3,6 @@ final: prev:
 let
 	myPackages = pypackages: with pypackages; [
 		black
-		copier
 		dateutil
 		flake8
 		ipython
@@ -42,28 +41,21 @@ in rec {
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
 			xonsh-direnv = cp ./xonsh-direnv.nix {};
 			xontrib-vox = cp ./xonsh-vox.nix {};
-			copier =  cp ./copier.nix {
-				inherit (python-final)
-				    iteration-utilities
-				    jinja2-ansible-filters
-				    pyyaml-include;
-			};
-			iteration-utilities = cp ./iteration-utilities.nix {};
-			jinja2-ansible-filters = cp ./jinja2-ansible-filters.nix {};
-			pyyaml-include = cp ./pyyaml-include.nix {};
 		})
 	];
 
 	brew = prev.callPackage ./homebrew.nix {};
-
-	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
-	hms = prev.callPackage ./hms.nix {
-		pkgs = final.pkgs;
-	};
-	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
 	setup-ssh = prev.callPackage ./setup-ssh.nix {
 		pkgs = final.pkgs;
 	};
+	hms = prev.callPackage ./hms.nix {
+		pkgs = final.pkgs;
+	};
+	jinja2-cli = prev.python3.pkgs.callPackage ./jinja2-cli.nix {};
+	template = prev.callPackage ./template.nix { };
+
+	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
+	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
 
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;

@@ -17,6 +17,10 @@ let
 			udpPortsString = lib.strings.concatMapStringsSep "\n" (x: "iifname { ${lanList}, \"tailscale0\" } udp dport ${toString x} accept") openUDPPorts;
 	in lib.strings.concatStringsSep "\n" [
 		"table ip filter {"
+		"	chain output {"
+		"		type filter hook output priority 100; policy accept;"
+		"	}"
+
 		"	chain input {"
 		"		type filter hook input priority 0; policy drop;"
 
