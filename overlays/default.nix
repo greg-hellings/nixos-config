@@ -44,19 +44,22 @@ in rec {
 		})
 	];
 
+	aacs = prev.callPackage ./aacs.nix {};
 	brew = prev.callPackage ./homebrew.nix {};
-	setup-ssh = prev.callPackage ./setup-ssh.nix {
-		pkgs = final.pkgs;
-	};
+	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
 	hms = prev.callPackage ./hms.nix {
 		pkgs = final.pkgs;
 	};
-	jinja2-cli = prev.python3.pkgs.callPackage ./jinja2-cli.nix {};
-	template = prev.callPackage ./template.nix { };
-
-	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
 	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
-
+	jinja2-cli = prev.python3.pkgs.callPackage ./jinja2-cli.nix {};
+	libbluray = prev.libbluray.override {
+		withAACS = true;
+		withBDplus = true;
+	};
+	setup-ssh = prev.callPackage ./setup-ssh.nix {
+		pkgs = final.pkgs;
+	};
+	template = prev.callPackage ./template.nix { };
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
 		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
@@ -66,9 +69,9 @@ in rec {
 		];
 	});
 
-	bitwarden = macOver ./mac/bitwarden.nix "bitwarden";
-	gnucash = macOver ./mac/gnucash.nix "gnucash";
-	handbrake = macOver ./mac/handbrake.nix "handbrake";
-	onlyoffice-bin = macOver ./mac/onlyoffice-bin.nix "onlyoffice-bin";
-	vlc = macOver ./mac/vlc.nix "vlc";
+	#bitwarden = macOver ./mac/bitwarden.nix "bitwarden";
+	#gnucash = macOver ./mac/gnucash.nix "gnucash";
+	#handbrake = macOver ./mac/handbrake.nix "handbrake";
+	#onlyoffice-bin = macOver ./mac/onlyoffice-bin.nix "onlyoffice-bin";
+	#vlc = macOver ./mac/vlc.nix "vlc";
 }

@@ -15,11 +15,6 @@ in
 	home.packages = with pkgs; [
 		cdrtools
 		dconf2nix
-		ffmpeg
-		gnucash
-		handbrake
-		libtheora
-		makemkv
 		vlc
 		x265
 	] ++
@@ -32,12 +27,6 @@ in
 		libreoffice
 		logseq
 		nextcloud-client
-	]) ++
-
-	# Items that just cannot be outside of x86_64 at all
-	( excludes ["aarch64-darwin" "aarch64-linux"]
-	[
-		synology-drive-client
 	]) ++
 
 	# Items that are not supported on ARM/Linux

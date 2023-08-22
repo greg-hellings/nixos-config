@@ -25,11 +25,16 @@ in {
 		brews = [
 			"qemu"
 			"gcc"
+			"libaacs"
 			{
 				name = "libvirt";
 				restart_service = true;
 			}
 			"virt-manager"
+		];
+		casks = [
+			"synology-drive"
+			"handbrake"
 		];
 	};
 }

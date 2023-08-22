@@ -39,6 +39,7 @@
 			crun = "compass workspace run";
 			ctest = "compass workspace test";
 			cylint = "./scripts/run_yaml_lint.py";
+			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
 
 			cleanup = "nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";

@@ -26,6 +26,7 @@ let
 				home-manager.extraSpecialArgs = {
 					inherit gnome gui inputs overlays;
 					home = "/home/greg";
+					host = name;
 				};
 			}
 			inputs.agenix.nixosModules.default

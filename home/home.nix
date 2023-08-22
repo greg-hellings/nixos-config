@@ -1,5 +1,6 @@
 { pkgs, lib, gui, gnome,
   inputs,
+  host ? "most",
   ...}:
 
 {
@@ -14,6 +15,7 @@
 		./templates.nix
 		./vim.nix
 		./xonsh.nix
+		./hosts/${host}
 	] ++ ( if gui then [ ./gui ] else []);
 
 
@@ -31,22 +33,11 @@
 		]);
 	};
 
-	home.file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
-		"[global]"
-		"retries = 1"
-		"index-url = https://pypi.python.org/simple"
-		"extra-index-url ="
-		"    https://pypi.ivrtechnology.com/simple/"
-		"    https://pypidev.ivrtechnology.com/simple/"
-	]);
-
 	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
-		brew
 		copier
 		diffutils
-		dmidecode
 		findutils
 		git
 		gnupatch
@@ -56,6 +47,7 @@
 		inetutils
 		jq
 		nano
+		nix-prefetch
 		nmap
 		openssl
 		setup-ssh
@@ -63,7 +55,6 @@
 		transcrypt
 		tree
 		unzip
-		vagrant
 		wget
 	];
 }
