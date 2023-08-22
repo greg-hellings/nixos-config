@@ -29,8 +29,6 @@ in
 
 		config = {
 			default_config = {};
-			esphome = {};  # Get these things loaded, even if not configured
-			met = {};
 			tts = [ { platform = "google_translate"; } ];
 			http = {
 				use_x_forwarded_for = true;
@@ -38,9 +36,9 @@ in
 				server_host = "127.0.0.1";
 			};
 			#"automation manual" = *nix config here* and so on
-			"automation ui" = "!include automations.yaml";
-			"script ui" = "!include scripts.yaml";
-			"scene ui" = "!include scenes.yaml";
+			"automation ui" = "";
+			"script ui" = "";
+			"scene ui" = "";
 		};
 	};
 
@@ -73,7 +71,13 @@ in
 	};
 
 
-	greg.proxies."smart.thehellings.lan".target = "http://127.0.0.1:8123";
+	greg.proxies = {
+		"smart.thehellings.lan".target = "http://127.0.0.1:8123";
+		"genesis.shire-zebra.ts.net" = {
+			target = "http://127.0.0.1:8123";
+			path = "/smart/";
+		};
+	};
 
 	# Ensure that both ports are up and running. We keep 8123 directly open because we are on the LAN and sometimes want to connect
 	# directly for troubleshooting Nginx configuration

@@ -36,6 +36,7 @@
 	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
+		busybox
 		copier
 		diffutils
 		findutils

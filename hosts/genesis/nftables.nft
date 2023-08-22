@@ -1,6 +1,15 @@
 #!/usr/bin/env nft -f
 
 table ip filter {
+	define FRIENDS = { {{ '\"' + ( lanInterfaces | join('\", \"') ) + '\"' }} , "tailscale0" }
+	define SUS = { {{ limitedLan | join(", ") }} }
+	define LAN = { $FRIENDS, $SUS }
+
+	counter tcp_dns {}
+	counter udp_dns {}
+	counter catchall {}
+	counter sus {}
+
 	chain output {
 		type filter hook output priority 100; policy accept;
 	}
@@ -9,24 +18,28 @@ table ip filter {
 		type filter hook input priority 0; policy drop;
 
 		iifname lo accept
+		iifname $SUS counter name sus
 
+		# Router needs to yield up DNS and DHCP for itself, in my case
+		iifname $LAN tcp dport { 53, 67 } counter name tcp_dns accept
+		iifname $LAN udp dport { 53, 67 } counter name udp_dns accept
 		# Open the specific ports that we allow
 		{% for port in tcpPorts %}
-		iifname { {{ lanInterfaces | join(", ") }}, "tailscale0" } tcp dport {{ port }} accept
+		iifname $FRIENDS tcp dport {{ port }} accept
 		{% endfor %}
 		{% for port in udpPorts %}
-		iifname { {{ lanInterfaces | join(", ") }}, "tailscale0" } udp dport {{ port }} accept
+		iifname $FRIENDS udp dport {{ port }} accept
 		{% endfor %}
 
-		iifname { {{ lanInterfaces | join(", ") }} } accept comment "Allows LAN traffic and outgoing"
-		iifname { {{ wanInterface }} } ct state { established, related } accept comment "Allows existing connections"
-		iifname { {{ wanInterface }} } icmp type { echo-request, destination-unreachable, time-exceeded } counter accept comment "Allow some ICMP traffic"
-		iifname { {{ wanInterface }} } counter drop comment "Drop other incoming traffic, and count how much"
+		iifname $LAN counter name catchall accept comment "Allows LAN traffic and outgoing"
+		iifname {{ wanInterface }} ct state { established, related } accept comment "Allows existing connections"
+		iifname {{ wanInterface }} icmp type { echo-request, destination-unreachable, time-exceeded } accept comment "Allow some ICMP traffic"
+		iifname {{ wanInterface }} counter drop comment "Drop other incoming traffic, and count how much"
 	}
 	chain forward {
 		type filter hook forward priority 0; policy drop;
-		iifname { {{ (lanInterfaces + limitedLan) | join(", ") }} } oifname { {{ wanInterface }} } accept comment "Forward LAN to WAN"
-		iifname { {{ wanInterface }} } oifname { {{ (lanInterfaces + limitedLan) | join(", ") }} } ct state established, related accept comment "Allow incoming established traffic"
+		iifname $LAN oifname {{ wanInterface }} accept comment "Forward LAN to WAN"
+		iifname {{ wanInterface }} oifname $LAN ct state established, related accept comment "Allow incoming established traffic"
 	}
 }
 

@@ -43,7 +43,7 @@ in {
 			"${iot}" = {
 				useDHCP = false;
 				ipv4.addresses = [ {
-					address = "192.168.66.2";
+					address = "192.168.66.1";
 					prefixLength = 24;
 				} ];
 			};
@@ -86,7 +86,10 @@ in {
 
 	greg.proxies = {
 		"jellyfin.thehellings.lan".target = "http://localhost:8096";
-		"jellyfin.me.ts".target = "http://localhost:8096";
+		"jellyfin.shire-zebra.ts.net" = {
+			target = "http://localhost:8096";
+			genAliases = false;
+		};
 	};
 
 	#########

@@ -41,11 +41,7 @@ in {
 		system = "aarch64-linux";
 		name = "2maccabees";
 	};
-	genesis = unstable {
-		name = "genesis";
-		gnome = true;
-		gui = true;
-	};
+	genesis = unstable { name = "genesis"; };
 	jude = unstable {
 		name = "jude";
 		gnome = true;

@@ -33,20 +33,20 @@ in
 			domain = "thehellings.lan";
 			dhcp-range = [
 		#		"${lanDevice},10.42.0.1,10.42.1.255,255.255.0.0,static"
-				"${lanDevice},10.43.2.1,10.43.2.255,255.255.0.0,12h"
+				"${lanDevice},10.42.2.1,10.42.2.255,255.255.0.0,12h"
 				"vlan66@${lanDevice},192.168.66.3,192.168.66.150,255.255.255.0,12h"
 				"vlan67@${lanDevice},192.168.67.3,192.168.67.150,12h"
 			];
 			dhcp-option = [
-				"${lanDevice},option:router,10.43.1.1"
-				"${lanDevice},option:dns-server,10.43.1.2,1.1.1.1"
-				"${lanDevice},option:domain-search,thehellings.lan"
+				"${lanDevice},option:router,10.42.1.1"
+				"${lanDevice},option:dns-server,10.42.1.1,1.1.1.1"
+				"${lanDevice},option:domain-search,thehellings.lan,shire-zebra.ts.net"
 
 				"vlan66@${lanDevice},option:router,192.168.66.1"
-				"vlan66@${lanDevice},option:dns-server,192.168.66.2"
+				"vlan66@${lanDevice},option:dns-server,192.168.66.1"
 
 				"vlan67@${lanDevice},option:router,192.168.67.1"
-				"vlan67@${lanDevice},option:dns-server,192.168.67.2"
+				"vlan67@${lanDevice},option:dns-server,192.168.67.1"
 			];
 			dhcp-host = [
 				# Static IPs for things in the IOT range
