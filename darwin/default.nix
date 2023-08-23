@@ -25,7 +25,7 @@ let
 						gnome = false;
 						gui = false;
 						home = "/Users/gregory.hellings";
-						mac = true;
+						host = name;
 					};
 				};
 				users.users."gregory.hellings".home = "/Users/gregory.hellings";

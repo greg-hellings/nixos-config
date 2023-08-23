@@ -1,5 +1,6 @@
 { pkgs, lib, gui, gnome,
-  inputs, mac,
+  inputs,
+  host ? "most",
   ...}:
 
 {
@@ -11,11 +12,10 @@
 		./direnv.nix
 		./git.nix
 		./ssh.nix
-		./templates.nix
 		./vim.nix
 		./xonsh.nix
-	] ++ ( if gui then [ ./gui ] else [])
-	++ ( if mac then [ ./mac.nix ] else []);
+		./hosts/${host}
+	] ++ ( if gui then [ ./gui ] else []);
 
 
 	greg.gnome = gnome;
@@ -35,10 +35,9 @@
 	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
-		brew
+		copier
 		diffutils
 		findutils
-		gimp
 		git
 		gnupatch
 		gregpy
@@ -55,7 +54,10 @@
 		transcrypt
 		tree
 		unzip
-		vagrant
 		wget
-	];
+	] ++ ( if pkgs.system == "x86_64-linux" || pkgs.system == "aarch64-linux" then
+	# Linux-only packages here
+	[
+		busybox
+	] else []);
 }

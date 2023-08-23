@@ -41,7 +41,7 @@
 			cylint = "./scripts/run_yaml_lint.py";
 			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
 
-			cleanup = "nix-collect-garbage -d && nix store optimise";
+			cleanup = "nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";
 			devroles = "cd ~/src/ansible_collections/devroles";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";

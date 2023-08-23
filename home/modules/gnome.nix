@@ -19,8 +19,18 @@ in {
 		};
 
 		dconf.settings = {
+			"org/gnome/Disks" = {
+				image-dir-uri = "file:///home/greg/Downloads";
+			};
 			"org/gnome/desktop/interface" = {
 				clock-show-weekday = true;
+				color-scheme = "default";
+				cursor-size = 24;
+				toolbar-style = "text";
+			};
+			"org/gnome/desktop/screensaver" = {
+				lock-delay = "uint32 0";
+				lock-enabled = false;
 			};
 			"org/gnome/desktop/wm/keybindings" = {
 				switch-applications = [];
@@ -28,22 +38,44 @@ in {
 				switch-windows = ["<Alt>Tab"];
 				switch-windows-backward = [ "<Shift><Alt>Tab" ];
 			};
+			"org/gnome/desktop/wm/preferences" = {
+				button-layout="icon:minimize,maximize,close";
+			};
+			"org/gnome/file-roller/listing" = {
+				list-mode = "as-folder";
+				name-coloumn-width = 302;
+				show-path = true;
+				sort-method = "name";
+				sort-type = "ascending";
+			};
 			"org/gnome/nautilus/preferences" = {
 				default-folder-viewer = "icon-view";
 				search-filter-time-type = "last_modified";
 				search-view = "list-view";
 			};
-			"org/gnome/shell/window-switcher" = {
-				app-icon-mode = "both";
-				current-workspace-only = true;
-			};
 			"org/gnome/shell" = {
+				enabled-extensions =  [
+					"appindicatorsupport@rgcjonas.gmail.com"
+					"Vitals@CoreCoding.com"
+					"window-list@gnome-shell-extensions.gcampax.github.com"
+					"gsconnect@andyholmes.github.io"
+				];
 				favorite-apps = [
 					"org.gnome.Calendar.desktop"
 					"org.gnome.Nautilus.desktop"
 					"org.gnome.Console.desktop"
 					"firefox.desktop"
 					"vlc.desktop"
+				];
+				remember-mount-password = true;
+			};
+			"org/gnome/shell/extensions/vitals" = {
+				hot-sensors = [
+					"_memory_usage_"
+					"_system_load_1m_"
+					"__network-rx_max__"
+					"_temperature_k10temp_tccd1_"
+					"_temperature_k10temp_tctl_"
 				];
 			};
 			"org/gnome/shell/overrides" = {
@@ -52,6 +84,29 @@ in {
 				edge-tiling = true;
 				focus-change-on-pointer-rest = true;
 				workspaces-only-on-primary = true;
+			};
+			"org/gnome/shell/weather" = {
+				automation-location = true;
+				locations = "[<(uint32 2, <('Midlothian / Waxahachie, Mid-Way Regional Airport', 'KJWY', false, [(0.5664611473274288, -1.691437359323684)], @a(dd) [])>)>]";
+			};
+			"org/gnome/shell/window-switcher" = {
+				app-icon-mode = "both";
+				current-workspace-only = true;
+			};
+			"org/gtk/settings/file-chooser" = {
+				location-mode = "path-bar";
+				show-hidden = false;
+				show-size-column = true;
+				sort-column = "modified";
+				sort-directories-first = false;
+				sort-order = "descending";
+			};
+			"org/virt-manager/virt-manager/confirm" = {
+				delete-storage = true;
+				forcepoweroff = false;
+			};
+			"org/virt-manager/virt-manager/details" = {
+				show-toolbar = true;
 			};
 			"org/virt-manager/virt-manager/connections" = {
 				autoconnect = [ "qemu:///session" "qemu:///system" ];

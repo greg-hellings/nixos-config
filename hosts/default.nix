@@ -16,7 +16,7 @@ let
 		};
 	in channel.lib.nixosSystem {
 		inherit system;
-		specialArgs = { inherit nixpkgs; };
+		specialArgs = { inherit nixpkgs inputs; };
 		modules = [
 			{
 				nixpkgs.overlays = overlays;
@@ -26,6 +26,7 @@ let
 				home-manager.extraSpecialArgs = {
 					inherit gnome gui inputs overlays;
 					home = "/home/greg";
+					host = name;
 				};
 			}
 			inputs.agenix.nixosModules.default
@@ -36,7 +37,11 @@ let
 		] ++ extraMods;
 	};
 in {
-	"2maccabees" = unstable { name = "2maccabees"; system = "aarch64-linux"; };
+	"2maccabees" = unstable {
+		system = "aarch64-linux";
+		name = "2maccabees";
+	};
+	genesis = unstable { name = "genesis"; };
 	jude = unstable {
 		name = "jude";
 		gnome = true;

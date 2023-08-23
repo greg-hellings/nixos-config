@@ -2,11 +2,14 @@
 
 {
 	environment.systemPackages = with pkgs; [
+		dmidecode
 		guestfs-tools
 		libguestfs
+		ovftool
 		packer
 		virt-manager
 		vmware-workstation
+		vmfs-tools
 	];
 
 	# Give my user access to the libvirtd process
@@ -23,8 +26,8 @@
 			enableExtensionPack = true;
 		};
 
-		waydroid.enable = true;
-		lxd.enable = true;
+		waydroid.enable = false;
+		lxd.enable = false;
 	};
 
 	users.extraGroups.vboxusers.members = [ "greg" ];
