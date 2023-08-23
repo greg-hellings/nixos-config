@@ -1,5 +1,5 @@
 { pkgs, lib, gui, gnome,
-  inputs,
+  inputs, mac,
   ...}:
 
 {
@@ -14,7 +14,8 @@
 		./templates.nix
 		./vim.nix
 		./xonsh.nix
-	] ++ ( if gui then [ ./gui ] else []);
+	] ++ ( if gui then [ ./gui ] else [])
+	++ ( if mac then [ ./mac.nix ] else []);
 
 
 	greg.gnome = gnome;
