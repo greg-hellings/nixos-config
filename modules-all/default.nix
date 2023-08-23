@@ -18,9 +18,8 @@
 
 		gc = {
 			automatic = true;
-			interval = {
-				Hour = 24;
-			};
+			# Scheduling of them is different in nixos vs nix-darwin, so check for
+			# the extra details there
 			options = "--delete-older-than 30d";
 		};
 
