@@ -92,7 +92,10 @@ in
 		};
 		extraConfig = "${extraConfig}";
 	};
-	environment.systemPackages = [ pkgs.curl ];
+	environment.systemPackages = with pkgs; [
+		busybox
+		curl
+	];
 
 	# Regularly update DNS block list
 	services.cron = {

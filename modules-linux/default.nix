@@ -15,7 +15,7 @@
 		./tailscale.nix
 	];
 
-	environment.systemPackages = [
+	environment.systemPackages = with pkgs; [
 		lshw
 	];
 
