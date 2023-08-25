@@ -58,6 +58,5 @@
 	] ++ ( if pkgs.system == "x86_64-linux" || pkgs.system == "aarch64-linux" then
 	# Linux-only packages here
 	[
-		busybox
 	] else []);
 }
