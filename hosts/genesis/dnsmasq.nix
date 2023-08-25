@@ -24,6 +24,8 @@ let
 	];
 
 	lanDevice = "enp1s0";
+
+	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
 in
 {
 	# Enable the service with its own configuration
@@ -90,13 +92,16 @@ in
 		};
 		extraConfig = "${extraConfig}";
 	};
-	environment.systemPackages = [ pkgs.curl ];
+	environment.systemPackages = with pkgs; [
+		busybox
+		curl
+	];
 
 	# Regularly update DNS block list
 	services.cron = {
 		enable = true;
 		systemCronJobs = [
-			"* * * * * root ( ${pkgs.curl}/bin/curl -s https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sed '1,33d' > /etc/adblock_hosts && systemctl restart dnsmasq ) 2>&1 > /var/log/adblock.log"
+			"* * * * * root ${adblockUpdate} 2>&1 > /var/log/adblock.log"
 		];
 	};
 

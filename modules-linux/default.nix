@@ -15,6 +15,10 @@
 		./tailscale.nix
 	];
 
+	environment.systemPackages = with pkgs; [
+		lshw
+	];
+
 	system.stateVersion = "22.05";
 
 	nix.gc.dates = "weekly";

@@ -60,7 +60,6 @@
 		hms # My own home manager switcher
 		htop
 		killall
-		lshw
 		nano
 		pciutils
 		pwgen
