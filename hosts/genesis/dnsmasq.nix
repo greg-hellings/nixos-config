@@ -49,6 +49,9 @@ in
 				"vlan67@${lanDevice},option:dns-server,192.168.67.1"
 			];
 			dhcp-host = [
+				# Static IPs for personal work
+				"00:00:de:ad:be:ef,10.42.2.254"
+
 				# Static IPs for things in the IOT range
 				"98:da:c4:77:7f:4d,192.168.66.102"
 				"28:87:ba:0e:ca:da,192.168.66.74"  # KS200M switch
