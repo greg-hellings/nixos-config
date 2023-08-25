@@ -12,17 +12,20 @@ in
 		./firefox.nix
 	];
 
-	home.packages = with pkgs; [
+	# These packages are Linux only
+	home.packages = with pkgs; ( excludes ["x86_64-darwin" "aarch64-darwin"]
+	[
 		cdrtools
-		dconf2nix
 		vlc
 		x265
-	] ++
+	]) ++
 
-	# Items that cannot be outside of x86_64-linux at all
+	# x86_64-linux only
 	( excludes ["x86_64-darwin" "aarch64-darwin" "aarch64-linux"]
 	[
+		bitwarden
 		endeavour
+		gnucash
 		jellyfin-media-player
 		libreoffice
 		logseq
@@ -32,8 +35,8 @@ in
 	# Items that are not supported on ARM/Linux
 	( excludes ["aarch64-linux"]
 	[
-		bitwarden
 		onlyoffice-bin
+		synology-drive-client
 		zoom-us
 	]);
 }

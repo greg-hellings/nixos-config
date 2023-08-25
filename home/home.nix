@@ -12,7 +12,6 @@
 		./direnv.nix
 		./git.nix
 		./ssh.nix
-		./templates.nix
 		./vim.nix
 		./xonsh.nix
 		./hosts/${host}
@@ -36,7 +35,6 @@
 	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
-		busybox
 		copier
 		diffutils
 		findutils
@@ -57,5 +55,8 @@
 		tree
 		unzip
 		wget
-	];
+	] ++ ( if pkgs.system == "x86_64-linux" || pkgs.system == "aarch64-linux" then
+	# Linux-only packages here
+	[
+	] else []);
 }

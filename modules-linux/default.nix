@@ -17,6 +17,8 @@
 
 	system.stateVersion = "22.05";
 
+	nix.gc.dates = "weekly";
+
 	# I am a fan of network manager, myself
 	networking = {
 		search = [

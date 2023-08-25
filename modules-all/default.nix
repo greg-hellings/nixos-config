@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
 	# Enable flakes
@@ -18,12 +18,13 @@
 
 		gc = {
 			automatic = true;
-			dates = "weekly";
+			# Scheduling of them is different in nixos vs nix-darwin, so check for
+			# the extra details there
 			options = "--delete-older-than 30d";
 		};
 
 		settings = {
-			auto-optimise-store = true;
+			auto-optimise-store = (if lib.strings.hasSuffix "darwin" pkgs.system then false else true);
 			experimental-features = "nix-command flakes";
 			keep-outputs = true;
 			keep-derivations = true;
@@ -59,6 +60,7 @@
 		hms # My own home manager switcher
 		htop
 		killall
+		lshw
 		nano
 		pciutils
 		pwgen

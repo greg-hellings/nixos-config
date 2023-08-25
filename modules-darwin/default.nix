@@ -7,4 +7,5 @@
 		bash.enable = true;
 	};
 	services.nix-daemon.enable = true;
+	nix.gc.interval.Hour = 24;
 }

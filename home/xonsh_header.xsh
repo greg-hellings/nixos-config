@@ -25,3 +25,4 @@ if platform == "darwin":
     $PATH.append(Path("/opt/homebrew/bin/"))
     $PATH.append(Path("/run/current-system/sw/bin"))
     $PATH.append(Path("/nix/var/nix/profiles/default/bin"))
+    $PATH.append(Path("/usr/local/bin"))

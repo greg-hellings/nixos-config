@@ -41,6 +41,12 @@ in rec {
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
 			xonsh-direnv = cp ./xonsh-direnv.nix {};
 			xontrib-vox = cp ./xonsh-vox.nix {};
+			copier =  cp ./copier.nix {
+				inherit (python-final)
+				    iteration-utilities
+				    jinja2-ansible-filters
+				    pyyaml-include;
+			};
 		})
 	];
 
@@ -60,6 +66,7 @@ in rec {
 		pkgs = final.pkgs;
 	};
 	template = prev.callPackage ./template.nix { };
+
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
 		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
@@ -68,10 +75,4 @@ in rec {
 			xontrib-vox
 		];
 	});
-
-	#bitwarden = macOver ./mac/bitwarden.nix "bitwarden";
-	#gnucash = macOver ./mac/gnucash.nix "gnucash";
-	#handbrake = macOver ./mac/handbrake.nix "handbrake";
-	#onlyoffice-bin = macOver ./mac/onlyoffice-bin.nix "onlyoffice-bin";
-	#vlc = macOver ./mac/vlc.nix "vlc";
 }
