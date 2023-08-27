@@ -36,9 +36,9 @@ in
 				server_host = "127.0.0.1";
 			};
 			#"automation manual" = *nix config here* and so on
-			"automation ui" = "";
-			"script ui" = "";
-			"scene ui" = "";
+			"automation ui" = "!include automations.yaml";
+			"script ui" = "!include scripts.yaml";
+			"scene ui" = "!include scenes.yaml";
 		};
 	};
 
