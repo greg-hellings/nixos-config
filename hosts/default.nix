@@ -37,10 +37,6 @@ let
 		] ++ extraMods;
 	};
 in {
-	"2maccabees" = unstable {
-		system = "aarch64-linux";
-		name = "2maccabees";
-	};
 	genesis = unstable { name = "genesis"; };
 	jude = unstable {
 		name = "jude";
@@ -49,7 +45,6 @@ in {
 	};
 	icdm-root = unstable { name = "icdm-root"; };
 	linode = machine { name = "linode"; };
-	linodeeu = machine { name = "linodeeu"; };
 	lappy = machine { name = "lappy"; };
 	mm = unstable { name = "mm"; };
 	iso = machine { name = "iso"; };
