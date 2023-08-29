@@ -27,6 +27,7 @@
 		flock
 		ffmpeg
 		handbrake
+		imagemagick
 		libtheora
 		makemkv
 		oathToolkit
