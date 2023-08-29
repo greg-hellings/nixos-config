@@ -1,6 +1,10 @@
 { pkgs, lib, ...}:
 
 {
+	imports = [
+		../../vscodium.nix
+	];
+
 	home.packages = with pkgs; [
 		aacs
 		brew
