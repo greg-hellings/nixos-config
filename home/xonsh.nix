@@ -38,6 +38,7 @@
 			cgh = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/compass\" gh";
 			crun = "compass workspace run";
 			ctest = "compass workspace test --extra-cmd-args=\"--test_output=errors\"";
+			ccover = "compass workspace cover --extra-cmd-args=\"--test_output=errors\"";
 			cylint = "./scripts/run_yaml_lint.py";
 			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
 

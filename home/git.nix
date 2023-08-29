@@ -17,6 +17,8 @@
 			".DS_Store" # Macs
 			"Thumbs.db" # Windows
 			".tox" # Tox temp directory
+			".eclipse"  # These next two are created by VSCodium plugins
+			".bazelproject"
 		];
 		extraConfig = {
 			init.defaultBranch = "main";
