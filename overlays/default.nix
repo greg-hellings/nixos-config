@@ -70,6 +70,8 @@ in rec {
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
 		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
+			responses
+			ruamel-yaml
 			xonsh-apipenv
 			xonsh-direnv
 			xontrib-vox
