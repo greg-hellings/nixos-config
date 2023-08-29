@@ -10,7 +10,6 @@
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
-		ffmac.url = "github:bandithedoge/nixpkgs-firefox-darwin";
 		flake-utils.url = "github:numtide/flake-utils";
 		hm = {
 			url = "github:nix-community/home-manager/release-23.05";
@@ -29,7 +28,6 @@
 	outputs = {
 		agenix,
 		darwin,
-		ffmac,
 		flake-utils,
 		hm,
 		nixneovim,
@@ -53,7 +51,6 @@
 			local_overlay
 			nixneovim.overlays.default
 			nurpkgs.overlay
-			ffmac.overlay
 		];
 
 	in {
