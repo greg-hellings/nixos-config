@@ -86,8 +86,10 @@ in
 			addn-hosts = "/etc/adblock_hosts";
 			# Public AdGuard DNS servers
 			server = [
-				"94.140.14.14"
-				"94.140.15.15"
+				"9.9.9.9"  # Quad 9
+				"1.1.1.1"  # Cloudflare
+				"1.0.0.1"  # Cloudflare
+				"149.112.112.112"  # Quad 9
 			];
 		};
 		extraConfig = "${extraConfig}";
