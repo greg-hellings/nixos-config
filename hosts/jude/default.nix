@@ -21,7 +21,6 @@
 	greg.kde.enable = false;
 
 	environment.systemPackages = with pkgs; [
-		busybox
 		gimp
 		gnucash
 		flock

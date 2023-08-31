@@ -95,7 +95,6 @@ in
 		extraConfig = "${extraConfig}";
 	};
 	environment.systemPackages = with pkgs; [
-		busybox
 		curl
 	];
 
