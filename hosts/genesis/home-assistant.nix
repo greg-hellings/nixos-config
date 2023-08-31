@@ -51,13 +51,16 @@ in
 		# I have ZWave devices. The easiest way to connect to them is the zwavejs2mqtt service running, so we spin up
 		# its container and map the ZWave device into it
 		containers.zwave = {
-			image = "zwavejs/zwavejs2mqtt:latest";
+			image = "zwavejs/zwave-js-ui:latest";
 			ports = [ "8091:8091" "3000:3000" ];
 			volumes = [ "/var/lib/zwave:/usr/src/app/store" ];
 			extraOptions = [
 				"--device" "/dev/serial/by-id/usb-0658_0200-if00:/dev/zwave"
 				"--pull=newer"
 			];
+			environment = {
+				TZ = "America/Chicago";
+			};
 		};
 	};
 
