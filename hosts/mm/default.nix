@@ -52,6 +52,10 @@ in
 		};
 		extraHosts = (builtins.concatStringsSep "\n" [
 			"${lanIpAddress} store.mindmazeroom.com"
+			"10.177.1.249 ms.mindmazeroom.com"
+			"10.177.1.248 saloon.mindmazeroom.com"
+			"10.177.1.247 jail.mindmazeroom.com"
+			"10.177.1.246 mspi.mindmazeroom.com"
 		]);
 	};
 
@@ -160,6 +164,10 @@ in
 						hw-address = "9c:8e:cd:3f:40:d3";
 						hostname = "jail";
 						ip-address = "10.177.1.247";
+					} {
+						hw-address = "dc:a6:32:62:e6:a8";
+						hostname = "madscientistpi";
+						ip-address = "10.177.1.246";
 					}];
 				}];
 			};
