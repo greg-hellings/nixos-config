@@ -23,6 +23,15 @@ in
 	boot.loader.efi.canTouchEfiVariables = true;
 	boot.loader.efi.efiSysMountPoint = "/boot/efi";
 
+	users.users.gamemaster = {
+		isNormalUser = true;
+		createHome = true;
+		shell = pkgs.bash;
+		openssh.authorizedKeys.keys = [
+			"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABgQDH960DgfJIyTKKke7mtQu73Byr8gp/BZSfkpAWAMDB8zBIgggJkbo6/C5jtCb9kXp3ULFi56bQYDHR7WOSTZ07G3nE5iKo++JXgOOGXAQKW4TQ4LP/Q7wJpDktBIlZwVdB46eQBMrML9YtV0l1q8R18y55su2ZB6VUEGUNiyDa4rM7iBNchizOgdYRbTeokvrYfxEZr18AjwNIerS6vRHTTzQsLZx64QxuTc7uM+aPOKAvzcD5mwqj+CzEzHQV7KhcbwN0mQS4QD0QBaIBLuB1ADmividLxOulj4zaVDF06JRIoT/o7l9Kz/CIohsDHMgDIG3upcFcCKLtuOLQd3wx3ZNC8uY+i5OskM8NOepq9St/c6aeMeLNyiUBvJNenbm5+nbqSXCHfOJW+SC4oaYOJZbV/pQgHotmjPQ0+oKCwMNoE0v4lRA0l3quySvIZAQxkLNPIo9bnk5oXnlAGzQaHcyojANnjDtbz19Fk4bRUKts6mL3CArUrHWEmftt1Ls= gamemaster@raspberrypi"
+		];
+	};
+
 	networking = {
 		hostName = "mm";
 		domain = "mindmazeroom.lan";
