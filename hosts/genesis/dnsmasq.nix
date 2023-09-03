@@ -4,10 +4,11 @@ let
 	extraHosts = builtins.concatStringsSep "\n" [
 		# Local hosts
 		"10.42.0.1 switch"
-		"10.42.1.1 router genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan"
-		#"10.42.1.2 2maccabees 2maccabees.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan"
+		"10.42.1.1 pve1.thehellings.lan"
+		"10.42.1.2 opnsense router opnsense.thehellings.lan router.thehellings.lan"
 		"10.42.1.3 printer"
 		"10.42.1.4 chronicles nas"
+		"10.42.1.5 router genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan"
 		"10.42.1.12 tv"
 
 		# Tailscale hosts
@@ -23,7 +24,7 @@ let
 	extraConfig = builtins.concatStringsSep "\n" [
 	];
 
-	lanDevice = "enp1s0";
+	lanDevice = "enp0s18";
 
 	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
 in
