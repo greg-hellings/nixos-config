@@ -75,17 +75,14 @@ in
 
 
 	greg.proxies = {
-		"smart.thehellings.lan".target = "http://127.0.0.1:8123";
-		"genesis.shire-zebra.ts.net" = {
-			target = "http://127.0.0.1:8123";
-			path = "/smart/";
-		};
+		"smart.home".target = "http://127.0.0.1:8123/";
+		"zwave.home".target = "http://127.0.0.1:8091/";
 	};
 
 	# Ensure that both ports are up and running. We keep 8123 directly open because we are on the LAN and sometimes want to connect
 	# directly for troubleshooting Nginx configuration
 	networking.firewall = {
-		allowedTCPPorts = [ 80 443 8091 8123 ];
+		allowedTCPPorts = [ 80 443 ];
 	};
 
 	greg.backup.jobs.zwave = {

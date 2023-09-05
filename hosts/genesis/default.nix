@@ -7,11 +7,9 @@
 {
 	imports = [
 		# Include the results of the hardware scan.
-		./dnsmasq.nix
 		./hardware-configuration.nix
 		./home-assistant.nix
 		./networking.nix
-		./vhosts.nix
 	];
 	
 	greg.home = true;
