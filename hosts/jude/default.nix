@@ -21,6 +21,7 @@
 	greg.kde.enable = false;
 
 	environment.systemPackages = with pkgs; [
+		bind  # For things like nslookup
 		gimp
 		gnucash
 		flock
