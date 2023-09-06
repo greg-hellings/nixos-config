@@ -13,12 +13,16 @@
 		nix-ld.enable = true;
 	};
 
-	networking.hostName = "jude";
-	networking.enableIPv6 = false;
+	networking = {
+		hostName = "jude";
+		enableIPv6 = false;
+	};
 	#systemd.oomd.enable = false;
-	greg.tailscale.enable = true;
-	greg.gnome.enable = true;
-	greg.kde.enable = false;
+	greg = {
+		tailscale.enable = true;
+		gnome.enable = true;
+		kde.enable = false;
+	};
 
 	environment.systemPackages = with pkgs; [
 		bind  # For things like nslookup
@@ -34,7 +38,6 @@
 		synology-drive-client
 		vagrant
 		ventoy
-		wireplumber
 
 		# Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
 		gst_all_1.gstreamer
@@ -55,4 +58,16 @@
 			fsType = "ntfs-3g";
 		};
 	};
+
+	# Let's do a sound thing
+	services.pipewire = {
+		enable = true;
+		alsa.enable = true;
+		audio.enable = true;
+		jack.enable = true;
+		pulse.enable = true;
+
+		wireplumber.enable = true;
+	};
+	hardware.pulseaudio.enable = false;  # This conflicts with pipewire
 }
