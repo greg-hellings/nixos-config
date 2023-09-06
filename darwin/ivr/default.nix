@@ -18,6 +18,7 @@ let
 in {
 	environment.systemPackages = with pkgs; [
 		qemu_conf
+		unixtools.watch
 	];
 
 	homebrew = {
