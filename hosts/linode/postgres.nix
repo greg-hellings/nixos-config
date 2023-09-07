@@ -4,7 +4,12 @@
 	services.postgresql = {
 		enable = true;
 		checkConfig = true;
-		ensureDatabases = [ "nextcloud" "gitea" "dendrite" ];
+		ensureDatabases = [
+			"dendrite"
+			"gitea"
+			"monica"
+			"nextcloud"
+		];
 		#initialScript = pkgs.writeText "create-matrix-db.sql" ''
 		#	CREATE ROLE "matrix-synapse" WITH LOGIN;
 		#	CREATE DATABASE "synapse" WITH OWNER "matrix-synapse" TEMPLATE template0 LC_COLLATE = "C" LC_CTYPE = "C";
@@ -22,6 +27,9 @@
 		} {
 			name = "dendrite";
 			ensurePermissions."DATABASE dendrite" = "ALL PRIVILEGES";
+		} {
+			name = "monica";
+			ensurePermissions."DATABASE monica" = "ALL PRIVILEGES";
 		} ];
 		settings = {
 			log_connections = true;
@@ -37,9 +45,10 @@ root root postgres
 	services.postgresqlBackup = {
 		enable = true;
 		databases = [
-			"gitea"
-			"nextcloud"
 			"dendrite"
+			"gitea"
+			"monica"
+			"nextcloud"
 		];
 	};
 

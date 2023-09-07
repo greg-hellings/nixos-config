@@ -39,4 +39,6 @@ in
 	"drone.age".publicKeys = everyone;
 
 	"3proxy.age".publicKeys = everyone;
+
+	"monica.age".publicKeys = everyone;
 }
