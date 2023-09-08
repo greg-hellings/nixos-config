@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
 	imports = [
@@ -16,4 +16,8 @@
 	greg.tailscale.enable = true;
 	networking.hostName = "linode";
 	networking.domain = "thehellings.com";
+	environment.systemPackages = with pkgs; [
+		graphviz
+		nix-du
+	];
 }
