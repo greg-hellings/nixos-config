@@ -5,7 +5,6 @@
 		./git.nix
 		./hardware-configuration.nix
 		./podman.nix
-		./monica.nix
 		./nextcloud.nix
 		./nginx.nix
 		./postgres.nix

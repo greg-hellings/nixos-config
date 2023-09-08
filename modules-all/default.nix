@@ -41,9 +41,6 @@
 
 	nixpkgs.config = {
 		allowUnfree = true;
-		permittedInsecurePackages = [
-			"qtwebkit-5.212.0-alpha4"
-		];
 	};
 
 	# Base packages that need to be in all my hosts
