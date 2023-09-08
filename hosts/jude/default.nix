@@ -34,6 +34,7 @@
 		imagemagick
 		libtheora
 		makemkv
+		nix-tree
 		oathToolkit
 		synology-drive-client
 		vagrant
