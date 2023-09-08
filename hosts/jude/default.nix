@@ -28,12 +28,14 @@
 		bind  # For things like nslookup
 		gimp
 		gnucash
+		graphviz
 		flock
 		ffmpeg
 		handbrake
 		imagemagick
 		libtheora
 		makemkv
+		nix-du
 		nix-tree
 		oathToolkit
 		synology-drive-client
