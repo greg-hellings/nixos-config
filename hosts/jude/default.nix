@@ -26,6 +26,7 @@
 
 	environment.systemPackages = with pkgs; [
 		bind  # For things like nslookup
+		darktable
 		gimp
 		gnucash
 		graphviz
