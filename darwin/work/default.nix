@@ -9,6 +9,7 @@
 		casks = [
 			"gnucash"
 			"onlyoffice"
+			"pgadmin4"
 			"postman"
 			"vagrant"
 		];
