@@ -26,14 +26,18 @@
 
 	environment.systemPackages = with pkgs; [
 		bind  # For things like nslookup
+		darktable
 		gimp
 		gnucash
+		graphviz
 		flock
 		ffmpeg
 		handbrake
 		imagemagick
 		libtheora
 		makemkv
+		nix-du
+		nix-tree
 		oathToolkit
 		synology-drive-client
 		vagrant
