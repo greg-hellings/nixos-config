@@ -2,7 +2,6 @@
 
 {
 	# Use the systemd-boot EFI boot loader.
-	#boot.loader.systemd-boot.enable = true;
 	boot = {
 		supportedFilesystems = [ "ntfs" ];
 		loader = {
@@ -31,5 +30,4 @@
 			#efi.canTouchEfiVariables = true;
 		};
 	};
-	networking.interfaces.enp4s0.useDHCP = true;
 }
