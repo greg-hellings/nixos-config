@@ -41,6 +41,10 @@
 			ccover = "compass workspace cover --extra-cmd-args=\"--test_output=errors\"";
 			cylint = "./scripts/run_yaml_lint.py";
 			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
+			cexec = "compass workspace exec";
+			cbazel = "compass workspace exec bazel";
+			gazelle = "compass workspace exec bazel run :gazelle";
+			cfetch = "compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache:fetch";
 
 			cleanup = "nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";
