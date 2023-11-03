@@ -15,7 +15,12 @@
 			url = "github:nix-community/home-manager/release-23.05";
 			inputs.nixpkgs.follows = "nixstable";
 		};
+		hmunstable = {
+			url = "github:nix-community/home-manager/master";
+			inputs.nixpkgs.follows = "nixstable";
+		};
 		nixneovim.url = "github:NixNeovim/NixNeovim";
+		nixpy311.url = "github:NixOS/nixpkgs/nixos-23.05";
 		nixstable.url = "github:nixos/nixpkgs/nixos-23.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		nurpkgs.url = "github:nix-community/NUR";
@@ -30,7 +35,9 @@
 		darwin,
 		flake-utils,
 		hm,
+		hmunstable,
 		nixneovim,
+		nixpy311,
 		nixstable,
 		nixunstable,
 		nurpkgs,

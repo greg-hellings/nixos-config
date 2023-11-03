@@ -82,14 +82,8 @@ in
 		plugins = {
 			airline.enable = true;
 			gitgutter.enable = true;
-			gruvbox.enable = true;
 			fugitive.enable = true;
 			notify.enable = true;
-			packer = {
-				enable = true;
-				plugins = [
-				];
-			};
 		};
 		extraConfigLua = builtins.readFile ./vim/extra.lua;
 		extraConfigVim = builtins.readFile ./vim/extra.vimrc;

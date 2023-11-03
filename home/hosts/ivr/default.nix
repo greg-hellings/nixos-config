@@ -1,4 +1,4 @@
-{ pkgs, lib, ...}:
+{ pkgs, lib, inputs, ...}:
 
 {
 	imports = [
@@ -8,8 +8,10 @@
 	home = {
 		packages = with pkgs; [
 			aacs
+			bruno
 			direnv
 			home-manager
+			pipenv
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 			"[global]"
