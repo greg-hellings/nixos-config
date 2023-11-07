@@ -8,6 +8,7 @@
 	home = {
 		packages = with pkgs; [
 			aacs
+			bitwarden-cli
 			bruno
 			direnv
 			home-manager
