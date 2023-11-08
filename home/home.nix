@@ -38,6 +38,7 @@
 		copier
 		diffutils
 		findutils
+		gh
 		git
 		gnupatch
 		gregpy

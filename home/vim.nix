@@ -80,23 +80,22 @@ in
 			};
 		};
 		plugins = {
-			airline.enable = true;
+			airline = {
+				enable = true;
+				theme = "gruvbox";
+			};
 			gitgutter.enable = true;
-			gruvbox.enable = true;
 			fugitive.enable = true;
 			notify.enable = true;
-			packer = {
-				enable = true;
-				plugins = [
-				];
-			};
 		};
 		extraConfigLua = builtins.readFile ./vim/extra.lua;
 		extraConfigVim = builtins.readFile ./vim/extra.vimrc;
 		extraPlugins = with pkgs.vimPlugins; [
 			bufexplorer
+			gruvbox
 			nerdtree
 			nvim-cmp
+			packer-nvim
 
 			#jedi-vim
 

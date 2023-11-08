@@ -16,8 +16,8 @@
 	networking = {
 		hostName = "jude";
 		enableIPv6 = false;
+		interfaces.enp37s0.useDHCP = true;
 	};
-	#systemd.oomd.enable = false;
 	greg = {
 		tailscale.enable = true;
 		gnome.enable = true;

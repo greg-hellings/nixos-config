@@ -1,14 +1,18 @@
 { inputs, overlays, ... }:
 let
 	wsl = args: (unstable (args // { extraMods = [ inputs.wsl.nixosModules.wsl ]; }));
-	unstable = args: (machine (args // { channel = inputs.nixunstable; }));
+	unstable = args: (machine (args // {
+		channel = inputs.nixunstable;
+		hm = inputs.hmunstable;
+	}));
 	machine = {
 		channel ? inputs.nixstable,
 		extraMods ? [],
 		gnome ? false,
 		gui ? false,
 		name,
-		system ? "x86_64-linux"
+		system ? "x86_64-linux",
+		hm ? inputs.hm
 	}:
 	let
 		nixpkgs = import channel {
@@ -30,7 +34,7 @@ let
 				};
 			}
 			inputs.agenix.nixosModules.default
-			inputs.hm.nixosModules.home-manager
+			hm.nixosModules.home-manager
 			../modules-all
 			../modules-linux
 			./${name}

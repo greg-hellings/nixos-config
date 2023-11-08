@@ -17,6 +17,7 @@
 
 	environment.systemPackages = with pkgs; [
 		coreutils-full
+		efibootmgr
 		psmisc
 		lshw
 	];
