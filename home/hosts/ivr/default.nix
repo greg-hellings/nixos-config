@@ -8,9 +8,11 @@
 	home = {
 		packages = with pkgs; [
 			aacs
+			bitwarden-cli
 			bruno
 			direnv
 			home-manager
+			insomnia
 			pipenv
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
