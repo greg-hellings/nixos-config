@@ -4,6 +4,7 @@ let
 		system ? "aarch64-darwin",
 		name,
 		channel ? inputs.nixunstable,
+		hm ? inputs.hmunstable,
 		extraMods ? []
 	}:
 	let
@@ -15,7 +16,7 @@ let
 		specialArgs = { inherit nixpkgs; };
 		modules = [
 			{ nixpkgs.overlays = overlays; }
-			inputs.hm.darwinModules.home-manager
+			hm.darwinModules.home-manager
 			{
 				home-manager = {
 					useGlobalPkgs = true;
