@@ -34,12 +34,12 @@
 
 			cblack = "compass workspace run src/python3/uc/tools:run_black --";
 			cbuild = "compass workspace build";
-			cci = "./scripts/circleci-checks.py";
+			cci = "compass workspace run src/python3/uc/tools:circleci-checks";
 			cgh = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/compass\" gh";
 			crun = "compass workspace run";
 			ctest = "compass workspace test --extra-cmd-args=\"--test_output=errors\"";
 			ccover = "compass workspace cover --extra-cmd-args=\"--test_output=errors\"";
-			cylint = "./scripts/run_yaml_lint.py";
+			cylint = "compass workspace run src/python3/uc/tools:run_yaml_lint";
 			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
 			cexec = "compass workspace exec";
 			cbazel = "compass workspace exec bazel";
