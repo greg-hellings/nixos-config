@@ -8,6 +8,7 @@
 		];
 		casks = [
 			"gnucash"
+			"insomnia"
 			"onlyoffice"
 			"pgadmin4"
 			"postman"
