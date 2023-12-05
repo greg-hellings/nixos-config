@@ -4,18 +4,6 @@
 	# Enable flakes
 	nix = {
 		package = pkgs.nixFlakes;
-		buildMachines = [
-			{
-				hostName = "dns.me.ts";
-				system = "aarch64-linux";
-			}
-
-			{
-				hostName = "jude.me.ts";
-				system = "x86_64-linux";
-			}
-		];
-
 		gc = {
 			automatic = true;
 			# Scheduling of them is different in nixos vs nix-darwin, so check for
@@ -32,9 +20,11 @@
 			max-free = (toString (5 * 1024 * 1024 * 1024) );
 			substituters = [
 				"https://cache.garnix.io"
+				"https://ai.cachix.org"
 			];
 			trusted-public-keys = [
 				"cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
+				"ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
 			];
 		};
 	};
