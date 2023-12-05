@@ -58,7 +58,7 @@
 			fsType = "auto";
 		};
 		"/windows" = {
-			device = "/dev/nvme0n1p3";
+			device = "/dev/nvme0n1p5";
 			fsType = "ntfs-3g";
 		};
 	};
