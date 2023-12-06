@@ -52,6 +52,7 @@ in {
 	lappy = machine { name = "lappy"; };
 	mm = unstable { name = "mm"; };
 	iso = machine { name = "iso"; };
+	iso-beta = unstable { name = "iso"; };
 	# nix build '.#nixosConfigurations.wsl.config.system.build.installer'
 	nixos = wsl { name = "wsl"; system = "aarch64-linux"; };
 	# nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
