@@ -53,7 +53,7 @@ in rec {
 	};
 	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
 	jinja2-cli = prev.python3.pkgs.callPackage ./jinja2-cli.nix {};
-	libbluray = prev.libbluray.override {
+	libbluray-custom = prev.libbluray.override {
 		withAACS = true;
 		withBDplus = true;
 	};
@@ -61,6 +61,9 @@ in rec {
 		pkgs = final.pkgs;
 	};
 	template = prev.callPackage ./template.nix { };
+	handbrake = prev.handbrake.override {
+		libbluray = libbluray-custom;
+	};
 
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
