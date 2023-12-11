@@ -17,19 +17,16 @@
 		#'';  # These are done manually in order to set the LC_COLLATE values properly
 		ensureUsers = [ {
 			name = "nextcloud";
-			ensurePermissions."DATABASE nextcloud" = "ALL PRIVILEGES";
-		} {
-			name = "root";
-			ensurePermissions."ALL TABLES IN SCHEMA public" = "ALL PRIVILEGES";
+			ensureDBOwnership = true;
 		} {
 			name = "gitea";
-			ensurePermissions."DATABASE gitea" = "ALL PRIVILEGES";
+			ensureDBOwnership = true;
 		} {
 			name = "dendrite";
-			ensurePermissions."DATABASE dendrite" = "ALL PRIVILEGES";
+			ensureDBOwnership = true;
 		} {
 			name = "monica";
-			ensurePermissions."DATABASE monica" = "ALL PRIVILEGES";
+			ensureDBOwnership = true;
 		} ];
 		settings = {
 			log_connections = true;
