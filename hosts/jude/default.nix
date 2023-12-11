@@ -61,6 +61,10 @@
 			device = "/dev/nvme0n1p5";
 			fsType = "ntfs-3g";
 		};
+		"/windows11" = {
+			device = "/dev/nvme1n1p2";
+			fsType = "ntfs-3g";
+		};
 	};
 
 	# Let's do a sound thing

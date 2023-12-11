@@ -46,7 +46,7 @@
 			gazelle = "compass workspace exec bazel run :gazelle";
 			cfetch = "compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache:fetch";
 
-			cleanup = "nix-collect-garbage --delete-older-than 30d && nix store optimise";
+			cleanup = "sudo nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";
 			devroles = "cd ~/src/ansible_collections/devroles";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";

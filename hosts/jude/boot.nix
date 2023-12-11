@@ -1,36 +1,33 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 {
 	# Use the systemd-boot EFI boot loader.
 	boot = {
 		supportedFilesystems = [ "ntfs" ];
 		loader = {
+			timeout = 15;
 			systemd-boot = {
 				enable = true;
-				configurationLimit = 10;
+				configurationLimit = 20;
 				extraEntries = {
 					"Windows.conf" = (lib.strings.concatStringsSep "\n" [
 						"title Windows"
 						"efi /EFI/Microsoft/EFI/bootmgfw.efi"
 					]);
-					"Pop.conf" = (lib.strings.concatStringsSep "\n" [
-						"title Pop!_OS"
-						"linux /EFI/Pop_OS-e4918d10-538d-42ad-b35d-a1ee2ed2a433/vmlinuz.efi"
-						"initrd /EFI/Pop_OS-e4918d10-538d-42ad-b35d-a1ee2ed2a433/initrd.img"
-						"options root=UUID=e4918d10-538d-42ad-b35d-a1ee2ed2a433 ro quiet loglevel=0 systemd.show_status=false splash"
+					"Win2.conf" = (lib.strings.concatStringsSep "\n" [
+						"title Windows 11"
+						"efi /shellx64.efi"
+						"options -nointerrupt -noconsolein -noconsoleout windows11.nsh"
 					]);
-					"Pop-oldkern.conf" = (lib.strings.concatStringsSep "\n" [
-						"title Pop!_OS"
-						"linux /EFI/Pop_OS-e4918d10-538d-42ad-b35d-a1ee2ed2a433/vmlinuz-previous.efi"
-						"initrd /EFI/Pop_OS-e4918d10-538d-42ad-b35d-a1ee2ed2a433/initrd.img-previous"
-						"options root=UUID=e4918d10-538d-42ad-b35d-a1ee2ed2a433 ro quiet loglevel=0 systemd.show_status=false splash"
+					"Shell.conf" = (lib.strings.concatStringsSep "\n" [
+						"title EFI Shell"
+						"efi /shell.efi"
 					]);
-					"Pop-recovery.conf" = (lib.strings.concatStringsSep "\n" [
-						"title Pop!_OS Recovery"
-						"linux /EFI/Recovery-1E97-BC0F/vmlinuz.efi"
-						"initrd /EFI/Recovery-1E97-BC0F/initrd.gz"
-						"options boot=casper hostname=recovery userfullname=Recovery username=recovery live-media-path=/casper-1E97-BC0F noprompt "
-					]);
+				};
+				extraFiles = {
+					"windows11.nsh" = (pkgs.writeText "windows11.nsh" (lib.strings.concatStringsSep "\n" [
+					]));
+					"shell.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";
 				};
 			};
 			grub = {
