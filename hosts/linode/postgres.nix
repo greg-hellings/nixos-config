@@ -6,7 +6,7 @@
 		checkConfig = true;
 		ensureDatabases = [
 			"dendrite"
-			"gitea"
+			"forgejo"
 			"monica"
 			"nextcloud"
 		];
@@ -19,7 +19,7 @@
 			name = "nextcloud";
 			ensureDBOwnership = true;
 		} {
-			name = "gitea";
+			name = "forgejo";
 			ensureDBOwnership = true;
 		} {
 			name = "dendrite";
@@ -43,7 +43,7 @@ root root postgres
 		enable = true;
 		databases = [
 			"dendrite"
-			"gitea"
+			"forgejo"
 			"monica"
 			"nextcloud"
 		];

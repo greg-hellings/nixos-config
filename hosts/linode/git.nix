@@ -20,12 +20,12 @@ in {
 	#                       GIT SERVICES
 	##########
 	##########################################################################################
-	services.gitea = rec {
+	services.forgejo = rec {
 		enable = true;
 		appName = "Greg's Sources";
 		database = {
 			type = "postgres";
-			user = "gitea";
+			user = "forgejo";
 		};
 		dump = {
 			enable = true;
@@ -44,23 +44,23 @@ in {
 	};
 
 	greg.proxies."${srcDomain}" = {
-		target = "${config.services.gitea.settings.server.PROTOCOL}://${config.services.gitea.settings.server.DOMAIN}:${toString config.services.gitea.settings.server.HTTP_PORT}";
+		target = "${config.services.forgejo.settings.server.PROTOCOL}://${config.services.forgejo.settings.server.DOMAIN}:${toString config.services.forgejo.settings.server.HTTP_PORT}";
 		ssl = true;
 		genAliases = false;
 	};
 
-	greg.backup.jobs.gitea = {
-		src = config.services.gitea.dump.backupDir;
-		dest = "gitea";
-		user = "gitea";
+	greg.backup.jobs.forgejo = {
+		src = config.services.forgejo.dump.backupDir;
+		dest = "forgejo";
+		user = "forgejo";
 	};
 
 	services.logrotate = {
 		enable = true;
 		settings = {
-			gitea = {
+			forgejo = {
 				enable = true;
-				files = "${config.services.gitea.dump.backupDir}/*";
+				files = "${config.services.forgejo.dump.backupDir}/*";
 			};
 		};
 	};
