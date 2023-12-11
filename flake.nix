@@ -12,7 +12,7 @@
 		};
 		flake-utils.url = "github:numtide/flake-utils";
 		hm = {
-			url = "github:nix-community/home-manager/release-23.05";
+			url = "github:nix-community/home-manager/release-23.11";
 			inputs.nixpkgs.follows = "nixstable";
 		};
 		hmunstable = {
@@ -21,7 +21,7 @@
 		};
 		nixneovim.url = "github:NixNeovim/NixNeovim";
 		nixpy311.url = "github:NixOS/nixpkgs/nixos-23.05";
-		nixstable.url = "github:nixos/nixpkgs/nixos-23.05";
+		nixstable.url = "github:nixos/nixpkgs/nixos-23.11";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		nurpkgs.url = "github:nix-community/NUR";
 		wsl = {
