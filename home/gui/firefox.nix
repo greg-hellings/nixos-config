@@ -28,7 +28,7 @@ in with lib;
 				};
 				extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 					bitwarden
-					pkgs.bypass-paywalls
+					bypass-paywalls-clean
 					gsconnect
 					foxyproxy-standard
 					multi-account-containers

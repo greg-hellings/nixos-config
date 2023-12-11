@@ -28,11 +28,6 @@ let
 
 in rec {
 	gregpy = myPython;
-	bypass-paywalls = final.nur.repos.rycee.firefox-addons.bypass-paywalls-clean.override {
-		version = "3.2.6.0";
-		url = "https://gitlab.com/magnolia1234/bpc-uploads/-/raw/master/bypass_paywalls_clean-3.2.6.0-custom.xpi";
-		sha256 = "sha256-dEdqg0q4w+evky7oZ4l33GPEBEc/PFG2dCsQkVY9/3g=";
-	};
 
 	## Testing adding python packages in the correct manner
 	pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
@@ -58,7 +53,7 @@ in rec {
 	};
 	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
 	jinja2-cli = prev.python3.pkgs.callPackage ./jinja2-cli.nix {};
-	libbluray = prev.libbluray.override {
+	libbluray-custom = prev.libbluray.override {
 		withAACS = true;
 		withBDplus = true;
 	};
@@ -66,6 +61,9 @@ in rec {
 		pkgs = final.pkgs;
 	};
 	template = prev.callPackage ./template.nix { };
+	handbrake = prev.handbrake.override {
+		libbluray = libbluray-custom;
+	};
 
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;

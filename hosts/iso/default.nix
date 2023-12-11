@@ -9,4 +9,7 @@
 	networking.networkmanager.enable = lib.mkForce false;
 	users.users.greg.initialPassword = "";
 	#services.getty.autologinUser = lib.mkForce "greg";
+	environment.systemPackages = with pkgs; [
+		tree
+	];
 }

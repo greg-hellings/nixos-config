@@ -32,23 +32,22 @@
 		aliases = {
 			ac = "vox activate";
 
+			cbazel = "compass workspace exec bazel";
 			cblack = "compass workspace run src/python3/uc/tools:run_black --";
 			cbuild = "compass workspace build";
-			cci = "./scripts/circleci-checks.py";
+			cci = "compass workspace run src/python3/uc/tools:circleci-checks";
+			ccover = "compass workspace cover --extra-cmd-args=\"--test_output=errors\"";
+			cexec = "compass workspace exec";
+			cfetch = "compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache:fetch";
 			cgh = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/compass\" gh";
+			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
 			crun = "compass workspace run";
 			ctest = "compass workspace test --extra-cmd-args=\"--test_output=errors\"";
-			ccover = "compass workspace cover --extra-cmd-args=\"--test_output=errors\"";
-			cylint = "./scripts/run_yaml_lint.py";
-			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
-			cexec = "compass workspace exec";
-			cbazel = "compass workspace exec bazel";
+			cylint = "compass workspace run src/python3/uc/tools:run_yaml_lint";
 			gazelle = "compass workspace exec bazel run :gazelle";
-			cfetch = "compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache:fetch";
 
-			cleanup = "nix-collect-garbage --delete-older-than 30d && nix store optimise";
+			cleanup = "sudo nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";
-			devroles = "cd ~/src/ansible_collections/devroles";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
 			gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
 			ls = "ls --color";
