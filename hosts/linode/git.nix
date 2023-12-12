@@ -20,27 +20,99 @@ in {
 	#                       GIT SERVICES
 	##########
 	##########################################################################################
-	services.forgejo = rec {
-		enable = true;
-		appName = "Greg's Sources";
-		database = {
-			type = "postgres";
-			user = "forgejo";
-		};
-		dump = {
+	services = {
+		forgejo = rec {
 			enable = true;
-			type = "tar.xz";
-		};
-		settings = {
-			server = rec {
-				ROOT_URL = "https://${DOMAIN}/";
-				DOMAIN = srcDomain;
-				HTTP_PORT = 3001;
+			database = {
+				type = "postgres";
+				user = "forgejo";
 			};
-			service.DISABLE_REGISTRATION = pkgs.lib.mkForce true;
-			session.COOKIE_SECURE = pkgs.lib.mkForce true;
-			log.level = "Info";
+			dump = {
+				enable = true;
+				type = "tar.xz";
+			};
+			settings = {
+				actions.ENABLED = true;
+				DEFAULT = {
+					APP_NAME = "Greg's Sources";
+				};
+				server = rec {
+					ROOT_URL = "https://${DOMAIN}/";
+					DOMAIN = srcDomain;
+					HTTP_PORT = 3001;
+				};
+				service.DISABLE_REGISTRATION = pkgs.lib.mkForce true;
+				session.COOKIE_SECURE = pkgs.lib.mkForce true;
+				log.level = "Info";
+			};
 		};
+
+		# For now, at least, this is the same as Forgejo's action runner
+		gitea-actions-runner.instances = {
+			exec = {
+				enable = true;
+				hostPackages = with pkgs; [
+					bashInteractive
+					podman
+					git
+					nodejs
+				];
+				name = "Linode";
+				labels = [
+					"native:host"
+				];
+				tokenFile = config.age.secrets.forgejo-runner.path;
+				url = "https://src.thehellings.com";
+				settings = {
+					log.level = "info";
+					runner = {
+						file = ".runner";
+						capacity = 3;
+						envs = {};  # Environment variables
+						env_file = ".env";
+						timeout = "3h";  # This is the default on Gitea/Forgejo as well
+						insecure = false;  # TLS verification
+						fetch_timeout = "5s";
+						fetch_interval = "2s";
+						#labels = [];  # See above
+					};
+					cache = {
+						enabled = true;
+						dir = "";  # Default is $HOME/.cache/actcache
+						host = "";  # How to access cache from the runner, autodetect
+						port = 0;
+						external_server = "";  #We are not going externally
+					};
+					container = {
+						network = "";  # Auto-create
+						privileged = false;
+						options = null;
+						workdir_parent = "/workspace";
+						valid_volumes = [];
+						#docker_host = "";
+						force_pull = false;
+					};
+					host = {
+						workdir_parent = null;  # Default $HOME/.cache/act
+					};
+				};
+			};
+		};
+
+		logrotate = {
+			enable = true;
+			settings = {
+				forgejo = {
+					enable = true;
+					files = "${config.services.forgejo.dump.backupDir}/*";
+				};
+			};
+		};
+	};
+
+	age.secrets.forgejo-runner = {
+		file = ../../secrets/linode-forgejo-runner.age;
+		owner = config.systemd.services.gitea-runner-exec.serviceConfig.User;
 	};
 
 	greg.proxies."${srcDomain}" = {
@@ -53,16 +125,6 @@ in {
 		src = config.services.forgejo.dump.backupDir;
 		dest = "forgejo";
 		user = "forgejo";
-	};
-
-	services.logrotate = {
-		enable = true;
-		settings = {
-			forgejo = {
-				enable = true;
-				files = "${config.services.forgejo.dump.backupDir}/*";
-			};
-		};
 	};
 
 	##########################################################################################

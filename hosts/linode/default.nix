@@ -17,6 +17,8 @@
 	networking.hostName = "linode";
 	networking.domain = "thehellings.com";
 	environment.systemPackages = with pkgs; [
+		forgejo
+		gitea-actions-runner
 		graphviz
 		nix-du
 	];
