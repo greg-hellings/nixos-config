@@ -33,4 +33,15 @@
 	users.extraGroups.vboxusers.members = [ "greg" ];
 
 	boot.extraModprobeConfig = "options kvm_amd nested=1";
+
+	greg.ci-runner = {
+		qemu = {
+			labels = [
+				"qemu:host"
+			];
+			packages = with pkgs; [
+				qemu
+			];
+		};
+	};
 }
