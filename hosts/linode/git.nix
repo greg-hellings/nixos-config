@@ -23,6 +23,7 @@ in {
 	services = {
 		forgejo = rec {
 			enable = true;
+			package = pkgs.unstable.forgejo;
 			database = {
 				type = "postgres";
 				user = "forgejo";
