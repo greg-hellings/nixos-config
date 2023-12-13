@@ -13,38 +13,11 @@
 		vim
 		xonsh
 	];
+
+	greg.tailscale.enable = true;
+
 	services = {
 		openssh.enable = true;
-	};
-	systemd.services = let
-		def = id: {
-			enable = true;
-			ephemeral = false;
-			extraEnvironment = {
-				HTTP_PORT_MIN = builtins.toString (8000 + id);
-				HTTP_PORT_MAX = builtins.toString (8000 + id);
-			};
-			extraLabels = [ "nixos" "isaiah" ];
-			name = "isaiah-nix-${builtins.toString id}";
-			nodeRuntimes = [ "node20" ];
-			package = pkgs.github-runner;
-			replace = true;
-			runnerGroup = null;
-			serviceOverrides = {
-				Group = "vboxusers";
-			};
-			tokenFile = "/etc/github_token";
-			user = "runner";
-			url = "https://github.com/greg-hellings/vms";
-			workDir = "/home/runner/${builtins.toString id}";
-		};
-		runner = a: {};
-	in {
-		gh-one = (runner { inherit config lib pkgs; svcName = "gh-one"; cfg = def 1; });
-		gh-two = (runner { inherit config lib pkgs; svcName = "gh-two"; cfg = def 2; });
-		gh-three = (runner { inherit config lib pkgs; svcName = "gh-three"; cfg = def 3; });
-		gh-four = (runner { inherit config lib pkgs; svcName = "gh-four"; cfg = def 4; });
-		gh-five = (runner { inherit config lib pkgs; svcName = "gh-five"; cfg = def 5; });
 	};
 	networking = {
 		hostName = "myself";
