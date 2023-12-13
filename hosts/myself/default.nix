@@ -1,8 +1,8 @@
 { config, pkgs, lib, ... }:
-
 {
 	imports = [	
 		./hardware-configuration.nix
+		./git.nix
 	];
 
 	environment.systemPackages = with pkgs; [
@@ -25,18 +25,6 @@
 				HTTP_PORT_MAX = builtins.toString (8000 + id);
 			};
 			extraLabels = [ "nixos" "isaiah" ];
-			extraPackages = with pkgs; [
-				config.virtualisation.virtualbox.host.package
-				curl
-				gawk
-				packer
-				pup
-				(python3.withPackages (p: with p; [ pip virtualenv ]))
-				qemu_full
-				qemu_kvm
-				xonsh
-				xorriso
-			];
 			name = "isaiah-nix-${builtins.toString id}";
 			nodeRuntimes = [ "node20" ];
 			package = pkgs.github-runner;
@@ -50,7 +38,7 @@
 			url = "https://github.com/greg-hellings/vms";
 			workDir = "/home/runner/${builtins.toString id}";
 		};
-		runner = (import ./runner.nix);
+		runner = a: {};
 	in {
 		gh-one = (runner { inherit config lib pkgs; svcName = "gh-one"; cfg = def 1; });
 		gh-two = (runner { inherit config lib pkgs; svcName = "gh-two"; cfg = def 2; });
@@ -87,14 +75,6 @@
 	};
 	users = {
 		users = {
-			runner = {
-				extraGroups = [
-					"kvm"
-					"vboxusers"
-				];
-				group = "runner";
-				isNormalUser = true;
-			};
 			greg = {
 				extraGroups = [
 					"kvm"
@@ -105,7 +85,6 @@
 				isNormalUser = true;
 			};
 		};
-		groups.runner = {};
 	};
 	system.stateVersion = lib.mkForce "24.05";
 	boot = {
