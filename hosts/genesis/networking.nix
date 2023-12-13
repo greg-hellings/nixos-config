@@ -17,6 +17,7 @@ let
 		"10.42.1.12 tv"
 
 		"10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan"
+
 		# Tailscale hosts
 		"100.90.74.19 jude.home"
 		"100.88.91.27 dns.home"
@@ -24,13 +25,10 @@ let
 		"100.115.57.8 linode.home"
 		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home"
 		"100.78.16.88 mm.home"
-		"100..84.183.79 myself.home myself.shire-zebra.ts.net"
+		"100.84.183.79 myself.home myself.shire-zebra.ts.net git.thehellings.lan"
 
 		# Dev hosts
 		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
-	];
-
-	extraConfig = builtins.concatStringsSep "\n" [
 	];
 
 	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
@@ -190,7 +188,6 @@ in {
 				hostsdir = "/etc/hosts.d/";
 				server = dnsServers;
 			};
-			extraConfig = "${extraConfig}";
 		};
 
 		# Update adblock list
@@ -212,6 +209,7 @@ in {
 	#};
 
 	environment.systemPackages = with pkgs; [
+		bind
 		curl  # Used by dnsmasq fetching
 		sqlite
 	];
