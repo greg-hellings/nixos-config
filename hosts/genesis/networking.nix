@@ -24,6 +24,7 @@ let
 		"100.115.57.8 linode.home"
 		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home"
 		"100.78.16.88 mm.home"
+		"100..84.183.79 myself.home myself.shire-zebra.ts.net"
 
 		# Dev hosts
 		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
