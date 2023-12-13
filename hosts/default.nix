@@ -51,6 +51,7 @@ in {
 	linode = machine { name = "linode"; };
 	lappy = machine { name = "lappy"; };
 	mm = unstable { name = "mm"; };
+	myself = unstable { name = "myself"; };
 	iso = machine { name = "iso"; };
 	iso-beta = unstable { name = "iso"; };
 	# nix build '.#nixosConfigurations.wsl.config.system.build.installer'

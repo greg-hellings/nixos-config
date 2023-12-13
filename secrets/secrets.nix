@@ -34,8 +34,6 @@ in
 
 	"3proxy.age".publicKeys = everyone;
 
-	"monica.age".publicKeys = everyone;
-
 	"linode-forgejo-runner.age".publicKeys = everyone;
 	"jude-forgejo-runner.age".publicKeys = everyone;
 }
