@@ -52,7 +52,6 @@ in rec {
 		pkgs = final.pkgs;
 	};
 	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
-	jinja2-cli = prev.python3.pkgs.callPackage ./jinja2-cli.nix {};
 	libbluray-custom = prev.libbluray.override {
 		withAACS = true;
 		withBDplus = true;
