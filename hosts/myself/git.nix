@@ -30,8 +30,7 @@ in  {
 		};
 	};
 
-	greg.proxies."isaiah.thehellings.lan".target = "http://192.168.200.2";
-	greg.proxies."myself.shire-zebra.ts.net".target = "http://192.168.200.2";
+	greg.proxies."git.thehellings.lan".target = "http://192.168.200.2";
 	
 	system.activationScripts.makeGitlabDir = lib.stringAfter [ "var" ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
 
