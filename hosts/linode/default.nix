@@ -1,4 +1,4 @@
-{ ... }:
+{ pkgs, ... }:
 
 {
 	imports = [
@@ -8,7 +8,6 @@
 		./nextcloud.nix
 		./nginx.nix
 		./postgres.nix
-		./rei.nix
 		./synapse.nix
 	];
 	greg.home = false;
@@ -16,4 +15,10 @@
 	greg.tailscale.enable = true;
 	networking.hostName = "linode";
 	networking.domain = "thehellings.com";
+	environment.systemPackages = with pkgs; [
+		forgejo
+		gitea-actions-runner
+		graphviz
+		nix-du
+	];
 }

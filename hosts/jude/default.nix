@@ -61,17 +61,31 @@
 			device = "/dev/nvme0n1p5";
 			fsType = "ntfs-3g";
 		};
+		"/windows11" = {
+			device = "/dev/nvme1n1p2";
+			fsType = "ntfs-3g";
+		};
 	};
 
 	# Let's do a sound thing
-	services.pipewire = {
-		enable = true;
-		alsa.enable = true;
-		audio.enable = true;
-		jack.enable = true;
-		pulse.enable = true;
-
-		wireplumber.enable = true;
+	services = {
+		pipewire = {
+			enable = true;
+			alsa.enable = true;
+			audio.enable = true;
+			jack.enable = true;
+			pulse.enable = true;
+			wireplumber.enable = true;
+		};
+		xserver.videoDrivers = [ "nvidia" ];
 	};
-	hardware.pulseaudio.enable = false;  # This conflicts with pipewire
+	hardware = {
+		nvidia = {
+			modesetting.enable = true;
+			nvidiaSettings = true;
+			open = true;
+		};
+		pulseaudio.enable = false;  # This conflicts with pipewire
+		system76.enableAll = true;
+	};
 }

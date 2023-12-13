@@ -4,7 +4,8 @@
 	imports = [
 		../../vscodium.nix
 	];
-	home.packages = [
-		(pkgs.mumble.override { pulseSupport = true; })
+	home.packages = with pkgs; [
+		(mumble.override { pulseSupport = true; })
+		fluffychat
 	];
 }

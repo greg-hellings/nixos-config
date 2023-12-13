@@ -46,7 +46,7 @@
 			cylint = "compass workspace run src/python3/uc/tools:run_yaml_lint";
 			gazelle = "compass workspace exec bazel run :gazelle";
 
-			cleanup = "nix-collect-garbage --delete-older-than 30d && nix store optimise";
+			cleanup = "sudo nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
 			gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";

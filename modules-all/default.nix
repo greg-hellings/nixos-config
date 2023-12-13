@@ -1,6 +1,10 @@
 { pkgs, lib, ... }:
 
 {
+	imports = [
+		./ci-runner.nix
+	];
+
 	# Enable flakes
 	nix = {
 		package = pkgs.nixFlakes;
