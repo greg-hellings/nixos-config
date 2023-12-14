@@ -4,6 +4,6 @@ builds:
     - '*.aarch64-linux.*'
     - nixosConfigurations.*
     - darwinConfigurations.*
-    - homeConfigurations."gregory.hellings"
+    - homeConfigurations."gregory.hellings".activationPackage
     - devShell.x86_64-linux
     - devShell.aarch64-linux
