@@ -30,6 +30,7 @@
 
 	services = {
 		resolved.enable = true;
+		openssh.enable = true;
 		gitlab = {
 			enable = true;
 			backup = {
@@ -37,7 +38,7 @@
 				startAt = [ "03:00" ];
 			};
 			host = "src.thehellings.com";
-			https = false;
+			https = true;
 			port = 443;
 			extraConfig = {
 				gitlab = {
