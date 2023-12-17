@@ -1,24 +1,15 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
-	extraPackages = with pkgs; [
-		config.virtualisation.virtualbox.host.package
-		curl
-		gawk
-		git
-		packer
-		pup
-		(python3.withPackages (p: with p; [ pip virtualenv ]))
-		qemu_full
-		qemu_kvm
-		shellcheck
-		xonsh
-		xorriso
-	];
 
 	gitlabStateDir = "/var/lib/gitlab";
 
 	registryPort = 8001;
+
+	container = input: (lib.attrsets.recursiveUpdate {
+		bindMounts."/etc/ssh".hostPath = "/etc/ssh";  # For agenix secrets
+		privateNetwork = true;
+	} input);
 in  {
 	networking = {
 		firewall = {
@@ -36,33 +27,36 @@ in  {
 	
 	system.activationScripts.makeGitlabDir = lib.stringAfter [ "var" ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
 
-	containers.gitlab = {
+	containers.gitlab = container {
 		autoStart = true;
 		bindMounts = {
 			"/var/gitlab/state" = {
 				hostPath = gitlabStateDir;
 				isReadOnly = false;
 			};
-			"/etc/ssh".hostPath = "/etc/ssh";
 		};
 		forwardPorts = [{
 			hostPort = 2222;
 			containerPort = 22;
 		}];
-		privateNetwork = true;
 		hostAddress = "192.168.200.1";
 		localAddress = "192.168.200.2";
 		config = ((import ./container-git.nix) { inherit inputs registryPort; });
 	};
 
-	systemd.services."container@gitlab-runner".serviceConfig = {
+	systemd.services."container@gitlab-runner-qemu".serviceConfig = {
 		DevicePolicy = lib.mkForce "auto";
+		ExecPostStop = [
+			"rmmod kvm_amd kvm"
+		];
+		ExecPreStart = [
+			"modprobe kvm"
+		];
 	};
+	systemd.services."container@gitlab-runner-qemu".conflicts = [ "container@gitlab-runner-vbox.service" ];
 
-	containers.gitlab-runner = {
-		autoStart = true;
+	containers.gitlab-runner-qemu = container {
 		bindMounts = {
-			"/etc/ssh".hostPath = "/etc/ssh";
 			"/dev/kvm" = {
 				hostPath = "/dev/kvm";
 				isReadOnly = false;
@@ -71,37 +65,50 @@ in  {
 		extraFlags = [
 			"--property=DeviceAllow=/dev/kvm"
 		];
-		privateNetwork = true;
 		hostAddress = "192.168.201.1";
 		localAddress = "192.168.201.2";
-		config = { config, pkgs, ... }: {
-			imports = [
-				inputs.agenix.nixosModules.default
-			];
-			age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-			age.secrets.qemu-runner-reg = {
-				file = ../../secrets/gitlab/myself-qemu-runner-reg.age;
-				owner = "gitlab-runner";
+		config = ((import ./container-runner-qemu.nix) inputs);
+	};
+
+	systemd.services."container@gitlab-runner-vbox".serviceConfig = {
+		DevicePolicy = lib.mkForce "auto";
+		ExecPostStop = [
+			"rmmod vboxnetadp vboxnetflt vboxdrv"
+		];
+		ExecPreStart = [
+			"modprobe vboxdrv vboxnetadp vboxnetflt"
+		];
+	};
+	systemd.services."container@gitlab-runner-vbox".conflicts = [ "container@gitlab-runner-qemu.service" ];
+
+	containers.gitlab-runner-vbox = container {
+		bindMounts = {
+			"/dev/vboxdrv" = {
+				hostPath = "/dev/vboxdrv";
+				isReadOnly = false;
 			};
-
-			networking.useHostResolvConf = lib.mkForce false;
-			networking.nameservers = [ "100.100.100.100" ];
-			services.resolved.enable = true;
-
-			environment.systemPackages = extraPackages;
-
-			services.gitlab-runner = {
-				enable = true;
-				services = {
-					shell = {
-						executor = "shell";
-						limit = 5;
-						registrationConfigFile = config.age.secrets.qemu-runner-reg.path;
-						tagList = [ "shell" "qemu" ];
-					};
+			"/dev/vboxdrvu" = {
+				hostPath = "/dev/vboxdrvu";
+				isReadOnly = false;
+			};
+			"/dev/vboxnetctl" = {
+				hostPath = "/dev/vboxnetctl";
+				isReadOnly = false;
+			};
+		};
+		hostAddress = "192.168.202.1";
+		localAddress = "192.168.202.2";
+		config = ((import ./container-runner-vbox.nix) {
+			inherit inputs;
+			name = "vbox";
+			extra = {
+				virtualisation.virtualbox.host = {
+					enable = true;
+					enableExtensionPack = true;
+					enableHardening = false;
+					headless = true;
 				};
 			};
-			system.stateVersion = "24.05";
-		};
+		});
 	};
 }
