@@ -81,6 +81,14 @@ in  {
 	};
 	systemd.services."container@gitlab-runner-vbox".conflicts = [ "container@gitlab-runner-qemu.service" ];
 
+	systemd.services.gitlab-runner = {
+		wants = [ "network-online.target" ];
+		after = [ "network.target" "network-online.target" ];
+	};
+
+	#####################################################################################
+	#################### Virtualbox Runner ##############################################
+	#####################################################################################
 	containers.gitlab-runner-vbox = container {
 		bindMounts = {
 			"/dev/vboxdrv" = {
@@ -102,6 +110,10 @@ in  {
 			inherit inputs;
 			name = "vbox";
 			extra = {
+				systemd.services.gitlab-runner.serviceConfig = {
+					User = "root";
+					DynamicUser = lib.mkForce false;
+				};
 				virtualisation.virtualbox.host = {
 					enable = true;
 					enableExtensionPack = true;
@@ -111,4 +123,38 @@ in  {
 			};
 		});
 	};
+
+	#####################################################################################
+	#################### Container Podman Runner ########################################
+	#####################################################################################
+	containers.gitlab-runner-shell = container {
+		autoStart = true;
+		hostAddress = "192.168.203.1";
+		localAddress = "192.168.203.2";
+		config = ((import ./container-runner-vbox.nix) {
+			inherit inputs;
+			name = "shell";
+		});
+	};
+
+	#####################################################################################
+	#################### Local Podman/Docker Runner #####################################
+	#####################################################################################
+	age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
+	services.gitlab-runner = {
+		enable = true;
+		settings.concurrent = 5;
+		services.podman = {
+			executor = "docker";
+			registrationConfigFile = config.age.secrets.runner-reg.path;
+			tagList = [ "container" ];
+			dockerImage = "ubuntu:22.04";
+		};
+	};
+	virtualisation.podman = {
+		enable = true;
+		dockerCompat = true;
+		dockerSocket.enable = true;
+	};
+	virtualisation.docker.enable = false;
 }

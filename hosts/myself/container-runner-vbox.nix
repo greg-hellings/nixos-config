@@ -1,4 +1,4 @@
-{ inputs, name, extra}:
+{ inputs, name, extra ? {} }:
 
 ({ config, pkgs, lib, ... }:
 let
@@ -8,77 +8,62 @@ let
 		virtualenv
 	]));
 in (
-	lib.attrsets.recursiveUpdate {
+lib.attrsets.recursiveUpdate {
 
-		imports = [
-			inputs.agenix.nixosModules.default
-		];
+	imports = [
+		inputs.agenix.nixosModules.default
+	];
 
-		age = {
-			identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-			secrets.runner-reg = {
-				file = ../../secrets/gitlab/myself-${name}-runner-reg.age;
-				owner = "gitlab-runner";
-			};
+	age = {
+		identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+		secrets.runner-reg = {
+			file = ../../secrets/gitlab/myself-${name}-runner-reg.age;
+			owner = "gitlab-runner";
 		};
+	};
 
-		environment.systemPackages = with pkgs; [
-			curl
-			gawk
-			git
-			packer
-			pup
-			py
-			shellcheck
-			xorriso
-		];
+	environment.systemPackages = with pkgs; [
+		curl
+		gawk
+		git
+		packer
+		pup
+		py
+		shellcheck
+		xorriso
+	];
 
-		networking = {
-			useHostResolvConf = pkgs.lib.mkForce false;
-			nameservers = [ "100.100.100.100" ];
-		};
+	networking = {
+		useHostResolvConf = pkgs.lib.mkForce false;
+		nameservers = [ "100.100.100.100" ];
+	};
 
-		nixpkgs.config.allowUnfree = true;
+	nixpkgs.config.allowUnfree = true;
 
-		services = {
-			gitlab-runner = {
-				enable = true;
-				settings.concurrent = 5;
-				services = {
-					shell = {
-						executor = "shell";
-						limit = 5;
-						registrationConfigFile = config.age.secrets.runner-reg.path;
-						tagList = [ "shell" name ];
-					};
+	services = {
+		gitlab-runner = {
+			enable = true;
+			settings.concurrent = 5;
+			services = {
+				shell = {
+					executor = "shell";
+					limit = 5;
+					registrationConfigFile = config.age.secrets.runner-reg.path;
+					tagList = [ "shell" name ];
 				};
 			};
-			resolved.enable = true;
 		};
+		resolved.enable = true;
+	};
 
-		systemd.services.gitlab-runner = {
-			wants = [ "network-online.target" ];
-			after = [ "network.target" "network-online.target" ];
-			serviceConfig = {
-				User = "root";
-				DynamicUser = lib.mkForce false;
-			};
-		};
+	systemd.services.gitlab-runner = {
+		wants = [ "network-online.target" "systemd-resolved.service" ];
+		after = [ "network.target" "network-online.target" "systemd-resolved.service" ];
+	};
 
-		system.stateVersion = "24.05";
-		users.users.gitlab-runner = {
-			isNormalUser = true;
-			group = "gitlab-runner";
-			extraGroups = [
-				"root"
-				"sudo"
-				"vboxusers"
-				"wheel"
-			];
-		};
-		users.groups.gitlab-runner = {};
-	}
+	system.stateVersion = "24.05";
+}
 
-	extra
+extra
 )  # End of attrsets.recursiveUpdate
 )  # End of outter function wrapper

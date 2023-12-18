@@ -19,17 +19,9 @@ in {
 		inputs.agenix.nixosModules.default
 	];
 	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-	age.secrets = let
-		file = num: {
-			file = ../../secrets/gitlab/myself-qemu-runner-reg-${num}.age;
-			owner = "gitlab-runner";
-		};
-	in {
-		qemu-runner-reg-1 = file "1";
-		qemu-runner-reg-2 = file "2";
-		qemu-runner-reg-3 = file "3";
-		qemu-runner-reg-4 = file "4";
-		qemu-runner-reg-5 = file "5";
+	age.secrets.qemu-runner-reg-1 = {
+		file = ../../secrets/gitlab/myself-qemu-runner-reg-1.age;
+		owner = "gitlab-runner";
 	};
 
 	networking.useHostResolvConf = pkgs.lib.mkForce false;
@@ -41,23 +33,15 @@ in {
 	services.gitlab-runner = {
 		enable = true;
 		settings.concurrent = 5;
-		services = let
-			r = num: {
-				executor = "shell";
-				registrationConfigFile = config.age.secrets."qemu-runner-reg-${num}".path;
-				tagList = [ "shell" "qemu" ];
-			};
-		in {
-			shell1 = r "1";
-			shell2 = r "2";
-			shell3 = r "3";
-			shell4 = r "4";
-			shell5 = r "5";
+		services.shell = {
+			executor = "shell";
+			registrationConfigFile = config.age.secrets.qemu-runner-reg-1.path;
+			tagList = [ "shell" "qemu" ];
 		};
 	};
 
-	systemd.services.gitlab-runner.wants = [ "network-online.target" ];
-	systemd.services.gitlab-runner.after = [ "network.target" "network-online.target" ];
+	systemd.services.gitlab-runner.wants = [ "network-online.target" "systemd-resolved.service" ];
+	systemd.services.gitlab-runner.after = [ "network.target" "network-online.target" "systemd-resolved.service" ];
 
 	system.stateVersion = "24.05";
 }
