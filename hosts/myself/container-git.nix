@@ -26,7 +26,13 @@
 		useHostResolvConf = lib.mkForce false;
 	};
 
-	greg.proxies."192.168.200.2".target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+	greg.proxies."192.168.200.2" = {
+		target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+		extraConfig = ''
+		proxy_set_header X-Forwarded-Proto https;
+		proxy_set_header X-Forwarded-Ssl on;
+		'';
+	};
 
 	services = {
 		resolved.enable = true;
