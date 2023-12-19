@@ -10,12 +10,20 @@
 		./postgres.nix
 		./synapse.nix
 	];
-	greg.home = false;
-	greg.linode.enable = true;
-	greg.tailscale.enable = true;
-	networking.hostName = "linode";
-	networking.domain = "thehellings.com";
+	greg = {
+		home = false;
+		linode.enable = true;
+		tailscale.enable = true;
+	};
+	networking = {
+		hostName = "linode";
+		domain = "thehellings.com";
+		nameservers = [
+			"100.88.91.27"
+		];
+	};
 	environment.systemPackages = with pkgs; [
+		bind
 		forgejo
 		gitea-actions-runner
 		graphviz
