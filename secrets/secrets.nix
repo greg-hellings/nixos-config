@@ -49,4 +49,10 @@ in
 	# Then pipe the resulting files to agenix -e <foo>
 	"gitlab/key.age".publicKeys = everyone;
 	"gitlab/cert.age".publicKeys = everyone;
+	"gitlab/myself-qemu-runner-reg-1.age".publicKeys = everyone;
+	"gitlab/myself-qemu-runner-reg-2.age".publicKeys = everyone;
+	"gitlab/myself-qemu-runner-reg-3.age".publicKeys = everyone;
+	"gitlab/myself-qemu-runner-reg-4.age".publicKeys = everyone;
+	"gitlab/myself-qemu-runner-reg-5.age".publicKeys = everyone;
+	"gitlab/myself-vbox-runner-reg.age".publicKeys = everyone;
 }

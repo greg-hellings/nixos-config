@@ -1,22 +1,15 @@
 { config, pkgs, lib, inputs, ... }:
 
 let
-	extraPackages = with pkgs; [
-		config.virtualisation.virtualbox.host.package
-		curl
-		gawk
-		packer
-		pup
-		(python3.withPackages (p: with p; [ pip virtualenv ]))
-		qemu_full
-		qemu_kvm
-		xonsh
-		xorriso
-	];
 
 	gitlabStateDir = "/var/lib/gitlab";
 
 	registryPort = 8001;
+
+	container = input: (lib.attrsets.recursiveUpdate {
+		bindMounts."/etc/ssh".hostPath = "/etc/ssh";  # For agenix secrets
+		privateNetwork = true;
+	} input);
 in  {
 	networking = {
 		firewall = {
@@ -30,108 +23,92 @@ in  {
 		};
 	};
 
-	greg.proxies."isaiah.thehellings.lan".target = "http://192.168.200.2";
+	greg.proxies."git.thehellings.lan".target = "http://192.168.200.2";
 	
 	system.activationScripts.makeGitlabDir = lib.stringAfter [ "var" ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
 
-	containers.gitlab = {
+	containers.gitlab = container {
 		autoStart = true;
 		bindMounts = {
 			"/var/gitlab/state" = {
 				hostPath = gitlabStateDir;
 				isReadOnly = false;
 			};
-			"/etc/ssh".hostPath = "/etc/ssh";
 		};
-		privateNetwork = true;
+		forwardPorts = [{
+			hostPort = 2222;
+			containerPort = 22;
+		}];
 		hostAddress = "192.168.200.1";
 		localAddress = "192.168.200.2";
-		config = { config, pkgs, ... }: {
-			imports = [
-				inputs.agenix.nixosModules.default
-				../../modules-linux/proxy.nix
-			];
+		config = ((import ./container-git.nix) { inherit inputs registryPort; });
+	};
 
-			age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-			age.secretsMountPoint = "/run/derp";
-			age.secrets = let
-				cfg = n: { file = ../../secrets/gitlab/${n}.age; owner = "github"; mode = "0444"; };
-			in {
-				gitlab-secret = cfg "secret";
-				gitlab-otp = cfg "otp";
-				gitlab-db = cfg "db";
-				gitlab-jws = cfg "jws";
-				gitlab-key = cfg "key";
-				gitlab-cert = cfg "cert";
+	systemd.services."container@gitlab-runner-qemu".serviceConfig = {
+		DevicePolicy = lib.mkForce "auto";
+		ExecPostStop = [
+			"rmmod kvm_amd kvm"
+		];
+		ExecPreStart = [
+			"modprobe kvm"
+		];
+	};
+	systemd.services."container@gitlab-runner-qemu".conflicts = [ "container@gitlab-runner-vbox.service" ];
+
+	containers.gitlab-runner-qemu = container {
+		bindMounts = {
+			"/dev/kvm" = {
+				hostPath = "/dev/kvm";
+				isReadOnly = false;
 			};
-
-			networking = {
-				firewall = {
-					enable = true;
-					allowedTCPPorts = [ 80 registryPort ];
-				};
-				useHostResolvConf = lib.mkForce false;
-			};
-
-			greg.proxies."192.168.200.2".target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
-
-			services = {
-				resolved.enable = true;
-				gitlab = {
-					enable = true;
-					backup = {
-						keepTime = 288;
-						startAt = [ "03:00" ];
-					};
-					host = "isaiah.thehellings.lan";  # Just for now...
-					https = false;
-					initialRootEmail = "greg@thehellings.com";
-					initialRootPasswordFile = pkgs.writeText "initialRootPassword" "root_password";
-					pages = {
-						enable = true;
-						settings.pages-domain = "pages.thehellings.com";
-					};
-					puma = {
-						threadsMax = 6;
-						threadsMin = 2;
-						workers = 6;
-					};
-					redisUrl = "unix:${config.services.redis.servers.gitlab.unixSocket}";
-					registry = {
-						enable = true;
-						certFile = config.age.secrets.gitlab-cert.path;
-						keyFile = config.age.secrets.gitlab-key.path;
-						externalPort = registryPort;
-					};
-					secrets = {
-						secretFile = config.age.secrets.gitlab-secret.path;
-						otpFile    = config.age.secrets.gitlab-otp.path;
-						dbFile     = config.age.secrets.gitlab-db.path;
-						jwsFile    = config.age.secrets.gitlab-jws.path;
-					};
-				};
-
-				postgresql = {
-					enable = true;
-					checkConfig = true;
-					ensureDatabases = [ "gitlab" ];
-					ensureUsers = [ {
-						name = "gitlab";
-						ensureDBOwnership = true;
-					} ];
-					settings = {
-						log_connections = true;
-						log_statement = "all";
-						logging_collector = true;
-						log_filename = "postgresql.log";
-					};
-				};
-
-				redis.servers.gitlab = {
-					enable = true;
-				};
-			};
-			system.stateVersion = "24.05";
 		};
+		extraFlags = [
+			"--property=DeviceAllow=/dev/kvm"
+		];
+		hostAddress = "192.168.201.1";
+		localAddress = "192.168.201.2";
+		config = ((import ./container-runner-qemu.nix) inputs);
+	};
+
+	systemd.services."container@gitlab-runner-vbox".serviceConfig = {
+		DevicePolicy = lib.mkForce "auto";
+		ExecPostStop = [
+			"rmmod vboxnetadp vboxnetflt vboxdrv"
+		];
+		ExecPreStart = [
+			"modprobe vboxdrv vboxnetadp vboxnetflt"
+		];
+	};
+	systemd.services."container@gitlab-runner-vbox".conflicts = [ "container@gitlab-runner-qemu.service" ];
+
+	containers.gitlab-runner-vbox = container {
+		bindMounts = {
+			"/dev/vboxdrv" = {
+				hostPath = "/dev/vboxdrv";
+				isReadOnly = false;
+			};
+			"/dev/vboxdrvu" = {
+				hostPath = "/dev/vboxdrvu";
+				isReadOnly = false;
+			};
+			"/dev/vboxnetctl" = {
+				hostPath = "/dev/vboxnetctl";
+				isReadOnly = false;
+			};
+		};
+		hostAddress = "192.168.202.1";
+		localAddress = "192.168.202.2";
+		config = ((import ./container-runner-vbox.nix) {
+			inherit inputs;
+			name = "vbox";
+			extra = {
+				virtualisation.virtualbox.host = {
+					enable = true;
+					enableExtensionPack = true;
+					enableHardening = false;
+					headless = true;
+				};
+			};
+		});
 	};
 }

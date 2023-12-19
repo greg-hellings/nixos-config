@@ -30,7 +30,7 @@
 	networking = {
 		search = [
 			"thehellings.lan"
-			"shire-zebra.ts.net"
+			"home"
 		];
 		networkmanager.enable = true;
 	};

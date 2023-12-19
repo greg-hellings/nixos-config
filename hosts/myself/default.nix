@@ -36,16 +36,6 @@
 			"10.42.1.5"
 		];
 	};
-	virtualisation = {
-		libvirtd = {
-			enable = false;
-			onBoot = "ignore";
-		};
-		virtualbox.host = {
-			enable = true;
-			enableExtensionPack = true;
-		};
-	};
 	users = {
 		users = {
 			greg = {
