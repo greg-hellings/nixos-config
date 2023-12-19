@@ -23,7 +23,13 @@ in  {
 		};
 	};
 
-	greg.proxies."git.thehellings.lan".target = "http://192.168.200.2";
+	greg.proxies."git.thehellings.lan" = {
+		target = "http://192.168.200.2";
+		extraConfig = ''
+		proxy_set_header X-Forwarded-Proto https;
+		proxy_set_header X-Forwarded-Ssl on;
+		'';
+	};
 	
 	system.activationScripts.makeGitlabDir = lib.stringAfter [ "var" ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
 
@@ -44,17 +50,32 @@ in  {
 		config = ((import ./container-git.nix) { inherit inputs registryPort; });
 	};
 
-	systemd.services."container@gitlab-runner-qemu".serviceConfig = {
-		DevicePolicy = lib.mkForce "auto";
-		ExecPostStop = [
-			"rmmod kvm_amd kvm"
-		];
-		ExecPreStart = [
-			"modprobe kvm"
-		];
+	systemd.services = {
+		"container@gitlab-runner-qemu" = {
+			conflicts = [
+				"container@gitlab-runner-vbox.service"
+			];
+			serviceConfig = {
+				DevicePolicy = lib.mkForce "auto";
+				ExecPostStop = [ "rmmod kvm_amd kvm" ];
+				ExecPreStart = [ "modprobe kvm" ];
+			};
+		};
+		"container@gitlab-runner-vbox" = {
+			conflicts = [
+				"container@gitlab-runner-qemu.service"
+			];
+			serviceConfig = {
+				DevicePolicy = lib.mkForce "auto";
+				ExecPostStop = [ "rmmod vboxnetadp vboxnetflt vboxdrv" ];
+				ExecPreStart = [ "modprobe vboxdrv vboxnetadp vboxnetflt" ];
+			};
+		};
 	};
-	systemd.services."container@gitlab-runner-qemu".conflicts = [ "container@gitlab-runner-vbox.service" ];
 
+	#####################################################################################
+	#################### QEmu Runner ####################################################
+	#####################################################################################
 	containers.gitlab-runner-qemu = container {
 		bindMounts = {
 			"/dev/kvm" = {
@@ -68,22 +89,6 @@ in  {
 		hostAddress = "192.168.201.1";
 		localAddress = "192.168.201.2";
 		config = ((import ./container-runner-qemu.nix) inputs);
-	};
-
-	systemd.services."container@gitlab-runner-vbox".serviceConfig = {
-		DevicePolicy = lib.mkForce "auto";
-		ExecPostStop = [
-			"rmmod vboxnetadp vboxnetflt vboxdrv"
-		];
-		ExecPreStart = [
-			"modprobe vboxdrv vboxnetadp vboxnetflt"
-		];
-	};
-	systemd.services."container@gitlab-runner-vbox".conflicts = [ "container@gitlab-runner-qemu.service" ];
-
-	systemd.services.gitlab-runner = {
-		wants = [ "network-online.target" ];
-		after = [ "network.target" "network-online.target" ];
 	};
 
 	#####################################################################################
@@ -142,19 +147,19 @@ in  {
 	#####################################################################################
 	age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
 	services.gitlab-runner = {
-		enable = true;
+		enable = false;
 		settings.concurrent = 5;
-		services.podman = {
-			executor = "docker";
-			registrationConfigFile = config.age.secrets.runner-reg.path;
-			tagList = [ "container" ];
-			dockerImage = "ubuntu:22.04";
+		services = {
+			default = {
+				executor = "docker";
+				registrationConfigFile = config.age.secrets.runner-reg.path;
+				dockerImage = "debian:stable";
+			};
 		};
 	};
-	virtualisation.podman = {
-		enable = true;
-		dockerCompat = true;
-		dockerSocket.enable = true;
+	virtualisation = {
+		docker.enable = true;
+		oci-containers.backend = "docker";
 	};
-	virtualisation.docker.enable = false;
+	#users.users.gitlab-runner.extraGroups = [ "docker" ];
 }

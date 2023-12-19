@@ -53,4 +53,5 @@ in
 	"gitlab/myself-vbox-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-podman-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-shell-runner-reg.age".publicKeys = everyone;
+	"gitlab/myself-vmware-runner-reg.age".publicKeys = everyone;
 }

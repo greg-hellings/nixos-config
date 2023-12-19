@@ -26,11 +26,14 @@ lib.attrsets.recursiveUpdate {
 		curl
 		gawk
 		git
+		p7zip
 		packer
 		pup
 		py
 		shellcheck
+		unzip
 		xorriso
+		wget
 	];
 
 	networking = {
