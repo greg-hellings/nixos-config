@@ -41,7 +41,6 @@
 		gh
 		git
 		gnupatch
-		gregpy
 		hms
 		htop
 		inetutils

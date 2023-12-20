@@ -33,6 +33,8 @@ in rec {
 	pythonPackagesExtensions = (prev.pythonPackagesExtensions or []) ++ [
 		(python-final: python-prev: let cp = python-final.callPackage; in {
 			django-rapyd-modernauth = cp ./django-rapyd-modernauth.nix {};
+			graypy = cp ./graypy.nix {};
+			itg-django-utils = cp ./itg-django-utils.nix {};
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
 			xonsh-direnv = cp ./xonsh-direnv.nix {};
 			xontrib-vox = cp ./xonsh-vox.nix {};
@@ -63,6 +65,7 @@ in rec {
 	handbrake = prev.handbrake.override {
 		libbluray = libbluray-custom;
 	};
+	pipenv-ivr = prev.callPackage ./pipenv.nix { };
 
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
