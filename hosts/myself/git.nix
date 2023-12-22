@@ -4,8 +4,6 @@ let
 
 	gitlabStateDir = "/var/lib/gitlab";
 
-	registryPort = 8001;
-
 	container = input: (lib.attrsets.recursiveUpdate {
 		bindMounts."/etc/ssh".hostPath = "/etc/ssh";  # For agenix secrets
 		privateNetwork = true;
@@ -14,7 +12,7 @@ in  {
 	networking = {
 		firewall = {
 			enable = true;
-			allowedTCPPorts = [ 80 registryPort ];
+			allowedTCPPorts = [ 80 ];
 		};
 		nat = {
 			enable = true;
@@ -40,6 +38,10 @@ in  {
 				hostPath = gitlabStateDir;
 				isReadOnly = false;
 			};
+			"/dev/net/tun" = {
+				hostPath = "/dev/net/tun";
+				isReadOnly = false;
+			};
 		};
 		forwardPorts = [{
 			hostPort = 2222;
@@ -47,7 +49,7 @@ in  {
 		}];
 		hostAddress = "192.168.200.1";
 		localAddress = "192.168.200.2";
-		config = ((import ./container-git.nix) { inherit inputs registryPort; });
+		config = ((import ./container-git.nix) { inherit inputs; });
 	};
 
 	systemd.services = {
@@ -58,7 +60,7 @@ in  {
 			serviceConfig = {
 				DevicePolicy = lib.mkForce "auto";
 				ExecPostStop = [ "rmmod kvm_amd kvm" ];
-				ExecPreStart = [ "modprobe kvm" ];
+				ExecPreStart = [ "modprobe kvm kvm_amd" ];
 			};
 		};
 		"container@gitlab-runner-vbox" = {
@@ -70,6 +72,11 @@ in  {
 				ExecPostStop = [ "rmmod vboxnetadp vboxnetflt vboxdrv" ];
 				ExecPreStart = [ "modprobe vboxdrv vboxnetadp vboxnetflt" ];
 			};
+		};
+		"container@gitlab".serviceConfig = {
+			DeviceAllow = [ "/dev/net/tun" ];
+			ProtectKernelModules = false;
+			PrivateDevices = false;
 		};
 	};
 
@@ -147,13 +154,30 @@ in  {
 	#####################################################################################
 	age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
 	services.gitlab-runner = {
-		enable = false;
+		enable = true;
 		settings.concurrent = 5;
 		services = {
 			default = {
 				executor = "docker";
 				registrationConfigFile = config.age.secrets.runner-reg.path;
-				dockerImage = "debian:stable";
+				dockerImage = "fedora:39";
+				dockerAllowedImages = [
+					"alpine:*"
+					"debian:*"
+					"docker:*"
+					"fedora:*"
+					"python:*"
+					"ubuntu:*"
+
+					"hashicorp/*:*"
+					"koalaman/shellcheck:*"
+
+					"registry.gitlab.com/gitlab-org/*"
+				];
+				dockerAllowedServices = [
+					"docker:*"
+				];
+				dockerPrivileged = true;
 			};
 		};
 	};
@@ -161,5 +185,4 @@ in  {
 		docker.enable = true;
 		oci-containers.backend = "docker";
 	};
-	#users.users.gitlab-runner.extraGroups = [ "docker" ];
 }

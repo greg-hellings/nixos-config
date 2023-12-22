@@ -1,8 +1,13 @@
-{ inputs, registryPort, ...}:
-{ config, pkgs, lib, ... }: {
+{ inputs, ...}:
+{ config, pkgs, lib, ... }: let
+	registryPort = 5000;
+	vpnIp = "100.78.226.76";
+	containerIp = "192.168.200.2";
+in {
 	imports = [
 		inputs.agenix.nixosModules.default
 		../../modules-linux/proxy.nix
+		../../modules-linux/tailscale.nix
 	];
 
 	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -26,13 +31,35 @@
 		useHostResolvConf = lib.mkForce false;
 	};
 
-	greg.proxies."192.168.200.2" = {
+	greg.proxies."${containerIp}" = {
 		target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
 		extraConfig = ''
 		proxy_set_header X-Forwarded-Proto https;
 		proxy_set_header X-Forwarded-Ssl on;
 		'';
 	};
+	services.nginx.virtualHosts."gitlab.shire-zebra.ts.net" = {
+		listen = [ {
+			addr = vpnIp;
+			port = registryPort;
+			ssl = true;
+		} ];
+		locations."/" = {
+			proxyPass = "http://127.0.0.1:5000/";
+			recommendedProxySettings = true;
+		};
+		extraConfig = builtins.concatStringsSep "\n" [
+			"ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;"
+			"ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;"
+		];
+	};
+	services.cron = {
+		enable = true;
+		systemCronJobs = [ "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx" ];
+	};
+	greg.tailscale.enable = true;
+
+	virtualisation.docker.enable = true;
 
 	services = {
 		resolved.enable = true;
@@ -67,7 +94,8 @@
 				enable = true;
 				certFile = config.age.secrets.gitlab-cert.path;
 				keyFile = config.age.secrets.gitlab-key.path;
-				externalPort = registryPort;
+				externalAddress = "registry.thehellings.com";
+				externalPort = 443;
 			};
 			secrets = {
 				secretFile = config.age.secrets.gitlab-secret.path;

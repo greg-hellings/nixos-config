@@ -33,6 +33,7 @@ lib.attrsets.recursiveUpdate {
 		shellcheck
 		unzip
 		xorriso
+		vagrant
 		wget
 	];
 

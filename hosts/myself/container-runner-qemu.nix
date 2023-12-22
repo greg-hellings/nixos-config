@@ -11,6 +11,7 @@ let
 		qemu_full
 		qemu_kvm
 		shellcheck
+		vagrant
 		xonsh
 		xorriso
 	];
