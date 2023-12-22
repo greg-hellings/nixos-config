@@ -12,6 +12,11 @@ in {
 		proxy_set_header X-Forwarded-Ssl on;
 		'';
 	};
+	greg.proxies."registry.thehellings.com" = {
+		target = "https://gitlab.shire-zebra.ts.net:5000";
+		ssl = true;
+		genAliases = false;
+	};
 
 	services.haproxy = {
 		enable = true;
