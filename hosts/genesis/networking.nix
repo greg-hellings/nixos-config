@@ -26,6 +26,7 @@ let
 		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home"
 		"100.78.16.88 mm.home"
 		"100.84.183.79 myself.home myself.shire-zebra.ts.net git.thehellings.lan"
+		"100.78.226.76 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan"
 
 		# Dev hosts
 		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
