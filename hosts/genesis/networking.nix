@@ -7,27 +7,28 @@ let
 	routerIP = "10.42.1.2";
 	extraHosts = builtins.concatStringsSep "\n" [
 		# Local hosts
-		"10.42.0.1 switch"
+		"10.42.0.1 switch switch.thehellings.lan"
 		"10.42.1.1 pve1.thehellings.lan"
 		"10.42.1.2 opnsense router opnsense.thehellings.lan router.thehellings.lan"
-		"10.42.1.3 printer"
-		"10.42.1.4 chronicles nas"
+		"10.42.1.3 printer.thehellings.lan"
+		"10.42.1.4 chronicles chronicles.thehellings.lan nas.thehellings.lan"
 		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan"
+		"10.42.1.6 isaiah isaiah.thehellings.lan"
 		"10.42.1.12 tv"
 
+		"10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan"
+
 		# Tailscale hosts
-		"100.90.74.19 jude.shire-zebra.ts.net"
-		"100.88.91.27 dns.shire-zebra.ts.net"
-		"100.119.228.115 chronicles.shire-zebra.ts.net"
-		"100.115.57.8 linode.shire-zebra.ts.net"
-		"100.88.91.27 genesis.shire-zebra.ts.net jellyfin.home smart.home zwave.home"
-		"100.78.16.88 mm.shire-zebra.ts.net"
+		"100.90.74.19 jude.home"
+		"100.88.91.27 dns.home"
+		"100.119.228.115 chronicles.home nas.home"
+		"100.115.57.8 linode.home"
+		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home"
+		"100.78.16.88 mm.home"
+		"100.84.183.79 myself.home myself.shire-zebra.ts.net git.thehellings.lan"
 
 		# Dev hosts
 		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
-	];
-
-	extraConfig = builtins.concatStringsSep "\n" [
 	];
 
 	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
@@ -87,9 +88,9 @@ in {
 			];
 		};
 		nftables.enable = true;
-		extraHosts = "${extraHosts}";
 	};
 
+	environment.etc."hosts.d/local".text = extraHosts;
 
 	fileSystems."/media" = {
 		device = "10.42.1.4:/volume1/video/";
@@ -148,6 +149,7 @@ in {
 				dhcp-host = [
 					# Static IPs for personal work
 					"00:00:de:ad:be:ef,10.42.2.254"
+					"01:a8:a1:59:c7:8a:12,10.42.2.253"  # BMC management interface for isaiah
 
 					# Static IPs for things in the IOT range
 					"b4:b0:24:9a:02:4a,192.168.66.5"  # LD125
@@ -181,10 +183,11 @@ in {
 				expand-hosts = true;
 				log-dhcp = true;
 				log-queries = true;
+				no-hosts = true;  # Do not read /etc/hosts, which makes genesis resolve to 127.0.0.2
 				addn-hosts = "/etc/adblock_hosts";
+				hostsdir = "/etc/hosts.d/";
 				server = dnsServers;
 			};
-			extraConfig = "${extraConfig}";
 		};
 
 		# Update adblock list
@@ -206,6 +209,8 @@ in {
 	#};
 
 	environment.systemPackages = with pkgs; [
+		bind
 		curl  # Used by dnsmasq fetching
+		sqlite
 	];
 }
