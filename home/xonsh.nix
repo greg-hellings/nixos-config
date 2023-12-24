@@ -27,6 +27,8 @@
 
 			GOPATH = "${config.home.homeDirectory}/src/go";
 			GOBIN  = "${config.home.homeDirectory}/src/bin";
+
+			EFI_DIR = "${pkgs.OVMF}/FV/";
 		};
 
 		aliases = {
