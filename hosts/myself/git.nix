@@ -107,7 +107,7 @@ in  {
 		];
 		hostAddress = "192.168.201.1";
 		localAddress = "192.168.201.2";
-		config = ((import ./container-runner-vbox.nix) {
+		config = ((import ./container-runner.nix) {
 			inherit inputs;
 			name = "qemu";
 			packages = with pkgs; [ qemu_full qemu_kvm ];
@@ -141,7 +141,7 @@ in  {
 		};
 		hostAddress = "192.168.202.1";
 		localAddress = "192.168.202.2";
-		config = ((import ./container-runner-vbox.nix) {
+		config = ((import ./container-runner.nix) {
 			inherit inputs;
 			name = "vbox";
 			extra = {
@@ -167,7 +167,7 @@ in  {
 		autoStart = true;
 		hostAddress = "192.168.203.1";
 		localAddress = "192.168.203.2";
-		config = ((import ./container-runner-vbox.nix) {
+		config = ((import ./container-runner.nix) {
 			inherit inputs;
 			name = "shell";
 		});
