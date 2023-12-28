@@ -38,32 +38,11 @@ in {
 		proxy_set_header X-Forwarded-Ssl on;
 		'';
 	};
-	services.nginx.virtualHosts."gitlab.shire-zebra.ts.net" = {
-		listen = [ {
-			addr = vpnIp;
-			port = registryPort;
-			ssl = true;
-		} ];
-		locations."/" = {
-			proxyPass = "http://127.0.0.1:5000/";
-			recommendedProxySettings = true;
-		};
-		extraConfig = builtins.concatStringsSep "\n" [
-			"ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;"
-			"ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;"
-		];
-	};
-	services.cron = {
-		enable = true;
-		systemCronJobs = [ "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx" ];
-	};
 	greg.tailscale.enable = true;
 
 	virtualisation.docker.enable = true;
 
 	services = {
-		resolved.enable = true;
-		openssh.enable = true;
 		gitlab = {
 			enable = true;
 			backup = {
@@ -105,6 +84,29 @@ in {
 			};
 		};
 
+		nginx.virtualHosts."gitlab.shire-zebra.ts.net" = {
+			listen = [ {
+				addr = vpnIp;
+				port = registryPort;
+				ssl = true;
+			} ];
+			locations."/" = {
+				proxyPass = "http://127.0.0.1:5000/";
+				recommendedProxySettings = true;
+			};
+			extraConfig = builtins.concatStringsSep "\n" [
+				"ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;"
+				"ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;"
+				"client_max_body_size 250m;"
+			];
+		};
+
+		# Fetch the SSL certificates for nginx to use
+		cron = {
+			enable = true;
+			systemCronJobs = [ "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx" ];
+		};
+
 		postgresql = {
 			enable = true;
 			checkConfig = true;
@@ -124,6 +126,15 @@ in {
 		redis.servers.gitlab = {
 			enable = true;
 		};
+		resolved.enable = true;
+		openssh.enable = true;
+	};
+
+	# Do not start nginx until we have tailscaled up and running, so it can bind
+	# to the 100.* addresses
+	systemd.services.nginx = {
+		after = [ "tailscaled.service" ];
+		requires = [ "tailscaled.service" ];
 	};
 	system.stateVersion = "24.05";
 }

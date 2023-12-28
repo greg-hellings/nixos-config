@@ -1,4 +1,4 @@
-{ inputs, name, extra ? {} }:
+{ inputs, name, extra ? {}, packages ? [] }:
 
 ({ config, pkgs, lib, ... }:
 let
@@ -32,10 +32,11 @@ lib.attrsets.recursiveUpdate {
 		py
 		shellcheck
 		unzip
+		xonsh
 		xorriso
 		vagrant
 		wget
-	];
+	] ++ packages;
 
 	networking = {
 		useHostResolvConf = pkgs.lib.mkForce false;
@@ -61,8 +62,15 @@ lib.attrsets.recursiveUpdate {
 	};
 
 	systemd.services.gitlab-runner = {
-		wants = [ "network-online.target" "systemd-resolved.service" ];
-		after = [ "network.target" "network-online.target" "systemd-resolved.service" ];
+		wants = [
+			"network-online.target"
+			"systemd-resolved.service"
+		];
+		after = [
+			"network.target"
+			"network-online.target"
+			"systemd-resolved.service"
+		];
 	};
 
 	system.stateVersion = "24.05";

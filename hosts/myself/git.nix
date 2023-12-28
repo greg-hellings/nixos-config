@@ -59,8 +59,11 @@ in  {
 			];
 			serviceConfig = {
 				DevicePolicy = lib.mkForce "auto";
-				ExecPostStop = [ "rmmod kvm_amd kvm" ];
-				ExecPreStart = [ "modprobe kvm kvm_amd" ];
+				ExecStopPost = [ "${pkgs.kmod}/bin/rmmod kvm_amd kvm" ];
+				ExecStartPre = [
+					"${pkgs.kmod}/bin/modprobe kvm"
+					"${pkgs.kmod}/bin/modprobe kvm_amd"
+				];
 			};
 		};
 		"container@gitlab-runner-vbox" = {
@@ -69,8 +72,12 @@ in  {
 			];
 			serviceConfig = {
 				DevicePolicy = lib.mkForce "auto";
-				ExecPostStop = [ "rmmod vboxnetadp vboxnetflt vboxdrv" ];
-				ExecPreStart = [ "modprobe vboxdrv vboxnetadp vboxnetflt" ];
+				ExecStopPost = [ "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv" ];
+				ExecStartPre = [
+					"${pkgs.kmod}/bin/modprobe vboxdrv"
+					"${pkgs.kmod}/bin/modprobe vboxnetadp"
+					"${pkgs.kmod}/bin/modprobe vboxnetflt"
+				];
 			};
 		};
 		"container@gitlab".serviceConfig = {
@@ -78,6 +85,7 @@ in  {
 			ProtectKernelModules = false;
 			PrivateDevices = false;
 		};
+		gitlab-runner.serviceConfig.EnvironmentFile = config.age.secrets.docker-auth.path;
 	};
 
 	#####################################################################################
@@ -89,13 +97,28 @@ in  {
 				hostPath = "/dev/kvm";
 				isReadOnly = false;
 			};
+			"/dev/mem" = {
+				hostPath = "/dev/mem";
+				isReadOnly = false;
+			};
 		};
 		extraFlags = [
 			"--property=DeviceAllow=/dev/kvm"
 		];
 		hostAddress = "192.168.201.1";
 		localAddress = "192.168.201.2";
-		config = ((import ./container-runner-qemu.nix) inputs);
+		config = ((import ./container-runner-vbox.nix) {
+			inherit inputs;
+			name = "qemu";
+			packages = with pkgs; [ qemu_full qemu_kvm ];
+			extra = {
+				virtualisation.libvirtd = {
+					enable = true;
+					onBoot = "ignore";
+					package = pkgs.libvirt-greg;
+				};
+			};
+		});
 	};
 
 	#####################################################################################
@@ -132,6 +155,7 @@ in  {
 					enableHardening = false;
 					headless = true;
 				};
+				networking.firewall.allowedTCPPorts = [ 18083 ];  # Should be interface for vboxweb
 			};
 		});
 	};
@@ -153,14 +177,17 @@ in  {
 	#################### Local Podman/Docker Runner #####################################
 	#####################################################################################
 	age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
+	age.secrets.docker-auth.file = ../../secrets/gitlab/docker-auth.age;
 	services.gitlab-runner = {
 		enable = true;
-		settings.concurrent = 5;
+		settings = {
+			concurrent = 5;
+		};
 		services = {
 			default = {
 				executor = "docker";
 				registrationConfigFile = config.age.secrets.runner-reg.path;
-				dockerImage = "fedora:39";
+				dockerImage = "registry.thehellings.com/greg/ci-images/fedora";
 				dockerAllowedImages = [
 					"alpine:*"
 					"debian:*"
@@ -173,11 +200,17 @@ in  {
 					"koalaman/shellcheck:*"
 
 					"registry.gitlab.com/gitlab-org/*"
+					"registry.thehellings.com/*"
 				];
 				dockerAllowedServices = [
 					"docker:*"
+					"registry.thehellings.com/*"
 				];
 				dockerPrivileged = true;
+				dockerVolumes = [
+					"/certs/client"
+					"/cache"
+				];
 			};
 		};
 	};

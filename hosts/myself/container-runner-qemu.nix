@@ -22,7 +22,7 @@ in {
 	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 	age.secrets.qemu-runner-reg-1 = {
 		file = ../../secrets/gitlab/myself-qemu-runner-reg-1.age;
-		owner = "gitlab-runner";
+		owner = "root";
 	};
 
 	networking.useHostResolvConf = pkgs.lib.mkForce false;
@@ -40,9 +40,23 @@ in {
 			tagList = [ "shell" "qemu" ];
 		};
 	};
+	virtualisation.libvirtd = {
+		enable = true;
+		onBoot = "ignore";
+	};
 
-	systemd.services.gitlab-runner.wants = [ "network-online.target" "systemd-resolved.service" ];
-	systemd.services.gitlab-runner.after = [ "network.target" "network-online.target" "systemd-resolved.service" ];
+	systemd.services = {
+		gitlab-runner = {
+			wants = [ "network-online.target" "systemd-resolved.service" ];
+			after = [ "network.target" "network-online.target" "systemd-resolved.service" ];
+		};
+		libvirtd.serviceConfig = {
+			DevicePolicy = "auto";
+			DeviceAllow = [ "/dev/kvm" "/dev/mem" ];
+			PrivateDevices = false;
+			ProtectKernelModules = false;
+		};
+	};
 
 	system.stateVersion = "24.05";
 }

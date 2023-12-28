@@ -63,6 +63,9 @@ in rec {
 	handbrake = prev.handbrake.override {
 		libbluray = libbluray-custom;
 	};
+	libvirt-greg = prev.libvirt.overrideAttrs {
+		postInstall = prev.libvirt.postInstall + "rm -r $out/lib/systemd/system/libvirtd.service";
+	};
 
 	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
 		python3 = final.gregpy;
