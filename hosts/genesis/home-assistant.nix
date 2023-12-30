@@ -76,6 +76,7 @@ in
 
 	greg.proxies = {
 		"smart.home".target = "http://127.0.0.1:8123/";
+		"smart.thehellings.lan".target = "http://127.0.0.1:8123/";
 		"zwave.home".target = "http://127.0.0.1:8091/";
 	};
 
