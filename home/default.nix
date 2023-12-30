@@ -4,8 +4,8 @@
 	...
 }:
 
-{
-	"gregory.hellings" = 
+rec {
+	greghellings = 
 	let
 		system = "x86_64-linux";
 		pkgs = (import inputs.nixunstable { inherit system overlays; });
@@ -20,4 +20,6 @@
 			username = "gregory.hellings";
 		};
 	};
+
+	"gregory.hellings" = greghellings;
 }

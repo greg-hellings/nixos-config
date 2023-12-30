@@ -14,7 +14,7 @@ let
 proxy_http_version 1.1;
 proxy_set_header Upgrade $http_upgrade;
 proxy_set_header Connection $connection_upgrade;
-'';
+'' + dest.extraConfig;
 		};
 		serverAliases = lib.mkIf dest.genAliases [ "${alias name}" ];
 	};
@@ -62,6 +62,12 @@ in with lib; {
 							type = types.str;
 							description = "The path prefix for this proxy";
 							default = "/";
+						};
+
+						extraConfig = mkOption {
+							type = types.str;
+							description = "Extra nginx config options";
+							default = "";
 						};
 					};
 				}));

@@ -49,7 +49,6 @@ in {
 	};
 	icdm-root = unstable { name = "icdm-root"; };
 	linode = machine { name = "linode"; };
-	lappy = machine { name = "lappy"; };
 	mm = unstable { name = "mm"; };
 	myself = unstable { name = "myself"; };
 	iso = machine { name = "iso"; };
