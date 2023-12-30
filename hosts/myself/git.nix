@@ -187,7 +187,7 @@ in  {
 			default = {
 				executor = "docker";
 				registrationConfigFile = config.age.secrets.runner-reg.path;
-				dockerImage = "registry.thehellings.com/greg/ci-images/fedora";
+				dockerImage = "gitlab.shire-zebra.ts.net:5000/greg/ci-images/fedora:latest";
 				dockerAllowedImages = [
 					"alpine:*"
 					"debian:*"
@@ -201,10 +201,12 @@ in  {
 
 					"registry.gitlab.com/gitlab-org/*"
 					"registry.thehellings.com/*"
+					"gitlab.shire-zebra.ts.net:5000/*:*"
 				];
 				dockerAllowedServices = [
 					"docker:*"
 					"registry.thehellings.com/*"
+					"gitlab.shire-zebra.ts.net:5000/*:*"
 				];
 				dockerPrivileged = true;
 				dockerVolumes = [
