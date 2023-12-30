@@ -20,7 +20,7 @@
 			inputs.nixpkgs.follows = "nixstable";
 		};
 		nixneovim.url = "github:NixNeovim/NixNeovim";
-		nixpy311.url = "github:NixOS/nixpkgs/nixos-23.05";
+		nix23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
 		nixstable.url = "github:nixos/nixpkgs/nixos-23.11";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		nurpkgs.url = "github:nix-community/NUR";
@@ -37,7 +37,7 @@
 		hm,
 		hmunstable,
 		nixneovim,
-		nixpy311,
+		nix23_05,
 		nixstable,
 		nixunstable,
 		nurpkgs,
@@ -48,7 +48,8 @@
 	let
 		pkg-sets = (
 			final: prev: {
-				unstable = import inputs.nixunstable { system = final.system; };
+				unstable = import inputs.nixunstable { system = final.system; inherit overlays; };
+				nix23_05 = import inputs.nix23_05 { system = final.system; inherit overlays; };
 			}
 		);
 		local_overlay = import ./overlays;

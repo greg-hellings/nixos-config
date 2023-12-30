@@ -1,10 +1,21 @@
 { pkgs, lib, inputs, ...}:
-
-{
+let
+	py = pkgs.nix23_05.python311.withPackages ( p: with p; [
+		django
+		djangorestframework
+		django-rapyd-modernauth
+		environs
+		#itg-django-utils
+		mysqlclient
+		ruamel-yaml
+		tox
+	]);
+in {
 	imports = [
 		../../vscodium.nix
 	];
 
+	greg.pypackage = py;
 	home = {
 		packages = with pkgs; [
 			aacs
@@ -13,7 +24,7 @@
 			direnv
 			home-manager
 			insomnia
-			pipenv
+			pipenv-ivr
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 			"[global]"
