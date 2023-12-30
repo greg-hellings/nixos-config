@@ -31,8 +31,7 @@ let
 				};
 				users.users."gregory.hellings".home = "/Users/gregory.hellings";
 			}
-			../modules-all
-			../modules-darwin
+			../modules
 			./${name}
 		] ++ extraMods;
 	};

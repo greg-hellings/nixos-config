@@ -217,5 +217,6 @@ in  {
 	virtualisation = {
 		docker.enable = true;
 		oci-containers.backend = "docker";
+		virtualbox.host.enable = true;
 	};
 }

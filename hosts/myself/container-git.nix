@@ -6,8 +6,8 @@
 in {
 	imports = [
 		inputs.agenix.nixosModules.default
-		../../modules-linux/proxy.nix
-		../../modules-linux/tailscale.nix
+		../../modules/linux/proxy.nix
+		../../modules/linux/tailscale.nix
 	];
 
 	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -133,8 +133,16 @@ in {
 	# Do not start nginx until we have tailscaled up and running, so it can bind
 	# to the 100.* addresses
 	systemd.services.nginx = {
-		after = [ "tailscaled.service" ];
-		requires = [ "tailscaled.service" ];
+		after = [
+			"tailscaled.service"
+			"network.target"
+			"network-online.target"
+		];
+		wants = [
+			"tailscaled.service"
+			"network.target"
+			"network-online.target"
+		];
 	};
 	system.stateVersion = "24.05";
 }

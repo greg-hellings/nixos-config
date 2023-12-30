@@ -1,9 +1,14 @@
 { pkgs, lib, ... }:
 
+let
+	inherit (lib.strings) hasSuffix;
+	system = pkgs.system; in
 {
 	imports = [
 		./ci-runner.nix
-	];
+	]
+	++ (if (lib.strings.hasSuffix "darwin" "nope") then [./darwin] else [])
+	++ (if (lib.strings.hasSuffix "linux" "linux") then [./linux] else []);
 
 	# Enable flakes
 	nix = {
