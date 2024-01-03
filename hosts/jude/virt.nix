@@ -5,6 +5,7 @@
 		dmidecode
 		guestfs-tools
 		libguestfs
+		OVMFFull
 		ovftool
 		packer
 		virt-manager
@@ -19,12 +20,15 @@
 		libvirtd = {
 			enable = true;
 			onBoot = "ignore";  # Do not auto-restart VMs on boot, unless they are marked autostart
+			qemu.ovmf.enable = true;
 		};
 
 		virtualbox.host = {
 			enable = true;
 			enableExtensionPack = true;
 		};
+
+		vmware.host.enable = true;
 
 		waydroid.enable = false;
 		lxd.enable = false;
@@ -33,15 +37,4 @@
 	users.extraGroups.vboxusers.members = [ "greg" ];
 
 	boot.extraModprobeConfig = "options kvm_amd nested=1";
-
-	greg.ci-runner = {
-		qemu = {
-			labels = [
-				"qemu:host"
-			];
-			packages = with pkgs; [
-				qemu
-			];
-		};
-	};
 }

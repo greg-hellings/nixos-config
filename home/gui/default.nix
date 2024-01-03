@@ -28,7 +28,7 @@ in
 		gnucash
 		jellyfin-media-player
 		libreoffice
-		logseq
+		#logseq
 		nextcloud-client
 	]) ++
 

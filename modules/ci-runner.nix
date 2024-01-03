@@ -7,15 +7,32 @@ let
 		enable = true;
 		hostPackages = with pkgs; [
 			bashInteractive
-			podman
+			coreutils
+			curl
+			gawk
 			git
+			gnused
 			nodejs
+			nodejs_20
+			podman
+			pup
+			gregpy
+			shellcheck
+			wget
 		] ++ value.packages;
 		labels = lib.mkIf ( builtins.hasAttr "labels" value) value.labels;
 		name = config.networking.hostName;
 		tokenFile = config.age.secrets.forgejo-runner.path;
 		url = "https://src.thehellings.com";
-		settings.runner.capacity = value.parallel;
+		settings = {
+			runner.capacity = value.parallel;
+			container.network = "host";
+			cache.enabled = true;
+			host = {
+				workdir_parent = "/var/lib/private/gitea-runner/${name}";
+			};
+			lxc.enabled = false;
+		};
 	};
 
 	userName = "gitea-runner";
@@ -65,6 +82,7 @@ in with lib; {
 
 	config = mkIf ( runnerNames != [] ) {
 		services.gitea-actions-runner.instances = ( mapAttrs makeRunner cfg);
+		#services.gitea-actions-runner.package = pkgs.forgejo-actions-runner;
 
 		age.secrets.forgejo-runner = let
 			aName = builtins.elemAt runnerNames 0;
