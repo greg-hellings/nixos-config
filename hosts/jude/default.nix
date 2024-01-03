@@ -40,6 +40,7 @@
 		nix-tree
 		oathToolkit
 		synology-drive-client
+		terraform
 		vagrant
 		ventoy
 
