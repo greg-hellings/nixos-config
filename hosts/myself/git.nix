@@ -4,8 +4,6 @@ let
 
 	gitlabStateDir = "/var/lib/gitlab";
 
-	registryPort = 8001;
-
 	container = input: (lib.attrsets.recursiveUpdate {
 		bindMounts."/etc/ssh".hostPath = "/etc/ssh";  # For agenix secrets
 		privateNetwork = true;
@@ -14,7 +12,7 @@ in  {
 	networking = {
 		firewall = {
 			enable = true;
-			allowedTCPPorts = [ 80 registryPort ];
+			allowedTCPPorts = [ 80 ];
 		};
 		nat = {
 			enable = true;
@@ -40,6 +38,10 @@ in  {
 				hostPath = gitlabStateDir;
 				isReadOnly = false;
 			};
+			"/dev/net/tun" = {
+				hostPath = "/dev/net/tun";
+				isReadOnly = false;
+			};
 		};
 		forwardPorts = [{
 			hostPort = 2222;
@@ -47,7 +49,7 @@ in  {
 		}];
 		hostAddress = "192.168.200.1";
 		localAddress = "192.168.200.2";
-		config = ((import ./container-git.nix) { inherit inputs registryPort; });
+		config = ((import ./container-git.nix) { inherit inputs; });
 	};
 
 	systemd.services = {
@@ -57,8 +59,11 @@ in  {
 			];
 			serviceConfig = {
 				DevicePolicy = lib.mkForce "auto";
-				ExecPostStop = [ "rmmod kvm_amd kvm" ];
-				ExecPreStart = [ "modprobe kvm" ];
+				ExecStopPost = [ "${pkgs.kmod}/bin/rmmod kvm_amd kvm" ];
+				ExecStartPre = [
+					"${pkgs.kmod}/bin/modprobe kvm"
+					"${pkgs.kmod}/bin/modprobe kvm_amd"
+				];
 			};
 		};
 		"container@gitlab-runner-vbox" = {
@@ -67,10 +72,20 @@ in  {
 			];
 			serviceConfig = {
 				DevicePolicy = lib.mkForce "auto";
-				ExecPostStop = [ "rmmod vboxnetadp vboxnetflt vboxdrv" ];
-				ExecPreStart = [ "modprobe vboxdrv vboxnetadp vboxnetflt" ];
+				ExecStopPost = [ "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv" ];
+				ExecStartPre = [
+					"${pkgs.kmod}/bin/modprobe vboxdrv"
+					"${pkgs.kmod}/bin/modprobe vboxnetadp"
+					"${pkgs.kmod}/bin/modprobe vboxnetflt"
+				];
 			};
 		};
+		"container@gitlab".serviceConfig = {
+			DeviceAllow = [ "/dev/net/tun" ];
+			ProtectKernelModules = false;
+			PrivateDevices = false;
+		};
+		gitlab-runner.serviceConfig.EnvironmentFile = config.age.secrets.docker-auth.path;
 	};
 
 	#####################################################################################
@@ -82,13 +97,28 @@ in  {
 				hostPath = "/dev/kvm";
 				isReadOnly = false;
 			};
+			"/dev/mem" = {
+				hostPath = "/dev/mem";
+				isReadOnly = false;
+			};
 		};
 		extraFlags = [
 			"--property=DeviceAllow=/dev/kvm"
 		];
 		hostAddress = "192.168.201.1";
 		localAddress = "192.168.201.2";
-		config = ((import ./container-runner-qemu.nix) inputs);
+		config = ((import ./container-runner.nix) {
+			inherit inputs;
+			name = "qemu";
+			packages = with pkgs; [ qemu_full qemu_kvm ];
+			extra = {
+				virtualisation.libvirtd = {
+					enable = true;
+					onBoot = "ignore";
+					package = pkgs.libvirt-greg;
+				};
+			};
+		});
 	};
 
 	#####################################################################################
@@ -111,7 +141,7 @@ in  {
 		};
 		hostAddress = "192.168.202.1";
 		localAddress = "192.168.202.2";
-		config = ((import ./container-runner-vbox.nix) {
+		config = ((import ./container-runner.nix) {
 			inherit inputs;
 			name = "vbox";
 			extra = {
@@ -125,6 +155,7 @@ in  {
 					enableHardening = false;
 					headless = true;
 				};
+				networking.firewall.allowedTCPPorts = [ 18083 ];  # Should be interface for vboxweb
 			};
 		});
 	};
@@ -136,7 +167,7 @@ in  {
 		autoStart = true;
 		hostAddress = "192.168.203.1";
 		localAddress = "192.168.203.2";
-		config = ((import ./container-runner-vbox.nix) {
+		config = ((import ./container-runner.nix) {
 			inherit inputs;
 			name = "shell";
 		});
@@ -146,20 +177,48 @@ in  {
 	#################### Local Podman/Docker Runner #####################################
 	#####################################################################################
 	age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
+	age.secrets.docker-auth.file = ../../secrets/gitlab/docker-auth.age;
 	services.gitlab-runner = {
-		enable = false;
-		settings.concurrent = 5;
+		enable = true;
+		settings = {
+			concurrent = 5;
+		};
 		services = {
 			default = {
 				executor = "docker";
 				registrationConfigFile = config.age.secrets.runner-reg.path;
-				dockerImage = "debian:stable";
+				dockerImage = "gitlab.shire-zebra.ts.net:5000/greg/ci-images/fedora:latest";
+				dockerAllowedImages = [
+					"alpine:*"
+					"debian:*"
+					"docker:*"
+					"fedora:*"
+					"python:*"
+					"ubuntu:*"
+
+					"hashicorp/*:*"
+					"koalaman/shellcheck:*"
+
+					"registry.gitlab.com/gitlab-org/*"
+					"registry.thehellings.com/*"
+					"gitlab.shire-zebra.ts.net:5000/*:*"
+				];
+				dockerAllowedServices = [
+					"docker:*"
+					"registry.thehellings.com/*"
+					"gitlab.shire-zebra.ts.net:5000/*:*"
+				];
+				dockerPrivileged = true;
+				dockerVolumes = [
+					"/certs/client"
+					"/cache"
+				];
 			};
 		};
 	};
 	virtualisation = {
 		docker.enable = true;
 		oci-containers.backend = "docker";
+		virtualbox.host.enable = true;
 	};
-	#users.users.gitlab-runner.extraGroups = [ "docker" ];
 }
