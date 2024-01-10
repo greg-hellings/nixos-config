@@ -28,7 +28,7 @@
 			enableExtensionPack = true;
 		};
 
-		vmware.host.enable = true;
+		vmware.host.enable = false;
 
 		waydroid.enable = false;
 		lxd.enable = false;
@@ -37,4 +37,23 @@
 	users.extraGroups.vboxusers.members = [ "greg" ];
 
 	boot.extraModprobeConfig = "options kvm_amd nested=1";
+
+	systemd.services = {
+		vbox = {
+			conflicts = [ "libvirtd.service" ];
+			serviceConfig = {
+				Type = "oneshot";
+				RemainAfterExit = "yes";
+				ExecStart = [
+					"rmmod kvm_amd"
+					"rmmod kvm"
+				];
+				ExecStop = [
+					"rmmod vboxnetflt"
+					"rmmod vboxnetadp"
+					"rmmod vboxdrv"
+				];
+			};
+		};
+	};
 }

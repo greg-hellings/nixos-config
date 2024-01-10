@@ -16,7 +16,8 @@
 	networking = {
 		hostName = "jude";
 		enableIPv6 = false;
-		interfaces.enp37s0.useDHCP = true;
+		interfaces.enp12s0.useDHCP = true;
+		firewall.enable = true;
 	};
 	greg = {
 		tailscale.enable = true;
@@ -35,6 +36,8 @@
 		handbrake
 		imagemagick
 		libtheora
+		libxml2
+		linode-cli
 		makemkv
 		nix-du
 		nix-tree
