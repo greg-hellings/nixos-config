@@ -7,11 +7,13 @@
 
 	environment.systemPackages = with pkgs; [
 		git
+		packer
 		(python3.withPackages (p: with p; [ pip virtualenv ]))
 		tmux
 		tree
 		vim
 		xonsh
+		xorriso
 	];
 
 	greg.tailscale.enable = true;

@@ -220,5 +220,6 @@ in  {
 		docker.enable = true;
 		oci-containers.backend = "docker";
 		virtualbox.host.enable = true;
+		vmware.host.enable = true;
 	};
 }
