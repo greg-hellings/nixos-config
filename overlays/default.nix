@@ -59,7 +59,7 @@ in rec {
 		withAACS = true;
 		withBDplus = true;
 	};
-	setup-ssh = prev.callPackage ./setup-ssh.nix {
+	setup-ssh = prev.callPackage ./setup-ssh {
 		pkgs = final.pkgs;
 	};
 	template = prev.callPackage ./template.nix { };

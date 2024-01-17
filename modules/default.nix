@@ -46,6 +46,7 @@ let
 		agenix
 		android-file-transfer
 		bitwarden-cli
+		configure_aws_creds
 		diffutils
 		git
 		gh
