@@ -49,8 +49,9 @@ in rec {
 
 	aacs = prev.callPackage ./aacs.nix {};
 	brew = prev.callPackage ./homebrew.nix {};
+	configure_aws_creds = prev.callPackage ./configure_aws_creds.nix {};
 	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
-	hms = prev.callPackage ./hms.nix {
+	hms = prev.callPackage ./hms {
 		pkgs = final.pkgs;
 	};
 	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };

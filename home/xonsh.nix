@@ -58,6 +58,7 @@
 			molcol = "molecule -c ../../tests/molecule.yml";
 			nixup = "nix flake lock --update-input";
 			pa = "cd ~/src/packaging";
+			tf = "terraform";
 			tsup = "sudo tailscale up";
 			tspub = "sudo tailscale up --exit-node=linode";
 			tshome = "sudo tailscale up --exit-node=2maccabees";
