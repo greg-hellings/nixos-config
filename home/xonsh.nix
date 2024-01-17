@@ -29,6 +29,7 @@
 			GOBIN  = "${config.home.homeDirectory}/src/bin";
 
 			EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+
 		};
 
 		aliases = {
@@ -70,6 +71,9 @@
 		};
 
 		configHeader = builtins.readFile ./xonsh_header.xsh;
-		configFooter = builtins.readFile ./xonsh_footer.xsh;
+		configFooter = (builtins.readFile ./xonsh_footer.xsh) + (builtins.concatStringsSep "\n" [
+			"with open('${pkgs.stdenv.cc}/nix-support/dynamic-linker', 'r') as fp:"
+			"    $NIX_LD = fp.read().strip()"
+		]);
 	};
 }
