@@ -55,6 +55,9 @@ lib.attrsets.recursiveUpdate {
 					limit = 5;
 					registrationConfigFile = config.age.secrets.runner-reg.path;
 					tagList = [ "shell" name ];
+					environmentVariables = {
+						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+					};
 				};
 			};
 		};
