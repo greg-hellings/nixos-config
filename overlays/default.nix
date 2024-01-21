@@ -38,18 +38,22 @@ in rec {
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
 			xonsh-direnv = cp ./xonsh-direnv.nix {};
 			xontrib-vox = cp ./xonsh-vox.nix {};
-			copier =  cp ./copier.nix {
-				inherit (python-final)
-				    iteration-utilities
-				    jinja2-ansible-filters
-				    pyyaml-include;
-			};
 		})
 	];
 
 	aacs = prev.callPackage ./aacs.nix {};
 	brew = prev.callPackage ./homebrew.nix {};
 	configure_aws_creds = prev.callPackage ./configure_aws_creds.nix {};
+	copier = prev.copier.overridePythonAttrs (old: {
+		version = "9.1.1";
+		src = final.fetchFromGitHub {
+			owner = "copier-org";
+			repo = "copier";
+			rev = "v9.1.0";
+			hash = "sha256-x5r7Xv4lAOMkR+UIEeSY7LvbYMLpTWYuICYe9ygz1tA=";
+			postFetch = "rm $out/tests/demo/doc/ma*ana.txt";
+		};
+	});
 	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
 	hms = prev.callPackage ./hms {
 		pkgs = final.pkgs;
