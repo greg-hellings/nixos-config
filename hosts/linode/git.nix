@@ -16,6 +16,7 @@ in {
 		target = "https://gitlab.shire-zebra.ts.net:5000";
 		ssl = true;
 		genAliases = false;
+		extraConfig = "client_max_body_size 250m;";
 	};
 
 	services.haproxy = {
