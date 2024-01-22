@@ -1,13 +1,10 @@
 { pkgs, lib, ... }:
 
 let
-	inherit (lib.strings) hasSuffix;
-	system = pkgs.system;
-	inherit (pkgs.stdenv) isDarwin isLinux;
 in {
 	imports = [
-	]
-	++ (if (isLinux) then [./linux] else []);
+		./linux
+	];
 
 	# Enable flakes
 	nix = {

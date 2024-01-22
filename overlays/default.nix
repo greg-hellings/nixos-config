@@ -26,6 +26,8 @@ let
 
 	buildFirefoxXpiAddon = final.nur.repos.rycee.lib.buildFirefoxXpiAddon;
 
+	is2405 = prev.lib.versionAtLeast prev.lib.version "24.05";
+
 in rec {
 	gregpy = myPython;
 
@@ -44,8 +46,8 @@ in rec {
 	aacs = prev.callPackage ./aacs.nix {};
 	brew = prev.callPackage ./homebrew.nix {};
 	configure_aws_creds = prev.callPackage ./configure_aws_creds.nix {};
-	copier = prev.copier.overridePythonAttrs (old: {
-		version = "9.1.1";
+	copier = (if is2405 then prev.copier.overridePythonAttrs (old: {
+		version = "9.1.0";
 		src = final.fetchFromGitHub {
 			owner = "copier-org";
 			repo = "copier";
@@ -53,7 +55,7 @@ in rec {
 			hash = "sha256-x5r7Xv4lAOMkR+UIEeSY7LvbYMLpTWYuICYe9ygz1tA=";
 			postFetch = "rm $out/tests/demo/doc/ma*ana.txt";
 		};
-	});
+	}) else prev.copier);
 	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
 	hms = prev.callPackage ./hms {
 		pkgs = final.pkgs;

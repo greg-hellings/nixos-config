@@ -35,6 +35,7 @@
 	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
+		copier
 		diffutils
 		findutils
 		gh
@@ -53,5 +54,5 @@
 		tree
 		unzip
 		wget
-	] ++ (if (pkgs.copier.version == "9.1.0") then [ pkgs.copier ] else []);
+	];
 }
