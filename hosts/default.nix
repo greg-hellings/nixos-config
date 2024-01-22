@@ -40,7 +40,7 @@ let
 		] ++ extraMods;
 	};
 in {
-	genesis = unstable { name = "genesis"; };
+	genesis = machine { name = "genesis"; };
 	jude = unstable {
 		name = "jude";
 		gnome = true;

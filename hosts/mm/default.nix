@@ -94,7 +94,7 @@ in
 			};
 		};
 		home-assistant = {
-			enable = true;
+			enable = false;
 			configDir = "/var/lib/hass";
 			package = (pkgs.home-assistant.override {
 				extraComponents = [
