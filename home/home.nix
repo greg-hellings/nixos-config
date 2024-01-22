@@ -35,7 +35,6 @@
 	home.stateVersion = "23.05";
 	home.packages = with pkgs; [
 		bitwarden-cli
-		copier
 		diffutils
 		findutils
 		gh
@@ -54,8 +53,5 @@
 		tree
 		unzip
 		wget
-	] ++ ( if pkgs.system == "x86_64-linux" || pkgs.system == "aarch64-linux" then
-	# Linux-only packages here
-	[
-	] else []);
+	] ++ (if (pkgs.copier.version == "9.1.0") then [ pkgs.copier ] else []);
 }
