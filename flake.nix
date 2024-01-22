@@ -85,7 +85,7 @@
 		overlays = { default = local_overlay; };
 		packages = (import ./overlays/packages.nix { inherit nixunstable flake-utils; });
 		defaultPackage = {
-			x86_64-linux = self.nixosConfigurations.iso-beta.config.system.build.toplevel;
+			x86_64-linux = self.nixosConfigurations.iso-beta.config.system.build.isoImage;
 		};
 	};
 }
