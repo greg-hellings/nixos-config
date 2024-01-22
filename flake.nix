@@ -60,32 +60,44 @@
 		];
 
 	in {
+		checks = {
+			x86_64-linux = {
+				unstable = self.nixosConfigurations.jude.config.system.build.toplevel;
+				stable   = self.nixosConfigurations.linode.config.system.build.toplevel;
+			};
+		};
+
 		nixosConfigurations = (import ./hosts { inherit inputs overlays; });
 
 		darwinConfigurations = (import ./darwin { inherit inputs overlays; });
 
 		homeConfigurations = (import ./home { inherit inputs overlays; });
 
-		devShell = (flake-utils.lib.eachSystemMap flake-utils.lib.allSystems (system: let
+		devShells = (flake-utils.lib.eachSystemMap flake-utils.lib.allSystems (system: let
 			pkgs = import nixunstable { inherit system overlays; };
-		in pkgs.mkShell {
-			buildInputs = with pkgs; [
-				bashInteractive
-				curl
-				git
-				gnutar
-				gzip
-				inject
-				tmux
-				vim
-				xonsh
-			];
+		in {
+			default = pkgs.mkShell {
+				buildInputs = with pkgs; [
+					bashInteractive
+					curl
+					git
+					gnutar
+					gzip
+					inject
+					tmux
+					vim
+					xonsh
+				];
+			};
 		}));
 
 		overlays = { default = local_overlay; };
-		packages = (import ./overlays/packages.nix { inherit nixunstable flake-utils; });
-		defaultPackage = {
-			x86_64-linux = self.nixosConfigurations.iso-beta.config.system.build.isoImage;
+		packages = {
+			x86_64-linux = rec {
+				default = iso;
+				iso = self.nixosConfigurations.iso.config.system.build.isoImage;
+				iso-beta = self.nixosConfigurations.iso.config.system.build.isoImage;
+			};
 		};
 	};
 }

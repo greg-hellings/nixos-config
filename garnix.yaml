@@ -1,7 +1,8 @@
 builds:
   include:
     - darwinConfigurations.*
-    - devShell.x86_64-linux
-    - devShell.aarch64-linux
+    - devShells.x86_64-linux.default
+    - devShells.aarch64-linux.default
+    - devShells.x86_64-darwin.default
     - homeConfigurations.greghellings.activationPackage
     - nixosConfigurations.*
