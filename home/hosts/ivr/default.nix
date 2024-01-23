@@ -7,6 +7,7 @@ let
 		environs
 		#itg-django-utils
 		mysqlclient
+		pyyaml
 		ruamel-yaml
 		tox
 	]);
