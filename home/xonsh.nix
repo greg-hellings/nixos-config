@@ -25,6 +25,8 @@
 			LESS_TERMCAP_us = "\\033[00;36m";     # begin underline
 			LESS_TERMCAP_ue = "\\033[0m";         # end underline
 
+			COMPASS_SKIP_ORIGIN_CHECK = "True";
+
 			GOPATH = "${config.home.homeDirectory}/src/go";
 			GOBIN  = "${config.home.homeDirectory}/src/bin";
 

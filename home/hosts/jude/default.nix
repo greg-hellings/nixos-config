@@ -7,5 +7,6 @@
 	home.packages = with pkgs; [
 		(mumble.override { pulseSupport = true; })
 		fluffychat
+		logseq
 	];
 }
