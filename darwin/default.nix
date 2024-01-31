@@ -39,6 +39,7 @@ let
 				nix = {
 					gc.interval.Hour = 24;
 					settings.auto-optimise-store = false;  # Darwin bugs?
+					settings.experimental-features = "nix-command flakes";
 				};
 			}
 			./${name}
