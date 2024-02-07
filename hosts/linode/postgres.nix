@@ -65,7 +65,7 @@ root root postgres
 		};
 	};
 
-	greg.backup.jobs.postgresql = {
+	greg.backup.jobs.greg-postgresql-backup = {
 		src = "/var/backup/postgresql";
 		dest = "linode-postgres";
 		user = "postgres";

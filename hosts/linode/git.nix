@@ -13,7 +13,7 @@ in {
 		'';
 	};
 	greg.proxies."registry.thehellings.com" = {
-		target = "https://gitlab.shire-zebra.ts.net:5000";
+		target = "https://registry.thehellings.lan:5000";
 		ssl = true;
 		genAliases = false;
 		extraConfig = "client_max_body_size 250m;";
@@ -40,19 +40,5 @@ in {
 			"	mode tcp"
 			"	server git-thehellings-lan git.thehellings.lan:2222"
 		];
-	};
-
-	##########################################################################################
-	###########
-	#                       CI SERVICES
-	##########
-	##########################################################################################
-	virtualisation.oci-containers = {
-		backend = "podman";
-	};
-
-	virtualisation.podman = {
-		enable = true;
-		dockerCompat = true;
 	};
 }
