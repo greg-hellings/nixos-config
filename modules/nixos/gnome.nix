@@ -57,6 +57,7 @@ in with lib; {
 			gnomeExtensions.dash-to-dock
 			gnomeExtensions.gsconnect
 			gnomeExtensions.stocks-extension
+			gnomeExtensions.tailscale-qs
 			gnomeExtensions.vitals
 		];
 	};

@@ -10,7 +10,7 @@
 	];
 	programs = {
 		steam.enable = true;
-		nix-ld.enable = true;
+		nix-ld.enable = false;
 	};
 
 	networking = {
@@ -28,6 +28,7 @@
 	environment.systemPackages = with pkgs; [
 		bind  # For things like nslookup
 		darktable
+		expect
 		gimp
 		gnucash
 		graphviz
