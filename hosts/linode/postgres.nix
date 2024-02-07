@@ -19,13 +19,7 @@
 			name = "nextcloud";
 			ensureDBOwnership = true;
 		} {
-			name = "forgejo";
-			ensureDBOwnership = true;
-		} {
 			name = "dendrite";
-			ensureDBOwnership = true;
-		} {
-			name = "monica";
 			ensureDBOwnership = true;
 		} ];
 		settings = {
@@ -43,8 +37,6 @@ root root postgres
 		enable = true;
 		databases = [
 			"dendrite"
-			"forgejo"
-			"monica"
 			"nextcloud"
 		];
 	};
