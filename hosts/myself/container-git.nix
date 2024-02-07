@@ -32,12 +32,18 @@ in {
 		useHostResolvConf = lib.mkForce false;
 	};
 
-	greg.proxies."${containerIp}" = {
-		target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
-		extraConfig = ''
-		proxy_set_header X-Forwarded-Proto https;
-		proxy_set_header X-Forwarded-Ssl on;
-		'';
+	greg.proxies = let
+		t = {
+			target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+			extraConfig = ''
+			proxy_set_header X-Forwarded-Proto https;
+			proxy_set_header X-Forwarded-Ssl on;
+			'';
+		};
+	in {
+		"${containerIp}" = t;
+		"${vpnIp}" = t;
+		"git.thehellings.lan" = t;
 	};
 	greg.tailscale.enable = true;
 
@@ -68,7 +74,7 @@ in {
 			port = 443;
 			extraConfig = {
 				gitlab = {
-					trustedProxies = [ "192.168.200.1/32" ];
+					trustedProxies = [ "100.109.86.8/32" ];
 				};
 			};
 			initialRootEmail = "greg@thehellings.com";
