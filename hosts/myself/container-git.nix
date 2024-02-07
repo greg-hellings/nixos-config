@@ -8,6 +8,7 @@ in {
 		inputs.agenix.nixosModules.default
 		../../modules/linux/proxy.nix
 		../../modules/linux/tailscale.nix
+		../../modules/linux/backup.nix
 	];
 
 	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -41,6 +42,19 @@ in {
 	greg.tailscale.enable = true;
 
 	virtualisation.docker.enable = true;
+
+	programs.ssh.extraConfig = lib.strings.concatStringsSep "\n" [
+		"Host nas"
+		"    User backup"
+		"    IdentityFile /etc/ssh/duplicity_ed25519"
+		"    StrictHostKeyChecking no"
+		"    UserKnownHostsFile /dev/null"
+	];
+
+	greg.backup.jobs.nas-backup = {
+		src = "/var/gitlab/state/backup/";
+		dest = "gitlab";
+	};
 
 	services = {
 		gitlab = {

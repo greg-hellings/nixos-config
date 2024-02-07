@@ -2,46 +2,24 @@
 
 let
 	cfg = config.greg.backup;
-	backup_key = "backup_keys/id_ed25519";
 
-	makeJob = name: job: {
-		paths = job.src;
-		encryption.mode = "none";
-		environment.BORG_RSH = "ssh -i /etc/${backup_key} -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'";
-		repo = "ssh://backup@nas.me.ts//volume1/NetBackup/${job.dest}";
-		compression = "auto,zstd";
-		startAt = "daily";
-
-		user = job.user;
-		group = job.group;
-		preHook = job.pre;
-		postHook = job.post;
+	makeTimer = name: job: {
+		timerConfig.OnCalendar = "daily";
+		wantedBy = [ "timers.target" ];
 	};
 
-	cronJob = name: job:
-	let
-		binName = "backup-${name}";
-		script = pkgs.writeShellScriptBin binName ''
-exec 1> >(systemd-cat -t $(basename $0)) 2>&1
-set -ex
-${job.pre}
-${pkgs.rsync}/bin/rsync -avz --delete -e "${pkgs.openssh}/bin/ssh -i /etc/${backup_key} -o 'StrictHostKeyChecking=no' -o 'UserKnownHostsFile=/dev/null'" ${job.src}/* backup@chronicles:/volume1/NetBackup/${job.dest}/
-${job.post}
-'';
-	in {
-		inherit script;
-		cron = "0 1 * * * ${job.user} ${script}/bin/${binName}";
+	makeService = name: job: {
+		serviceConfig = {
+			User = job.user;
+			ExecPre = lib.optionalString (job.pre != "") job.pre;
+			ExecStart = "${pkgs.rsync}/bin/rsync -avz --delete -e '${pkgs.openssh}/bin/ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' ${job.src}/ backup@nas:/volume1/NetBackup/${job.dest}";
+			ExecPost = lib.optionalString (job.post != "") job.post;
+		};
 	};
 
 in with lib; {
 	options = {
 		greg.backup = {
-			key = mkOption {
-				type = types.path;
-				description = "SSH key to use";
-				default = ../ssh/id_ed25519;
-			};
-
 			jobs = mkOption {
 				default = {};
 
@@ -82,15 +60,11 @@ in with lib; {
 		};
 	};
 
-	config = let
-		jobs = attrValues ( mapAttrs cronJob cfg.jobs );
-	in mkIf ( ( attrValues cfg.jobs ) != [] )
+	config = mkIf ( ( attrValues cfg.jobs ) != [] )
 	{
-		services.cron = {
-			enable = true;
-			systemCronJobs = map (e: e.cron) jobs;
+		systemd = {
+			timers = mapAttrs makeTimer cfg.jobs;
+			services = mapAttrs makeService cfg.jobs;
 		};
-
-		environment.systemPackages = map (e: e.script) jobs;
 	};
 }
