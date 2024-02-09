@@ -12,6 +12,7 @@ lib.attrsets.recursiveUpdate {
 
 	imports = [
 		inputs.agenix.nixosModules.default
+		inputs.self.modules.nixosModule
 	];
 
 	age = {
@@ -75,7 +76,7 @@ lib.attrsets.recursiveUpdate {
 		];
 	};
 
-	system.stateVersion = "24.05";
+	system.stateVersion = lib.mkForce "24.05";
 }
 
 extra

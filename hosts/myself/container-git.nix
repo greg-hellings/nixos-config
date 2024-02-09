@@ -6,9 +6,7 @@
 in {
 	imports = [
 		inputs.agenix.nixosModules.default
-		../../modules/linux/proxy.nix
-		../../modules/linux/tailscale.nix
-		../../modules/linux/backup.nix
+		inputs.self.modules.nixosModule
 	];
 
 	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -164,5 +162,5 @@ in {
 			"network-online.target"
 		];
 	};
-	system.stateVersion = "24.05";
+	system.stateVersion = lib.mkForce "24.05";
 }
