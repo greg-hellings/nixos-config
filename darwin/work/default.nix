@@ -5,6 +5,7 @@
 		enable = true;
 		brews = [
 			"packer"
+			"direnv"
 		];
 		casks = [
 			"gnucash"
