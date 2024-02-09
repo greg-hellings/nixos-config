@@ -35,7 +35,7 @@ let
 			}
 			inputs.agenix.nixosModules.default
 			hm.nixosModules.home-manager
-			../modules
+			inputs.self.modules.nixosModule
 			./${name}
 		] ++ extraMods;
 	};

@@ -92,6 +92,9 @@
 		}));
 
 		overlays = { default = local_overlay; };
+
+		modules = import ./modules;
+		
 		packages = {
 			x86_64-linux = rec {
 				default = iso;

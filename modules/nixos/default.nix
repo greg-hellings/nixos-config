@@ -2,13 +2,13 @@
 
 {
 	imports = [
+		../baseline.nix
 		./backup.nix
 		./gnome.nix
 		./home.nix
 		./kde.nix
 		./kiwix-serve.nix
 		./linode.nix
-		./linux.nix
 		./proxy.nix
 		./router.nix
 		./rpi4.nix
@@ -24,7 +24,10 @@
 
 	system.stateVersion = "22.05";
 
-	nix.gc.dates = "weekly";
+	nix = {
+		gc.dates = "weekly";
+		settings.auto-optimise-store = true;
+	};
 
 	# I am a fan of network manager, myself
 	networking = {
