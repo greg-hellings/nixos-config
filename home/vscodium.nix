@@ -11,7 +11,10 @@
 		enable = true;
 		package = pkgs.vscodium;
 		extensions = with pkgs.vscode-extensions; [
+			asvetliakov.vscode-neovim
+			bungcip.better-toml
 			golang.go
+			mkhl.direnv
 			ms-python.python
 			vscjava.vscode-java-test
 			vscjava.vscode-java-dependency
