@@ -17,10 +17,13 @@ in
 				"eufy"
 				"lovelace"
 				"nextcloud"
+				"piper"
 				"smart_meter_texas"
 				"solaredge"
 				"tplink"
+				"whisper"
 				"wiz"
+				"wyoming"
 				"zwave_js"
 			];
 		}).overrideAttrs (oldAttrs: {
@@ -39,6 +42,25 @@ in
 			"automation ui" = "!include automations.yaml";
 			"script ui" = "!include scripts.yaml";
 			"scene ui" = "!include scenes.yaml";
+		};
+	};
+
+	# Helps with Voice stuff for Home Assistant
+	services.wyoming = {
+		faster-whisper.servers = {
+			greg = {
+				enable = true;
+				beamSize = 1; # wut?
+				device = "auto"; # Could be CPU or CUDA
+				language = "en";
+				model = "base-int8";
+				uri = "tcp://0.0.0.0:13415";
+			};
+		};
+		piper.servers.greg = {
+			enable = true;
+			uri = "tcp://0.0.0.0:13416";
+			voice = "en_US-amy-medium";
 		};
 	};
 
