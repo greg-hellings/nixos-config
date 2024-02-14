@@ -113,4 +113,10 @@ in
 		dest = "zwave";
 		user = "root";
 	};
+
+	greg.backup.jobs.nextcloud-backup = {
+		src = "/var/lib/hass";
+		dest = "hass";
+		user = "root";
+	};
 }
