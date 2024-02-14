@@ -33,5 +33,6 @@
 	networking.hostName = "genesis"; # Define your hostname.
 	environment.systemPackages = with pkgs; [
 		awscli2
+		create_ssl
 	];
 }

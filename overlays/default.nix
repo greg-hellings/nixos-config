@@ -47,9 +47,20 @@ in rec {
 		})
 	];
 
+	# My own packages
 	aacs = prev.callPackage ./aacs.nix {};
-	brew = prev.callPackage ./homebrew.nix {};
 	configure_aws_creds = prev.callPackage ./configure_aws_creds.nix {};
+	create_ssl = prev.callPackage ./create_ssl.nix {};
+	hms = prev.callPackage ./hms {
+		pkgs = final.pkgs;
+	};
+	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
+	setup-ssh = prev.callPackage ./setup-ssh {
+		pkgs = final.pkgs;
+	};
+
+	# Overrides of packages
+	brew = prev.callPackage ./homebrew.nix {};
 	copier = (if is2405 then prev.copier.overridePythonAttrs (old: {
 		version = "9.1.0";
 		src = final.fetchFromGitHub {
@@ -60,17 +71,10 @@ in rec {
 			postFetch = "rm $out/tests/demo/doc/ma*ana.txt";
 		};
 	}) else prev.copier);
-	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
-	hms = prev.callPackage ./hms {
-		pkgs = final.pkgs;
-	};
 	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
 	libbluray-custom = prev.libbluray.override {
 		withAACS = true;
 		withBDplus = true;
-	};
-	setup-ssh = prev.callPackage ./setup-ssh {
-		pkgs = final.pkgs;
 	};
 	template = prev.callPackage ./template.nix { };
 	handbrake = prev.handbrake.override {
