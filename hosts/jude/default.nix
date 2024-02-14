@@ -27,6 +27,7 @@
 
 	environment.systemPackages = with pkgs; [
 		bind  # For things like nslookup
+		create_ssl
 		darktable
 		expect
 		gimp
