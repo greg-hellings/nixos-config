@@ -21,7 +21,7 @@ let
 		# Tailscale hosts
 		"100.90.74.19 jude.home"
 		"100.88.91.27 dns.home"
-		"100.119.228.115 chronicles.home nas.home"
+		"100.119.228.115 chronicles.home nas.home chronicles.shire-zebra.ts.net"
 		"100.115.57.8 linode.home"
 		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home"
 		"100.78.16.88 mm.home"
