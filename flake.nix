@@ -91,7 +91,10 @@
 			};
 		}));
 
-		overlays = { default = local_overlay; };
+		overlays = {
+			default = local_overlay;
+			all = overlays;
+		};
 
 		modules = import ./modules;
 		

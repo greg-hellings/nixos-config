@@ -15,6 +15,8 @@ lib.attrsets.recursiveUpdate {
 		inputs.self.modules.nixosModule
 	];
 
+	nixpkgs.overlays = inputs.self.overlays.all;
+
 	age = {
 		identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 		secrets.runner-reg = {

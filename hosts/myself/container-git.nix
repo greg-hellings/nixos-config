@@ -9,6 +9,8 @@ in {
 		inputs.self.modules.nixosModule
 	];
 
+	nixpkgs.overlays = inputs.self.overlays.all;
+
 	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 	age.secretsMountPoint = "/run/derp";
 	age.secrets = let
