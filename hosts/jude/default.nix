@@ -10,6 +10,12 @@
 	];
 	programs = {
 		steam.enable = true;
+		nix-index = {
+			enable = true;
+			enableBashIntegration = false;
+			enableFishIntegration = false;
+			enableZshIntegration = false;
+		};
 		nix-ld.enable = false;
 	};
 
