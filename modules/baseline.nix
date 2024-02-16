@@ -35,6 +35,7 @@
         agenix
         android-file-transfer
         bitwarden-cli
+        bmon
         configure_aws_creds
         diffutils
         git
@@ -48,6 +49,7 @@
         nano
         pciutils
         pwgen
+        tcptrack
         transcrypt
         unzip
         wget
