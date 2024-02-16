@@ -6,8 +6,6 @@
 		checkConfig = true;
 		ensureDatabases = [
 			"dendrite"
-			"forgejo"
-			"monica"
 			"nextcloud"
 		];
 		#initialScript = pkgs.writeText "create-matrix-db.sql" ''

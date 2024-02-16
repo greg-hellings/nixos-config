@@ -37,5 +37,6 @@
 		bind
 		graphviz
 		nix-du
+		pgloader
 	];
 }

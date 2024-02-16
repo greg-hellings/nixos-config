@@ -6,6 +6,7 @@
 let
 	domain = "${config.networking.domain}";
 	fqdn = "matrix.${domain}";
+	conn = "postgresql:///dendrite?sslmode=disable&host=/run/postgresql";
 in
 {
 	services.nginx = {
@@ -89,10 +90,25 @@ return 200 '${builtins.toJSON client}';
 		environmentFile = "/run/agenix/dendrite";
 		httpPort = 8448;
 		# Identify ourselves as the root of our own domain
-		settings = {
+		settings = (
+		(builtins.listToAttrs (
+			(map (x: { name = x; value = { database.connection_string = conn; }; }) [
+				"app_service_api"
+				"federation_api"
+				"key_server"
+				"media_api"
+				"mscs"
+				"relay_api"
+				"room_server"
+				"sync_api"
+			])
+		) ) //
+		{
+			user_api.account_database.connection_string = conn;
+			user_api.device_database.connection_string = conn;
 			global = {
-				database.args = {
-					connection_string = "postgresql://dendrite@localhost/dendrite?sslmode=disable";
+				database = {
+					connection_string = conn;
 					max_open_conns = 90;
 					max_idle_conns = 5;
 					conn_max_lifetime = -1;
@@ -107,10 +123,10 @@ return 200 '${builtins.toJSON client}';
 				private_key = "/etc/dendrite.pem";
 			};
 			client_api = {
-				egistration_enabled = false;
+				registration_enabled = false;
 				registration_shared_secret = "\${REGISTRATION_SHARED_SECRET}";
 			};
-		};
+		});
 	};
 
 	# Open networking ports for the server
