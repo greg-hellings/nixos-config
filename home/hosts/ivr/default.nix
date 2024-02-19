@@ -36,6 +36,6 @@ in {
 			"    https://pypidev.ivrtechnology.com/simple/"
 		]);
 		username = "gregory.hellings";
-		homeDirectory = "/home/gregory.hellings";
+		homeDirectory = lib.mkForce "/home/gregory.hellings";
 	};
 }
