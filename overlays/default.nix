@@ -51,10 +51,12 @@ in rec {
 	aacs = prev.callPackage ./aacs.nix {};
 	configure_aws_creds = prev.callPackage ./configure_aws_creds.nix {};
 	create_ssl = prev.callPackage ./create_ssl.nix {};
+	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
 	hms = prev.callPackage ./hms {
 		pkgs = final.pkgs;
 	};
-	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
+	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
+	inject-darwin = prev.callPackage ./inject-darwin.nix { inherit (final) pkgs; };
 	setup-ssh = prev.callPackage ./setup-ssh {
 		pkgs = final.pkgs;
 	};
@@ -71,7 +73,6 @@ in rec {
 			postFetch = "rm $out/tests/demo/doc/ma*ana.txt";
 		};
 	}) else prev.copier);
-	inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
 	libbluray-custom = prev.libbluray.override {
 		withAACS = true;
 		withBDplus = true;

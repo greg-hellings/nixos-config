@@ -84,6 +84,7 @@
 					gnutar
 					gzip
 					inject
+					inject-darwin
 					tmux
 					vim
 					xonsh
