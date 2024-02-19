@@ -103,7 +103,7 @@
 			x86_64-linux = rec {
 				default = iso;
 				iso = self.nixosConfigurations.iso.config.system.build.isoImage;
-				iso-beta = self.nixosConfigurations.iso.config.system.build.isoImage;
+				iso-beta = self.nixosConfigurations.iso-beta.config.system.build.isoImage;
 			};
 		};
 	};
