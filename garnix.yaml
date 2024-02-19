@@ -1,7 +1,11 @@
 builds:
-  exclude: []
+  exclude:
+    - devShells.i686-linux.default
   include:
     - darwinConfigurations.*.system
     - devShells.*.default
     - homeConfigurations.*
     - nixosConfigurations.*
+    - packages.x86_64-linux.*
+    - packages.aarch64-linux.*
+    - packages.aarch64-darwin.*
