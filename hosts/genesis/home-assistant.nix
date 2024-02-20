@@ -73,6 +73,7 @@ in
 		# I have ZWave devices. The easiest way to connect to them is the zwavejs2mqtt service running, so we spin up
 		# its container and map the ZWave device into it
 		containers.zwave = {
+			autoStart = false;  # We will try to start it with udev.extraRules listed below, as this option starts it too quickly
 			image = "zwavejs/zwave-js-ui:latest";
 			ports = [ "8091:8091" "3000:3000" ];
 			volumes = [ "/var/lib/zwave:/usr/src/app/store" ];
@@ -94,6 +95,10 @@ in
 			StateDirectoryMode = pkgs.lib.mkForce "0777";
 		};
 	};
+
+	services.udev.extraRules = ''
+	SUBSYSTEM=="tty", KERNEL=="ttyACM0", TAG+="systemd", ENV{SYSTEMD_WANTS}+="podman-zwave.service"
+	'';
 
 
 	greg.proxies = {
