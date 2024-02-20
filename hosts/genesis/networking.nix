@@ -12,7 +12,7 @@ let
 		"10.42.1.2 opnsense router opnsense.thehellings.lan router.thehellings.lan"
 		"10.42.1.3 printer.thehellings.lan"
 		"10.42.1.4 chronicles chronicles.thehellings.lan nas.thehellings.lan"
-		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan"
+		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan speedtest.thehellings.lan"
 		"10.42.1.6 isaiah isaiah.thehellings.lan"
 		"10.42.1.12 tv"
 
@@ -157,7 +157,7 @@ in {
 					"98:da:c4:20:f3:64,192.168.66.6"
 					"54:af:97:c1:dc:b9,192.168.66.25"  # Master bedroom Kasa switch
 					"f0:03:8c:b3:b0:f6,192.168.66.55"  # Roomba
-					"4c:a1:61:05:cd:52,192.168.66.61"
+					"4c:a1:61:05:cd:52,192.168.66.61"  # Rainbird
 					"48:d6:d5:5d:81:21,192.168.66.65"  # Google Home
 					"6c:29:90:3e:e2:02,192.168.66.66"  # wiz
 					"28:87:ba:0e:ca:da,192.168.66.74"  # KS200M switch

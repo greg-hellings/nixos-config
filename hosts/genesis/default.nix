@@ -35,4 +35,11 @@
 		awscli2
 		create_ssl
 	];
+
+	virtualisation.oci-containers.containers.speedtest = {
+		image = "ghcr.io/librespeed/speedtest";
+		hostname = "speedtest";
+		ports = [ "19472:80" ];
+	};
+	greg.proxies."speedtest.thehellings.lan".target = "http://localhost:19472";
 }
