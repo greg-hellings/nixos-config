@@ -27,7 +27,7 @@
 	};
 	greg = {
 		tailscale.enable = true;
-		gnome.enable = true;
+		sway.enable = true;
 		kde.enable = false;
 	};
 
@@ -89,6 +89,7 @@
 			pulse.enable = true;
 			wireplumber.enable = true;
 		};
+		locate.enable = true;
 		xserver.videoDrivers = [ "nvidia" ];
 	};
 	hardware = {

@@ -8,8 +8,6 @@ let
 	machine = {
 		channel ? inputs.nixstable,
 		extraMods ? [],
-		gnome ? false,
-		gui ? false,
 		name,
 		system ? "x86_64-linux",
 		hm ? inputs.hm
@@ -28,7 +26,7 @@ let
 				home-manager.useUserPackages = true;
 				home-manager.users.greg = import ../home/home.nix;
 				home-manager.extraSpecialArgs = {
-					inherit gnome gui inputs overlays;
+					inherit inputs overlays;
 					home = "/home/greg";
 					host = name;
 				};
@@ -41,11 +39,7 @@ let
 	};
 in {
 	genesis = machine { name = "genesis"; };
-	jude = unstable {
-		name = "jude";
-		gnome = true;
-		gui = true;
-	};
+	jude = unstable { name = "jude"; };
 	icdm-root = unstable { name = "icdm-root"; };
 	linode = machine { name = "linode"; };
 	mm = unstable { name = "mm"; };

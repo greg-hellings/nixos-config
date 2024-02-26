@@ -12,6 +12,7 @@
 		./proxy.nix
 		./router.nix
 		./rpi4.nix
+		./sway.nix
 		./tailscale.nix
 	];
 

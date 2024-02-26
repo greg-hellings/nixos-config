@@ -9,4 +9,6 @@
 		fluffychat
 		logseq
 	];
+	greg.gui = true;
+	greg.sway = true;
 }

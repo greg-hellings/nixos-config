@@ -38,7 +38,6 @@ in with lib; {
 		};
 
 		programs.dconf.enable = true;
-		programs.sway.enable = true;  # Gives us Wayland
 		xdg.portal = {
 			enable = true;
 			wlr.enable = true;  # Enables screen sharing in Wayland
