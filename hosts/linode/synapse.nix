@@ -109,7 +109,7 @@ return 200 '${builtins.toJSON client}';
 			global = {
 				database = {
 					connection_string = conn;
-					max_open_conns = 90;
+					max_open_conns = 25;
 					max_idle_conns = 5;
 					conn_max_lifetime = -1;
 				};
