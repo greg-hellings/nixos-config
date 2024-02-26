@@ -1,8 +1,11 @@
 builds:
+  exclude:
+    - devShells.i686-linux.default
   include:
-    - darwinConfigurations.*
-    - devShells.x86_64-linux.default
-    - devShells.aarch64-linux.default
-    - devShells.x86_64-darwin.default
-    - homeConfigurations.greghellings.activationPackage
+    - darwinConfigurations.*.system
+    - devShells.*.default
+    - homeConfigurations.*
     - nixosConfigurations.*
+    - packages.x86_64-linux.*
+    - packages.aarch64-linux.*
+    - packages.aarch64-darwin.*
