@@ -6,6 +6,23 @@ let
 		pkg = pkgs.krusader;
 		path = "${pkgs.krusader}/bin/krusader";
 	};
+	term = "${pkgs.alacritty}/bin/alacritty";
+	msg = "${pkgs.sway}/bin/swaymsg";
+	sleep = "${pkgs.coreutils}/bin/sleep";
+	workstation1 = pkgs.writeScriptBin "workstation1" (builtins.concatStringsSep "\n" [
+		"${msg} \"workspace 1 ; exec ${pkgs.firefox}/bin/firefox ; split horizontal ; exec ${pkgs.element-desktop}/bin/element-desktop \""
+		"${sleep} 1"
+		"${msg} '[app_id=\"firefox\"]' move left"
+		"${msg} '[instance=\"element\"]' \"layout tabbed ; exec ${term} \""
+		"${msg} '[app_id=\"firefox\"]' move left"
+		"${sleep} 0.3"
+		"${msg} '[app_id=\"Alacritty\" workspace=\"1\"]' move right"
+		"${msg} '[app_id=\"firefox\"]' resize grow width 300 px"
+	]);
+	workstation2 = pkgs.writeScriptBin "workstation2" (builtins.concatStringsSep "\n" [
+		"${sleep} 5"
+		"${msg} \"workspace 2 ; exec ${term} ; layout tabbed\""
+	]);
 in {
 	options.greg.sway = lib.mkEnableOption "Enable Sway support and settings";
 
@@ -38,9 +55,10 @@ in {
 						pos = "200 1920";
 					};
 				};
-				terminal = "${pkgs.alacritty}/bin/alacritty";
+				terminal = term;
 				startup = [
-					{ command = "firefox"; }
+					{ command = "${workstation1}/bin/workstation1"; }
+					{ command = "${workstation2}/bin/workstation2"; }
 				];
 			};
 			extraOptions = [
