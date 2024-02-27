@@ -1,8 +1,9 @@
 { config, pkgs, lib, ... }:
 {
-	imports = [	
+	imports = [
 		./hardware-configuration.nix
 		./git.nix
+		./matrix.nix
 	];
 
 	environment.systemPackages = with pkgs; [

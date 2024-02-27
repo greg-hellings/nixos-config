@@ -33,8 +33,6 @@ in
 	# Then you can reference the file at /run/agenix/matrix
 	"nextcloudadmin.age".publicKeys = everyone;
 
-	"drone.age".publicKeys = everyone;
-
 	"3proxy.age".publicKeys = everyone;
 
 	"linode-forgejo-runner.age".publicKeys = everyone;
