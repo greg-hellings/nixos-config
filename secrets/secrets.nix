@@ -42,6 +42,7 @@ in
 
 
 	"dendrite.age".publicKeys = everyone;
+	"dendrite_key.age".publicKeys = everyone;
 	"gitlab/secret.age".publicKeys = everyone;
 	"gitlab/otp.age".publicKeys = everyone;
 	"gitlab/db.age".publicKeys = everyone;
