@@ -29,7 +29,7 @@ in with lib; {
 					banner = "Welcome to Greg's JUDE machine. Do I know you?";
 					wayland = true;
 				};
-				layout = "us";
+				xkb.layout = "us";
 			};
 		};
 
