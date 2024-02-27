@@ -5,7 +5,10 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		agenix.url = "github:ryantm/agenix";
+		agenix = {
+			url = "github:ryantm/agenix";
+			inputs.nixpkgs.follows = "nixunstable";
+		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
