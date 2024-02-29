@@ -5,9 +5,23 @@ let
 	conn = "postgresql:///dendrite?sslmode=disable&host=/run/postgresql";
 in
 {
+	systemd.services."container@matrix".serviceConfig = {
+		DeviceAllow = [ "/dev/net/tun" ];
+		ProtectKernelModules = false;
+		PrivateDevices = false;
+	};
 	containers.matrix = {
 		autoStart = true;
-		bindMounts."/etc/ssh".hostPath = "/etc/ssh";
+		bindMounts = {
+			"/etc/ssh".hostPath = "/etc/ssh";
+			"/dev/net/tun" = {
+				hostPath = "/dev/net/tun";
+				isReadOnly = false;
+			};
+		};
+		hostAddress = "192.168.204.1";
+		localAddress = "192.168.204.2";
+		privateNetwork = true;
 		config = { pkgs, config, ... }: {
 			imports = [
 				inputs.agenix.nixosModules.default
@@ -31,6 +45,10 @@ in
 					file = ../../secrets/dendrite.age;
 					owner = "dendrite";
 				};
+				secrets.dendrite_key = {
+					file = ../../secrets/dendrite_key.age;
+					owner = "dendrite";
+				};
 			};
 
 			users.users.dendrite = {
@@ -47,6 +65,8 @@ in
 				databases.dendrite = {};
 				tailscale.enable = true;
 			};
+
+			#services.tailscale.interfaceName = "userspace-networking";
 
 			services.dendrite = {
 				enable = true;
@@ -83,7 +103,7 @@ in
 							"jupiterbroadcasting.com"
 						];
 						# Generate this with {path-to-dendrite}/bin/generate-keys --private-key /etc/dendrite.pem
-						private_key = "/etc/dendrite.pem";
+						private_key = config.age.secrets.dendrite_key.path;
 					};
 					client_api = {
 						registration_enabled = false;
