@@ -11,9 +11,9 @@ let
 	makeService = name: job: {
 		serviceConfig = {
 			User = job.user;
-			ExecPre = lib.optionalString (job.pre != "") job.pre;
+			ExecStarPre = lib.optionalString (job.pre != "") job.pre;
 			ExecStart = "${pkgs.rsync}/bin/rsync -avz --delete -e '${pkgs.openssh}/bin/ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' ${job.src}/ backup@chronicles.shire-zebra.ts.net:/volume1/NetBackup/${job.dest}";
-			ExecPost = lib.optionalString (job.post != "") job.post;
+			ExecStartPost = lib.optionalString (job.post != "") job.post;
 		};
 	};
 
