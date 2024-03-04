@@ -31,25 +31,10 @@ in  {
 	
 	system.activationScripts.makeGitlabDir = lib.stringAfter [ "var" ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
 
-	containers.gitlab = container {
-		autoStart = true;
-		bindMounts = {
-			"/var/gitlab/state" = {
-				hostPath = gitlabStateDir;
-				isReadOnly = false;
-			};
-			"/dev/net/tun" = {
-				hostPath = "/dev/net/tun";
-				isReadOnly = false;
-			};
-		};
-		forwardPorts = [{
-			hostPort = 2222;
-			containerPort = 22;
-		}];
-		hostAddress = "192.168.200.1";
-		localAddress = "192.168.200.2";
-		config = ((import ./container-git.nix) { inherit inputs; });
+	greg.containers.gitlab = {
+		tailscale = true;
+		subnet = "200";
+		builder = (import ./container-git.nix);
 	};
 
 	systemd.services = {
@@ -79,11 +64,6 @@ in  {
 					"${pkgs.kmod}/bin/modprobe vboxnetflt"
 				];
 			};
-		};
-		"container@gitlab".serviceConfig = {
-			DeviceAllow = [ "/dev/net/tun" ];
-			ProtectKernelModules = false;
-			PrivateDevices = false;
 		};
 		gitlab-runner.serviceConfig.EnvironmentFile = config.age.secrets.docker-auth.path;
 	};

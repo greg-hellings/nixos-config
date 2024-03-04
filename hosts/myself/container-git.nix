@@ -1,20 +1,11 @@
-{ inputs, ...}:
 { config, pkgs, lib, ... }: let
 	registryPort = 5000;
 	vpnIp = "100.78.226.76";
 	containerIp = "192.168.200.2";
 in {
-	imports = [
-		inputs.agenix.nixosModules.default
-		inputs.self.modules.nixosModule
-	];
-
-	nixpkgs.overlays = inputs.self.overlays.all;
-
-	age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 	age.secretsMountPoint = "/run/derp";
 	age.secrets = let
-		cfg = n: { file = ../../secrets/gitlab/${n}.age; owner = "github"; mode = "0444"; };
+		cfg = n: { file = ../../secrets/gitlab/${n}.age; owner = "gitlab"; group = "gitlab"; mode = "0444"; };
 	in {
 		gitlab-secret = cfg "secret";
 		gitlab-otp = cfg "otp";
@@ -24,13 +15,7 @@ in {
 		gitlab-cert = cfg "cert";
 	};
 
-	networking = {
-		firewall = {
-			enable = true;
-			allowedTCPPorts = [ 80 registryPort ];
-		};
-		useHostResolvConf = lib.mkForce false;
-	};
+	networking.firewall.allowedTCPPorts = [ 80 registryPort ];
 
 	greg.proxies = let
 		t = {
@@ -45,7 +30,6 @@ in {
 		"${vpnIp}" = t;
 		"git.thehellings.lan" = t;
 	};
-	greg.tailscale.enable = true;
 
 	virtualisation.docker.enable = true;
 

@@ -5,42 +5,14 @@ let
 	conn = "postgresql:///dendrite?sslmode=disable&host=/run/postgresql";
 in
 {
-	systemd.services."container@matrix".serviceConfig = {
-		DeviceAllow = [ "/dev/net/tun" ];
-		ProtectKernelModules = false;
-		PrivateDevices = false;
-	};
-	containers.matrix = {
-		autoStart = true;
-		bindMounts = {
-			"/etc/ssh".hostPath = "/etc/ssh";
-			"/dev/net/tun" = {
-				hostPath = "/dev/net/tun";
-				isReadOnly = false;
-			};
-		};
-		hostAddress = "192.168.204.1";
-		localAddress = "192.168.204.2";
-		privateNetwork = true;
-		config = { pkgs, config, ... }: {
-			imports = [
-				inputs.agenix.nixosModules.default
-				inputs.self.modules.nixosModule
-			];
-
-			nixpkgs.overlays = inputs.self.overlays.all;
-
-			networking = {
-				firewall = {
-					enable = true;
-					allowedTCPPorts = [ config.services.dendrite.httpPort ];
-				};
-				useHostResolvConf = lib.mkForce false;
-			};
+	greg.containers.matrix = {
+		tailscale = true;
+		subnet = "204";
+		builder = { pkgs, config, ... }: {
+			networking.firewall.allowedTCPPorts = [ config.services.dendrite.httpPort ];
 
 			# Environment secrets
 			age = {
-				identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 				secrets.dendrite = {
 					file = ../../secrets/dendrite.age;
 					owner = "dendrite";
@@ -61,12 +33,7 @@ in
 				User = "dendrite";
 			};
 
-			greg = {
-				databases.dendrite = {};
-				tailscale.enable = true;
-			};
-
-			#services.tailscale.interfaceName = "userspace-networking";
+			greg.databases.dendrite = {};
 
 			services.dendrite = {
 				enable = true;
