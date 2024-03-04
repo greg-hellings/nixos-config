@@ -48,22 +48,7 @@ return 200 '${builtins.toJSON client}';
 				locations."/".extraConfig = "return 404;";
 
 				locations."/_matrix" = {
-					proxyPass = "http://127.0.0.1:8448"; # Lacking the trailing / is correct
-				};
-			};
-
-			# Run Element web
-			"chat.${fqdn}" = {
-				enableACME = true;
-				forceSSL = true;
-				serverAliases = [
-					"chat.${domain}"
-				];
-				root = pkgs.element-web.override {
-					conf.default_server_config."m.homeserver" = {
-						"base_url" = "https://${fqdn}";
-						"server_name" = "${fqdn}";
-					};
+					proxyPass = "http://matrix.shire-zebra.ts.net:8448"; # Lacking the trailing / is correct
 				};
 			};
 		};
