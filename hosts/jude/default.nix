@@ -96,7 +96,7 @@
 		nvidia = {
 			modesetting.enable = true;
 			nvidiaSettings = true;
-			open = true;
+			open = false;
 		};
 		pulseaudio.enable = false;  # This conflicts with pipewire
 		system76.enableAll = true;

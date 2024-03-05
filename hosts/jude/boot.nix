@@ -3,6 +3,7 @@
 {
 	# Use the systemd-boot EFI boot loader.
 	boot = {
+		kernelPackages = pkgs.linuxPackages_latest;
 		supportedFilesystems = [ "ntfs" ];
 		loader = {
 			timeout = 15;
