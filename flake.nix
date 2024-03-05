@@ -68,6 +68,9 @@
 				unstable = self.nixosConfigurations.jude.config.system.build.toplevel;
 				stable   = self.nixosConfigurations.linode.config.system.build.toplevel;
 			};
+			aarch64-linux = {
+				unstable = self.nixosConfigurations.nixos.config.system.build.toplevel;
+			};
 		};
 
 		nixosConfigurations = (import ./hosts { inherit inputs overlays; });
@@ -97,7 +100,6 @@
 
 		overlays = {
 			default = local_overlay;
-			all = overlays;
 		};
 
 		modules = import ./modules;

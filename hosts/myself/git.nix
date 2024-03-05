@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, overlays, ... }:
 
 let
 
@@ -88,7 +88,7 @@ in  {
 		hostAddress = "192.168.201.1";
 		localAddress = "192.168.201.2";
 		config = ((import ./container-runner.nix) {
-			inherit inputs;
+			inherit inputs overlays;
 			name = "qemu";
 			packages = with pkgs; [ qemu_full qemu_kvm ];
 			extra = {
@@ -122,7 +122,7 @@ in  {
 		hostAddress = "192.168.202.1";
 		localAddress = "192.168.202.2";
 		config = ((import ./container-runner.nix) {
-			inherit inputs;
+			inherit inputs overlays;
 			name = "vbox";
 			extra = {
 				systemd.services.gitlab-runner.serviceConfig = {
@@ -148,7 +148,7 @@ in  {
 		hostAddress = "192.168.203.1";
 		localAddress = "192.168.203.2";
 		config = ((import ./container-runner.nix) {
-			inherit inputs;
+			inherit inputs overlays;
 			name = "shell";
 		});
 	};

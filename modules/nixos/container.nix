@@ -1,4 +1,4 @@
-{ config, lib, inputs, ... }:
+{ config, lib, inputs, overlays, ... }:
 
 let
 	cfg = config.greg.containers;
@@ -23,7 +23,7 @@ let
 				container.builder
 			];
 
-			nixpkgs.overlays = inputs.self.overlays.all;
+			nixpkgs.overlays = overlays;
 
 			networking = {
 				firewall.enable = true;

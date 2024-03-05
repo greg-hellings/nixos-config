@@ -1,4 +1,4 @@
-{ inputs, name, extra ? {}, packages ? [] }:
+{ inputs, name, extra ? {}, packages ? [], overlays }:
 
 ({ config, pkgs, lib, ... }:
 let
@@ -15,7 +15,7 @@ lib.attrsets.recursiveUpdate {
 		inputs.self.modules.nixosModule
 	];
 
-	nixpkgs.overlays = inputs.self.overlays.all;
+	nixpkgs.overlays = overlays;
 
 	age = {
 		identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
