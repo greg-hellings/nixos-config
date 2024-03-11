@@ -23,12 +23,17 @@
 		hostName = "jude";
 		enableIPv6 = false;
 		interfaces.enp12s0.useDHCP = true;
-		firewall.enable = true;
+		firewall = {
+			enable = false;
+			allowedTCPPorts = [ 21000 ];
+			allowedUDPPorts = [ 21000 21010 ];
+		};
 	};
 	greg = {
 		tailscale.enable = true;
-		sway.enable = true;
-		kde.enable = false;
+		sway.enable = false;
+		gnome.enable = false;
+		kde.enable = true;
 	};
 
 	environment.systemPackages = with pkgs; [
@@ -37,12 +42,14 @@
 		darktable
 		expect
 		gimp
+		gparted
 		gnucash
 		graphviz
 		flock
 		ffmpeg
 		handbrake
 		imagemagick
+		immersed-vr
 		libtheora
 		libxml2
 		linode-cli

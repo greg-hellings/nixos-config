@@ -17,7 +17,7 @@ in with lib; {
 				enable = true;
 				displayManager.gdm.enable = true;
 				desktopManager.gnome.enable = true;
-				layout = "us";
+				xkb.layout = "us";
 				# Trackpad support
 				libinput.enable = true;
 			};
