@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
 	imports = [
@@ -36,40 +36,50 @@
 		kde.enable = true;
 	};
 
-	environment.systemPackages = with pkgs; [
-		bind  # For things like nslookup
-		create_ssl
-		darktable
-		expect
-		gimp
-		gparted
-		gnucash
-		graphviz
-		flock
-		ffmpeg
-		handbrake
-		imagemagick
-		immersed-vr
-		libtheora
-		libxml2
-		linode-cli
-		makemkv
-		nix-du
-		nix-tree
-		oathToolkit
-		synology-drive-client
-		terraform
-		vagrant
-		ventoy
+	boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
-		# Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
-		gst_all_1.gstreamer
-		gst_all_1.gst-plugins-base
-		gst_all_1.gst-plugins-good
-		gst_all_1.gst-plugins-bad
-		gst_all_1.gst-plugins-ugly
-		gst_all_1.gst-libav
-		gst_all_1.gst-vaapi
+	environment.systemPackages = with pkgs; lib.mkMerge [
+		[  # for Immersed
+			cudatoolkit
+			immersed-vr
+			libva
+		]
+		[
+			bind  # For things like nslookup
+			create_ssl
+			darktable
+			expect
+			gimp
+			gparted
+			gnucash
+			graphviz
+			flock
+			ffmpeg
+			handbrake
+			imagemagick
+			libtheora
+			libxml2
+			linode-cli
+			makemkv
+			nix-du
+			nix-tree
+			oathToolkit
+			synology-drive-client
+			terraform
+			vagrant
+			ventoy
+		]
+
+		[
+			# Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
+			gst_all_1.gstreamer
+			gst_all_1.gst-plugins-base
+			gst_all_1.gst-plugins-good
+			gst_all_1.gst-plugins-bad
+			gst_all_1.gst-plugins-ugly
+			gst_all_1.gst-libav
+			gst_all_1.gst-vaapi
+		]
 	];
 	fileSystems =  {
 		"/boot" = {
@@ -103,7 +113,7 @@
 		nvidia = {
 			modesetting.enable = true;
 			nvidiaSettings = true;
-			open = false;
+			open = true;
 		};
 		pulseaudio.enable = false;  # This conflicts with pipewire
 		system76.enableAll = true;
