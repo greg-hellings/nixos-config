@@ -87,6 +87,7 @@ in
 			];
 			environment = {
 				TZ = "America/Chicago";
+				CONSOLE_OUTPUT = "true";
 			};
 		};
 	};
