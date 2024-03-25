@@ -1,6 +1,12 @@
 { lib, ... }:
 
 {
+	# Workaround to set the config value to user read-only
+	# This allows things like SSH in distrobox to read the config file just fine
+	home.file.".ssh/config" = {
+  	  target = ".ssh/config_source";
+  	  onChange = ''cat ~/.ssh/config_source > ~/.ssh/config && chmod 400 ~/.ssh/config'';
+	};
 	programs.ssh = {
 		enable = true;
 		serverAliveInterval = 60;
