@@ -1,4 +1,4 @@
-{ pkgs, lib, gui, gnome,
+{ pkgs, lib,
   inputs,
   host ? "most",
   ...}:
@@ -15,10 +15,8 @@
 		./vim.nix
 		./xonsh.nix
 		./hosts/${host}
-	] ++ ( if gui then [ ./gui ] else []);
+	];
 
-
-	greg.gnome = gnome;
 
 	programs.tmux = {
 		enable = true;
@@ -54,5 +52,6 @@
 		tree
 		unzip
 		wget
+		zip
 	];
 }

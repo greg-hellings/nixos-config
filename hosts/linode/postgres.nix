@@ -5,7 +5,6 @@
 		enable = true;
 		checkConfig = true;
 		ensureDatabases = [
-			"dendrite"
 			"nextcloud"
 		];
 		#initialScript = pkgs.writeText "create-matrix-db.sql" ''
@@ -16,10 +15,7 @@
 		ensureUsers = [ {
 			name = "nextcloud";
 			ensureDBOwnership = true;
-		} {
-			name = "dendrite";
-			ensureDBOwnership = true;
-		} ];
+		}  ];
 		settings = {
 			log_connections = true;
 			log_statement = "all";
@@ -34,7 +30,6 @@ root root postgres
 	services.postgresqlBackup = {
 		enable = true;
 		databases = [
-			"dendrite"
 			"nextcloud"
 		];
 	};

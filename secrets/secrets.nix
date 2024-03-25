@@ -34,14 +34,14 @@ in
 	# Then you can reference the file at /run/agenix/matrix
 	"nextcloudadmin.age".publicKeys = everyone;
 
-	"drone.age".publicKeys = everyone;
-
 	"3proxy.age".publicKeys = everyone;
 
 	"linode-forgejo-runner.age".publicKeys = everyone;
 	"jude-forgejo-runner.age".publicKeys = everyone;
 
 
+	"dendrite.age".publicKeys = everyone;
+	"dendrite_key.age".publicKeys = everyone;
 	"gitlab/secret.age".publicKeys = everyone;
 	"gitlab/otp.age".publicKeys = everyone;
 	"gitlab/db.age".publicKeys = everyone;

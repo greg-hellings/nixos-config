@@ -17,7 +17,7 @@ in with lib; {
 				enable = true;
 				displayManager.gdm.enable = true;
 				desktopManager.gnome.enable = true;
-				layout = "us";
+				xkb.layout = "us";
 				# Trackpad support
 				libinput.enable = true;
 			};
@@ -38,7 +38,6 @@ in with lib; {
 		};
 
 		programs.dconf.enable = true;
-		programs.sway.enable = true;  # Gives us Wayland
 		xdg.portal = {
 			enable = true;
 			wlr.enable = true;  # Enables screen sharing in Wayland

@@ -4,6 +4,8 @@
 	imports = [
 		../baseline.nix
 		./backup.nix
+		./container.nix
+		./db.nix
 		./gnome.nix
 		./home.nix
 		./kde.nix
@@ -12,6 +14,7 @@
 		./proxy.nix
 		./router.nix
 		./rpi4.nix
+		./sway.nix
 		./tailscale.nix
 	];
 
@@ -22,7 +25,7 @@
 		lshw
 	];
 
-	system.stateVersion = "22.05";
+	system.stateVersion = "24.05";
 
 	nix = {
 		gc.dates = "weekly";

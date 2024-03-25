@@ -5,7 +5,10 @@
 	description = "Greg's machines!";
 
 	inputs = {
-		agenix.url = "github:ryantm/agenix";
+		agenix = {
+			url = "github:ryantm/agenix";
+			inputs.nixpkgs.follows = "nixunstable";
+		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
@@ -65,6 +68,9 @@
 				unstable = self.nixosConfigurations.jude.config.system.build.toplevel;
 				stable   = self.nixosConfigurations.linode.config.system.build.toplevel;
 			};
+			aarch64-linux = {
+				unstable = self.nixosConfigurations.nixos.config.system.build.toplevel;
+			};
 		};
 
 		nixosConfigurations = (import ./hosts { inherit inputs overlays; });
@@ -94,7 +100,6 @@
 
 		overlays = {
 			default = local_overlay;
-			all = overlays;
 		};
 
 		modules = import ./modules;

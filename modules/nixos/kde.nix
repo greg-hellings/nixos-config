@@ -13,9 +13,12 @@ in with lib; {
 		services = {
 			xserver = {
 				enable = true;
-				displayManager.sddm.enable = true;
-				desktopManager.plasma5.enable = true;
-				layout = "us";
+				desktopManager.plasma6.enable = true;
+				displayManager = {
+					defaultSession = "plasma";
+					sddm.enable = true;
+				};
+				xkb.layout = "us";
 				# Trackpad support
 				libinput.enable = true;
 			};

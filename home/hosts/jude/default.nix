@@ -6,7 +6,9 @@
 	];
 	home.packages = with pkgs; [
 		(mumble.override { pulseSupport = true; })
-		fluffychat
 		logseq
 	];
+	greg.gui = true;
+	greg.sway = false;
+	greg.gnome = false;
 }

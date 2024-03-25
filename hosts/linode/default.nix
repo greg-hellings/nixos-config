@@ -5,10 +5,10 @@
 		./git.nix
 		./hardware-configuration.nix
 		./podman.nix
+		./matrix.nix
 		./nextcloud.nix
 		./nginx.nix
 		./postgres.nix
-		./synapse.nix
 	];
 
 	greg = {

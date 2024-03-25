@@ -1,8 +1,9 @@
 { config, pkgs, lib, ... }:
 {
-	imports = [	
+	imports = [
 		./hardware-configuration.nix
 		./git.nix
+		./matrix.nix
 	];
 
 	environment.systemPackages = with pkgs; [
@@ -65,6 +66,9 @@
 				configurationLimit = 10;
 			};
 		};
+		binfmt.emulatedSystems = [
+			"aarch64-linux"
+		];
 	};
 	nixpkgs.config = {
 		allowUnfree = true;

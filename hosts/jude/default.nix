@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
 	imports = [
@@ -23,46 +23,64 @@
 		hostName = "jude";
 		enableIPv6 = false;
 		interfaces.enp12s0.useDHCP = true;
-		firewall.enable = true;
+		firewall = {
+			enable = false;
+			allowedTCPPorts = [ 21000 ];
+			allowedUDPPorts = [ 21000 21010 ];
+		};
 	};
 	greg = {
 		tailscale.enable = true;
-		gnome.enable = true;
-		kde.enable = false;
+		sway.enable = false;
+		gnome.enable = false;
+		kde.enable = true;
 	};
 
-	environment.systemPackages = with pkgs; [
-		bind  # For things like nslookup
-		create_ssl
-		darktable
-		expect
-		gimp
-		gnucash
-		graphviz
-		flock
-		ffmpeg
-		handbrake
-		imagemagick
-		libtheora
-		libxml2
-		linode-cli
-		makemkv
-		nix-du
-		nix-tree
-		oathToolkit
-		synology-drive-client
-		terraform
-		vagrant
-		ventoy
+	boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
-		# Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
-		gst_all_1.gstreamer
-		gst_all_1.gst-plugins-base
-		gst_all_1.gst-plugins-good
-		gst_all_1.gst-plugins-bad
-		gst_all_1.gst-plugins-ugly
-		gst_all_1.gst-libav
-		gst_all_1.gst-vaapi
+	environment.systemPackages = with pkgs; lib.mkMerge [
+		[  # for Immersed
+			cudatoolkit
+			immersed-vr
+			libva
+		]
+		[
+			bind  # For things like nslookup
+			create_ssl
+			darktable
+			distrobox
+			expect
+			gimp
+			gparted
+			gnucash
+			graphviz
+			flock
+			ffmpeg
+			handbrake
+			imagemagick
+			libtheora
+			libxml2
+			linode-cli
+			makemkv
+			nix-du
+			nix-tree
+			oathToolkit
+			synology-drive-client
+			terraform
+			vagrant
+			ventoy
+		]
+
+		[
+			# Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
+			gst_all_1.gstreamer
+			gst_all_1.gst-plugins-base
+			gst_all_1.gst-plugins-good
+			gst_all_1.gst-plugins-bad
+			gst_all_1.gst-plugins-ugly
+			gst_all_1.gst-libav
+			gst_all_1.gst-vaapi
+		]
 	];
 	fileSystems =  {
 		"/boot" = {
@@ -89,6 +107,7 @@
 			pulse.enable = true;
 			wireplumber.enable = true;
 		};
+		locate.enable = true;
 		xserver.videoDrivers = [ "nvidia" ];
 	};
 	hardware = {

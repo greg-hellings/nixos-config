@@ -43,6 +43,7 @@
         gnupatch
         gregpy
         findutils
+        file
         hms # My own home manager switcher
         htop
         killall

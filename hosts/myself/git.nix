@@ -1,4 +1,4 @@
-{ config, pkgs, lib, inputs, ... }:
+{ config, pkgs, lib, inputs, overlays, ... }:
 
 let
 
@@ -31,25 +31,10 @@ in  {
 	
 	system.activationScripts.makeGitlabDir = lib.stringAfter [ "var" ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
 
-	containers.gitlab = container {
-		autoStart = true;
-		bindMounts = {
-			"/var/gitlab/state" = {
-				hostPath = gitlabStateDir;
-				isReadOnly = false;
-			};
-			"/dev/net/tun" = {
-				hostPath = "/dev/net/tun";
-				isReadOnly = false;
-			};
-		};
-		forwardPorts = [{
-			hostPort = 2222;
-			containerPort = 22;
-		}];
-		hostAddress = "192.168.200.1";
-		localAddress = "192.168.200.2";
-		config = ((import ./container-git.nix) { inherit inputs; });
+	greg.containers.gitlab = {
+		tailscale = true;
+		subnet = "200";
+		builder = (import ./container-git.nix);
 	};
 
 	systemd.services = {
@@ -80,11 +65,6 @@ in  {
 				];
 			};
 		};
-		"container@gitlab".serviceConfig = {
-			DeviceAllow = [ "/dev/net/tun" ];
-			ProtectKernelModules = false;
-			PrivateDevices = false;
-		};
 		gitlab-runner.serviceConfig.EnvironmentFile = config.age.secrets.docker-auth.path;
 	};
 
@@ -108,7 +88,7 @@ in  {
 		hostAddress = "192.168.201.1";
 		localAddress = "192.168.201.2";
 		config = ((import ./container-runner.nix) {
-			inherit inputs;
+			inherit inputs overlays;
 			name = "qemu";
 			packages = with pkgs; [ qemu_full qemu_kvm ];
 			extra = {
@@ -142,7 +122,7 @@ in  {
 		hostAddress = "192.168.202.1";
 		localAddress = "192.168.202.2";
 		config = ((import ./container-runner.nix) {
-			inherit inputs;
+			inherit inputs overlays;
 			name = "vbox";
 			extra = {
 				systemd.services.gitlab-runner.serviceConfig = {
@@ -168,7 +148,7 @@ in  {
 		hostAddress = "192.168.203.1";
 		localAddress = "192.168.203.2";
 		config = ((import ./container-runner.nix) {
-			inherit inputs;
+			inherit inputs overlays;
 			name = "shell";
 		});
 	};

@@ -183,9 +183,9 @@ in
 			};
 		};
 		# Configure keymap in X11
-		xserver = {
+		xserver.xkb = {
 			layout = "us";
-			xkbVariant = "";
+			variant = "";
 		};
 	};
 
