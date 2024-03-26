@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, options, ... }:
 
 let
 	cfg = config.greg.kde;
@@ -13,7 +13,6 @@ in with lib; {
 		services = {
 			xserver = {
 				enable = true;
-				desktopManager.plasma6.enable = true;
 				displayManager = {
 					defaultSession = "plasma";
 					sddm.enable = true;
@@ -21,7 +20,9 @@ in with lib; {
 				xkb.layout = "us";
 				# Trackpad support
 				libinput.enable = true;
-			};
+			} // (optionalAttrs (builtins.hasAttr "plasma6" options.services.xserver.desktopManager) {
+				desktopManager.plasma6.enable = true;
+			});
 
 			pipewire = {
 				enable = true;

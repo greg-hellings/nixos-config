@@ -12,7 +12,7 @@ let
 		"10.42.1.2 opnsense router opnsense.thehellings.lan router.thehellings.lan"
 		"10.42.1.3 printer.thehellings.lan"
 		"10.42.1.4 chronicles chronicles.thehellings.lan nas.thehellings.lan"
-		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan speedtest.thehellings.lan"
+		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan speedtest.thehellings.lan nixcache.thehellings.lan"
 		"10.42.1.6 isaiah isaiah.thehellings.lan"
 		"10.42.1.12 tv"
 
@@ -23,7 +23,7 @@ let
 		"100.88.91.27 dns.home"
 		"100.119.228.115 chronicles.home nas.home chronicles.shire-zebra.ts.net"
 		"100.115.57.8 linode.home"
-		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home"
+		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home nixcache.home"
 		"100.78.16.88 mm.home"
 		"100.84.183.79 myself.home myself.shire-zebra.ts.net"
 		"100.78.226.76 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan"
@@ -76,7 +76,7 @@ in {
 			};
 		};
 		firewall = {
-			enable = true;
+			enable = false;
 			allowedUDPPorts = [
 				dhcpPort
 				dnsPort
@@ -86,17 +86,24 @@ in {
 			allowedTCPPorts = [
 				dnsPort
 				proxyPort
+				80
 			];
 		};
-		nftables.enable = true;
+		nftables.enable = false;
 	};
 
 	environment.etc."hosts.d/local".text = extraHosts;
 
-	fileSystems."/media" = {
-		device = "10.42.1.4:/volume1/video/";
-		fsType = "nfs";
-		options = [ "ro" ];
+	fileSystems = {
+		"/media" = {
+			device = "10.42.1.4:/volume1/video/";
+			fsType = "nfs";
+			options = [ "ro" ];
+		};
+		"/proxy" = {
+			device = "10.42.1.4:/volume1/nixpkgs/";
+			fsType = "nfs";
+		};
 	};
 
 	services = {
@@ -204,10 +211,39 @@ in {
 		"jellyfin.home".target = "http://localhost:8096/";
 	};
 
-	#age.secrets."3proxy" = {
-	#	file = ../../secrets/3proxy.age;
-	#	mode = "776";
-	#};
+	services.nginx.virtualHosts."nixcache.thehellings.lan" = {
+		serverName = "nixcache.thehellings.lan";
+		serverAliases = [ "nixcache" "nixcache.home" ];
+		root = "/proxy";
+		locations = {
+			"~ ^/nix-cache-info" = {
+				proxyPass = "http://cache.nixos.org";
+				root = "/proxy/nix-cache-info/store";
+				recommendedProxySettings = false;
+				extraConfig = ''
+					error_log /var/log/nginx/proxy.og debug;
+					proxy_store on;
+					proxy_store_access user:rw group:rw all:r;
+					proxy_temp_path /proxy/nix-cache-info/temp;
+					proxy_pass_request_headers on;
+					proxy_set_header Host "cache.nixos.org";
+				'';
+			};
+			"~^/nar/.+$" = {
+				proxyPass = "https://cache.nixos.org";
+				root = "/proxy/nar/store";
+				recommendedProxySettings = false;
+				extraConfig = ''
+					proxy_store on;
+					proxy_store_access user:rw group:rw all:r;
+					proxy_temp_path /proxy/nar/temp;
+					proxy_pass_request_headers on;
+					proxy_set_header Host "cache.nixos.org";
+				'';
+			};
+		};
+	};
+	systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/proxy" ];
 
 	environment.systemPackages = with pkgs; [
 		bind

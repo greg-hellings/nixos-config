@@ -15,7 +15,7 @@ in {
 	systemd.services.step-ca.serviceConfig.Environment = lib.mkForce ["STEPDEBUG=1" "HOME=%S/step-ca"];
 	services.step-ca = {
 		inherit address;
-		enable = true;
+		enable = false;
 		intermediatePasswordFile = config.age.secrets.acme_password.path;
 		openFirewall = true;
 		port = 8443;
