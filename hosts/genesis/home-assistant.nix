@@ -21,6 +21,7 @@ in
 				"piper"
 				"radio_browser"
 				"rainbird"
+				"roborock"
 				"smart_meter_texas"
 				"speedtestdotnet"
 				"solaredge"
