@@ -31,28 +31,32 @@
     };
 
     # Base packages that need to be in all my hosts
-    environment.systemPackages = with pkgs; [
-        agenix
-        android-file-transfer
-        bitwarden-cli
-        bmon
-        configure_aws_creds
-        diffutils
-        git
-        gh
-        gnupatch
-        gregpy
-        findutils
-        file
-        hms # My own home manager switcher
-        htop
-        killall
-        nano
-        pciutils
-        pwgen
-        tcptrack
-        transcrypt
-        unzip
-        wget
+    environment.systemPackages = with pkgs; lib.mkMerge [
+	[
+		agenix
+		android-file-transfer
+		bitwarden-cli
+		bmon
+		configure_aws_creds
+		diffutils
+		git
+		gh
+		gnupatch
+		gregpy
+		findutils
+		file
+		hms # My own home manager switcher
+		htop
+		killall
+		nano
+		pciutils
+		pwgen
+		transcrypt
+		unzip
+		wget
+	]
+	(lib.optional pkgs.stdenv.isLinux [
+		tcptrack
+	])
     ];
 }
