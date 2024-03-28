@@ -48,6 +48,7 @@
 			bind  # For things like nslookup
 			create_ssl
 			darktable
+			distrobox
 			expect
 			gimp
 			gparted

@@ -16,6 +16,7 @@
             min-free = (toString (1024 * 1024 * 1024) );
             max-free = (toString (5 * 1024 * 1024 * 1024) );
             substituters = [
+                "http://nixcache.home"
                 "https://cache.garnix.io"
                 "https://ai.cachix.org"
             ];

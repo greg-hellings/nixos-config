@@ -7,6 +7,7 @@
 {
 	imports = [
 		# Include the results of the hardware scan.
+		./acme.nix
 		./hardware-configuration.nix
 		./home-assistant.nix
 		./networking.nix
@@ -34,5 +35,13 @@
 	environment.systemPackages = with pkgs; [
 		awscli2
 		create_ssl
+		step-ca
 	];
+
+	virtualisation.oci-containers.containers.speedtest = {
+		image = "ghcr.io/librespeed/speedtest";
+		hostname = "speedtest";
+		ports = [ "19472:80" ];
+	};
+	greg.proxies."speedtest.thehellings.lan".target = "http://localhost:19472";
 }

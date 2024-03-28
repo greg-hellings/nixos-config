@@ -17,8 +17,13 @@ in
 				"eufy"
 				"lovelace"
 				"nextcloud"
+				"ping"
 				"piper"
+				"radio_browser"
+				"rainbird"
+				"roborock"
 				"smart_meter_texas"
+				"speedtestdotnet"
 				"solaredge"
 				"tplink"
 				"whisper"
@@ -83,6 +88,7 @@ in
 			];
 			environment = {
 				TZ = "America/Chicago";
+				CONSOLE_OUTPUT = "true";
 			};
 		};
 	};
