@@ -8,6 +8,7 @@
 			"direnv"
 		];
 		casks = [
+			"alt-tab"
 			"gnucash"
 			"insomnia"
 			"onlyoffice"
