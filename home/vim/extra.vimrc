@@ -31,3 +31,5 @@ endfunction
 command! -nargs=? -range=% Space2Tab call IndentConvert(<line1>,<line2>,0,<q-args>)
 command! -nargs=? -range=% Tab2Space call IndentConvert(<line1>,<line2>,1,<q-args>)
 command! -nargs=? -range=% RetabIndent call IndentConvert(<line1>,<line2>,&et,<q-args>)
+
+noremap <expr> <C-p> (fugitive#Head() != '' ? ':GFiles --exclude-standard --others --cached' : ':Files')."\<cr>"

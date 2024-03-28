@@ -35,10 +35,3 @@ api.nvim_create_autocmd({ "BufRead", "BufNewFile"}, {
 	pattern = "Vagrantfile*",
 	command = "set filetype=ruby"
 })
-
-if api.nvim_command_output("!git rev-parse --is-inside-work-tree") == true then
-	vim.keymap.set(all, "<C-p>", ":GFiles --cached --others --exclude-standard<CR>")
-	vim.keymap.set(all, "<C-o>", ":GFiles?<CR>")
-else
-	vim.keymap.set(all, "<C-p>", ":Files<CR>")
-end

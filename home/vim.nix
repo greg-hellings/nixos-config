@@ -77,6 +77,7 @@ in
 				"<C-k>" = ''"<C-w>k<C-w><CR>"'';
 				"<C-h>" = ''"<C-w>h<C-w><CR>"'';
 				"<C-l>" = ''"<C-w>l<C-w><CR>"'';
+				"<C-o>" = ''":GFiles?<CR>"'';
 			};
 		};
 		plugins = {
@@ -88,7 +89,7 @@ in
 			fugitive.enable = true;
 			notify.enable = true;
 		};
-		extraConfigLua = builtins.readFile ./vim/extra.lua;
+		extraConfigLua = builtins.replaceStrings [ "@git@" ] [ "${pkgs.git}/bin/git" ] (builtins.readFile ./vim/extra.lua);
 		extraConfigVim = builtins.readFile ./vim/extra.vimrc;
 		extraPlugins = with pkgs.vimPlugins; [
 			bufexplorer
@@ -97,14 +98,11 @@ in
 			nvim-cmp
 			packer-nvim
 
-			#jedi-vim
-
 			context-vim
 			direnv-vim
 			fzf-vim
 			vim-flake8
 			vim-indent-guides
-			vim-rooter
 			vim-xonsh
 		];
 		viAlias = true;
