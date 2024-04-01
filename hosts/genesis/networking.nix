@@ -14,6 +14,7 @@ let
 		"10.42.1.4 chronicles chronicles.thehellings.lan nas.thehellings.lan"
 		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan speedtest.thehellings.lan nixcache.thehellings.lan"
 		"10.42.1.6 isaiah isaiah.thehellings.lan"
+		"10.42.1.7 hosea hosea.thehellings.lan"
 		"10.42.1.12 tv"
 
 		"10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan"
@@ -24,9 +25,9 @@ let
 		"100.119.228.115 chronicles.home nas.home chronicles.shire-zebra.ts.net"
 		"100.115.57.8 linode.home"
 		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home nixcache.home"
-		"100.78.16.88 mm.home"
 		"100.84.183.79 myself.home myself.shire-zebra.ts.net"
 		"100.78.226.76 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan"
+		"100.68.203.1 hosea.home hosea.shire-zebra.ts.net"
 
 		# Dev hosts
 		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
