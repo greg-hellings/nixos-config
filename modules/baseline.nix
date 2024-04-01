@@ -32,7 +32,7 @@
     };
 
     # Base packages that need to be in all my hosts
-    environment.systemPackages = with pkgs; lib.mkMerge [
+    environment.systemPackages = with pkgs; (
 	[
 		agenix
 		android-file-transfer
@@ -56,8 +56,5 @@
 		unzip
 		wget
 	]
-	(lib.optional pkgs.stdenv.isLinux [
-		tcptrack
-	])
-    ];
+    );
 }
