@@ -42,7 +42,7 @@ in {
 	jude = unstable { name = "jude"; };
 	icdm-root = unstable { name = "icdm-root"; };
 	linode = machine { name = "linode"; };
-	mm = unstable { name = "mm"; };
+	hosea = unstable { name = "hosea"; };
 	myself = unstable { name = "myself"; };
 	iso = machine { name = "iso"; };
 	iso-beta = unstable { name = "iso"; };
