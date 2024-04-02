@@ -56,7 +56,7 @@ in
 		};
 		gitlab-runner = {
 			enable = true;
-			settings.concurrent = 5;
+			settings.concurrent = 2;
 			services = {
 				shell = {
 					executor = "shell";
