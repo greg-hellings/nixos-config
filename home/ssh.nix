@@ -5,7 +5,7 @@
 	# This allows things like SSH in distrobox to read the config file just fine
 	home.file.".ssh/config" = {
   	  target = ".ssh/config_source";
-  	  onChange = ''cat ~/.ssh/config_source > ~/.ssh/config && chmod 400 ~/.ssh/config'';
+  	  onChange = ''cat ~/.ssh/config_source > ~/.ssh/config && chmod 600 ~/.ssh/config'';
 	};
 	programs.ssh = {
 		enable = true;
@@ -36,7 +36,6 @@
 			"src" = {
 				user = "gitlab";
 				hostname = "git.thehellings.lan";
-				port = 2222;
 			};
 
 			"*.thehellings.lan" = owned;
