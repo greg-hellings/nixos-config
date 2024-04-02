@@ -45,7 +45,6 @@
 				extraGroups = [
 					"kvm"
 					"sudo"
-					"vboxusers"
 					"wheel"
 				];
 				isNormalUser = true;
@@ -54,7 +53,7 @@
 	};
 	system.stateVersion = lib.mkForce "24.05";
 	boot = {
-		extraModprobeConfig = "options kvm_amd nested=1 vboxdrv";
+		extraModprobeConfig = "options kvm_amd nested=1";
 		supportedFilesystems = [ "ntfs" ];
 		loader = {
 			efi = {

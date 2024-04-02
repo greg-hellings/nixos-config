@@ -16,10 +16,18 @@ in
 		];
 
 
-	# Bootloader.
-	boot.loader.systemd-boot.enable = true;
-	boot.loader.efi.canTouchEfiVariables = true;
-	boot.loader.efi.efiSysMountPoint = "/boot/";
+	# Bootloader
+	boot = {
+		loader = {
+			systemd-boot.enable = true;
+			efi = {
+				canTouchEfiVariables = true;
+				efiSysMountPoint = "/boot/";
+			};
+		};
+		extraModprobeConfig = "vboxdrv";
+	};
+	users.users.greg.extraGroups = [ "vboxusers" ];
 
 	networking = {
 		hostName = "hosea";
@@ -46,62 +54,74 @@ in
 			layout = "us";
 			variant = "";
 		};
+		gitlab-runner = {
+			enable = true;
+			settings.concurrent = 5;
+			services = {
+				shell = {
+					executor = "shell";
+					limit = 5;
+					registrationConfigFile = config.age.secrets.runner-reg.path;
+					environmentVariables = {
+						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+					};
+				};
+			};
+		};
 	};
 
 	#####################################################################################
 	#################### Virtualbox Runner ##############################################
 	#####################################################################################
-	systemd.services."container@gitlab-runner-vbox" = {
+	age.secrets.runner-reg.file = ../../secrets/gitlab/myself-vbox-runner-reg.age;
+	virtualisation.virtualbox.host = {
+		enable = true;
+		enableExtensionPack = true;
+		enableHardening = false;
+		headless = true;
+	};
+
+	systemd.services."gitlab-runner" = {
+		after = [
+			"network.target"
+			"network-online.target"
+			"systemd-resolved.service"
+		];
 		# Moved here from myself/Isaiah, so technically unnecessary now
 		conflicts = [
 			"container@gitlab-runner-qemu.service"
 		];
+		wants = [
+			"network-online.target"
+			"systemd-resolved.service"
+		];
+		path = with pkgs; [
+			curl
+			gawk
+			git
+			p7zip
+			packer
+			pup
+			gregpy
+			shellcheck
+			unzip
+			xonsh
+			xorriso
+			vagrant
+			wget
+		];
+		preStart = builtins.concatStringsSep "\n" [
+			"${pkgs.kmod}/bin/modprobe vboxdrv"
+			"${pkgs.kmod}/bin/modprobe vboxnetadp"
+			"${pkgs.kmod}/bin/modprobe vboxnetflt"
+		];
+		postStop = "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv";
 		serviceConfig = {
 			DevicePolicy = lib.mkForce "auto";
-			ExecStopPost = [ "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv" ];
-			ExecStartPre = [
-				"${pkgs.kmod}/bin/modprobe vboxdrv"
-				"${pkgs.kmod}/bin/modprobe vboxnetadp"
-				"${pkgs.kmod}/bin/modprobe vboxnetflt"
-			];
+			User = "root";
+			DynamicUser = lib.mkForce false;
 		};
 	};
 
-	containers.gitlab-runner-vbox = {
-		bindMounts."/etc/ssh/ssh_host_ed25519_key".hostPath = "/etc/ssh/ssh_host_ed25519_key";  # For agenix secrets
-		privateNetwork = true;
-		bindMounts = {
-			"/dev/vboxdrv" = {
-				hostPath = "/dev/vboxdrv";
-				isReadOnly = false;
-			};
-			"/dev/vboxdrvu" = {
-				hostPath = "/dev/vboxdrvu";
-				isReadOnly = false;
-			};
-			"/dev/vboxnetctl" = {
-				hostPath = "/dev/vboxnetctl";
-				isReadOnly = false;
-			};
-		};
-		hostAddress = "192.168.202.1";
-		localAddress = "192.168.202.2";
-		config = ((import ../myself/container-runner.nix) {
-			inherit inputs overlays;
-			name = "vbox";
-			extra = {
-				systemd.services.gitlab-runner.serviceConfig = {
-					User = "root";
-					DynamicUser = lib.mkForce false;
-				};
-				virtualisation.virtualbox.host = {
-					enable = true;
-					enableExtensionPack = true;
-					enableHardening = false;
-					headless = true;
-				};
-				networking.firewall.allowedTCPPorts = [ 18083 ];  # Should be interface for vboxweb
-			};
-		});
-	};
+	networking.firewall.allowedTCPPorts = [ 18083 ];  # Should be interface for vboxweb
 }
