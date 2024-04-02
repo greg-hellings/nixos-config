@@ -6,6 +6,7 @@ let
 
 	container = input: (lib.attrsets.recursiveUpdate {
 		bindMounts."/etc/ssh".hostPath = "/etc/ssh";  # For agenix secrets
+		enableTun = true;
 		privateNetwork = true;
 	} input);
 in  {
@@ -59,6 +60,7 @@ in  {
 	#################### QEmu Runner ####################################################
 	#####################################################################################
 	containers.gitlab-runner-qemu = container {
+		autoStart = true;
 		bindMounts = {
 			"/dev/kvm" = {
 				hostPath = "/dev/kvm";

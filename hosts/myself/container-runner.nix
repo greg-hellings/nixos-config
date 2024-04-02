@@ -17,6 +17,8 @@ lib.attrsets.recursiveUpdate {
 
 	nixpkgs.overlays = overlays;
 
+	greg.tailscale.enable = true;
+
 	age = {
 		identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
 		secrets.runner-reg = {
