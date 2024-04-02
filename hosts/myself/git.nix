@@ -39,6 +39,7 @@ in  {
 
 	systemd.services = {
 		"container@gitlab-runner-qemu" = {
+			# Now moved to a separate machine
 			conflicts = [
 				"container@gitlab-runner-vbox.service"
 			];
@@ -48,20 +49,6 @@ in  {
 				ExecStartPre = [
 					"${pkgs.kmod}/bin/modprobe kvm"
 					"${pkgs.kmod}/bin/modprobe kvm_amd"
-				];
-			};
-		};
-		"container@gitlab-runner-vbox" = {
-			conflicts = [
-				"container@gitlab-runner-qemu.service"
-			];
-			serviceConfig = {
-				DevicePolicy = lib.mkForce "auto";
-				ExecStopPost = [ "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv" ];
-				ExecStartPre = [
-					"${pkgs.kmod}/bin/modprobe vboxdrv"
-					"${pkgs.kmod}/bin/modprobe vboxnetadp"
-					"${pkgs.kmod}/bin/modprobe vboxnetflt"
 				];
 			};
 		};
@@ -97,45 +84,6 @@ in  {
 					onBoot = "ignore";
 					package = pkgs.libvirt-greg;
 				};
-			};
-		});
-	};
-
-	#####################################################################################
-	#################### Virtualbox Runner ##############################################
-	#####################################################################################
-	containers.gitlab-runner-vbox = container {
-		bindMounts = {
-			"/dev/vboxdrv" = {
-				hostPath = "/dev/vboxdrv";
-				isReadOnly = false;
-			};
-			"/dev/vboxdrvu" = {
-				hostPath = "/dev/vboxdrvu";
-				isReadOnly = false;
-			};
-			"/dev/vboxnetctl" = {
-				hostPath = "/dev/vboxnetctl";
-				isReadOnly = false;
-			};
-		};
-		hostAddress = "192.168.202.1";
-		localAddress = "192.168.202.2";
-		config = ((import ./container-runner.nix) {
-			inherit inputs overlays;
-			name = "vbox";
-			extra = {
-				systemd.services.gitlab-runner.serviceConfig = {
-					User = "root";
-					DynamicUser = lib.mkForce false;
-				};
-				virtualisation.virtualbox.host = {
-					enable = true;
-					enableExtensionPack = true;
-					enableHardening = false;
-					headless = true;
-				};
-				networking.firewall.allowedTCPPorts = [ 18083 ];  # Should be interface for vboxweb
 			};
 		});
 	};
