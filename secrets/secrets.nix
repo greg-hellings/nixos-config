@@ -41,6 +41,7 @@ in
 
 	"linode-forgejo-runner.age".publicKeys = everyone;
 	"jude-forgejo-runner.age".publicKeys = everyone;
+	"minio.age".publicKeys = everyone;
 
 
 	"dendrite.age".publicKeys = everyone;
