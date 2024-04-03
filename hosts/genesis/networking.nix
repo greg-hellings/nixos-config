@@ -218,11 +218,11 @@ in {
 		root = "/proxy";
 		locations = {
 			"~ ^/nix-cache-info" = {
-				proxyPass = "http://cache.nixos.org";
+				proxyPass = "https://cache.nixos.org";
 				root = "/proxy/nix-cache-info/store";
 				recommendedProxySettings = false;
 				extraConfig = ''
-					error_log /var/log/nginx/proxy.og debug;
+					error_log /var/log/nginx/proxy.log debug;
 					proxy_store on;
 					proxy_store_access user:rw group:rw all:r;
 					proxy_temp_path /proxy/nix-cache-info/temp;
