@@ -56,7 +56,7 @@ in
 		};
 		gitlab-runner = {
 			enable = true;
-			settings.concurrent = 2;
+			settings.concurrent = 1;
 			services = {
 				shell = {
 					executor = "shell";
@@ -64,6 +64,8 @@ in
 					registrationConfigFile = config.age.secrets.runner-reg.path;
 					environmentVariables = {
 						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+						#HTTP_PROXY = "http://10.42.1.4:3128/";
+						#HTTPS_PROXY = "http://10.42.1.4:3128/";
 					};
 				};
 			};
@@ -95,21 +97,6 @@ in
 			"network-online.target"
 			"systemd-resolved.service"
 		];
-		path = with pkgs; [
-			curl
-			gawk
-			git
-			p7zip
-			packer
-			pup
-			gregpy
-			shellcheck
-			unzip
-			xonsh
-			xorriso
-			vagrant
-			wget
-		];
 		preStart = builtins.concatStringsSep "\n" [
 			"${pkgs.kmod}/bin/modprobe vboxdrv"
 			"${pkgs.kmod}/bin/modprobe vboxnetadp"
@@ -122,6 +109,21 @@ in
 			DynamicUser = lib.mkForce false;
 		};
 	};
+	environment.systemPackages = with pkgs; [
+		curl
+		gawk
+		git
+		p7zip
+		packer
+		pup
+		gregpy
+		shellcheck
+		unzip
+		xonsh
+		xorriso
+		vagrant
+		wget
+	];
 
 	networking.firewall.allowedTCPPorts = [ 18083 ];  # Should be interface for vboxweb
 }
