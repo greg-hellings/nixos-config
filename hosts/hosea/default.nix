@@ -37,7 +37,7 @@ in
 				useDHCP = false;
 				ipv4.addresses = [{
 					address = lanIpAddress;
-					prefixLength = 24;
+					prefixLength = 16;
 				}];
 			};
 		};
