@@ -48,6 +48,7 @@
 		file
 		hms # My own home manager switcher
 		htop
+		iperf
 		killall
 		nano
 		pciutils
