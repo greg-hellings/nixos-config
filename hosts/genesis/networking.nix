@@ -35,6 +35,7 @@ let
 
 	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
 	proxyPort = 3128;
+	minioPort = 9000;
 	dnsPort = 53;
 	dhcpPort = 67;
 	dnsServers = [
@@ -86,6 +87,7 @@ in {
 			];
 			allowedTCPPorts = [
 				dnsPort
+				minioPort
 				proxyPort
 				80
 			];
@@ -102,8 +104,8 @@ in {
 			options = [ "ro" ];
 		};
 		"/proxy" = {
-			device = "10.42.1.4:/volume1/nixpkgs/";
-			fsType = "nfs";
+			device = "/dev/vdb1";
+			fsType = "btrfs";
 		};
 	};
 
@@ -219,6 +221,7 @@ in {
 			enable = true;
 			dataDir = [ "/proxy/minio" ];
 			rootCredentialsFile = config.age.secrets.minio.path;
+			browser = false;
 		};
 		nginx.virtualHosts."nixcache.thehellings.lan" = {
 			serverName = "nixcache.thehellings.lan";
@@ -227,25 +230,25 @@ in {
 			locations = {
 				"~ ^/nix-cache-info" = {
 					proxyPass = "https://cache.nixos.org";
-					root = "/proxy/nix-cache-info/store";
+					root = "/proxy/nixpkgs/nix-cache-info/store";
 					recommendedProxySettings = false;
 					extraConfig = ''
 						error_log /var/log/nginx/proxy.log debug;
 						proxy_store on;
 						proxy_store_access user:rw group:rw all:r;
-						proxy_temp_path /proxy/nix-cache-info/temp;
+						proxy_temp_path /proxy/nixpkgs/nix-cache-info/temp;
 						proxy_pass_request_headers on;
 						proxy_set_header Host "cache.nixos.org";
 					'';
 				};
 				"~^/nar/.+$" = {
 					proxyPass = "https://cache.nixos.org";
-					root = "/proxy/nar/store";
+					root = "/proxy/nixpkgs/nar/store";
 					recommendedProxySettings = false;
 					extraConfig = ''
 						proxy_store on;
 						proxy_store_access user:rw group:rw all:r;
-						proxy_temp_path /proxy/nar/temp;
+						proxy_temp_path /proxy/nixpkgs/nar/temp;
 						proxy_pass_request_headers on;
 						proxy_set_header Host "cache.nixos.org";
 					'';
@@ -258,6 +261,7 @@ in {
 	environment.systemPackages = with pkgs; [
 		bind
 		curl  # Used by dnsmasq fetching
+		minio-client
 		sqlite
 	];
 }
