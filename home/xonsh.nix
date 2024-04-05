@@ -29,8 +29,6 @@
 
 			GOPATH = "${config.home.homeDirectory}/src/go";
 			GOBIN  = "${config.home.homeDirectory}/src/bin";
-
-			EFI_DIR = lib.mkIf pkgs.stdenv.isLinux "${pkgs.OVMF.fd}/FV/";
 		};
 
 		aliases = {
