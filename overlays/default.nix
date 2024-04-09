@@ -60,6 +60,7 @@ in rec {
 	setup-ssh = prev.callPackage ./setup-ssh {
 		pkgs = final.pkgs;
 	};
+	upgrade-pg-cluster = prev.callPackage ./upgrade-pg-cluster.nix {};
 
 	# Overrides of packages
 	brew = prev.callPackage ./homebrew.nix {};
