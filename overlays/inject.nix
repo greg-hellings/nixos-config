@@ -18,7 +18,7 @@ mkdir -p "/etc/nixos/hosts/''${hostname}"
 
 # Prepares everything for the flake usage
 #cp /etc/nixos.bk/configuration.nix "/etc/nixos/hosts/''${hostname}/default.nix"
-cat < EOF > "/etc/nixos/hosts/''${hostname}/default.nix
+cat << EOF > "/etc/nixos/hosts/''${hostname}/default.nix"
 { pkgs, config, ... }:
 
 {
@@ -40,7 +40,7 @@ cp /etc/nixos.bk/hardware-configuration.nix "/etc/nixos/hosts/''${hostname}/hard
 
 # Prepare home-manager portion for setup
 mkdir -p "/etc/nixos/home/hosts/''${hostname}"
-cat < EOF > "/etc/nixos/home/hosts/''${hostname}/default.nix"
+cat << EOF > "/etc/nixos/home/hosts/''${hostname}/default.nix"
 { pkgs, config, ... }:
 
 {
@@ -51,6 +51,6 @@ EOF
 cp /etc/nixos.bk/hardware-configuration.nix /etc/nixos
 chown -R greg nixos
 
-echo "Now you should be able to just run 'nixos-rebuild switch' to enable the flake functionality"
-echo "After that and adding the entry to the flake, run 'nixos-rebuild boot --flake '.#''${hostname}' and reboot"
+echo "Now you should be able to just run `nixos-rebuild switch` to enable the flake functionality"
+echo "After that and adding the entry to the flake, run `nixos-rebuild boot --flake '.#''${hostname}'` and reboot"
 ''
