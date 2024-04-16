@@ -17,7 +17,25 @@ ${git}/bin/git clone http://github.com/greg-hellings/nixos-config nixos
 mkdir -p "/etc/nixos/hosts/''${hostname}"
 
 # Prepares everything for the flake usage
-cp /etc/nixos.bk/configuration.nix "/etc/nixos/hosts/''${hostname}/default.nix"
+#cp /etc/nixos.bk/configuration.nix "/etc/nixos/hosts/''${hostname}/default.nix"
+cat < EOF > "/etc/nixos/hosts/''${hostname}/default.nix
+{ pkgs, config, ... }:
+
+{
+	imports = [ ./hardware-configuration.nix ];
+
+	boot.loader = {
+		systemd-boot.enable = true;
+		efi.canTouchEfiVariables = true;
+	};
+
+	networking.hostName = "''${hostname}";
+	greg = {
+		home = true;
+		tailscale.enable = true;
+	};
+}
+EOF
 cp /etc/nixos.bk/hardware-configuration.nix "/etc/nixos/hosts/''${hostname}/hardware-configuration.nix"
 
 # Prepare home-manager portion for setup
