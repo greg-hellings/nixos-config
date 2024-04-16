@@ -20,6 +20,15 @@ mkdir -p "/etc/nixos/hosts/''${hostname}"
 cp /etc/nixos.bk/configuration.nix "/etc/nixos/hosts/''${hostname}/default.nix"
 cp /etc/nixos.bk/hardware-configuration.nix "/etc/nixos/hosts/''${hostname}/hardware-configuration.nix"
 
+# Prepare home-manager portion for setup
+mkdir -p "/etc/nixos/home/hosts/''${hostname}"
+cat < EOF > "/etc/nixos/home/hosts/''${hostname}/default.nix"
+{ pkgs, config, ... }:
+
+{
+}
+EOF
+
 # Prepares it for injecting the use case into the flake usage
 cp /etc/nixos.bk/hardware-configuration.nix /etc/nixos
 chown -R greg nixos
