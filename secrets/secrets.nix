@@ -17,6 +17,7 @@ let
 	user_linode = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINAX6pNx5mbwIa8X+GzktyNijfYmJUpgROFpRxSW9js0 greg@linode";
 	user_myself = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAl6DJVrPSujvJSAEA5Q8tRrzfJs/c6DMwqwQEUFffIR greg@myself";
 	user_hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrqJQvDspLi1vXQRJ/Z5kN/F8jCBHvaXjo+5zLuIYjR greg@hosea";
+	user_jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYIiecdyM9c7tXgR96983K3wqiJeQRMbrzGIF8Wy6uO greg@jeremiah";
 
 	users = [
 		user_genesis_virt
@@ -25,6 +26,7 @@ let
 		user_linode
 		user_myself
 		user_hosea
+		user_jeremiah
 	];
 
 	everyone = systems ++ users;
