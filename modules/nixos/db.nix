@@ -18,6 +18,7 @@ in {
 		services = {
 			postgresql = {
 				enable = true;
+				package = pkgs.postgresql_15;
 				checkConfig = true;
 				ensureDatabases = dbs;
 				ensureUsers = map (db: { name = db; ensureDBOwnership = true; }) dbs;

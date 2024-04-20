@@ -31,13 +31,15 @@ in
 
 	networking = {
 		hostName = "hosea";
+		nameservers = [ "10.42.1.5" ];
+		defaultGateway = "10.42.1.1";
 		interfaces = {
 			"${wanInterface}".useDHCP = true;
 			"${lanInterface}" = {
 				useDHCP = false;
 				ipv4.addresses = [{
 					address = lanIpAddress;
-					prefixLength = 24;
+					prefixLength = 16;
 				}];
 			};
 		};

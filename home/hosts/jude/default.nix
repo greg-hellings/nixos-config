@@ -11,4 +11,6 @@
 	greg.gui = true;
 	greg.sway = false;
 	greg.gnome = false;
+
+	programs.xonsh.sessionVariables.EFI_DIR = "${pkgs.OVMF.fd}/FV/";
 }

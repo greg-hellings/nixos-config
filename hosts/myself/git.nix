@@ -39,55 +39,20 @@ in  {
 	};
 
 	systemd.services = {
-		"container@gitlab-runner-qemu" = {
-			# Now moved to a separate machine
-			conflicts = [
-				"container@gitlab-runner-vbox.service"
-			];
+		"gitlab-runner" = {
 			serviceConfig = {
 				DevicePolicy = lib.mkForce "auto";
+				DevicesAllow = [ "/dev/kvm" "/dev/mem" ];
+				EnvironmentFile = config.age.secrets.docker-auth.path;
 				ExecStopPost = [ "${pkgs.kmod}/bin/rmmod kvm_amd kvm" ];
 				ExecStartPre = [
-					"${pkgs.kmod}/bin/modprobe kvm"
-					"${pkgs.kmod}/bin/modprobe kvm_amd"
+					"+${pkgs.kmod}/bin/modprobe kvm"
+					"+${pkgs.kmod}/bin/modprobe kvm_amd"
 				];
+				PrivateDevices = false;
+				ProtectKernelModules = false;
 			};
 		};
-		gitlab-runner.serviceConfig.EnvironmentFile = config.age.secrets.docker-auth.path;
-	};
-
-	#####################################################################################
-	#################### QEmu Runner ####################################################
-	#####################################################################################
-	containers.gitlab-runner-qemu = container {
-		autoStart = true;
-		bindMounts = {
-			"/dev/kvm" = {
-				hostPath = "/dev/kvm";
-				isReadOnly = false;
-			};
-			"/dev/mem" = {
-				hostPath = "/dev/mem";
-				isReadOnly = false;
-			};
-		};
-		extraFlags = [
-			"--property=DeviceAllow=/dev/kvm"
-		];
-		hostAddress = "192.168.201.1";
-		localAddress = "192.168.201.2";
-		config = ((import ./container-runner.nix) {
-			inherit inputs overlays;
-			name = "qemu";
-			packages = with pkgs; [ qemu_full qemu_kvm ];
-			extra = {
-				virtualisation.libvirtd = {
-					enable = true;
-					onBoot = "ignore";
-					package = pkgs.libvirt-greg;
-				};
-			};
-		});
 	};
 
 	#####################################################################################
@@ -108,6 +73,7 @@ in  {
 	#####################################################################################
 	age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
 	age.secrets.docker-auth.file = ../../secrets/gitlab/docker-auth.age;
+	age.secrets.runner-qemu.file = ../../secrets/gitlab/myself-qemu-runner-reg.age;
 	services.gitlab-runner = {
 		enable = true;
 		settings = {
@@ -144,10 +110,35 @@ in  {
 					"/cache"
 				];
 			};
+			qemu = {
+				executor = "shell";
+				limit = 5;
+				registrationConfigFile = config.age.secrets.runner-qemu.path;
+				environmentVariables = {
+					EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+				};
+			};
 		};
 	};
 	virtualisation = {
 		docker.enable = true;
 		oci-containers.backend = "docker";
 	};
+	environment.systemPackages = with pkgs; [
+		curl
+		gawk
+		git
+		p7zip
+		packer
+		pup
+		(python3.withPackages (p: with p; [ pip pyyaml virtualenv ]) )
+		qemu_full
+		qemu_kvm
+		shellcheck
+		unzip
+		xonsh
+		xorriso
+		vagrant
+		wget
+	];
 }

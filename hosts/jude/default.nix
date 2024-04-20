@@ -51,6 +51,7 @@
 			distrobox
 			expect
 			gimp
+			go
 			gparted
 			gnucash
 			graphviz

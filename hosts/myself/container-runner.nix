@@ -50,6 +50,12 @@ lib.attrsets.recursiveUpdate {
 
 	nixpkgs.config.allowUnfree = true;
 
+	users.users.gitlab-runner = {
+		isSystemUser = true;
+		group = "kvm";
+		extraGroups = [ "kvm" ];
+	};
+
 	services = {
 		gitlab-runner = {
 			enable = true;
@@ -78,6 +84,15 @@ lib.attrsets.recursiveUpdate {
 			"network-online.target"
 			"systemd-resolved.service"
 		];
+		serviceConfig = {
+			DevicePolicy = lib.mkForce "auto";
+			PrivateDevices = false;
+			ProtectKernelModules = false;
+			DevicesAllow = [ "/dev/kvm" "/dev/mem" ];
+			DynamicUser = lib.mkForce false;
+			User = "root";
+			Group = "kvm";
+		};
 	};
 
 	system.stateVersion = lib.mkForce "24.05";

@@ -5,6 +5,8 @@ let
 	conn = "postgresql:///dendrite?sslmode=disable&host=/run/postgresql";
 in
 {
+	environment.systemPackages = with pkgs; [ upgrade-pg-cluster ];
+
 	greg.containers.matrix = {
 		tailscale = true;
 		subnet = "204";
