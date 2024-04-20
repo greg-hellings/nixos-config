@@ -5,33 +5,7 @@ let
 	iot = "ens19";
 	iotIP = "192.168.66.250";
 	routerIP = "10.42.1.2";
-	extraHosts = builtins.concatStringsSep "\n" [
-		# Local hosts
-		"10.42.0.1 switch switch.thehellings.lan"
-		"10.42.1.1 pve1.thehellings.lan"
-		"10.42.1.2 opnsense router opnsense.thehellings.lan router.thehellings.lan"
-		"10.42.1.3 printer.thehellings.lan"
-		"10.42.1.4 chronicles chronicles.thehellings.lan nas.thehellings.lan"
-		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan speedtest.thehellings.lan nixcache.thehellings.lan gitcache.thehellings.lan s3.thehellings.lan"
-		"10.42.1.6 isaiah isaiah.thehellings.lan"
-		"10.42.1.7 hosea hosea.thehellings.lan"
-		"10.42.1.12 tv"
-
-		"10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan"
-
-		# Tailscale hosts
-		"100.90.74.19 jude.home"
-		"100.88.91.27 dns.home"
-		"100.119.228.115 chronicles.home nas.home chronicles.shire-zebra.ts.net"
-		"100.115.57.8 linode.home"
-		"100.88.91.27 genesis.home jellyfin.home smart.home zwave.home nixcache.home gitcache.home"
-		"100.84.183.79 myself.home myself.shire-zebra.ts.net"
-		"100.78.226.76 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan"
-		"100.68.203.1 hosea.home hosea.shire-zebra.ts.net"
-
-		# Dev hosts
-		"10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan"
-	];
+	extraHosts = builtins.readFile ./net/hosts;
 
 	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
 	proxyPort = 3128;
@@ -161,6 +135,7 @@ in {
 				];
 				dhcp-host = [
 					# Static IPs for personal work
+					"2a:5d:23:10:4e:22,10.42.0.5"  # SAN Switch
 					"00:00:de:ad:be:ef,10.42.2.254"
 					"01:a8:a1:59:c7:8a:12,10.42.2.253"  # BMC management interface for isaiah
 
