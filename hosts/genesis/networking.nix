@@ -12,7 +12,7 @@ let
 		"10.42.1.2 opnsense router opnsense.thehellings.lan router.thehellings.lan"
 		"10.42.1.3 printer.thehellings.lan"
 		"10.42.1.4 chronicles chronicles.thehellings.lan nas.thehellings.lan"
-		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan speedtest.thehellings.lan nixcache.thehellings.lan gitcache.thehellings.lan"
+		"10.42.1.5 genesis genesis.thehellings.lan dns dns.thehellings.lan smart smart.thehellings.lan jellyfin jellyfin.thehellings.lan speedtest.thehellings.lan nixcache.thehellings.lan gitcache.thehellings.lan s3.thehellings.lan"
 		"10.42.1.6 isaiah isaiah.thehellings.lan"
 		"10.42.1.7 hosea hosea.thehellings.lan"
 		"10.42.1.12 tv"
@@ -36,6 +36,7 @@ let
 	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
 	proxyPort = 3128;
 	minioPort = 9000;
+	minioConsolePort = 9001;
 	dnsPort = 53;
 	dhcpPort = 67;
 	dnsServers = [
@@ -88,6 +89,7 @@ in {
 			allowedTCPPorts = [
 				dnsPort
 				minioPort
+				minioConsolePort
 				proxyPort
 				80
 			];
@@ -221,7 +223,7 @@ in {
 			enable = true;
 			dataDir = [ "/proxy/minio" ];
 			rootCredentialsFile = config.age.secrets.minio.path;
-			browser = false;
+			browser = true;
 		};
 		nginx.virtualHosts."nixcache.thehellings.lan" = {
 			serverName = "nixcache.thehellings.lan";
