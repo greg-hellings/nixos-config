@@ -13,6 +13,19 @@ in {
 		gitlab-jws = cfg "jws";
 		gitlab-key = cfg "key";
 		gitlab-cert = cfg "cert";
+
+		minio_access_key_id = {
+			file = ../../secrets/minio_access_key_id.age;
+			owner = "gitlab";
+			group = "gitlab";
+			mode = "0444";
+		};
+		minio_secret_access_key = {
+			file = ../../secrets/minio_secret_access_key.age;
+			owner = "gitlab";
+			group = "gitlab";
+			mode = "0444";
+		};
 	};
 
 	networking.firewall.allowedTCPPorts = [ 80 registryPort ];
@@ -86,6 +99,34 @@ in {
 				dbFile     = config.age.secrets.gitlab-db.path;
 				jwsFile    = config.age.secrets.gitlab-jws.path;
 			};
+
+			extraConfig = {
+				object_store = {
+					enabled = true;
+					proxy_download = false;  # Tell them to reach out to object storage themselves!
+					connection = {
+						provider = "AWS";
+						endpoint = "http://s3.thehellings.lan:9000";
+						region = "us-east-1";
+						aws_access_key_id = { _secret = config.age.secrets.minio_access_key_id.path; };
+						aws_secret_access_key = { _secret = config.age.secrets.minio_secret_access_key.path; };
+						path_style = true;  # True for MinIO
+						aws_signature_version = 2;
+					};
+					#storage_options = ...;
+					objects = builtins.listToAttrs ( builtins.map (x: lib.attrsets.nameValuePair x { bucket = "gitlab-${builtins.replaceStrings [ "_" ] [ "-" ] x}"; }) [
+						"artifacts"
+						"ci_secure_files"
+						"dependency_proxy"
+						"external_diffs"
+						"lfs"
+						"packages"
+						"pages"
+						"terraform_state"
+						"uploads"
+					]);
+				};
+			};
 		};
 
 		nginx.virtualHosts."gitlab.shire-zebra.ts.net" = {
@@ -147,6 +188,9 @@ in {
 			"network.target"
 			"network-online.target"
 		];
+		preStart = ''
+			sleep 5  # tailscaled is up before it's ACTUALLY up... try waiting?
+		'';
 	};
 	system.stateVersion = lib.mkForce "24.05";
 }
