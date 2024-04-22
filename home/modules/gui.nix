@@ -14,7 +14,7 @@ let
 
 	vars = {
 		MOZ_ENABLE_WAYLAND = "1";
-		XDG_CURRENT_DESKTOP = "sway";
+		XDG_CURRENT_DESKTOP = "GNOME";
 	};
 in {
 	options.greg.gui = lib.mkEnableOption "Enable GUI programs";
