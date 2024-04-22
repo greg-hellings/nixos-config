@@ -87,14 +87,11 @@ in rec {
 	};
 	pipenv-ivr = prev.callPackage ./pipenv.nix { };
 
-	xonsh = prev.xonsh.overridePythonAttrs (old: rec{
-		python3 = final.gregpy;
-		propagatedBuildInputs = with final.gregpy.pkgs; old.propagatedBuildInputs ++ [
-			responses
-			ruamel-yaml
+	xonsh = (prev.xonsh.override {
+		extraPackages = (ps: with ps; [
 			xonsh-apipenv
 			xonsh-direnv
 			xontrib-vox
-		];
+		]);
 	});
 }

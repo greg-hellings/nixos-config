@@ -13,16 +13,10 @@ in with lib; {
 		services = {
 			xserver = {
 				enable = true;
-				displayManager = {
-					defaultSession = "plasma";
-					sddm.enable = true;
-				};
 				xkb.layout = "us";
 				# Trackpad support
 				libinput.enable = true;
-			} // (optionalAttrs (builtins.hasAttr "plasma6" options.services.xserver.desktopManager) {
-				desktopManager.plasma6.enable = true;
-			});
+			};
 
 			pipewire = {
 				enable = true;
@@ -30,7 +24,13 @@ in with lib; {
 				alsa.support32Bit = true;
 				pulse.enable = true;
 			};
-		};
+		} // (optionalAttrs (builtins.hasAttr "plasma6" options.services.xserver.desktopManager) {
+			desktopManager.plasma6.enable = true;
+			displayManager = {
+				defaultSession = "plasma";
+				sddm.enable = true;
+			};
+		});
 
 		programs.dconf.enable = true;
 		programs.sway.enable = true;  # Gives us Wayland
