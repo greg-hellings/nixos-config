@@ -68,6 +68,7 @@
 			oathToolkit
 			synology-drive-client
 			terraform
+			usbutils
 			vagrant
 			ventoy
 		]
