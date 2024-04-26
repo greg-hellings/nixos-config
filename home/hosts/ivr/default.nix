@@ -20,6 +20,7 @@ in {
 	home = {
 		packages = with pkgs; [
 			aacs
+			ansible
 			bitwarden-cli
 			bruno
 			direnv
