@@ -70,8 +70,8 @@ in
 		};
 		mappings = {
 			normalVisualOp = {
-				"<F2>" = ''"<Esc>:BufExplorer<CR>"'';
-				"<F4>" = ''"<Esc>:NERDTreeToggle<CR>"'';
+				"<C-e>" = ''"<Esc>:BufExplorer<CR>"'';
+				"<C-t>" = ''"<Esc>:NERDTreeToggle<CR>"'';
 				"<F6>" = ''"<Esc>:Files<CR>"'';
 				"<C-j>" = ''"<C-w>j<C-w><CR>"'';
 				"<C-k>" = ''"<C-w>k<C-w><CR>"'';
