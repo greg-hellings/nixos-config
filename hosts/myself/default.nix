@@ -35,6 +35,12 @@
 				prefixLength = 16;
 			} ];
 		};
+		interfaces.enp39s0 = {
+			ipv4.addresses = [ {
+				address = "10.201.1.1";
+				prefixLength = 24;
+			} ];
+		};
 		nameservers = [
 			"10.42.1.5"
 		];
