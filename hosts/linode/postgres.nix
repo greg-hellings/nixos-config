@@ -1,8 +1,13 @@
 { config, pkgs, lib, ... }:
 
 {
+	environment.systemPackages = [
+		pkgs.upgrade-pg-cluster
+	];
+
 	services.postgresql = {
 		enable = true;
+		package = pkgs.postgresql_15;
 		checkConfig = true;
 		ensureDatabases = [
 			"nextcloud"
