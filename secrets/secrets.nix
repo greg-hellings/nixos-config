@@ -60,6 +60,7 @@ in
 	"gitlab/myself-vbox-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-podman-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-shell-runner-reg.age".publicKeys = everyone;
+	"gitlab/linode-deployer-runner-reg.age".publicKeys = everyone;
 	"gitlab/docker-auth.age".publicKeys = everyone;
 
 	"acme_password.age".publicKeys = everyone;
