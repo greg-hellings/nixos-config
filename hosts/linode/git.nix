@@ -2,6 +2,7 @@
 
 let
 	srcDomain = "src.thehellings.com";
+	sshPort = 2222;
 in {
 	greg.proxies."${srcDomain}" = {
 		target = "http://git.thehellings.lan";
@@ -19,6 +20,8 @@ in {
 		extraConfig = "client_max_body_size 250m;";
 	};
 
+	networking.firewall.allowedTCPPorts = [ sshPort ];
+
 	services.haproxy = {
 		enable = true;
 		config = builtins.concatStringsSep "\n" [
@@ -31,14 +34,11 @@ in {
 			"	timeout client 500s"
 			"	timeout server 1h"
 
-			"frontend gitsshd"
-			"	bind *:2222"
-			"	default_backend gitssh"
+			"listen gitsshd"
+			"	bind *:${toString sshPort}"
 			"	timeout client 1h"
-
-			"backend gitssh"
 			"	mode tcp"
-			"	server git-thehellings-lan git.thehellings.lan:2222"
+			"	server git-thehellings-lan git.thehellings.lan:22"
 		];
 	};
 }
