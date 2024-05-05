@@ -39,6 +39,7 @@ let
 	};
 in {
 	genesis = machine { name = "genesis"; };
+	exodus = unstable { name = "exodus"; };
 	jude = unstable { name = "jude"; };
 	icdm-root = unstable { name = "icdm-root"; };
 	linode = machine { name = "linode"; };
