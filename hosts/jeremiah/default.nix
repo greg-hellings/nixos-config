@@ -14,7 +14,34 @@
 	boot.loader.systemd-boot.enable = true;
 	boot.loader.efi.canTouchEfiVariables = true;
 
-	networking.hostName = "jeremiah"; # Define your hostname.
+	networking = {
+		hostName = "jeremiah"; # Define your hostname.
+		useDHCP = false;
+		defaultGateway = {
+			address = " 10.42.1.1";
+			interface = "enp68s0";
+		};
+		interfaces = {
+			enp68s0 = {
+				ipv4.addresses = [ {
+					address = "10.42.1.8";
+					prefixLength = 16;
+				} {
+					address = "10.42.100.1";
+					prefixLength = 16;
+				} ];
+			};
+			enp67s0 = {
+				ipv4.addresses = [ {
+					address = "10.201.1.2";
+					prefixLength = 16;
+				} ];
+			};
+		};
+		nameservers = [
+			"10.42.1.5"
+		];
+	};
 	greg = {
 	home = true;
 		tailscale.enable = true;
