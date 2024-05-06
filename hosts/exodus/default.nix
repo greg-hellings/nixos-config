@@ -1,7 +1,10 @@
 { pkgs, config, ... }:
 
 {
-	imports = [ ./hardware-configuration.nix ];
+	imports = [
+		./hardware-configuration.nix
+		../jude/printing.nix
+	];
 
 	boot.loader = {
 		systemd-boot.enable = true;
