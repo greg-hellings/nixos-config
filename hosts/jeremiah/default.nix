@@ -7,6 +7,7 @@
 {
 	imports =
 		[ # Include the results of the hardware scan.
+			./ceph.nix
 			./hardware-configuration.nix
 		];
 

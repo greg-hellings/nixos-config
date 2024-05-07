@@ -4,6 +4,7 @@
 	imports = [
 		../baseline.nix
 		./backup.nix
+		./ceph.nix
 		./container.nix
 		./db.nix
 		./gnome.nix
