@@ -24,9 +24,12 @@ in {
 			bitwarden-cli
 			bruno
 			direnv
+			gcc
 			home-manager
 			insomnia
+			libmysqlclient
 			pipenv-ivr
+			pkg-config
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 			"[global]"
