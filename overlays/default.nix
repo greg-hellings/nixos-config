@@ -40,10 +40,6 @@ in rec {
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
 			xonsh-direnv = cp ./xonsh-direnv.nix {};
 			xontrib-vox = cp ./xonsh-vox.nix {};
-
-			home-assistant-chip-core = python-prev.home-assistant-chip-core.override {
-				openssl_1_1 = final.openssl;
-			};
 		})
 	];
 
