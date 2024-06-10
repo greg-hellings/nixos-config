@@ -22,7 +22,7 @@
 			url = "github:nix-community/home-manager/master";
 			inputs.nixpkgs.follows = "nixstable";
 		};
-		nixneovim.url = "github:NixNeovim/NixNeovim";
+		nixvim.url = "github:nix-community/nixvim";
 		nix23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
 		nixstable.url = "github:nixos/nixpkgs/nixos-23.11";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -39,10 +39,10 @@
 		flake-utils,
 		hm,
 		hmunstable,
-		nixneovim,
 		nix23_05,
 		nixstable,
 		nixunstable,
+		nixvim,
 		nurpkgs,
 		wsl,
 
@@ -58,7 +58,6 @@
 			agenix.overlays.default
 			pkg-sets
 			local_overlay
-			nixneovim.overlays.default
 			nurpkgs.overlay
 		];
 

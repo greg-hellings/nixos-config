@@ -6,7 +6,6 @@
 		guestfs-tools
 		libguestfs
 		OVMFFull
-		ovftool
 		packer
 		virt-manager
 		vmware-workstation
