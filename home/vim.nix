@@ -33,12 +33,10 @@ in
 		globals = {
 			indent_guides_enable_on_vim_startup = 1;
 			nix_recommended_style = 0;
-			NERDTreeIgnore = [
-				"\\.pyc$"
-				"\\.pyo$"
-				"\\.o$"
-				"\\.class$"
-			];
+			netrw_liststyle = 3;
+			netrw_browse_split = 4;
+			netrw_altv = 1;
+			netrw_winsize = 25;
 		};
 		opts = {
 			background = "dark";
@@ -73,15 +71,15 @@ in
 		in [ {
 			mode = "n";
 			key = "<C-e>";
-			action = "<Esc><leader>BufExplorer<CR>";
+			action = "<Esc>:BufExplorer<CR>";
 		} {
 			mode = "n";
 			key = "<C-t>";
-			action = "<Esc><leader>NERDTreeToggle<CR>";
+			action = "<Esc>:Lex<CR>";
 		} {
 			mode = "n";
 			key = "<C-o>";
-			action = "<leader>GFiles?<CR>";
+			action = "<Esc>:GFiles?<CR>";
 		}
 			(winMove "h")
 			(winMove "j")
@@ -102,7 +100,6 @@ in
 		extraPlugins = with pkgs.vimPlugins; [
 			bufexplorer
 			gruvbox
-			nerdtree
 			nvim-cmp
 			packer-nvim
 
