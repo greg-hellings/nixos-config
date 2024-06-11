@@ -1,8 +1,8 @@
 { postgresql_15, postgresql_14, writeScriptBin, ... }:
 
 let
-	newPostgres = postgresql_15;
-	oldPostgres = postgresql_14;
+	newPostgres = postgresql_16;
+	oldPostgres = postgresql_15;
 in writeScriptBin "upgrade-pg-cluster" ''
 	set -eux
 	systemctl stop postgresql
