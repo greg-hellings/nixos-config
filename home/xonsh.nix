@@ -42,7 +42,6 @@
 			cci = "compass workspace run src/python3/uc/tools:circleci-checks";
 			ccover = "compass workspace cover --extra-cmd-args=\"--test_output=errors\"";
 			cexec = "compass workspace exec";
-			cfetch = "compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache/fetch/cmd/fetch:fetch";
 			cgh = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/compass\" gh";
 			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
 			crun = "compass workspace run";

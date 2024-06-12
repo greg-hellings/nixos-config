@@ -1,5 +1,22 @@
 # vim: set ft=python :
 
+def bw_unlock():
+    if "BW_SESSION" in ${...}:
+        return $BW_SESSION
+    result = !(bw unlock)
+    while not result:
+        result = !(bw unlock)
+    l = [k for k in result.lines if 'BW_SESSION="' in k][0]
+    left, right = l.split("=")
+    token = right[1:-1]
+    $BW_SESSION = token
+    return token
+
+def _cfetch(args):
+    bw_unlock()
+    $CIRCLECI_CLI_TOKEN=$(bw get password CircleCI) 
+    compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache/fetch/cmd/fetch:fetch
+
 def _rebuild(args):
     system = uname()
     if system.sysname == 'Darwin':
@@ -48,6 +65,7 @@ def _bake(args):
         git clone src:greg/copier-templates.git ~/.copier-templates
     copier copy @(str(templates / args[0])) .
 
+aliases['cfetch'] = _cfetch
 aliases['bake'] = _bake
 aliases['rebuild'] = _rebuild
 aliases['yaml2json'] = _yaml2json
