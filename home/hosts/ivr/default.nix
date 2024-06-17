@@ -5,7 +5,6 @@ let
 		djangorestframework
 		django-rapyd-modernauth
 		environs
-		#itg-django-utils
 		mysqlclient
 		pyyaml
 		ruamel-yaml
@@ -22,14 +21,10 @@ in {
 			aacs
 			ansible
 			bitwarden-cli
-			bruno
 			direnv
-			gcc
 			home-manager
 			insomnia
-			libmysqlclient
 			pipenv-ivr
-			pkg-config
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 			"[global]"
