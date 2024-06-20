@@ -13,6 +13,7 @@ in
 	imports =
 		[ # Include the results of the hardware scan.
 			./hardware-configuration.nix
+			./minio.nix
 		];
 
 
@@ -66,8 +67,6 @@ in
 					registrationConfigFile = config.age.secrets.runner-reg.path;
 					environmentVariables = {
 						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-						#HTTP_PROXY = "http://10.42.1.4:3128/";
-						#HTTPS_PROXY = "http://10.42.1.4:3128/";
 					};
 				};
 			};

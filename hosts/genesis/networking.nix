@@ -9,8 +9,6 @@ let
 
 	adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
 	proxyPort = 3128;
-	minioPort = 9000;
-	minioConsolePort = 9001;
 	dnsPort = 53;
 	dhcpPort = 67;
 	dnsServers = [
@@ -62,8 +60,6 @@ in {
 			];
 			allowedTCPPorts = [
 				dnsPort
-				minioPort
-				minioConsolePort
 				proxyPort
 				80
 			];
@@ -191,15 +187,7 @@ in {
 		"jellyfin.home".target = "http://localhost:8096/";
 	};
 
-	age.secrets.minio.file = ../../secrets/minio.age;
-
 	services = {
-		minio = {
-			enable = true;
-			dataDir = [ "/proxy/minio" ];
-			rootCredentialsFile = config.age.secrets.minio.path;
-			browser = true;
-		};
 		nginx.virtualHosts."nixcache.thehellings.lan" = {
 			serverName = "nixcache.thehellings.lan";
 			serverAliases = [ "nixcache" "nixcache.home" ];
@@ -238,7 +226,6 @@ in {
 	environment.systemPackages = with pkgs; [
 		bind
 		curl  # Used by dnsmasq fetching
-		minio-client
 		sqlite
 	];
 }
