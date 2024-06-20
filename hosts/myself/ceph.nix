@@ -8,9 +8,9 @@ let
 	baseConfig = import ../../ceph/home.nix;
 in {
 	services.ceph-benaco = baseConfig // {
-		enable = true;
+		enable = false;
 		monitor = {
-			enable = true;
+			enable = false;
 			initialKeyring = ../../secrets/home.mon.keyring;
 			nodeName = hostname;
 			bindAddr = publicIp;
@@ -20,7 +20,7 @@ in {
 		osdAdvertisedPublicAddr = publicIp;
 		osds = {
 			osd1 = {
-				enable = true;
+				enable = false;
 				bootstrapKeyring = ../../secrets/home.osd-bootstrap.keyring;
 				id = 2;
 				uuid = "73424b68-210b-415f-800f-8767babea625";
