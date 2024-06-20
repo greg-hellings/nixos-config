@@ -1,4 +1,4 @@
-{ postgresql_15, postgresql_14, writeScriptBin, ... }:
+{ postgresql_15, postgresql_16, writeScriptBin, ... }:
 
 let
 	newPostgres = postgresql_16;
