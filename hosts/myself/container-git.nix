@@ -188,6 +188,9 @@ in {
 			"network.target"
 			"network-online.target"
 		];
+		requires = [
+			"tailscaled.service"
+		];
 		preStart = ''
 			sleep 5  # tailscaled is up before it's ACTUALLY up... try waiting?
 		'';

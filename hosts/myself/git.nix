@@ -40,17 +40,18 @@ in  {
 
 	systemd.services = {
 		"gitlab-runner" = {
+			preStart = builtins.concatStringsSep "\n" [
+				"${pkgs.kmod}/bin/modprobe kvm"
+				"${pkgs.kmod}/bin/modprobe kvm_amd"
+			];
+			postStop = builtins.concatStringsSep "\n" [
+				"${pkgs.kmod}/bin/rmmod -f kvm_amd kvm"
+			];
 			serviceConfig = {
 				DevicePolicy = lib.mkForce "auto";
 				DevicesAllow = [ "/dev/kvm" "/dev/mem" ];
 				EnvironmentFile = config.age.secrets.docker-auth.path;
-				ExecStopPost = [
-					"${pkgs.kmod}/bin/rmmod kvm_amd kvm || true"
-				];
-				ExecStartPre = [
-					"+${pkgs.kmod}/bin/modprobe kvm"
-					"+${pkgs.kmod}/bin/modprobe kvm_amd"
-				];
+				PermissionsStartOnly = "true";
 				PrivateDevices = false;
 				ProtectKernelModules = false;
 			};
