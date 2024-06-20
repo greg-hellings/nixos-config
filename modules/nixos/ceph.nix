@@ -445,7 +445,7 @@ in
 
         OSD_SECRET=$(${cfg.package}/bin/ceph-authtool --gen-print-key)
         echo "{\"cephx_secret\": \"$OSD_SECRET\"}" | \
-          ${cfg.package}/bin/ceph osd new ${osdConfig.uuid} ${toString osdConfig.id} -i - \
+          ${cfg.package}/bin/ceph --cluster ${cfg.clusterName} osd new ${osdConfig.uuid} ${toString osdConfig.id} -i - \
           -n client.bootstrap-osd -k ${osdConfig.bootstrapKeyring}
         mkdir -p /var/lib/ceph/osd/${cfg.clusterName}-${toString osdConfig.id}
 
