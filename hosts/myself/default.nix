@@ -5,6 +5,7 @@
 		./hardware-configuration.nix
 		./git.nix
 		./matrix.nix
+		./minio.nix
 	];
 
 	environment.systemPackages = with pkgs; [
