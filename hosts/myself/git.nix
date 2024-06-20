@@ -44,7 +44,9 @@ in  {
 				DevicePolicy = lib.mkForce "auto";
 				DevicesAllow = [ "/dev/kvm" "/dev/mem" ];
 				EnvironmentFile = config.age.secrets.docker-auth.path;
-				ExecStopPost = [ "${pkgs.kmod}/bin/rmmod kvm_amd kvm" ];
+				ExecStopPost = [
+					"${pkgs.kmod}/bin/rmmod kvm_amd kvm || true"
+				];
 				ExecStartPre = [
 					"+${pkgs.kmod}/bin/modprobe kvm"
 					"+${pkgs.kmod}/bin/modprobe kvm_amd"
