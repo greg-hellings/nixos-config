@@ -65,6 +65,7 @@ in  {
 		config = ((import ./container-runner.nix) {
 			inherit inputs overlays;
 			name = "shell";
+			extra.virtualisation.podman.enable = true;
 		});
 	};
 
@@ -96,13 +97,13 @@ in  {
 					"koalaman/shellcheck:*"
 
 					"registry.gitlab.com/gitlab-org/*"
-					"registry.thehellings.com/*"
-					"gitlab.shire-zebra.ts.net:5000/*:*"
+					"registry.thehellings.com/*/*/*:*"
+					"gitlab.shire-zebra.ts.net:5000/*/*/*:*"
 				];
 				dockerAllowedServices = [
 					"docker:*"
-					"registry.thehellings.com/*"
-					"gitlab.shire-zebra.ts.net:5000/*:*"
+					"registry.thehellings.com/*/*/*:*"
+					"gitlab.shire-zebra.ts.net:5000/*/*/*:*"
 				];
 				dockerPrivileged = true;
 				dockerVolumes = [

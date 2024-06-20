@@ -3,9 +3,12 @@
   host ? "most",
   ...}:
 
+let
+	system = pkgs.system;
+in
 {
 	imports = [
-		inputs.nixneovim.nixosModules.default
+		inputs.nixvim.homeManagerModules.default
 		./modules
 		./ansible.nix
 		./bash.nix

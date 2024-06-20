@@ -27,20 +27,18 @@ in
 		pyright
 	];
 
-	programs.nixneovim = {
+	programs.nixvim = {
 		enable = true;
-		colorscheme = "gruvbox";
+		colorschemes.gruvbox.enable = true;
 		globals = {
 			indent_guides_enable_on_vim_startup = 1;
 			nix_recommended_style = 0;
-			NERDTreeIgnore = [
-				"\\.pyc$"
-				"\\.pyo$"
-				"\\.o$"
-				"\\.class$"
-			];
+			netrw_liststyle = 3;
+			netrw_browse_split = 4;
+			netrw_altv = 1;
+			netrw_winsize = 25;
 		};
-		options = {
+		opts = {
 			background = "dark";
 			backup = false;
 			copyindent = true;
@@ -68,22 +66,30 @@ in
 			wrap = false;
 			writebackup = false;
 		};
-		mappings = {
-			normalVisualOp = {
-				"<F2>" = ''"<Esc>:BufExplorer<CR>"'';
-				"<F4>" = ''"<Esc>:NERDTreeToggle<CR>"'';
-				"<F6>" = ''"<Esc>:Files<CR>"'';
-				"<C-j>" = ''"<C-w>j<C-w><CR>"'';
-				"<C-k>" = ''"<C-w>k<C-w><CR>"'';
-				"<C-h>" = ''"<C-w>h<C-w><CR>"'';
-				"<C-l>" = ''"<C-w>l<C-w><CR>"'';
-				"<C-o>" = ''":GFiles?<CR>"'';
-			};
-		};
+		keymaps = let
+			winMove = key: { mode = "n"; key = "<C-${key}>"; action = "<C-w>${key}<C-w><CR>"; };
+		in [ {
+			mode = "n";
+			key = "<C-e>";
+			action = "<Esc>:BufExplorer<CR>";
+		} {
+			mode = "n";
+			key = "<C-t>";
+			action = "<Esc>:Lex<CR>";
+		} {
+			mode = "n";
+			key = "<C-o>";
+			action = "<Esc>:GFiles?<CR>";
+		}
+			(winMove "h")
+			(winMove "j")
+			(winMove "k")
+			(winMove "l")
+		];
 		plugins = {
 			airline = {
 				enable = true;
-				theme = "gruvbox";
+				settings.theme = "gruvbox";
 			};
 			gitgutter.enable = true;
 			fugitive.enable = true;
@@ -94,7 +100,6 @@ in
 		extraPlugins = with pkgs.vimPlugins; [
 			bufexplorer
 			gruvbox
-			nerdtree
 			nvim-cmp
 			packer-nvim
 

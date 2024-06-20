@@ -5,7 +5,6 @@ let
 		djangorestframework
 		django-rapyd-modernauth
 		environs
-		#itg-django-utils
 		mysqlclient
 		pyyaml
 		ruamel-yaml
@@ -20,8 +19,8 @@ in {
 	home = {
 		packages = with pkgs; [
 			aacs
+			ansible
 			bitwarden-cli
-			bruno
 			direnv
 			home-manager
 			insomnia

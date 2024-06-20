@@ -33,6 +33,15 @@
 			ipv4.addresses = [ {
 				address = "10.42.1.6";
 				prefixLength = 16;
+			} {
+				address = "10.42.100.1";
+				prefixLength = 16;
+			} ];
+		};
+		interfaces.enp39s0 = {
+			ipv4.addresses = [ {
+				address = "10.201.1.1";
+				prefixLength = 24;
 			} ];
 		};
 		nameservers = [

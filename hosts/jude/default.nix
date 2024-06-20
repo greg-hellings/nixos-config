@@ -32,8 +32,8 @@
 	greg = {
 		tailscale.enable = true;
 		sway.enable = false;
-		gnome.enable = false;
-		kde.enable = true;
+		gnome.enable = true;
+		kde.enable = false;
 	};
 
 	boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
@@ -68,6 +68,7 @@
 			oathToolkit
 			synology-drive-client
 			terraform
+			usbutils
 			vagrant
 			ventoy
 		]

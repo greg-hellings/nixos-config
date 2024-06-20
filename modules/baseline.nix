@@ -1,4 +1,7 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
+let
+	notDarwin = (! pkgs.stdenv.isDarwin);
+in
 {
     # Enable flakes
     nix = {
@@ -15,8 +18,7 @@
             keep-derivations = true;
             min-free = (toString (1024 * 1024 * 1024) );
             max-free = (toString (5 * 1024 * 1024 * 1024) );
-            substituters = [
-                "http://nixcache.home"
+            substituters = (if notDarwin then [ "http://nixcache.home" ] else []) ++ [
                 "https://cache.garnix.io"
                 "https://ai.cachix.org"
             ];
@@ -32,8 +34,7 @@
     };
 
     # Base packages that need to be in all my hosts
-    environment.systemPackages = with pkgs; (
-	[
+    environment.systemPackages = with pkgs; [
 		agenix
 		android-file-transfer
 		bitwarden-cli
@@ -56,6 +57,5 @@
 		transcrypt
 		unzip
 		wget
-	]
-    );
+	];
 }

@@ -60,9 +60,13 @@ in
 	"gitlab/myself-vbox-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-podman-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-shell-runner-reg.age".publicKeys = everyone;
+	"gitlab/linode-deployer-runner-reg.age".publicKeys = everyone;
 	"gitlab/docker-auth.age".publicKeys = everyone;
 
 	"acme_password.age".publicKeys = everyone;
 	"ca/intermediate_key.age".publicKeys = everyone;
 	"ca/root_key.age".publicKeys = everyone;
+
+	"minio_secret_access_key.age".publicKeys = everyone;
+	"minio_access_key_id.age".publicKeys = everyone;
 }

@@ -1,5 +1,25 @@
 # vim: set ft=python :
 
+def bw_unlock():
+    """Unlocks the BitWarden CLI and adds the resulting session code to the
+    current environment variables. Also returns the code for them."""
+    if "BW_SESSION" in ${...}:
+        return $BW_SESSION
+    result = $(bw unlock)
+    while "BW_SESSION" not in result:
+        result = $(bw unlock)
+    lines = result.split("\n")
+    l = [k for k in lines if 'BW_SESSION="' in k][0]
+    left, right = l.split("=", 1)
+    token = right[1:-1]
+    $BW_SESSION = token
+    return token
+
+def _cfetch(args):
+    bw_unlock()
+    $CIRCLECI_CLI_TOKEN=$(bw get password CircleCI) 
+    compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache/fetch/cmd/fetch:fetch
+
 def _rebuild(args):
     system = uname()
     if system.sysname == 'Darwin':
@@ -48,6 +68,7 @@ def _bake(args):
         git clone src:greg/copier-templates.git ~/.copier-templates
     copier copy @(str(templates / args[0])) .
 
+aliases['cfetch'] = _cfetch
 aliases['bake'] = _bake
 aliases['rebuild'] = _rebuild
 aliases['yaml2json'] = _yaml2json

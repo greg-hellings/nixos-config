@@ -23,7 +23,8 @@ in
 	virtualisation.oci-containers = {
 		backend = "podman";
 		containers."homepage" = {
-			image = "ghcr.io/greg-hellings/homepage:latest";
+			# needs explicit port to match what gitlab-runner sees when pulling
+			image = "registry.thehellings.com:443/greg/homepage/gregs-homepage:latest";
 			ports = [ "${homepage}:80" ];
 		};
 	};

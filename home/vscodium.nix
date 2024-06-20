@@ -11,15 +11,16 @@
 		enable = true;
 		package = pkgs.vscodium;
 		extensions = with pkgs.vscode-extensions; [
+			arrterian.nix-env-selector
 			asvetliakov.vscode-neovim
 			bungcip.better-toml
 			golang.go
+			jnoortheen.nix-ide
 			mkhl.direnv
 			ms-python.python
 			vscjava.vscode-java-test
 			vscjava.vscode-java-dependency
 			vscjava.vscode-java-debug
-			vscodevim.vim
 		];
 	};
 }
