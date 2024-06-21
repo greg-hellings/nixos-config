@@ -31,20 +31,28 @@
 			address = " 10.42.1.1";
 			interface = "enp38s0";
 		};
-		interfaces.enp38s0 = {
-			ipv4.addresses = [ {
-				address = "10.42.1.6";
-				prefixLength = 16;
-			} {
-				address = "10.42.100.1";
-				prefixLength = 16;
-			} ];
+		vlans = {
+			san = {
+				id = 616;
+				interface = "enp39s0";
+			};
 		};
-		interfaces.enp39s0 = {
-			ipv4.addresses = [ {
-				address = "10.201.1.1";
-				prefixLength = 24;
-			} ];
+		interfaces = {
+			enp38s0 = {
+				ipv4.addresses = [ {
+					address = "10.42.1.6";
+					prefixLength = 16;
+				} {
+					address = "10.42.100.1";
+					prefixLength = 16;
+				} ];
+			};
+			san = {
+				ipv4.addresses = [ {
+					address = "10.201.1.1";
+					prefixLength = 24;
+				} ];
+			};
 		};
 		nameservers = [
 			"10.42.1.5"
