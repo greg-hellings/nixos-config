@@ -57,6 +57,7 @@ in
 	# Then pipe the resulting files to agenix -e <foo>
 	"gitlab/key.age".publicKeys = everyone;
 	"gitlab/cert.age".publicKeys = everyone;
+	"gitlab/jeremiah-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-qemu-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-vbox-runner-reg.age".publicKeys = everyone;
 	"gitlab/myself-podman-runner-reg.age".publicKeys = everyone;

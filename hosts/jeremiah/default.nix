@@ -2,7 +2,7 @@
 # your system.	Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
 	imports =
@@ -56,6 +56,19 @@
 	};
 	environment.systemPackages = with pkgs; [
 		btrfs-progs
+		curl
+		gawk
+		git
+		p7zip
+		packer
+		pup
+		gregpy
+		shellcheck
+		unzip
+		xonsh
+		xorriso
+		vagrant
+		wget
 	];
 	
 	fileSystems = {
@@ -68,6 +81,56 @@
 			fsType = "btrfs";
 			options = [ "subvol=var" ];
 			device = "/dev/nvme0n1p1";
+		};
+	};
+
+	#####################################################################################
+	#################### Virtualbox Runner ##############################################
+	#####################################################################################
+	services = {
+		gitlab-runner = {
+			enable = true;
+			settings.concurrent = 1;
+			services = {
+				shell = {
+					executor = "shell";
+					limit = 5;
+					registrationConfigFile = config.age.secrets.runner-reg.path;
+					environmentVariables = {
+						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+					};
+				};
+			};
+		};
+	};
+	age.secrets.runner-reg.file = ../../secrets/gitlab/jeremiah-runner-reg.age;
+	virtualisation.virtualbox.host = {
+		enable = true;
+		enableExtensionPack = true;
+		enableHardening = false;
+		headless = true;
+	};
+
+	systemd.services."gitlab-runner" = {
+		after = [
+			"network.target"
+			"network-online.target"
+			"systemd-resolved.service"
+		];
+		wants = [
+			"network-online.target"
+			"systemd-resolved.service"
+		];
+		preStart = builtins.concatStringsSep "\n" [
+			"${pkgs.kmod}/bin/modprobe vboxdrv"
+			"${pkgs.kmod}/bin/modprobe vboxnetadp"
+			"${pkgs.kmod}/bin/modprobe vboxnetflt"
+		];
+		postStop = "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv";
+		serviceConfig = {
+			DevicePolicy = lib.mkForce "auto";
+			User = "root";
+			DynamicUser = lib.mkForce false;
 		};
 	};
 }
