@@ -15,6 +15,10 @@ def bw_unlock():
     $BW_SESSION = token
     return token
 
+def _glrestart(args):
+    sudo nixos-container run gitlab -- systemctl restart gitlab
+    sudo nixos-container run gitlab -- systemctl restart nginx
+
 def _cfetch(args):
     bw_unlock()
     $CIRCLECI_CLI_TOKEN=$(bw get password CircleCI) 
@@ -68,6 +72,7 @@ def _bake(args):
         git clone src:greg/copier-templates.git ~/.copier-templates
     copier copy @(str(templates / args[0])) .
 
+aliases['glrestart'] = _glrestart
 aliases['cfetch'] = _cfetch
 aliases['bake'] = _bake
 aliases['rebuild'] = _rebuild
