@@ -120,6 +120,7 @@ in  {
 				registrationConfigFile = config.age.secrets.runner-qemu.path;
 				environmentVariables = {
 					EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+					STORAGE_URL = "http://localhost:9000";
 				};
 			};
 		};
@@ -132,6 +133,7 @@ in  {
 		curl
 		gawk
 		git
+		minio-client
 		p7zip
 		packer
 		pup
