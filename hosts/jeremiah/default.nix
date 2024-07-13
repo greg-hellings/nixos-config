@@ -90,7 +90,7 @@
 	services = {
 		gitlab-runner = {
 			enable = true;
-			settings.concurrent = 1;
+			settings.concurrent = 7;
 			services = {
 				shell = {
 					executor = "shell";
