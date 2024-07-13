@@ -17,6 +17,7 @@
 		./rpi4.nix
 		./sway.nix
 		./tailscale.nix
+		./vmdev.nix
 	];
 
 	environment.systemPackages = with pkgs; [
