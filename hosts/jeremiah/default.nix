@@ -23,6 +23,12 @@
 			address = " 10.42.1.1";
 			interface = "enp68s0";
 		};
+		vlans = {
+			san = {
+				id = 616;
+				interface = "enp67s0";
+			};
+		};
 		interfaces = {
 			enp68s0 = {
 				ipv4.addresses = [ {
@@ -33,7 +39,7 @@
 					prefixLength = 16;
 				} ];
 			};
-			enp67s0 = {
+			san = {
 				ipv4.addresses = [ {
 					address = "10.201.1.2";
 					prefixLength = 24;
