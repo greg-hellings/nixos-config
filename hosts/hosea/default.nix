@@ -121,7 +121,6 @@ in
 		gregpy
 		shellcheck
 		unzip
-		xonsh
 		xorriso
 		vagrant
 		wget

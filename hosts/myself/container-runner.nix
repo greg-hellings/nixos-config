@@ -38,7 +38,6 @@ lib.attrsets.recursiveUpdate {
 		py
 		shellcheck
 		unzip
-		xonsh
 		xorriso
 		vagrant
 		wget

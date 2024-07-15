@@ -44,7 +44,10 @@
 	};
 
 	programs = {
-		xonsh.enable = true;
+		xonsh = {
+			enable = true;
+			package = pkgs.myxonsh;
+		};
 	};
 
 	# Enable the OpenSSH daemon for remote control

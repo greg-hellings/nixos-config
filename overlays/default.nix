@@ -83,7 +83,7 @@ in rec {
 	};
 	pipenv-ivr = prev.callPackage ./pipenv.nix { };
 
-	xonsh = (prev.xonsh.override {
+	myxonsh = (prev.xonsh-unwrapped.passthru.wrapper.override {
 		extraPackages = (ps: with ps; [
 			xonsh-apipenv
 			xonsh-direnv

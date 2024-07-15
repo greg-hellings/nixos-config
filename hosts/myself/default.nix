@@ -15,7 +15,6 @@
 		tmux
 		tree
 		vim
-		xonsh
 		xorriso
 	];
 

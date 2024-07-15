@@ -142,7 +142,6 @@ in  {
 		qemu_kvm
 		shellcheck
 		unzip
-		xonsh
 		xorriso
 		vagrant
 		wget
