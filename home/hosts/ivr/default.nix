@@ -25,6 +25,7 @@ in {
 			home-manager
 			insomnia
 			pipenv-ivr
+			poetry
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 			"[global]"
