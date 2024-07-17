@@ -18,7 +18,7 @@ let
 		virtualenv
 	];
 
-	myPython = prev.python3.withPackages myPackages;
+	myPython = prev.python312.withPackages myPackages;
 	macOver = file: og:
 		if prev.stdenv.isDarwin then
 		(prev.callPackage file {}) else
