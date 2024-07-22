@@ -75,10 +75,6 @@ in {
 			fsType = "nfs";
 			options = [ "ro" ];
 		};
-		"/proxy" = {
-			device = "/dev/vdb1";
-			fsType = "btrfs";
-		};
 	};
 
 	services = {
@@ -186,42 +182,6 @@ in {
 	greg.proxies = {
 		"jellyfin.home".target = "http://localhost:8096/";
 	};
-
-	services = {
-		nginx.virtualHosts."nixcache.thehellings.lan" = {
-			serverName = "nixcache.thehellings.lan";
-			serverAliases = [ "nixcache" "nixcache.home" ];
-			root = "/proxy";
-			locations = {
-				"~ ^/nix-cache-info" = {
-					proxyPass = "https://cache.nixos.org";
-					root = "/proxy/nixpkgs/nix-cache-info/store";
-					recommendedProxySettings = false;
-					extraConfig = ''
-						error_log /var/log/nginx/proxy.log debug;
-						proxy_store on;
-						proxy_store_access user:rw group:rw all:r;
-						proxy_temp_path /proxy/nixpkgs/nix-cache-info/temp;
-						proxy_pass_request_headers on;
-						proxy_set_header Host "cache.nixos.org";
-					'';
-				};
-				"~^/nar/.+$" = {
-					proxyPass = "https://cache.nixos.org";
-					root = "/proxy/nixpkgs/nar/store";
-					recommendedProxySettings = false;
-					extraConfig = ''
-						proxy_store on;
-						proxy_store_access user:rw group:rw all:r;
-						proxy_temp_path /proxy/nixpkgs/nar/temp;
-						proxy_pass_request_headers on;
-						proxy_set_header Host "cache.nixos.org";
-					'';
-				};
-			};
-		};
-	};
-	systemd.services.nginx.serviceConfig.ReadWritePaths = [ "/proxy" ];
 
 	environment.systemPackages = with pkgs; [
 		bind
