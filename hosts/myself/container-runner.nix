@@ -31,13 +31,13 @@ lib.attrsets.recursiveUpdate {
 		curl
 		gawk
 		git
+		minio-client
 		p7zip
 		packer
 		pup
 		py
 		shellcheck
 		unzip
-		xonsh
 		xorriso
 		vagrant
 		wget
@@ -67,6 +67,7 @@ lib.attrsets.recursiveUpdate {
 					registrationConfigFile = config.age.secrets.runner-reg.path;
 					environmentVariables = {
 						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+						STORAGE_URL = "http://localhost:9000";
 					};
 				};
 			};

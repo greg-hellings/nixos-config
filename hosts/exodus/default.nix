@@ -16,5 +16,9 @@
 		home = true;
 		gnome.enable = true;
 		tailscale.enable = true;
+		vmdev = {
+			enable = true;
+			system = "intel";
+		};
 	};
 }

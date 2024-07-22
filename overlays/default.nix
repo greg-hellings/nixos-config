@@ -18,7 +18,7 @@ let
 		virtualenv
 	];
 
-	myPython = prev.python3.withPackages myPackages;
+	myPython = prev.python312.withPackages myPackages;
 	macOver = file: og:
 		if prev.stdenv.isDarwin then
 		(prev.callPackage file {}) else
@@ -83,7 +83,7 @@ in rec {
 	};
 	pipenv-ivr = prev.callPackage ./pipenv.nix { };
 
-	xonsh = (prev.xonsh.override {
+	myxonsh = (prev.xonsh-unwrapped.passthru.wrapper.override {
 		extraPackages = (ps: with ps; [
 			xonsh-apipenv
 			xonsh-direnv

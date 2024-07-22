@@ -1,40 +1,12 @@
 { pkgs, config, ... }:
 
 {
-	environment.systemPackages = with pkgs; [
-		dmidecode
-		guestfs-tools
-		libguestfs
-		OVMFFull
-		packer
-		virt-manager
-		vmware-workstation
-		vmfs-tools
-		xorriso
-	];
-
-	# Give my user access to the libvirtd process
-	users.users.greg.extraGroups = [ "libvirtd" ];
+	greg.vmdev.enable = true;
 
 	virtualisation = {
-		libvirtd = {
-			enable = true;
-			onBoot = "ignore";  # Do not auto-restart VMs on boot, unless they are marked autostart
-			qemu.ovmf.enable = true;
-		};
-
-		virtualbox.host = {
-			enable = true;
-			enableExtensionPack = true;
-		};
-
 		waydroid.enable = false;
 		lxd.enable = false;
 	};
-
-	users.extraGroups.vboxusers.members = [ "greg" ];
-
-	boot.extraModprobeConfig = "options kvm_amd nested=1";
 
 	systemd.services = {
 		gitlab-runner = {
@@ -46,10 +18,6 @@
 			postStop = "${pkgs.kmod}/bin/rmmod vboxnetflt vboxnetadp vboxdrv";
 			wantedBy = pkgs.lib.mkForce [];
 			serviceConfig.User = "root";
-		};
-		libvirtd = {
-			preStart = "${pkgs.kmod}/bin/modprobe kvm_amd";
-			postStop = "${pkgs.kmod}/bin/rmmod kvm_amd kvm";
 		};
 	};
 

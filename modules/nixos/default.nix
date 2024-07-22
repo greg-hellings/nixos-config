@@ -17,6 +17,7 @@
 		./rpi4.nix
 		./sway.nix
 		./tailscale.nix
+		./vmdev.nix
 	];
 
 	environment.systemPackages = with pkgs; [
@@ -44,7 +45,10 @@
 	};
 
 	programs = {
-		xonsh.enable = true;
+		xonsh = {
+			enable = true;
+			package = pkgs.myxonsh;
+		};
 	};
 
 	# Enable the OpenSSH daemon for remote control

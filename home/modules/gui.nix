@@ -25,6 +25,7 @@ in {
 		[
 			cdrtools
 			fluffychat
+			freetube
 			cinny-desktop
 			qpwgraph
 			vlc

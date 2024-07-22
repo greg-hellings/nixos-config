@@ -33,10 +33,6 @@ in
 		globals = {
 			indent_guides_enable_on_vim_startup = 1;
 			nix_recommended_style = 0;
-			netrw_liststyle = 3;
-			netrw_browse_split = 4;
-			netrw_altv = 1;
-			netrw_winsize = 25;
 		};
 		opts = {
 			background = "dark";
@@ -75,11 +71,7 @@ in
 		} {
 			mode = "n";
 			key = "<C-t>";
-			action = "<Esc>:Lex<CR>";
-		} {
-			mode = "n";
-			key = "<C-o>";
-			action = "<Esc>:GFiles?<CR>";
+			action = "<Esc>:NERDTreeToggle<CR>";
 		}
 			(winMove "h")
 			(winMove "j")
@@ -87,25 +79,43 @@ in
 			(winMove "l")
 		];
 		plugins = {
-			airline = {
-				enable = true;
-				settings.theme = "gruvbox";
-			};
+			airline.enable = true;
+			cmp.enable = true;
+			direnv.enable = true;
 			gitgutter.enable = true;
 			fugitive.enable = true;
+			fzf-lua = {
+				enable = true;
+				iconsEnabled = true;
+				keymaps = {
+					"<C-o>" = {
+						action = "files";
+						settings = {
+							previewers.cat.cmd = "${pkgs.coreutils}/bin/cat";
+							winopts.height = 0.5;
+						};
+					};
+					"<C-p>" = {
+						action = "git_files";
+						settings = {
+							previewers.cat.cmd = "${pkgs.coreutils}/bin/cat";
+							winopts.height = 0.5;
+						};
+					};
+				};
+				profile = "fzf-vim";
+			};
 			notify.enable = true;
 		};
 		extraConfigLua = builtins.replaceStrings [ "@git@" ] [ "${pkgs.git}/bin/git" ] (builtins.readFile ./vim/extra.lua);
 		extraConfigVim = builtins.readFile ./vim/extra.vimrc;
 		extraPlugins = with pkgs.vimPlugins; [
 			bufexplorer
-			gruvbox
-			nvim-cmp
+			nerdtree
+			nvim-web-devicons  # Be sure to install Hack Nerd Font and set it to your term default: https://gist.github.com/matthewjberger/7dd7e079f282f8138a9dc3b045ebefa0
 			packer-nvim
 
 			context-vim
-			direnv-vim
-			fzf-vim
 			vim-flake8
 			vim-indent-guides
 			vim-xonsh

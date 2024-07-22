@@ -1,5 +1,7 @@
 # vim: set ft=python :
 
+from tempfile import NamedTemporaryFile
+
 def bw_unlock():
     """Unlocks the BitWarden CLI and adds the resulting session code to the
     current environment variables. Also returns the code for them."""
@@ -14,6 +16,28 @@ def bw_unlock():
     token = right[1:-1]
     $BW_SESSION = token
     return token
+
+def vpn(con, bwname):
+    bw_unlock()
+    base=$(bw get password @(bwname))
+    secret=$(bw get totp @(bwname))
+    #echo vpn.secrets.password:${base}$(oathtool -b -d "${digits}" -s "${period}" --totp "${secret}") > "${f}"
+
+    with NamedTemporaryFile(delete_on_close=False) as fp:
+        secret = f"vpn.secrets.password:{base}{secret}"
+        fp.write(secret.encode("utf-8"))
+        fp.close()
+        nmcli c up @(con) passwd-file @(fp.name)
+
+def _unlock(args):
+    bw_unlock()
+
+def _ivr(args):
+    vpn("350Main", "IVR Technology")
+
+def _glrestart(args):
+    sudo nixos-container run gitlab -- systemctl restart gitlab
+    sudo nixos-container run gitlab -- systemctl restart nginx
 
 def _cfetch(args):
     bw_unlock()
@@ -68,16 +92,19 @@ def _bake(args):
         git clone src:greg/copier-templates.git ~/.copier-templates
     copier copy @(str(templates / args[0])) .
 
-aliases['cfetch'] = _cfetch
+aliases['glrestart'] = _glrestart
 aliases['bake'] = _bake
-aliases['rebuild'] = _rebuild
-aliases['yaml2json'] = _yaml2json
+aliases['unlock'] = _unlock
+aliases['cfetch'] = _cfetch
+aliases['ivr'] = _ivr
+aliases['newdock'] = _newdock
+aliases['pip_extras'] = _pip_extras
 aliases['py2env'] = _py2env
 aliases['py3env'] = _py3env
+aliases['rebuild'] = _rebuild
 aliases['rundock'] = _rundock
-aliases['newdock'] = _newdock
 aliases['unknown_host'] = _unknown_host
-aliases['pip_extras'] = _pip_extras
+aliases['yaml2json'] = _yaml2json
 ###
 #
 # Other random nice-to-have things
