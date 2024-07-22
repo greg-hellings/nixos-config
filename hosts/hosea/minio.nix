@@ -10,6 +10,7 @@ in {
 	};
 
 	networking.firewall.allowedTCPPorts = [
+		80
 		minioPort
 		minioConsolePort
 	];
@@ -22,6 +23,8 @@ in {
 		rootCredentialsFile = config.age.secrets.minio.path;
 		browser = true;
 	};
+
+	greg.proxies."s3.thehellings.lan".target = "http://127.0.0.1:${toString minioPort}";
 
 	environment.systemPackages = with pkgs; [
 		minio-client

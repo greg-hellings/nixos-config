@@ -25,6 +25,7 @@
 		efibootmgr
 		psmisc
 		lshw
+		usbutils
 	];
 
 	system.stateVersion = "24.05";
