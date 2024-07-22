@@ -18,7 +18,7 @@ in
             keep-derivations = true;
             min-free = (toString (1024 * 1024 * 1024) );
             max-free = (toString (5 * 1024 * 1024 * 1024) );
-            substituters = (if notDarwin then [ "http://nixcache.home" ] else []) ++ [
+            substituters = [
                 "https://cache.garnix.io"
                 "https://ai.cachix.org"
             ];
