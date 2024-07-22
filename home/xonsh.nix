@@ -53,6 +53,7 @@
 			d = "vox deactivate";
 			dirflake = "nix flake new -t github:nix-community/nix-direnv";
 			gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
+			gl-nging = "sudo nixos-container run gitlab -- systemctl restart nginx";
 			ls = "ls --color";
 			ll = "ls -l --color";
 			molcol = "molecule -c ../../tests/molecule.yml";
