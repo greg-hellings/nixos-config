@@ -177,23 +177,18 @@ in {
 
 	# Do not start nginx until we have tailscaled up and running, so it can bind
 	# to the 100.* addresses
-	systemd.services.nginx = {
-		after = [
-			"tailscaled.service"
-			"network.target"
-			"network-online.target"
-		];
-		wants = [
-			"tailscaled.service"
-			"network.target"
-			"network-online.target"
-		];
-		requires = [
-			"tailscaled.service"
-		];
-		preStart = ''
-			sleep 5  # tailscaled is up before it's ACTUALLY up... try waiting?
-		'';
+	systemd.services = {
+		nginx = rec {
+			after = [
+				"network-online.target"
+			];
+			wants = after;
+			serviceConfig = {
+				RestartMaxDelaySec = "30s";
+				RestartSteps = "5";
+			};
+		};
+		tailscaled.partOf = [ "network-online.target" ];
 	};
 	system.stateVersion = lib.mkForce "24.05";
 }
