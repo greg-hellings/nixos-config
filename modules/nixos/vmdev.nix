@@ -62,6 +62,7 @@ in with lib;
 			vbox = {
 				preStart = "${pkgs.kmod}/bin/modprobe vboxdrv vboxnetadp vboxnetflt";
 				postStop = "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv";
+				script = "echo Started";
 				conflicts = [ "libvirtd.service" ];
 				unitConfig = {
 					Type = "oneshot";
