@@ -109,6 +109,7 @@
 		enableExtensionPack = true;
 		enableHardening = false;
 		headless = true;
+		enableWebService = true;
 	};
 
 	systemd.services."gitlab-runner" = {
