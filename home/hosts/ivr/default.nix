@@ -11,11 +11,10 @@ let
 		tox
 	]);
 in {
-	imports = [
-		../../vscodium.nix
-	];
-
-	greg.pypackage = py;
+	greg = {
+		pypackage = py;
+		vscodium = true;
+	};
 	home = {
 		packages = with pkgs; [
 			aacs
