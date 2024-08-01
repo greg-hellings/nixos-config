@@ -44,6 +44,10 @@ def _cfetch(args):
     $CIRCLECI_CLI_TOKEN=$(bw get password CircleCI) 
     compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache/fetch/cmd/fetch:fetch
 
+def _aws_creds(args):
+    $AWS_ACCESS_KEY_ID=$(bw get username "AWS Access Key")
+    $AWS_SECRET_ACCESS_KEY=$(bw get password "AWS Access Key")
+
 def _rebuild(args):
     system = uname()
     if system.sysname == 'Darwin':
@@ -92,6 +96,7 @@ def _bake(args):
         git clone src:greg/copier-templates.git ~/.copier-templates
     copier copy @(str(templates / args[0])) .
 
+aliases['aws_creds'] = _aws_creds
 aliases['glrestart'] = _glrestart
 aliases['bake'] = _bake
 aliases['unlock'] = _unlock

@@ -49,9 +49,9 @@ in with lib; {
 
 		# Enable some Gnome plugins that I like
 		environment.systemPackages = with pkgs; [
-			gnome3.adwaita-icon-theme
-			gnome3.gnome-tweaks
-			gnome3.dconf-editor
+			adwaita-icon-theme
+			gnome-tweaks
+			dconf-editor
 			gnomeExtensions.appindicator
 			gnomeExtensions.clipboard-indicator
 			gnomeExtensions.dash-to-dock

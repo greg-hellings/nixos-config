@@ -3,7 +3,7 @@
 {
 	home.packages = with pkgs; [
 		(mumble.override { pulseSupport = true; })
-		logseq
+		#logseq
 	];
 	greg = {
 		gui = true;
