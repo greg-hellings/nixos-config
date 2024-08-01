@@ -56,7 +56,7 @@ in {
 
 		programs.firefox = {
 			enable = (! pkgs.stdenv.hostPlatform.isDarwin);
-			package = ffPkgs;
+			#package = ffPkgs;
 			profiles = {
 				default = {
 					settings = {
