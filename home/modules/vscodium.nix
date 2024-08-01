@@ -23,6 +23,7 @@ in {
 				jnoortheen.nix-ide
 				mkhl.direnv
 				ms-python.python
+				rust-lang.rust-analyzer
 				vscjava.vscode-java-test
 				vscjava.vscode-java-dependency
 				vscjava.vscode-java-debug
