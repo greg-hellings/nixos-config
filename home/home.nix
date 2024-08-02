@@ -7,6 +7,7 @@ let
 	system = pkgs.system;
 in
 {
+	nixpkgs.config.allowUnfreePredicate = (_: true);
 	imports = [
 		inputs.nixvim.homeManagerModules.default
 		./modules
