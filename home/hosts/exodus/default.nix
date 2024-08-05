@@ -1,6 +1,12 @@
 { pkgs, config, ... }:
 
 {
-	greg.gnome = true;
-	greg.gui = true;
+	greg = {
+		development = true;
+		gnome = true;
+		gui = true;
+	};
+	home.packages = with pkgs; [
+		cargo
+	];
 }
