@@ -26,28 +26,12 @@
 			# Tells vox where to find virtualenvs
 			VIRTUALENV_HOME = "${config.home.homeDirectory}/venv/";
 
-			COMPASS_SKIP_ORIGIN_CHECK = "True";
-
 			GOPATH = "${config.home.homeDirectory}/src/go";
 			GOBIN  = "${config.home.homeDirectory}/src/bin";
 		};
 
 		aliases = {
 			ac = "vox activate";
-
-			cavg = "compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache/avg_duration/cmd/avg_duration:avg_duration";
-			cbazel = "compass workspace exec bazel";
-			cblack = "compass workspace run src/python3/uc/tools:run_black --";
-			cbuild = "compass workspace build";
-			cci = "compass workspace run src/python3/uc/tools:circleci-checks";
-			ccover = "compass workspace cover --extra-cmd-args=\"--test_output=errors\"";
-			cexec = "compass workspace exec";
-			cgh = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/compass\" gh";
-			cpip = "compass workspace run src/python3/uc/tools:run_pip_compile";
-			crun = "compass workspace run";
-			ctest = "compass workspace test --extra-cmd-args=\"--test_output=errors\"";
-			cylint = "compass workspace run src/python3/uc/tools:run_yaml_lint";
-			gazelle = "compass workspace exec bazel run :gazelle";
 
 			cleanup = "sudo nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";
@@ -58,6 +42,7 @@
 			ll = "ls -l --color";
 			molcol = "molecule -c ../../tests/molecule.yml";
 			nixup = "nix flake lock --update-input";
+			nixtest = "nixpkgs-review rev HEAD";
 			pa = "cd ~/src/packaging";
 			tf = "terraform";
 			tsup = "sudo tailscale up";
