@@ -2,7 +2,7 @@
 let
 	packages = with pkgs; [
 		cargo
-		nixd
+		nixfmt-rfc-style
 		nixpkgs-review
 	];
 in with lib; {
