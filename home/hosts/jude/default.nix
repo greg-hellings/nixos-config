@@ -6,6 +6,7 @@
 		#logseq
 	];
 	greg = {
+		development = true;
 		gui = true;
 		sway = false;
 		gnome = false;
