@@ -1,9 +1,7 @@
 { pkgs, ... }:
 
 {
-	imports = [
-		../../vscodium.nix
-	];
+	greg.vscodium.enable = true;
 
 	home.packages = with pkgs; [
 		brew

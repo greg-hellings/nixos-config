@@ -47,7 +47,6 @@
 		[
 			bind  # For things like nslookup
 			create_ssl
-			darktable
 			distrobox
 			expect
 			gimp
@@ -63,11 +62,8 @@
 			libxml2
 			linode-cli
 			makemkv
-			nix-du
-			nix-tree
 			oathToolkit
 			synology-drive-client
-			terraform
 			usbutils
 			vagrant
 			ventoy

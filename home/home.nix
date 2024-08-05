@@ -7,18 +7,11 @@ let
 	system = pkgs.system;
 in
 {
+	nixpkgs.config.allowUnfreePredicate = (_: true);
 	imports = [
 		inputs.nixvim.homeManagerModules.default
 		./modules
-		./ansible.nix
-		./bash.nix
-		./direnv.nix
-		./git.nix
-		./ssh.nix
-		./vim.nix
-		./xonsh.nix
-		./hosts/${host}
-	];
+	] ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
 
 
 	programs.tmux = {

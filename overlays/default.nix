@@ -45,7 +45,6 @@ in rec {
 
 	# My own packages
 	aacs = prev.callPackage ./aacs.nix {};
-	configure_aws_creds = prev.callPackage ./configure_aws_creds.nix {};
 	create_ssl = prev.callPackage ./create_ssl.nix {};
 	enwiki-dump = prev.callPackage ./enwiki-dump.nix {};
 	hms = prev.callPackage ./hms {

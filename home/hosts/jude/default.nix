@@ -1,16 +1,16 @@
 { pkgs, ... }:
 
 {
-	imports = [
-		../../vscodium.nix
-	];
 	home.packages = with pkgs; [
 		(mumble.override { pulseSupport = true; })
-		logseq
+		#logseq
 	];
-	greg.gui = true;
-	greg.sway = false;
-	greg.gnome = false;
+	greg = {
+		gui = true;
+		sway = false;
+		gnome = false;
+		vscodium = true;
+	};
 
 	programs.xonsh.sessionVariables.EFI_DIR = "${pkgs.OVMF.fd}/FV/";
 }
