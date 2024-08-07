@@ -12,6 +12,7 @@ let
 	]);
 in {
 	greg = {
+		development = true;
 		pypackage = py;
 		vscodium = true;
 	};

@@ -2,6 +2,7 @@
 let
 	packages = with pkgs; [
 		cargo
+		mariadb
 		nixfmt-rfc-style
 		nixpkgs-review
 		process-compose
