@@ -54,7 +54,10 @@
 
 	# Enable the OpenSSH daemon for remote control
 	services = {
-		openssh.enable = true;
+		openssh = {
+			enable = true;
+			settings.X11Forwarding = true;
+		};
 	};
 
 	# Define a user account. Don't forget to set a password with ‘passwd’.
