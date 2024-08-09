@@ -2,8 +2,10 @@
 let
 	packages = with pkgs; [
 		cargo
+		mariadb
 		nixfmt-rfc-style
 		nixpkgs-review
+		process-compose
 	];
 in with lib; {
 	options.greg.development = mkEnableOption "Setup necessary development packages";
