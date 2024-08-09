@@ -8,12 +8,9 @@ let
 	);
 
 	# For now, we ignore this and don't install it
-	ffPkgs = if ( pkgs.stdenv.hostPlatform.isDarwin )
-		then pkgs.firefox-bin
-		else pkgs.firefox-wayland.override { cfg.enableGnomeExtensions = true; };
+	ffPkgs = pkgs.firefox.override { cfg.enableGnomeExtensions = true; };
 
 	vars = {
-		MOZ_ENABLE_WAYLAND = "1";
 		XDG_CURRENT_DESKTOP = "GNOME";
 	};
 in {
@@ -56,9 +53,12 @@ in {
 
 		programs.firefox = {
 			enable = (! pkgs.stdenv.hostPlatform.isDarwin);
-			#package = ffPkgs;
+			package = ffPkgs;
 			profiles = {
 				default = {
+					isDefault = true;
+					id = 0;
+					search.default = "DuckDuckGo";
 					settings = {
 						"app.update.auto" = false;
 						"browser.ctrlTab.sortByRecentlyUsed" = true;
@@ -70,16 +70,13 @@ in {
 					};
 					extensions = with pkgs.nur.repos.rycee.firefox-addons; [
 						bitwarden
-						#bypass-paywalls-clean
 						gsconnect
 						foxyproxy-standard
 						multi-account-containers
-						plasma-integration
 						octotree
 						refined-github
 						tree-style-tab
 						ublock-origin
-						unpaywall
 					];
 				};
 			};

@@ -20,6 +20,7 @@
 		./vmdev.nix
 	];
 
+	environment.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
 	environment.systemPackages = with pkgs; [
 		coreutils-full
 		efibootmgr
