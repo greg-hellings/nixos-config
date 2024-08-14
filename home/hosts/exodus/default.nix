@@ -2,6 +2,7 @@
 
 {
 	greg = {
+		vscodium = true;
 		development = true;
 		gnome = true;
 		gui = true;
