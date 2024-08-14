@@ -6,7 +6,7 @@
 
 		sessionVariables = {
 			CLICOLOR = 1;
-			EDITOR = "${pkgs.vim}/bin/vim";
+			EDITOR = "nvim";
 			# vte_new_tab_cwd causes new Terminal tabs to open in the
 			# same CWD as the current tab
 			LESS_TERMCAP_mb = "\\033[01;31m";     # begin blinking
@@ -25,6 +25,7 @@
 			TIMEFORMAT = "%3Uu %3Ss %3lR %P%%";
 			# Tells vox where to find virtualenvs
 			VIRTUALENV_HOME = "${config.home.homeDirectory}/venv/";
+			XONSH_COLOR_STYLE = "default";
 
 			GOPATH = "${config.home.homeDirectory}/src/go";
 			GOBIN  = "${config.home.homeDirectory}/src/bin";
