@@ -32,6 +32,8 @@ in
     nixpkgs.config = {
         allowUnfree = true;
     };
+    
+    home-manager.backupFileExtension = "bkp";
 
     # Base packages that need to be in all my hosts
     environment.systemPackages = with pkgs; [
