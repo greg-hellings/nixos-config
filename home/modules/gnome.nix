@@ -14,6 +14,10 @@ in {
 			themeVariant = "dark";
 			profile."95f3c68e-82f3-4f44-ac85-6e075fed80b0" = {
 				default = true;
+				customCommand = "${pkgs.myxonsh}/bin/xonsh -st best";
+				loginShell = true;
+				scrollbackLines = 65535;
+				transparencyPercent = 50;
 				visibleName = "greg";
 			};
 		};
