@@ -63,7 +63,6 @@
 			linode-cli
 			makemkv
 			oathToolkit
-			synology-drive-client
 			usbutils
 			vagrant
 			ventoy
