@@ -57,6 +57,7 @@ in {
 	greg.backup.jobs.nas-backup = {
 		src = "/var/gitlab/state/backup/";
 		dest = "gitlab";
+		id = "yha^-s45h";
 	};
 
 	services = {

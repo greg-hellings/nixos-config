@@ -57,7 +57,7 @@ in {
 		greg.backup.jobs.greg-postgresql-backup = {
 			src = config.services.postgresqlBackup.location;
 			dest = "database-${config.networking.hostName}";
-			user = "postgres";
+			id = "${config.networking.hostName}-postgres-backup";
 		};
 	};
 }

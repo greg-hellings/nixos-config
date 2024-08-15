@@ -22,13 +22,16 @@ let
 		modules = [
 			{
 				nixpkgs.overlays = overlays;
-				home-manager.useGlobalPkgs = true;
-				home-manager.useUserPackages = true;
-				home-manager.users.greg = import ../home/home.nix;
-				home-manager.extraSpecialArgs = {
-					inherit inputs overlays;
-					home = "/home/greg";
-					host = name;
+				home-manager = {
+					useGlobalPkgs = true;
+					useUserPackages = true;
+					users.greg = import ../home/home.nix;
+					extraSpecialArgs = {
+						inherit inputs overlays;
+						home = "/home/greg";
+						host = name;
+					};
+					backupFileExtension = "bkp";
 				};
 			}
 			inputs.agenix.nixosModules.default

@@ -40,6 +40,7 @@ in  {
 
 	systemd.services = {
 		"gitlab-runner" = {
+			after = [ "container@github.service" ];
 			preStart = builtins.concatStringsSep "\n" [
 				"${pkgs.kmod}/bin/modprobe kvm"
 				"${pkgs.kmod}/bin/modprobe kvm_amd"
