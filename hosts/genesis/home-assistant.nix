@@ -122,12 +122,12 @@ in
 	greg.backup.jobs.zwave = {
 		src = "/var/lib/zwave";
 		dest = "zwave";
-		user = "root";
+		id = "zwave-asdf";
 	};
 
-	greg.backup.jobs.nextcloud-backup = {
+	greg.backup.jobs.hass-backup = {
 		src = "/var/lib/hass";
 		dest = "hass";
-		user = "root";
+		id = "hass-asdf";
 	};
 }
