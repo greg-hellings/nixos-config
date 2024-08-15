@@ -15,8 +15,10 @@
 			adminuser = "greg";
 			dbhost = "/run/postgresql";
 			dbtype = "pgsql";
-			defaultPhoneRegion = "US";
-			overwriteProtocol = "https";
+		};
+		settings = {
+			default_phone_region = "US";
+			overwriteprotocol = "https";
 		};
 	};
 
@@ -24,6 +26,9 @@
 		forceSSL = true;
 		enableACME = true;
 	};
+
+	# Otherwise nginx errors looking for the nextcloud sock file
+	systemd.services.nginx.after = [ "nextcloud.service" ];
 
 	greg.backup.jobs.nextcloud-bkup = {
 		src = "/var/lib/nextcloud";
