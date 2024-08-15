@@ -56,8 +56,8 @@ root root postgres
 	};
 
 	greg.backup.jobs.greg-postgresql-backup = {
-		src = "/var/backup/postgresql";
+		src = config.services.postgresqlBackup.location;
 		dest = "linode-postgres";
-		user = "postgres";
+		id = "9pwvg-s257a";
 	};
 }

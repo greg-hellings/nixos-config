@@ -33,6 +33,6 @@
 	greg.backup.jobs.nextcloud-bkup = {
 		src = "/var/lib/nextcloud";
 		dest = "nextcloud-backup";
-		user = "nextcloud";
+		id = "rbfco-rvmis";
 	};
 }

@@ -46,6 +46,9 @@ in
 	"jude-forgejo-runner.age".publicKeys = everyone;
 	"minio.age".publicKeys = everyone;
 
+	"restic-env.age".publicKeys = everyone;
+	"restic-pw.age".publicKeys = everyone;
+
 
 	"dendrite.age".publicKeys = everyone;
 	"dendrite_key.age".publicKeys = everyone;

@@ -3,18 +3,25 @@
 let
 	cfg = config.greg.backup;
 
-	makeTimer = name: job: {
-		timerConfig.OnCalendar = "daily";
-		wantedBy = [ "timers.target" ];
+	where = j: "${config.services.syncthing.dataDir}/${j.dest}";
+
+	makeSyncFolders = name: job: {
+		devices = [ "chronicles" ];
+		enable = true;
+		id = job.id;
+		label = job.dest;
+		path = where job;
+		type = "sendonly";
 	};
 
-	makeService = name: job: {
-		serviceConfig = {
-			User = job.user;
-			ExecStartPre = lib.optionalString (job.pre != "") job.pre;
-			ExecStart = "${pkgs.rsync}/bin/rsync -avz --delete -e '${pkgs.openssh}/bin/ssh -oStrictHostKeyChecking=no -oUserKnownHostsFile=/dev/null' ${job.src}/ backup@chronicles.shire-zebra.ts.net:/volume1/NetBackup/${job.dest}";
-			ExecStartPost = lib.optionalString (job.post != "") job.post;
-		};
+	makeRestic = name: job: let
+		who = "${config.services.syncthing.user}:${config.services.syncthing.group}";
+	in rec {
+		initialize = true;
+		passwordFile = config.age.secrets.restic-pw.path;
+		paths = [ job.src ];
+		repository = where job;
+		backupCleanupCommand = ''${pkgs.coreutils}/bin/chown -R ${who} "${repository}"'';
 	};
 
 in with lib; {
@@ -36,22 +43,9 @@ in with lib; {
 								type = types.str;
 							};
 
-							user = mkOption {
+							id = mkOption {
 								type = types.str;
-								default = "root";
-								description = "User to run backup as";
-							};
-
-							pre = mkOption {
-								type = types.str;
-								default = "";
-								description = "Commands to run before backup";
-							};
-
-							post = mkOption {
-								type = types.str;
-								default = "";
-								description = "Commands to run after backup";
+								description = "The unique folder ID for this";
 							};
 						};
 					}
@@ -62,9 +56,16 @@ in with lib; {
 
 	config = mkIf ( ( attrValues cfg.jobs ) != [] )
 	{
-		systemd = {
-			timers = mapAttrs makeTimer cfg.jobs;
-			services = mapAttrs makeService cfg.jobs;
+		age.secrets = {
+			restic-pw.file = ../../secrets/restic-pw.age;
+			restic-env.file = ../../secrets/restic-env.age;
+		};
+		greg.syncthing = {
+			enable = true;
+		};
+		services = {
+			syncthing.settings.folders = mapAttrs makeSyncFolders cfg.jobs;
+			restic.backups = mapAttrs makeRestic cfg.jobs;
 		};
 	};
 }
