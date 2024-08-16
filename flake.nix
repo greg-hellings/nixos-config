@@ -50,7 +50,6 @@
 		...}@inputs:
 	let
 		pkg-sets = final: prev: {
-			unstable = import inputs.nixunstable { system = final.system; inherit overlays; };
 			nix23_05 = import inputs.nix23_05 { system = final.system; inherit overlays; };
 		};
 		local_overlay = import ./overlays;

@@ -17,10 +17,8 @@ in
 	programs.tmux = {
 		enable = true;
 		keyMode = "vi";
-		shell = "${pkgs.myxonsh}/bin/xonsh";
 		terminal = "xterm-256color";
 		customPaneNavigationAndResize = true;
-			#"set-option -g default-command ${pkgs.myxonsh}/bin/xonsh"
 		extraConfig = (lib.strings.concatStringsSep "\n" [
 			"bind P paste-buffer"
 		]);
