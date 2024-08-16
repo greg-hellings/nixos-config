@@ -1,4 +1,9 @@
-{ lib, buildPythonPackage, fetchFromGitHub, pkgs}:
+{
+	lib,
+	buildPythonPackage,
+	fetchFromGitHub,
+	pipenv,
+}:
 
 buildPythonPackage rec {
 	pname = "xonsh-apipenv";
@@ -20,7 +25,7 @@ buildPythonPackage rec {
 
 	doCheck = false;
 
-	buildInputs = with pkgs; [
+	dependencies = [
 		pipenv
 	];
 

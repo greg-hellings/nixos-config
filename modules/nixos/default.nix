@@ -48,18 +48,17 @@ in {
 		networkmanager.enable = true;
 	};
 
-	programs.xonsh = let
-		test = import inputs.test {
-			inherit (pkgs.stdenv) system;
-			overlays = [ inputs.self.overlays.default ];
-		};
-	in {
+	programs.xonsh = {
 		enable = true;
-		package = (test.xonsh.override {
-			extraPackages = (ps: [
-				ps.xonsh-apipenv
-				ps.xonsh-direnv
-				ps.xontrib-vox
+		package = (pkgs.xonsh.passthru.wrapper.override {
+			extraPackages = (ps: with ps; [
+				(ps.toPythonModule pkgs.pipenv)
+				pyyaml
+				requests
+				ruamel-yaml
+				xonsh-apipenv
+				xonsh-direnv
+				xontrib-vox
 			]);
 		});
 	};

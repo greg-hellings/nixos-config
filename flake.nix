@@ -32,12 +32,12 @@
 			inputs.nixpkgs.follows = "nixunstable";
 		};
 
-		crowe.url = "/home/greg/src/nur-packages";
-		test.url = "github:SamLukeYes/nixpkgs/xonsh";
+		crowe.url = "github:drmikecrowe/nur-packages/overlay";
 	};
 
 	outputs = {
 		agenix,
+		crowe,
 		darwin,
 		flake-utils,
 		hm,
@@ -61,6 +61,7 @@
 			pkg-sets
 			local_overlay
 			nurpkgs.overlay
+			crowe.overlays
 		];
 
 	in {

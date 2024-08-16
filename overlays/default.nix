@@ -38,8 +38,6 @@ in rec {
 			graypy = cp ./graypy.nix {};
 			itg-django-utils = cp ./itg-django-utils.nix {};
 			xonsh-apipenv = cp ./xonsh-apipenv.nix {};
-			xonsh-direnv = cp ./xonsh-direnv.nix {};
-			xontrib-vox = cp ./xonsh-vox.nix {};
 		})
 	];
 
