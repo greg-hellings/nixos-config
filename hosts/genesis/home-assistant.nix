@@ -96,14 +96,18 @@ in
 	# Both of the above container need storage for their configuration and devices, but it is not created correctly by
 	# the container. So we add the creation of /var/lib/{zwave,hass} to the systemd Unit files
 	systemd.services = {
-		"podman-zwave".serviceConfig = {
-			StateDirectory = "zwave";
-			StateDirectoryMode = pkgs.lib.mkForce "0777";
+		"podman-zwave" = {
+			after = [ "sys-devices-pci0000:00-0000:00:1e.0-0000:02:1b.0-usb2-2\\x2d1-2\\x2d1:1.0-tty-ttyACM0.device" ];
+			wantedBy = [ "sys-devices-pci0000:00-0000:00:1e.0-0000:02:1b.0-usb2-2\\x2d1-2\\x2d1:1.0-tty-ttyACM0.device" ];
+			serviceConfig = {
+				StateDirectory = "zwave";
+				StateDirectoryMode = pkgs.lib.mkForce "0777";
+			};
 		};
 	};
 
 	services.udev.extraRules = ''
-	SUBSYSTEM=="tty", KERNEL=="ttyACM0", TAG+="systemd", ENV{SYSTEMD_WANTS}+="podman-zwave.service"
+	SUBSYSTEM=="tty", KERNEL=="ttyACM0", TAG+="systemd"
 	'';
 
 
