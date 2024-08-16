@@ -32,7 +32,8 @@
 			inputs.nixpkgs.follows = "nixunstable";
 		};
 
-		crowe.url = "/home/greg/nur-packages";
+		crowe.url = "/home/greg/src/nur-packages";
+		test.url = "github:SamLukeYes/nixpkgs/xonsh";
 	};
 
 	outputs = {

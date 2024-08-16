@@ -28,16 +28,17 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "dirtyRev": "4ff5384b96c24919c2b4ac3d7c588db2f22a528a-dirty",
-        "dirtyShortRev": "4ff5384-dirty",
         "lastModified": 1723461092,
-        "narHash": "sha256-Z/o1ebB2U+5cAjC44yryxSCfzR6BkBcZ2UAMDE3Zgg8=",
+        "narHash": "sha256-4Ouw2IqRut2uZUU7UPjtmx4FcpMUFXd7XcJxFtKErOI=",
+        "ref": "refs/heads/master",
+        "rev": "4ff5384b96c24919c2b4ac3d7c588db2f22a528a",
+        "revCount": 56,
         "type": "git",
-        "url": "file:///home/greg/nur-packages"
+        "url": "file:///home/greg/src/nur-packages"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/greg/nur-packages"
+        "url": "file:///home/greg/src/nur-packages"
       }
     },
     "darwin": {
@@ -513,6 +514,7 @@
         "nixunstable": "nixunstable",
         "nixvim": "nixvim",
         "nurpkgs": "nurpkgs",
+        "test": "test",
         "wsl": "wsl"
       }
     },
@@ -573,6 +575,22 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "test": {
+      "locked": {
+        "lastModified": 1723214923,
+        "narHash": "sha256-6RSkrFPjOzqhT6y3xxDtNkbDyunzqXVSygB9UDrG/P4=",
+        "owner": "SamLukeYes",
+        "repo": "nixpkgs",
+        "rev": "633da8f7a0a05aca42f6cc23e53523e18ce10a4f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "SamLukeYes",
+        "ref": "xonsh",
+        "repo": "nixpkgs",
         "type": "github"
       }
     },
