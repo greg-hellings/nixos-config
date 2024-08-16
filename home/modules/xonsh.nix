@@ -81,8 +81,6 @@ in with lib; {
 
 	in mkIf cfg.enable {
 
-		home.packages = [ pkgs.myxonsh ];
-
 		home.file.".xonshrc".text = ''
 ${cfg.configHeader}
 

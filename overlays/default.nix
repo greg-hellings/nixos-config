@@ -81,12 +81,4 @@ in rec {
 		postInstall = prev.libvirt.postInstall + "rm -r $out/lib/systemd/system/libvirtd.service";
 	};
 	pipenv-ivr = prev.callPackage ./pipenv.nix { };
-
-	myxonsh = (prev.xonsh-unwrapped.passthru.wrapper.override {
-		extraPackages = (ps: with ps; [
-			xonsh-apipenv
-			xonsh-direnv
-			xontrib-vox
-		]);
-	});
 }

@@ -32,7 +32,6 @@ in
     nixpkgs.config = {
         allowUnfree = true;
     };
-    
 
     # Base packages that need to be in all my hosts
     environment.systemPackages = with pkgs; [

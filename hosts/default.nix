@@ -16,6 +16,10 @@ let
 		nixpkgs = import channel {
 			inherit system;
 		};
+		# Use this to include modules directly from a repo
+		nurNoPkg = import inputs.nurpkgs {
+			nurpkgs = nixpkgs;
+		};
 	in channel.lib.nixosSystem {
 		inherit system;
 		specialArgs = { inherit nixpkgs inputs overlays; };
@@ -37,6 +41,7 @@ let
 			inputs.agenix.nixosModules.default
 			hm.nixosModules.home-manager
 			inputs.self.modules.nixosModule
+			inputs.nurpkgs.nixosModules.nur
 			./${name}
 		] ++ extraMods;
 	};

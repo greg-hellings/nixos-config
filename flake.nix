@@ -31,6 +31,8 @@
 			url = "github:nix-community/NixOS-WSL";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
+
+		crowe.url = "/home/greg/nur-packages";
 	};
 
 	outputs = {
