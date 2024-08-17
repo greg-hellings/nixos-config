@@ -14,6 +14,7 @@ rec {
 		modules = [ ./home.nix ];
 		extraSpecialArgs = {
 			inherit inputs;
+			nixvim = inputs.nixvimunstable;
 			gui = false;
 			gnome = false;
 			host = "ivr";
