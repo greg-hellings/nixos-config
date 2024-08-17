@@ -1,10 +1,12 @@
 builds:
   exclude:
     - devShells.i686-linux.default
+    - packages.x86_64-linux.default  # just duplicates
   include:
     - devShells.*.default
     - homeConfigurations.*
     - nixosConfigurations.*
-    - packages.x86_64-linux.*
+    - packages.x86_64-linux.iso
+    - packages.x86_64-linux.iso-beta
     - packages.aarch64-linux.*
     - packages.aarch64-darwin.*
