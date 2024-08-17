@@ -8,16 +8,6 @@
 		./minio.nix
 	];
 
-	environment.systemPackages = with pkgs; [
-		git
-		packer
-		(python3.withPackages (p: with p; [ pip virtualenv ]))
-		tmux
-		tree
-		vim
-		xorriso
-	];
-
 	greg.tailscale.enable = true;
 
 	services = {

@@ -1,13 +1,7 @@
 { inputs, name, extra ? {}, packages ? [], overlays }:
 
 ({ config, pkgs, lib, ... }:
-let
-	py = (pkgs.python3.withPackages (p: with p; [
-		pip
-		pyyaml
-		virtualenv
-	]));
-in (
+(
 lib.attrsets.recursiveUpdate {
 
 	imports = [
@@ -31,15 +25,8 @@ lib.attrsets.recursiveUpdate {
 		curl
 		gawk
 		git
-		minio-client
-		p7zip
-		packer
-		pup
-		py
-		shellcheck
 		unzip
 		xorriso
-		vagrant
 		wget
 	] ++ packages;
 
@@ -67,7 +54,7 @@ lib.attrsets.recursiveUpdate {
 					registrationConfigFile = config.age.secrets.runner-reg.path;
 					environmentVariables = {
 						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-						STORAGE_URL = "http://minio-01.thehellings.lan:9000";
+						STORAGE_URL = "http://s3.thehellings.lan:9000";
 					};
 				};
 			};

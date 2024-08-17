@@ -51,7 +51,7 @@
 		];
 	};
 	greg = {
-	home = true;
+		home = true;
 		tailscale.enable = true;
 	};
 	environment.systemPackages = with pkgs; [
@@ -59,14 +59,7 @@
 		curl
 		gawk
 		git
-		p7zip
-		packer
-		pup
-		gregpy
-		shellcheck
 		unzip
-		xorriso
-		vagrant
 		wget
 	];
 	
@@ -97,7 +90,7 @@
 					registrationConfigFile = config.age.secrets.runner-reg.path;
 					environmentVariables = {
 						EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-						STORAGE_URL = "http://localhost:9000";
+						STORAGE_URL = "http://s3.thehellings.lan:9000";
 					};
 				};
 			};

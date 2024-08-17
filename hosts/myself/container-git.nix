@@ -107,7 +107,7 @@ in {
 					proxy_download = false;  # Tell them to reach out to object storage themselves!
 					connection = {
 						provider = "AWS";
-						endpoint = "http://minio-01.thehellings.lan:9000";
+						endpoint = "http://s3.thehellings.lan:9000";
 						region = "us-east-1";
 						aws_access_key_id = { _secret = config.age.secrets.minio_access_key_id.path; };
 						aws_secret_access_key = { _secret = config.age.secrets.minio_secret_access_key.path; };

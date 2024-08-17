@@ -121,7 +121,7 @@ in  {
 				registrationConfigFile = config.age.secrets.runner-qemu.path;
 				environmentVariables = {
 					EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-					STORAGE_URL = "http://localhost:9000";
+					STORAGE_URL = "http://s3.thehellings.lan:9000";
 				};
 			};
 		};
@@ -134,17 +134,7 @@ in  {
 		curl
 		gawk
 		git
-		minio-client
-		p7zip
-		packer
-		pup
-		(python3.withPackages (p: with p; [ pip pyyaml virtualenv ]) )
-		qemu_full
-		qemu_kvm
-		shellcheck
 		unzip
-		xorriso
-		vagrant
 		wget
 	];
 }
