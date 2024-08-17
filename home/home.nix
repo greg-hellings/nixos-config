@@ -1,6 +1,7 @@
 { pkgs, lib,
   inputs,
   host ? "most",
+  nixvim,
   ...}:
 
 let
@@ -9,7 +10,7 @@ in
 {
 	nixpkgs.config.allowUnfreePredicate = (_: true);
 	imports = [
-		inputs.nixvim.homeManagerModules.default
+		nixvim.homeManagerModules.default
 		./modules
 	] ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
 

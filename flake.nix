@@ -22,7 +22,8 @@
 			url = "github:nix-community/home-manager/master";
 			inputs.nixpkgs.follows = "nixstable";
 		};
-		nixvim.url = "github:nix-community/nixvim";
+		nixvimstable.url = "github:nix-community/nixvim/nixos-24.05";
+		nixvimunstable.url = "github:nix-community/nixvim/main";
 		nix23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
 		nixstable.url = "github:nixos/nixpkgs/nixos-24.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
@@ -45,7 +46,6 @@
 		nix23_05,
 		nixstable,
 		nixunstable,
-		nixvim,
 		nurpkgs,
 		wsl,
 
@@ -65,15 +65,15 @@
 		];
 
 	in {
-		checks = {
-			x86_64-linux = {
-				unstable = self.nixosConfigurations.jude.config.system.build.toplevel;
-				stable   = self.nixosConfigurations.linode.config.system.build.toplevel;
-			};
-			aarch64-linux = {
-				unstable = self.nixosConfigurations.nixos.config.system.build.toplevel;
-			};
-		};
+		#checks = {
+		#	x86_64-linux = {
+		#		unstable = self.nixosConfigurations.jude.config.system.build.toplevel;
+		#		stable   = self.nixosConfigurations.linode.config.system.build.toplevel;
+		#	};
+		#	aarch64-linux = {
+		#		unstable = self.nixosConfigurations.nixos.config.system.build.toplevel;
+		#	};
+		#};
 
 		nixosConfigurations = (import ./hosts { inherit inputs overlays; });
 

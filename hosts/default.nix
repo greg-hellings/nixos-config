@@ -4,13 +4,15 @@ let
 	unstable = args: (machine (args // {
 		channel = inputs.nixunstable;
 		hm = inputs.hmunstable;
+		nixvim = inputs.nixvimunstable;
 	}));
 	machine = {
 		channel ? inputs.nixstable,
 		extraMods ? [],
 		name,
 		system ? "x86_64-linux",
-		hm ? inputs.hm
+		hm ? inputs.hm,
+		nixvim ? inputs.nixvimstable,
 	}:
 	let
 		nixpkgs = import channel {
@@ -31,7 +33,7 @@ let
 					useUserPackages = true;
 					users.greg = import ../home/home.nix;
 					extraSpecialArgs = {
-						inherit inputs overlays;
+						inherit inputs overlays nixvim;
 						home = "/home/greg";
 						host = name;
 					};
