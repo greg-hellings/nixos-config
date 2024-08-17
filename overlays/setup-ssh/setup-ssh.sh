@@ -9,4 +9,3 @@ if [ ! -f "${file}" ]; then
 	gh auth refresh -h github.com -s admin:public_key
 	gh ssh-key add -t ${HOSTNAME}-auto "${file}" || true
 fi
-cp /etc/nixos/home/ssh/authorized_keys "${HOME}/.ssh/authorized_keys"
