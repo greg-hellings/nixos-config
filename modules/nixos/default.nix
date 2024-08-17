@@ -1,7 +1,9 @@
 { config, pkgs, inputs, lib, ... }:
 
 let
-	crowe = inputs.crowe.legacyPackages."${pkgs.stdenv.system}";
+	x = if builtins.hasAttr "wrapper" pkgs.xonsh.passthru then
+		pkgs.xonsh.passthru.wrapper else
+		pkgs.xonsh;
 in {
 	imports = [
 		../baseline.nix
@@ -50,7 +52,7 @@ in {
 
 	programs.xonsh = {
 		enable = true;
-		package = (pkgs.xonsh.passthru.wrapper.override {
+		package = (x.override {
 			extraPackages = (ps: with ps; [
 				(ps.toPythonModule pkgs.pipenv)
 				pyyaml
