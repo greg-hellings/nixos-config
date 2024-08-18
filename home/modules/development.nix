@@ -3,6 +3,7 @@ let
 	packages = with pkgs; [
 		cargo
 		mariadb
+		nix-update
 		nixfmt-rfc-style
 		nixpkgs-review
 		process-compose
