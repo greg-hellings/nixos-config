@@ -36,7 +36,6 @@ in {
 			endeavour
 			gnucash
 			jellyfin-media-player
-			libreoffice
 			#logseq
 			nextcloud-client
 			slack
