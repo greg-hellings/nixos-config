@@ -1,9 +1,9 @@
 { config, pkgs, inputs, lib, ... }:
 
 let
-	x = if builtins.hasAttr "wrapper" pkgs.xonsh.passthru then
-		pkgs.xonsh.passthru.wrapper else
-		pkgs.xonsh;
+	x = if builtins.hasAttr "xonsh-unwrapped" pkgs then
+		pkgs.xonsh else
+		pkgs.xonsh.passthru.wrapper;
 in {
 	imports = [
 		../baseline.nix
@@ -59,8 +59,8 @@ in {
 				requests
 				ruamel-yaml
 				xonsh-apipenv
-				xonsh-direnv
-				xontrib-vox
+				pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
+				pkgs.nur.repos.xonsh-xontribs.xontrib-vox
 			]);
 		});
 	};

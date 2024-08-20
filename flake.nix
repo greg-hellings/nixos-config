@@ -32,13 +32,10 @@
 			url = "github:nix-community/NixOS-WSL";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
-
-		crowe.url = "github:drmikecrowe/nur-packages/overlay";
 	};
 
 	outputs = {
 		agenix,
-		crowe,
 		darwin,
 		flake-utils,
 		hm,
@@ -61,7 +58,6 @@
 			pkg-sets
 			local_overlay
 			nurpkgs.overlay
-			crowe.overlays
 		];
 
 	in {
