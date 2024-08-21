@@ -10,6 +10,12 @@ let
 		ruamel-yaml
 		tox
 	]);
+	x = pkgs.xonsh.override {
+		extraPackages = (ps: [
+			pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
+			pkgs.nur.repos.xonsh-xontribs.xontrib-vox
+		]);
+	};
 in {
 	greg = {
 		development = true;
@@ -26,6 +32,7 @@ in {
 			insomnia
 			pipenv-ivr
 			poetry
+			x
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 			"[global]"
