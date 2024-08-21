@@ -19,7 +19,7 @@
   };
 
   swapDevices = [
-    { device = "/dev/sdb"; }
+    #{ device = "/dev/sdb"; }
   ];
 
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
