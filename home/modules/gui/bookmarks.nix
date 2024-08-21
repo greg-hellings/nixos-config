@@ -14,6 +14,45 @@
 			url = "https://www.dc4k.org/leaderzone/articles";
 		} ];
 	} {
+		name = "IVR";
+		bookmarks = [ {
+			name = "Dev";
+			bookmarks = [ {
+				name = "Core Survey";
+				url = "https://webdev5.ivrtechnology.com/coreservices/survey/admin/";
+			} {
+				name = "Audio";
+				url = "https://apidev1.ivrtechnology.com/coreservices/audio/admin/";
+			} ];
+		} {
+			name = "HC";
+			bookmarks = [ {
+				name = "Audio";
+				url = "https://hcweb3.ivrtechnology.com/coreservices/audio/admin/";
+			} {
+				name = "Survey";
+				url = "https://hcweb2.ivrtechnology.com/coreservices/survey/admin/";
+			} ];
+		} {
+			name = "PCI";
+			bookmarks = [ {
+				name = "Audio";
+				url = "https://pciweb3.ivrtechnology.com/coreservices/audio/admin/";
+			} ];
+		} {
+			name = "Processes";
+			bookmarks = [ {
+				name = "Change Management";
+				url = "https://ivrtg.atlassian.net/wiki/spaces/ITS/pages/13094842/Executing+Change+Management";
+			} {
+				name = "Okta";
+				url = "https://engagesmart.okta.com/";
+			} {
+				name = "DB Request";
+				url = "https://ivrtg.aha.io/develop/features/INFR-1073";
+			} ];
+		} ];
+	} {
 		name = "Katie";
 		bookmarks = [ {
 			name = "Sports Forms";
@@ -22,7 +61,7 @@
 			name = "Skyward";
 			url = "https://skyward.iscorp.com/MidlothianISDTXStuSTS/Session/Signin?area=Home&controller=Home&action=Index&logoutreason=TimedOut";
 		} ];
-	} {	
+	} {
 		name = "Nix";
 		bookmarks = [ {
 			name = "Package Versions";

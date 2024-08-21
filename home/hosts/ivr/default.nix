@@ -23,9 +23,18 @@ let
 in {
 	greg = {
 		development = true;
+		gui = true;
 		pypackage = py;
 		vscodium = true;
 	};
+
+    nixpkgs.config = {
+        allowUnfree = true;
+        permittedInsecurePackages = [
+			"jitsi-meet-1.0.8043"
+		];
+    };
+
 	home = {
 		packages = with pkgs; [
 			aacs
