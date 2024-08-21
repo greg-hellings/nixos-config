@@ -52,11 +52,43 @@ in {
 		programs.firefox = {
 			enable = (! pkgs.stdenv.hostPlatform.isDarwin);
 			package = ffPkgs;
+			policies = {
+				DisableAppUpdate = true;
+			};
 			profiles = {
 				default = {
-					isDefault = true;
+					bookmarks = import ./gui/bookmarks.nix;
 					id = 0;
-					search.default = "DuckDuckGo";
+					isDefault = true;
+					search = {
+						default = "DuckDuckGo";
+						force = true;
+						engines = {
+							Google.metaData.alias = "@g";
+							"Nix Packages" = {
+								urls = [{
+									template = "https://search.nixos.org/packages";
+									params = [
+										{ name = "type"; value = "packages"; }
+										{ name = "query"; value = "{searchTerms}"; }
+									];
+								}];
+								icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+								definedAliases = [ "@np" ];
+							};
+							"Nix Options" = {
+								urls = [{
+									template = "https://search.nixos.org/options";
+									params = [
+										{ name = "type"; value = "packages"; }
+										{ name = "query"; value = "{searchTerms}"; }
+									];
+								}];
+								icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+								definedAliases = [ "@no" ];
+							};
+						};
+					};
 					settings = {
 						"app.update.auto" = false;
 						"browser.ctrlTab.sortByRecentlyUsed" = true;
