@@ -7,20 +7,13 @@
 
 buildPythonPackage rec {
 	pname = "xonsh-apipenv";
-	version = "0.4.0";
+	version = "0.5.0";
 
 	src = fetchFromGitHub {
-		owner = "deeuu";
+		owner = "greg-hellings";
 		repo = "xontrib-apipenv";
-		rev = "0.4.0";
-		sha256 = "sha256-uFn3kF7P4wykd72XkQx6cPWLhBOh2SDQBcI3Idc2rFM=";
-	};
-
-	meta = with lib; {
-		description = "Auto pipenv support for Xonsh";
-		homepage = "https://github.com/deeuu/xontrib-apipenv";
-		license = licenses.mit;
-		maintainers = [];
+		rev = "0.5.0";
+		hash = "sha256-QJatIiIP1YVT8M5vLUPHmf/8CGZ34cXMBXQmfSgY5C4=";
 	};
 
 	doCheck = false;
@@ -29,6 +22,10 @@ buildPythonPackage rec {
 		pipenv
 	];
 
-	nativeBuildInputs = [
-	];
+	meta = with lib; {
+		description = "Auto pipenv support for Xonsh";
+		homepage = "https://github.com/greg-hellings/xontrib-apipenv";
+		license = licenses.mit;
+		maintainers = [];
+	};
 }
