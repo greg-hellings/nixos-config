@@ -32,24 +32,29 @@
 		};
 
 		aliases = {
+			# Python related ones
 			ac = "vox activate";
-
-			cleanup = "sudo nix-collect-garbage --delete-older-than 30d && nix store optimise";
 			d = "vox deactivate";
-			dirflake = "nix flake new -t github:nix-community/nix-direnv";
-			gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
+
+			# Nix related ones
 			gl-nging = "sudo nixos-container run gitlab -- systemctl restart nginx";
-			ls = "ls --color";
-			ll = "ls -l --color";
-			molcol = "molecule -c ../../tests/molecule.yml";
 			nixup = "nix flake lock --update-input";
 			nixtest = "nixpkgs-review rev HEAD";
-			pa = "cd ~/src/packaging";
+			nixdu = "sudo nix-store --gc --print-roots | egrep -v r\"^(/nix/var|/run/\\w+-system|\\{memory|/proc)\"";
+
+			# General
+			gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
+			ls = "ls --color";
+			ll = "ls -l --color";
 			tf = "terraform";
+
+			# Tailscale related ones
 			tsup = "sudo tailscale up";
 			tspub = "sudo tailscale up --exit-node=linode";
 			tshome = "sudo tailscale up --exit-node=2maccabees";
 			tsclear = "sudo tailscale up --exit-node=''";
+
+			# Vagrant related
 			vdown = "vagrant destroy";
 			vhalt = "vagrant halt";
 			vos = "vagrant up --provision --provider openstack";

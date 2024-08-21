@@ -59,7 +59,7 @@ in with lib; {
 	config =
 	let
 		shortAliases = concatStringsSep "\n" (
-			mapAttrsToList (k: v: "aliases['${k}']='${v}'") cfg.aliases
+			mapAttrsToList (k: v: "aliases['${k}']=r'${v}'") cfg.aliases
 		);
 
 		listToPythonList = let

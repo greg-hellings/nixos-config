@@ -110,6 +110,12 @@ def _bake(args):
     copier copy @(str(templates / args[0])) .
 aliases['bake'] = _bake
 
+def _cleanup(args):
+	sudo nix profile wipe-history --profile ~/.local/state/nix/profiles/home-manager --older-than '30d'
+	sudo nix-collect-garbage --delete-older-than 30d
+	sudo nix store optimise
+aliases['cleanup'] = _cleanup
+
 ###
 #
 # Other random nice-to-have things
