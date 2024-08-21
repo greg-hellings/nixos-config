@@ -49,13 +49,9 @@
 		self,
 		...}@inputs:
 	let
-		pkg-sets = final: prev: {
-			nix23_05 = import inputs.nix23_05 { system = final.system; inherit overlays; };
-		};
 		local_overlay = import ./overlays;
 		overlays = [
 			agenix.overlays.default
-			pkg-sets
 			local_overlay
 			nurpkgs.overlay
 		];

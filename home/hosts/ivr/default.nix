@@ -1,6 +1,10 @@
 { pkgs, lib, inputs, ...}:
 let
-	py = pkgs.nix23_05.python311.withPackages ( p: with p; [
+	nix23 = import inputs.nix23_05 {
+		inherit (pkgs.stdenv) system;
+		overlays = [ inputs.self.overlays.default ];
+	};
+	py = nix23.python311.withPackages ( p: with p; [
 		django
 		djangorestframework
 		django-rapyd-modernauth
@@ -10,6 +14,12 @@ let
 		ruamel-yaml
 		tox
 	]);
+	x = pkgs.xonsh.override {
+		extraPackages = (ps: [
+			pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
+			pkgs.nur.repos.xonsh-xontribs.xontrib-vox
+		]);
+	};
 in {
 	greg = {
 		development = true;
@@ -26,6 +36,7 @@ in {
 			insomnia
 			pipenv-ivr
 			poetry
+			x
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
 			"[global]"
