@@ -3,6 +3,9 @@ let
 	packages = with pkgs; [
 		cargo
 		mariadb
+		nix-eval-jobs
+		nix-fast-build
+		nix-output-monitor
 		nix-update
 		nixfmt-rfc-style
 		nixpkgs-review
