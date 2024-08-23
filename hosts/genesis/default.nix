@@ -34,7 +34,6 @@
 	networking.hostName = "genesis"; # Define your hostname.
 	environment.systemPackages = with pkgs; [
 		awscli2
-		btrfs-progs
 		create_ssl
 		step-ca
 	];

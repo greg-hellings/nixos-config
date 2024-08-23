@@ -27,11 +27,13 @@ in {
 
 	environment.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
 	environment.systemPackages = with pkgs; [
+		btrfs-progs
 		coreutils-full
 		efibootmgr
 		psmisc
 		lshw
 		usbutils
+		xfsprogs
 	];
 
 	system.stateVersion = "24.05";
