@@ -129,6 +129,9 @@
 		} {
 			name = "Keymap editor";
 			url = "https://nickcoutsos.github.io/keymap-editor/";
+		} {
+			name = "Bitcoin dashboard";
+			url = "http://hosea.home:60845";
 		} ];
 	} ];
 } ]
