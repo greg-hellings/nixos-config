@@ -55,7 +55,6 @@
 		tailscale.enable = true;
 	};
 	environment.systemPackages = with pkgs; [
-		btrfs-progs
 		curl
 		gawk
 		git

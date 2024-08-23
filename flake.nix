@@ -9,6 +9,9 @@
 			url = "github:ryantm/agenix";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
+		btc = {
+			url = "github:fort-nix/nix-bitcoin/release";
+		};
 		darwin = {
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
