@@ -9,6 +9,7 @@ let
 		nix-update
 		nixfmt-rfc-style
 		nixpkgs-review
+		nodejs
 		process-compose
 	];
 in with lib; {
