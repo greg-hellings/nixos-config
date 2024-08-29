@@ -42,7 +42,7 @@ in {
 			bitwarden-cli
 			direnv
 			home-manager
-			insomnia
+			mysql-workbench
 			pipenv-ivr
 			poetry
 			x
