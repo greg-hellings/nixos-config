@@ -3,7 +3,6 @@
 {
 	imports = [
 		./hardware-configuration.nix
-		../jude/printing.nix
 	];
 
 	boot.loader = {
@@ -15,6 +14,7 @@
 	greg = {
 		home = true;
 		gnome.enable = true;
+		print.enable = true;
 		tailscale.enable = true;
 		vmdev = {
 			enable = true;

@@ -5,7 +5,6 @@
 		./boot.nix
 		./hardware-configuration.nix
 		./podman.nix
-		./printing.nix
 		./virt.nix
 	];
 	programs = {
@@ -34,6 +33,7 @@
 		sway.enable = false;
 		gnome.enable = true;
 		kde.enable = false;
+		print.enable = true;
 	};
 
 	boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
