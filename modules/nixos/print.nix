@@ -17,8 +17,7 @@ in with lib;
 			enable = true;
 			drivers = with pkgs; [
 				gutenprint
-				gutenprintBin
-			];
+			] ++ (lib.optional pkgs.stdenv.isx86_64 gutenprintBin);
 		};
 
 		hardware.printers.ensurePrinters = [ {
