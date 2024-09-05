@@ -16,6 +16,7 @@ in {
 		./kde.nix
 		./kiwix-serve.nix
 		./linode.nix
+		./print.nix
 		./proxy.nix
 		./router.nix
 		./rpi4.nix
