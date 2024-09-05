@@ -38,9 +38,10 @@
 
 			# Nix related ones
 			gl-nging = "sudo nixos-container run gitlab -- systemctl restart nginx";
-			nixup = "nix flake lock --update-input";
-			nixtest = "nixpkgs-review rev HEAD";
+			nb = "nix build -L";
 			nixdu = "sudo nix-store --gc --print-roots | egrep -v r\"^(/nix/var|/run/\\w+-system|\\{memory|/proc)\"";
+			nixtest = "nixpkgs-review rev HEAD";
+			nixup = "nix flake lock --update-input";
 
 			# General
 			gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
