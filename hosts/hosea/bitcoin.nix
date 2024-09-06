@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, pkgs, ... }:
 
 let
 	ip = "100.68.203.1";
@@ -15,10 +15,24 @@ in {
 	networking.firewall.allowedTCPPorts = with config.services; [
 		bitcoind.port
 		bitcoind.rpc.port
+		lnd.restPort
+		lnd.port
 		mempool.frontend.port
 	];
 
+	greg.backup.jobs = {
+		clightning = {
+			src = config.services.clightning.replication.local.directory;
+			dest = "hosea-clightning";
+			id = "clightning";
+		};
+	};
+
 	services = {
+		backups = {
+			enable = true;
+			frequency = "hourly";
+		};
 		bitcoind = {
 			enable = true;
 			address = "0.0.0.0";
@@ -31,10 +45,24 @@ in {
 				];
 			};
 		};
-		clightning.enable = true;
+		clightning = {
+			enable = true;
+			address = ip;
+			port = 9736;
+			replication = {
+				enable = true;
+				local.directory = "/var/backup/clightning";
+				encrypt = false;
+			};
+		};
 		electrs = {
 			enable = true;
 			address = ip;
+		};
+		lnd = {
+			enable = true;
+			address = ip;
+			lndconnect.enable = true;
 		};
 		mempool = {
 			enable = true;
@@ -44,4 +72,7 @@ in {
 			};
 		};
 	};
+
+	environment.systemPackages = with pkgs; [
+	];
 }

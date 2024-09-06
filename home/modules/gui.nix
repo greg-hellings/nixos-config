@@ -104,6 +104,7 @@ in {
 						foxyproxy-standard
 						multi-account-containers
 						octotree
+						okta-browser-plugin
 						refined-github
 						tree-style-tab
 						ublock-origin
