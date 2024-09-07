@@ -1,6 +1,7 @@
 { config, pkgs, lib, ... }:
 let
 	packages = with pkgs; [
+		bruno  # but let's not talk about it
 		cargo
 		mariadb
 		nix-eval-jobs
