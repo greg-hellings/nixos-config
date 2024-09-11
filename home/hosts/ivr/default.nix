@@ -18,6 +18,8 @@ let
 		extraPackages = (ps: [
 			pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
 			pkgs.nur.repos.xonsh-xontribs.xontrib-vox
+			ps.xonsh-apipenv
+			pkgs.pipenv-ivr
 		]);
 	};
 in {

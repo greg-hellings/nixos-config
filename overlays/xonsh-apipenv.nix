@@ -2,6 +2,7 @@
 	lib,
 	buildPythonPackage,
 	fetchFromGitHub,
+	toPythonModule,
 	pipenv,
 }:
 
@@ -19,7 +20,7 @@ buildPythonPackage rec {
 	doCheck = false;
 
 	dependencies = [
-		pipenv
+		(toPythonModule pipenv)
 	];
 
 	meta = with lib; {
