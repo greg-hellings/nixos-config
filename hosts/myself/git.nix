@@ -41,41 +41,6 @@ in
     builder = (import ./container-git.nix);
   };
 
-  systemd.services = {
-    "gitlab-runner" = {
-      after = [ "container@github.service" ];
-      preStart = builtins.concatStringsSep "\n" [
-        "${pkgs.kmod}/bin/modprobe kvm"
-        "${pkgs.kmod}/bin/modprobe kvm_amd"
-      ];
-      postStop = builtins.concatStringsSep "\n" [
-        "${pkgs.kmod}/bin/rmmod -f kvm_amd kvm"
-      ];
-      serviceConfig = {
-        DevicePolicy = lib.mkForce "auto";
-        DevicesAllow = [ "/dev/kvm" "/dev/mem" ];
-        EnvironmentFile = config.age.secrets.docker-auth.path;
-        PermissionsStartOnly = "true";
-        PrivateDevices = false;
-        ProtectKernelModules = false;
-      };
-    };
-  };
-
-  #####################################################################################
-  #################### Container Podman Runner ########################################
-  #####################################################################################
-  containers.gitlab-runner-shell = container {
-    autoStart = true;
-    hostAddress = "192.168.203.1";
-    localAddress = "192.168.203.2";
-    config = ((import ./container-runner.nix) {
-      inherit inputs overlays;
-      name = "shell";
-      extra.virtualisation.podman.enable = true;
-    });
-  };
-
   #####################################################################################
   #################### Local Podman/Docker Runner #####################################
   #####################################################################################
@@ -90,7 +55,7 @@ in
     services = {
       default = {
         executor = "docker";
-        authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
+        registrationConfigFile = config.age.secrets.runner-reg.path;
         dockerImage = "gitlab.shire-zebra.ts.net:5000/greg/ci-images/fedora:latest";
         dockerAllowedImages = [
           "alpine:*"
@@ -99,10 +64,6 @@ in
           "fedora:*"
           "python:*"
           "ubuntu:*"
-
-          "hashicorp/*:*"
-          "koalaman/shellcheck:*"
-
           "registry.gitlab.com/gitlab-org/*"
           "registry.thehellings.com/*/*/*:*"
           "gitlab.shire-zebra.ts.net:5000/*/*/*:*"
@@ -121,7 +82,7 @@ in
       qemu = {
         executor = "shell";
         limit = 5;
-        authenticationTokenConfigFile = config.age.secrets.runner-qemu.path;
+        registrationConfigFile = config.age.secrets.runner-qemu.path;
         environmentVariables = {
           EFI_DIR = "${pkgs.OVMF.fd}/FV/";
           STORAGE_URL = "http://s3.thehellings.lan:9000";
@@ -130,8 +91,8 @@ in
     };
   };
   virtualisation = {
-    docker.enable = true;
-    oci-containers.backend = "docker";
+    podman.enable = true;
+    oci-containers.backend = "podman";
   };
   environment.systemPackages = with pkgs; [
     curl
