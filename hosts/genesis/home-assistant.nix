@@ -9,31 +9,29 @@ in
 	services.home-assistant = {
 		enable = true;
 		configDir = "/var/lib/hass";
-		package = (pkgs.home-assistant.override {
-			extraComponents = [
-				"accuweather"
-				"calendar"
-				"cast"
-				"eufy"
-				"lovelace"
-				"nextcloud"
-				"ping"
-				"piper"
-				"radio_browser"
-				"rainbird"
-				"roborock"
-				"smart_meter_texas"
-				"speedtestdotnet"
-				"solaredge"
-				"tplink"
-				"whisper"
-				"wiz"
-				"wyoming"
-				"zwave_js"
-			];
-		}).overrideAttrs (oldAttrs: {
-			doInstallCheck = false;
-		});
+		extraComponents = [
+			"accuweather"
+			"calendar"
+			"cast"
+			"eufy"
+			"lovelace"
+			"nextcloud"
+			"ping"
+			"piper"
+			"radio_browser"
+			"rainbird"
+			"roborock"
+			"smart_meter_texas"
+			"speedtestdotnet"
+			"solaredge"
+			"whisper"
+			"wiz"
+			"wyoming"
+			"zwave_js"
+		];
+		customComponents = with pkgs.home-assistant-custom-components; [
+			smartthinq-sensors
+		];
 
 		config = {
 			default_config = {};
