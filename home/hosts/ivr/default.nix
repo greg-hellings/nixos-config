@@ -47,6 +47,7 @@ in {
 			mysql-workbench
 			pipenv-ivr
 			poetry
+			robo3t
 			x
 		];
 		file.".pip/pip.conf".text = (lib.strings.concatStringsSep "\n" [
