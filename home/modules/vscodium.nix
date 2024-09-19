@@ -28,6 +28,24 @@ in {
 				vscjava.vscode-java-dependency
 				vscjava.vscode-java-debug
 			];
+			userSettings = {
+				"direnv.restart.automatic" = true;
+				"direnv.path.executable" = "/home/gregory.hellings/.nix-profile/bin/direnv";
+				"extensions.autoUpdate" = false;
+				"extensions.experimental.affinity" = {
+					"asvetliakov.vscode-neovim" = 1;
+				};
+				"git.openRepositoryInParentFolders" = "always";
+				"search.exclude" = {
+					"**/.tox" = true;
+				};
+				"terminal.integrated.defaultProfile.linux" = "tmux";
+				"vscode-neovim.neovimInitVimPaths.darwin" = "~/.config/nvim/init.lua";
+				"vscode-neovim.neovimInitVimPaths.linux" = "~/.config/nvim/init.lua";
+				"workbench.settings.applyToAllProfiles" = [
+					"direnv.path.executable"
+				];
+			};
 		};
 	};
 }

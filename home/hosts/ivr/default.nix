@@ -61,4 +61,5 @@ in {
 		username = "gregory.hellings";
 		homeDirectory = lib.mkForce "/home/gregory.hellings";
 	};
+	programs.tmux.shell = (lib.getExe x);
 }
