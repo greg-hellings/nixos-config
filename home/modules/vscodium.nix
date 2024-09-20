@@ -9,6 +9,7 @@ in {
 		home.packages = with pkgs; [
 			buildifier
 			gopls
+			nixd  # nix language server
 		];
 
 		# An alternative editor to vim, when I need it for some things
