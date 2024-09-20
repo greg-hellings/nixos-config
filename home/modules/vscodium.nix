@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, config, lib, inputs, ... }:
 
 let
 	cfg = config.greg.vscodium;
@@ -15,18 +15,23 @@ in {
 		programs.vscode = {
 			enable = true;
 			package = pkgs.vscodium;
-			extensions = with pkgs.vscode-extensions; [
+			extensions = with inputs.vsext.extensions."${pkgs.stdenv.system}".vscode-marketplace; [
 				arrterian.nix-env-selector
 				asvetliakov.vscode-neovim
+				batisteo.vscode-django
 				bungcip.better-toml
+				donjayamanne.python-environment-manager
 				golang.go
+				kevinrose.vsc-python-indent
 				jnoortheen.nix-ide
 				mkhl.direnv
 				ms-python.python
+				njpwerner.autodocstring
 				rust-lang.rust-analyzer
 				vscjava.vscode-java-test
 				vscjava.vscode-java-dependency
 				vscjava.vscode-java-debug
+				wholroyd.jinja
 			];
 			userSettings = {
 				"direnv.restart.automatic" = true;

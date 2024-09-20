@@ -31,6 +31,7 @@
 		nixstable.url = "github:nixos/nixpkgs/nixos-24.05";
 		nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
 		nurpkgs.url = "github:nix-community/NUR";
+		vsext.url = "github:nix-community/nix-vscode-extensions";
 		wsl = {
 			url = "github:nix-community/NixOS-WSL";
 			inputs.nixpkgs.follows = "nixunstable";
@@ -47,6 +48,7 @@
 		nixstable,
 		nixunstable,
 		nurpkgs,
+		vsext,
 		wsl,
 
 		self,
@@ -57,6 +59,7 @@
 			agenix.overlays.default
 			local_overlay
 			nurpkgs.overlay
+			vsext.overlays.default
 		];
 
 	in {
