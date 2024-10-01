@@ -37,6 +37,10 @@ def _ivr(args):
     vpn("350Main", "IVR Technology")
 aliases['ivr'] = _ivr
 
+def _ivr2(args):
+    vpn("gregory_hellings@ra.ivrtechnology.com", "IVR Technology")
+aliases['ivr2'] = _ivr2
+
 def _glrestart(args):
     sudo nixos-container run gitlab -- systemctl restart gitlab
     sudo nixos-container run gitlab -- systemctl restart nginx
