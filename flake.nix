@@ -41,16 +41,10 @@
 
 	outputs = {
 		agenix,
-		darwin,
 		flake-utils,
-		hm,
-		hmunstable,
-		nix23_05,
-		nixstable,
 		nixunstable,
 		nurpkgs,
 		vsext,
-		wsl,
 
 		self,
 		...}@inputs:
