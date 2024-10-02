@@ -1,32 +1,19 @@
 { pkgs, ... }:
 
 let
-	vim-stabs = pkgs.vimUtils.buildVimPlugin {
-		name = "vim-stabs";
-		src = pkgs.fetchFromGitHub {
-			owner = "Thyrum";
-			repo = "vim-stabs";
-			rev = "4654d4e000680e1f608b40f155af08873446ed63";
-			sha256 = "0hi1c5zv38hwxbyrf11fz97r728jgbppz4is7fwzwhfrzhwbw0ga";
-		};
-	};
-
 	vim-xonsh = pkgs.vimUtils.buildVimPlugin {
 		name = "vim-xonsh";
 		src = pkgs.fetchFromGitHub {
 			owner = "meatballs";
 			repo = "vim-xonsh";
-			rev = "2028aac";
-			sha256 = "sha256-0+dqtlz8LeyOoSiS12rv8aLdzOMj31PuYAyDYWnpNzw=";
+			rev = "929f35e";
+			hash = "sha256-ugHLu2Z9bTtQsIp4FQPKxgjVe9oZNjfQYrP+aHu+/uU=";
 		};
 	};
 in
 {
-	home.packages = with pkgs; [
-		ansible-language-server
-		pyright
-	];
-
+	fonts.fontconfig.enable = true;
+	home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
 	programs.nixvim = {
 		enable = true;
 		colorschemes.gruvbox.enable = true;
@@ -80,13 +67,20 @@ in
 		];
 		plugins = {
 			airline.enable = true;
-			cmp.enable = true;
+			cmp = {
+				enable = true;
+				autoEnableSources = true;
+				settings.sources = [
+					{ name = "nvim_lsp"; }
+					{ name = "buffer"; group_index = 2; }
+					{ name = "path"; gruop_index = 3; }
+				];
+			};
 			direnv.enable = true;
 			gitgutter.enable = true;
 			fugitive.enable = true;
 			fzf-lua = {
 				enable = true;
-				iconsEnabled = true;
 				keymaps = {
 					"<C-o>" = {
 						action = "files";
@@ -105,18 +99,36 @@ in
 				};
 				profile = "fzf-vim";
 			};
+			lsp = {
+				enable = true;
+				servers = {
+					#ansibels.enable = true;
+					cmake.enable = true;
+					gopls.enable = true;
+					html.enable = true;
+					nixd.enable = true;
+					#packer.enable = true;
+					pylsp.enable = true;
+					pyright.enable = true;
+					rust-analyzer = {
+						# No need to have these installed on every one of my systems
+						installCargo = false;
+						installRustc = false;
+						enable = true;
+					};
+					terraformls.enable = true;
+				};
+			};
 			notify.enable = true;
+			web-devicons.enable = true;
 		};
 		extraConfigLua = builtins.replaceStrings [ "@git@" ] [ "${pkgs.git}/bin/git" ] (builtins.readFile ./vim/extra.lua);
 		extraConfigVim = builtins.readFile ./vim/extra.vimrc;
 		extraPlugins = with pkgs.vimPlugins; [
 			bufexplorer
-			nerdtree
-			nvim-web-devicons  # Be sure to install Hack Nerd Font and set it to your term default: https://gist.github.com/matthewjberger/7dd7e079f282f8138a9dc3b045ebefa0
-			packer-nvim
+			nerdtree  # Maybe neo-tree?
 
 			context-vim
-			vim-flake8
 			vim-indent-guides
 			vim-xonsh
 		];
