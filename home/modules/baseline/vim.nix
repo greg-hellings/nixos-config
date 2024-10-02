@@ -58,7 +58,12 @@ in
 		} {
 			mode = "n";
 			key = "<C-t>";
-			action = "<Esc>:NERDTreeToggle<CR>";
+			#action = "<Esc>:NERDTreeToggle<CR>";
+			action = "<Esc>:Neotree toggle<CR>";
+		} {
+			mode = "n";
+			key = "<C-g>";
+			action = "<Esc>:Neotree float git_status toggle<CR>";
 		}
 			(winMove "h")
 			(winMove "j")
@@ -119,6 +124,7 @@ in
 					terraformls.enable = true;
 				};
 			};
+			neo-tree.enable = true;
 			notify.enable = true;
 			web-devicons.enable = true;
 		};
@@ -126,7 +132,6 @@ in
 		extraConfigVim = builtins.readFile ./vim/extra.vimrc;
 		extraPlugins = with pkgs.vimPlugins; [
 			bufexplorer
-			nerdtree  # Maybe neo-tree?
 
 			context-vim
 			vim-indent-guides
