@@ -107,12 +107,11 @@ in
 			lsp = {
 				enable = true;
 				servers = {
-					#ansibels.enable = true;
+					ansiblels.enable = true;
 					cmake.enable = true;
 					gopls.enable = true;
 					html.enable = true;
 					nixd.enable = true;
-					#packer.enable = true;
 					pylsp.enable = true;
 					pyright.enable = true;
 					rust-analyzer = {
