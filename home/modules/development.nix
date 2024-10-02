@@ -3,6 +3,7 @@ let
 	packages = with pkgs; [
 		bruno  # but let's not talk about it
 		cargo
+		gh-copilot
 		mariadb
 		nix-eval-jobs
 		nix-fast-build
@@ -12,6 +13,7 @@ let
 		nixpkgs-review
 		nodejs
 		process-compose
+		zed-editor
 	];
 in with lib; {
 	options.greg.development = mkEnableOption "Setup necessary development packages";
