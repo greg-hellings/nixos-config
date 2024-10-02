@@ -4,10 +4,7 @@ let
 	myPackages = pypackages: with pypackages; [
 		black
 		dateutil
-		flake8
 		ipython
-		jedi
-		jedi-language-server
 		mypy
 		pylint
 		pyyaml
