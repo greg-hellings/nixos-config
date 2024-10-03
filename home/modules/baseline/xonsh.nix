@@ -41,9 +41,9 @@
       nb = "nix build -L";
       nixdu = "sudo nix-store --gc --print-roots | egrep -v r\"^(/nix/var|/run/\\w+-system|\\{memory|/proc)\"";
       nixtest = "nixpkgs-review rev HEAD";
-      nixup = "nix flake update";
-      stable = "nix flake update nixpkgs hm nixvimstable";
-      unstable = "nix flake update nixunstable hmunstable nixvimunstable nurpkgs vsext wsl";
+      nixup = "nix flake lock --update-input";
+      stable = "nix flake lock --update-input nixpkgs --update-input hm --update-input nixvimstable";
+      unstable = "nix flake lock --update-input nixunstable --update-input hmunstable --update-input nixvimunstable --update-input nurpkgs --update-input vsext --update-input wsl";
 
       # General
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
