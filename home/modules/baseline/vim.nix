@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, config, ... }:
 
 let
 	vim-xonsh = pkgs.vimUtils.buildVimPlugin {
@@ -126,7 +126,7 @@ in
 			neo-tree.enable = true;
 			notify.enable = true;
 			web-devicons.enable = true;
-		};
+		} // (lib.mkIf (lib.versionAtLeast config.system.nixos.release "24.11") {});
 		extraConfigLua = builtins.replaceStrings [ "@git@" ] [ "${pkgs.git}/bin/git" ] (builtins.readFile ./vim/extra.lua);
 		extraConfigVim = builtins.readFile ./vim/extra.vimrc;
 		extraPlugins = with pkgs.vimPlugins; [

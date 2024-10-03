@@ -76,14 +76,16 @@
 			modules = import ./modules;
 		};
 
-		perSystem = { config, self', pkgs', system, ... }: {
-			_module.args.pkgs = import inputs.nixpkgs {
+		perSystem = { pkgs, system, ... }: {
+			_module.args.pkgs = import inputs.nixstable {
 				inherit system overlays;
 			};
 
+			checks = import ./checks.nix { inherit  system; inherit (inputs) hooks; };
+
 			devShells = {
-				default = pkgs'.mkShell {
-					buildInputs = with pkgs'; [
+				default = pkgs.mkShell {
+					buildInputs = with pkgs; [
 						bashInteractive
 						curl
 						git

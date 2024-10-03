@@ -1,12 +1,8 @@
 { pkgs, lib,
-  inputs,
   host ? "most",
   nixvim,
   ...}:
 
-let
-	system = pkgs.system;
-in
 {
 	nixpkgs.config.allowUnfreePredicate = (_: true);
 	imports = [

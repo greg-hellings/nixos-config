@@ -43,7 +43,7 @@
 		enable = true;
 		services.deployer = {
 			executor = "shell";
-			registrationConfigFile = config.age.secrets.runner-deployer.path;
+			authenticationTokenConfigFile = config.age.secrets.runner-deployer.path;
 		};
 	};
 

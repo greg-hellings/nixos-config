@@ -24,7 +24,7 @@ in with lib; {
 			};
 
 			udev.packages = with pkgs; [
-				gnome3.gnome-settings-daemon
+				gnome-settings-daemon
 			];
 
 			pipewire.enable = true;
