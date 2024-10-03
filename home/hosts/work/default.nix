@@ -1,9 +1,9 @@
 { pkgs, ... }:
 
 {
-	greg.vscodium.enable = true;
+  greg.vscodium.enable = true;
 
-	home.packages = with pkgs; [
-		brew
-	];
+  home.packages = with pkgs; [
+    brew
+  ];
 }

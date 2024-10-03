@@ -5,20 +5,21 @@
 { config, pkgs, agenix, ... }:
 
 {
-	imports = [ # Include the results of the hardware scan.
-		./hardware-configuration.nix
-		./boot.nix
-		./filesystem.nix
-		./location.nix
-		./networking.nix
-		./wiki.nix
-	];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./boot.nix
+    ./filesystem.nix
+    ./location.nix
+    ./networking.nix
+    ./wiki.nix
+  ];
 
-	# Define a user account. Don't forget to set a password with ‘passwd’.
-	users.users.greg = {
-		isNormalUser = true;
-		description = "Gregory Hellings";
-		extraGroups = [ "networkmanager" "wheel" ];
-		packages = with pkgs; [];
-	};
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.greg = {
+    isNormalUser = true;
+    description = "Gregory Hellings";
+    extraGroups = [ "networkmanager" "wheel" ];
+    packages = with pkgs; [ ];
+  };
 }

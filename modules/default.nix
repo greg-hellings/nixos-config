@@ -1,7 +1,8 @@
 let
-	nixos = (import ./nixos);
-	darwin = (import ./darwin);
-in {
-	nixosModule = nixos;
-	darwinModule = darwin;
+  nixos = (import ./nixos);
+  darwin = (import ./darwin);
+in
+{
+  nixosModule = nixos;
+  darwinModule = darwin;
 }

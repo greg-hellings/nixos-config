@@ -1,8 +1,8 @@
 { ... }:
 
 {
-	imports = [
-		./modules
-		./hosts/work
-	];
+  imports = [
+    ./modules
+    ./hosts/work
+  ];
 }
