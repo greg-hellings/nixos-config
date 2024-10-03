@@ -1,8 +1,5 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
-let
-  service_list = [ "podman-home-assistant.service" ];
-in
 {
   virtualisation.podman.enable = true;
 

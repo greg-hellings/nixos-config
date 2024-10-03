@@ -5,7 +5,7 @@ let
 
   # Create a container with all our default settings
 
-  makeContainer = name: container:
+  makeContainer = _: container:
     let
       agekey = "/etc/ssh/agenix_key";
     in
@@ -18,7 +18,7 @@ let
         "${agekey}".hostPath = "/etc/ssh/ssh_host_ed25519_key"; # This is needed for agenix to 
       };
       enableTun = container.tailscale;
-      config = { config, pkgs, ... }: {
+      config = { ... }: {
         imports = [
           inputs.agenix.nixosModules.default
           inputs.self.modules.nixosModule

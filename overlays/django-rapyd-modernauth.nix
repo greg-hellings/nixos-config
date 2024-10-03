@@ -10,17 +10,6 @@
 , zipp
 }:
 
-let
-  pydeps = pypkgs: with pypkgs; [
-    click
-    django
-    python-dotenv
-    pytz
-    setuptools
-    sqlparse
-    zipp
-  ];
-in
 buildPythonPackage rec {
   pname = "django-rapyd-modernauth";
   version = "0.0.4";

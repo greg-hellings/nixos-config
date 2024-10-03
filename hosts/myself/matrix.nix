@@ -1,7 +1,5 @@
-{ config, pkgs, inputs, lib, ... }:
+{ pkgs, ... }:
 let
-  domain = "thehellings.com";
-  fqdn = "matrix.${domain}";
   conn = "postgresql:///dendrite?sslmode=disable&host=/run/postgresql";
 in
 {
@@ -10,7 +8,7 @@ in
   greg.containers.matrix = {
     tailscale = true;
     subnet = "204";
-    builder = { pkgs, config, ... }: {
+    builder = { config, ... }: {
       networking.firewall.allowedTCPPorts = [ config.services.dendrite.httpPort ];
 
       # Environment secrets

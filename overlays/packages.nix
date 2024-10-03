@@ -3,10 +3,6 @@
 flake-utils.lib.eachDefaultSystemMap (system:
 let
   pkgs = (import nixunstable { inherit system; });
-  lib = pkgs.lib;
-  callPackage = pkgs.lib.callPackageWith pkgs;
-  python = pkgs.packages.python3;
-  cp = pkgs.packages.python3.pkgs.callPackage;
 in
 {
   hms = pkgs.callPackage ./hms.nix {

@@ -5,7 +5,7 @@ let
 
   where = j: "${config.services.syncthing.dataDir}/${j.dest}";
 
-  makeSyncFolders = name: job: {
+  makeSyncFolders = _: job: {
     devices = [ "chronicles" ];
     enable = true;
     id = job.id;
@@ -14,7 +14,7 @@ let
     type = "sendonly";
   };
 
-  makeRestic = name: job:
+  makeRestic = _: job:
     let
       who = "${config.services.syncthing.user}:${config.services.syncthing.group}";
     in
@@ -34,7 +34,7 @@ with lib; {
         default = { };
 
         type = with types; attrsOf (submodule (
-          { name, config, options, ... }:
+          { ... }:
           {
             options = {
               src = mkOption {

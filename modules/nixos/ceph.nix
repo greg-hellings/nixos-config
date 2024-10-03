@@ -10,7 +10,7 @@ let
 
   ensureUnitExists = c': name:
     let
-      unitName = (builtins.elemAt (builtins.split "\\." name) 0);
+      #unitName = (builtins.elemAt (builtins.split "\\." name) 0);
     in
     if c'.systemd.services ? unitName
     then name
@@ -393,6 +393,8 @@ in
         "/run/wrappers" # `systemd.services.<name>.path` adds the `bin/` subdir of this
       ] ++ map ({ package, ... }: package) cephMonitoringSudoersCommandsAndPackages;
 
+      # Unused localOsdServiceName in the following line
+      # deadnix: skip
       makeCephOsdSetupSystemdService = localOsdServiceName: osdConfig:
         let
           osdExistenceFile = "/var/lib/ceph/osd/.${toString osdConfig.id}.${osdConfig.uuid}.nix-existence";

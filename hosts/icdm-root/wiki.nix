@@ -1,6 +1,5 @@
 { pkgs, ... }:
 let
-  wikiPasswordFile = "/var/mediawiki/passwordFile";
   wikiHost = "wiki.icdm.lan";
   kiwixport = 8080;
   dependents = with pkgs; [

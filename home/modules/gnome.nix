@@ -1,9 +1,7 @@
 { config, pkgs, lib, ... }:
 
 let
-  gv = lib.hm.gvariant;
   cfg = config.greg.gnome;
-
 in
 {
   options.greg.gnome = lib.mkEnableOption "Enable Gnome support and settings";

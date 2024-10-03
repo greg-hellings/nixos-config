@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, ... }:
 
 let
   cfg = config.greg.proxies;
@@ -38,7 +38,7 @@ with lib; {
         			'';
 
       type = with types; attrsOf (submodule (
-        { name, config, options, ... }:
+        { ... }:
         {
           options = {
             genAliases = mkOption {

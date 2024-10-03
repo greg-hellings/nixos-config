@@ -19,10 +19,6 @@ let
       nixpkgs = import channel {
         inherit system;
       };
-      # Use this to include modules directly from a repo
-      nurNoPkg = import inputs.nurpkgs {
-        nurpkgs = nixpkgs;
-      };
     in
     channel.lib.nixosSystem {
       inherit system;

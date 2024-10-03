@@ -96,6 +96,7 @@
               gzip
               inject
               inject-darwin
+              self'.checks.pre-commit-check.enabledPackages
               tmux
               vim
               xonsh

@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, ... }:
 let
   lan = "ens18";
   lanIP = "10.42.1.5";

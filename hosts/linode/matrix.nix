@@ -2,11 +2,10 @@
 # them by the following commands:
 # nix run nixpkgs.matrix-synapse
 # register_new_matrix_user -k "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa" http://localhost:8448
-{ config, pkgs, ... }:
+{ config, ... }:
 let
   domain = "${config.networking.domain}";
   fqdn = "matrix.${domain}";
-  conn = "postgresql:///dendrite?sslmode=disable&host=/run/postgresql";
 in
 {
   services.nginx = {

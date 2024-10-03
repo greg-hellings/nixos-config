@@ -1,7 +1,4 @@
-{ pkgs, lib, ... }:
-let
-  notDarwin = (! pkgs.stdenv.isDarwin);
-in
+{ pkgs, ... }:
 {
   # Enable flakes
   nix = {

@@ -1,4 +1,4 @@
-{ config, pkgs, inputs, lib, ... }:
+{ config, pkgs, lib, ... }:
 
 let
   x =

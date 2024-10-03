@@ -16,13 +16,6 @@ let
   ];
 
   myPython = prev.python312.withPackages myPackages;
-  macOver = file: og:
-    if prev.stdenv.isDarwin then
-      (prev.callPackage file { }) else
-      prev."${og}";
-
-  buildFirefoxXpiAddon = final.nur.repos.rycee.lib.buildFirefoxXpiAddon;
-
   is2405 = prev.lib.versionAtLeast prev.lib.version "24";
 
 in
@@ -31,7 +24,7 @@ rec {
 
   ## Testing adding python packages in the correct manner
   pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
-    (python-final: python-prev:
+    (python-final: _:
       let cp = python-final.callPackage; in {
         django-rapyd-modernauth = cp ./django-rapyd-modernauth.nix { };
         graypy = cp ./graypy.nix { };
@@ -58,7 +51,7 @@ rec {
   brew = prev.callPackage ./homebrew.nix { };
   copier = (if is2405 then
     prev.copier.overridePythonAttrs
-      (old: {
+      (_: {
         version = "9.1.0";
         src = final.fetchFromGitHub {
           owner = "copier-org";

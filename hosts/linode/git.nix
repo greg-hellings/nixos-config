@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ ... }:
 
 let
   srcDomain = "src.thehellings.com";

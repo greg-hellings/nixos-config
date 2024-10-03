@@ -8,7 +8,7 @@ in
   options.greg.databases = lib.mkOption {
     default = { };
     type = with lib.types; attrsOf (submodule (
-      { name, config, options, ... }: {
+      { ... }: {
         # Options reserved for future expansion
         options = { };
       }
