@@ -16,7 +16,8 @@
 			url = "github:lnl7/nix-darwin/master";
 			inputs.nixpkgs.follows = "nixunstable";
 		};
-		flake-utils.url = "github:numtide/flake-utils";
+		flake-parts.url = "github:hercules-ci/flake-parts";
+		hooks.url = "github:cachix/git-hooks.nix";
 		hm = {
 			url = "github:nix-community/home-manager/release-24.05";
 			inputs.nixpkgs.follows = "nixstable";
@@ -39,26 +40,18 @@
 		zed.url = "github:zed-industries/zed/v0.154.x";
 	};
 
-	outputs = {
-		agenix,
-		flake-utils,
-		nixunstable,
-		nurpkgs,
-		vsext,
-
-		self,
-		...}@inputs:
-	let
+	outputs = { self, ...}@inputs: let
 		local_overlay = import ./overlays;
 		overlays = [
-			agenix.overlays.default
+			inputs.agenix.overlays.default
 			local_overlay
-			nurpkgs.overlay
-			vsext.overlays.default
+			inputs.nurpkgs.overlay
+			inputs.vsext.overlays.default
 			(_: _: { zed-editor = inputs.zed.packages.x86_64-linux.default; } )
 		];
 
-	in {
+	in inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+		systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
 		#checks = {
 		#	x86_64-linux = {
 		#		unstable = self.nixosConfigurations.jude.config.system.build.toplevel;
@@ -69,40 +62,44 @@
 		#	};
 		#};
 
-		nixosConfigurations = (import ./hosts { inherit inputs overlays; });
+		flake = {
+			nixosConfigurations = (import ./hosts { inherit inputs overlays; });
 
-		darwinConfigurations = (import ./darwin { inherit inputs overlays; });
+			darwinConfigurations = (import ./darwin { inherit inputs overlays; });
 
-		homeConfigurations = (import ./home { inherit inputs overlays; });
+			homeConfigurations = (import ./home { inherit inputs overlays; });
 
-		devShells = (flake-utils.lib.eachSystemMap flake-utils.lib.allSystems (system: let
-			pkgs = import nixunstable { inherit system overlays; };
-		in {
-			default = pkgs.mkShell {
-				buildInputs = with pkgs; [
-					bashInteractive
-					curl
-					git
-					gnutar
-					gzip
-					inject
-					inject-darwin
-					tmux
-					vim
-					xonsh
-				];
+			overlays = {
+				default = local_overlay;
 			};
-		}));
 
-		overlays = {
-			default = local_overlay;
+			modules = import ./modules;
 		};
 
-		modules = import ./modules;
-		
-		packages = {
-			x86_64-linux = rec {
-				default = iso-beta;
+		perSystem = { config, self', pkgs', system, ... }: {
+			_module.args.pkgs = import inputs.nixpkgs {
+				inherit system overlays;
+			};
+
+			devShells = {
+				default = pkgs'.mkShell {
+					buildInputs = with pkgs'; [
+						bashInteractive
+						curl
+						git
+						gnutar
+						gzip
+						inject
+						inject-darwin
+						tmux
+						vim
+						xonsh
+					];
+				};
+			};
+
+			packages = rec {
+				defaullt = iso;
 				iso = self.nixosConfigurations.iso.config.system.build.isoImage;
 				iso-beta = self.nixosConfigurations.iso-beta.config.system.build.isoImage;
 			};
