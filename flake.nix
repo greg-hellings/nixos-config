@@ -76,24 +76,7 @@
 
         checks = import ./checks.nix { inherit system; inherit (inputs) hooks; };
 
-        devShells = {
-          default = pkgs.mkShell {
-            inherit (self'.checks.pre-commit-check) shellHook;
-            buildInputs = with pkgs; [
-              bashInteractive
-              curl
-              git
-              gnutar
-              gzip
-              inject
-              inject-darwin
-              (inputs.nixvimunstable.legacyPackages.${system}.makeNixvim (import ./home/modules/baseline/vim/config.nix { inherit pkgs; inherit (pkgs) lib; }))
-              self'.checks.pre-commit-check.enabledPackages
-              tmux
-              xonsh
-            ];
-          };
-        };
+        devShells = import ./shells.nix { inherit self' pkgs; inherit (inputs) nixvimunstable; };
 
         packages = rec {
           default = iso;
