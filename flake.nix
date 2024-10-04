@@ -96,6 +96,7 @@
               gzip
               inject
               inject-darwin
+              (inputs.nixvimunstable.legacyPackages.${system}.makeNixvim (import ./home/modules/baseline/vim/config.nix { inherit pkgs; }))
               self'.checks.pre-commit-check.enabledPackages
               tmux
               xonsh
