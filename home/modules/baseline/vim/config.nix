@@ -79,6 +79,13 @@ in
           { name = "buffer"; group_index = 2; }
           { name = "path"; gruop_index = 3; }
         ];
+        mapping = {
+          "<C-Space>" = "cmp.mapping.complete()";
+          "<CR>" = "cmp.mapping.confirm({ select = true })";
+          "<C-f>" = "cmp.mapping.scroll_docs(4)";
+          "<C-b>" = "cmp.mapping.scroll_docs(-4)";
+          "<C-c>" = "cmp.mapping.abort()";
+        };
       };
     };
     direnv.enable = true;
