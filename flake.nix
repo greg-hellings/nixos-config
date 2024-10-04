@@ -54,15 +54,6 @@
     in
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
-      #checks = {
-      #	x86_64-linux = {
-      #		unstable = self.nixosConfigurations.jude.config.system.build.toplevel;
-      #		stable   = self.nixosConfigurations.linode.config.system.build.toplevel;
-      #	};
-      #	aarch64-linux = {
-      #		unstable = self.nixosConfigurations.nixos.config.system.build.toplevel;
-      #	};
-      #};
 
       flake = {
         nixosConfigurations = (import ./hosts { inherit inputs overlays; });
