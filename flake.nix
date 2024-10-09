@@ -37,7 +37,7 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    zed.url = "github:zed-industries/zed/v0.154.x";
+    zed.url = "github:zed-industries/zed/v0.156.x";
   };
 
   outputs = { self, ... }@inputs:
