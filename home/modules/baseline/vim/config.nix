@@ -90,7 +90,7 @@ in
       };
     };
     copilot-vim = {
-      enable = config.nixpkgs.config.allowUnfree;
+      enable = (config.nixpkgs.config ? "allowUnfree" && config.nixpkgs.config.allowUnfree);
       settings.workspace_folders = [ "~/src/ivr" ];
     };
     direnv.enable = true;
