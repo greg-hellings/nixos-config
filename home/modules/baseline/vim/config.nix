@@ -77,6 +77,7 @@ in
         sources = [
           { name = "nvim_lsp"; }
           { name = "buffer"; group_index = 2; }
+          { name = "copilot-vim"; group_index = 2; }
           { name = "path"; gruop_index = 3; }
         ];
         mapping = {
@@ -87,6 +88,10 @@ in
           "<C-c>" = "cmp.mapping.abort()";
         };
       };
+    };
+    copilot-vim = {
+      enable = true;
+      settings.workspace_folders = [ "~/src/ivr" ];
     };
     direnv.enable = true;
     gitgutter.enable = true;
