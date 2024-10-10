@@ -7,7 +7,7 @@ rec {
   greghellings =
     let
       system = "x86_64-linux";
-      pkgs = (import inputs.nixunstable { inherit system overlays; });
+      pkgs = (import inputs.nixunstable { inherit system overlays; config.allowUnfree = true; });
     in
     inputs.hmunstable.lib.homeManagerConfiguration {
       inherit pkgs;

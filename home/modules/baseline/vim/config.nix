@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
   vim-xonsh = pkgs.vimUtils.buildVimPlugin {
     name = "vim-xonsh";
@@ -90,7 +90,7 @@ in
       };
     };
     copilot-vim = {
-      enable = true;
+      enable = config.nixpkgs.config.allowUnfree;
       settings.workspace_folders = [ "~/src/ivr" ];
     };
     direnv.enable = true;
