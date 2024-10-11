@@ -31,9 +31,6 @@ rec {
         cp = python-final.callPackage;
       in
       {
-        django-rapyd-modernauth = cp ./django-rapyd-modernauth.nix { };
-        graypy = cp ./graypy.nix { };
-        itg-django-utils = cp ./itg-django-utils.nix { };
         xonsh-apipenv = cp ./xonsh-apipenv.nix { };
       }
     )
@@ -43,7 +40,6 @@ rec {
   enwiki-dump = prev.callPackage ./enwiki-dump.nix { };
 
   # Overrides of packages
-  brew = prev.callPackage ./homebrew.nix { };
   copier = (
     if is2405 then
       prev.copier.overridePythonAttrs (_: {

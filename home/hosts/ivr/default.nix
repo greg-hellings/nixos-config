@@ -11,11 +11,6 @@ let
   };
   py = nix23.python311.withPackages (
     p: with p; [
-      django
-      djangorestframework
-      django-rapyd-modernauth
-      environs
-      mysqlclient
       pyyaml
       ruamel-yaml
       tox
