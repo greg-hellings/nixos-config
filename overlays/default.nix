@@ -1,4 +1,4 @@
-final: prev:
+_: prev:
 
 let
   myPackages =
@@ -17,7 +17,6 @@ let
     ];
 
   myPython = prev.python312.withPackages myPackages;
-  is2405 = prev.lib.versionAtLeast prev.lib.version "24";
 
 in
 rec {
@@ -40,26 +39,10 @@ rec {
   enwiki-dump = prev.callPackage ./enwiki-dump.nix { };
 
   # Overrides of packages
-  copier = (
-    if is2405 then
-      prev.copier.overridePythonAttrs (_: {
-        version = "9.1.0";
-        src = final.fetchFromGitHub {
-          owner = "copier-org";
-          repo = "copier";
-          rev = "v9.1.0";
-          hash = "sha256-x5r7Xv4lAOMkR+UIEeSY7LvbYMLpTWYuICYe9ygz1tA=";
-          postFetch = "rm $out/tests/demo/doc/ma*ana.txt";
-        };
-      })
-    else
-      prev.copier
-  );
   libbluray-custom = prev.libbluray.override {
     withAACS = true;
     withBDplus = true;
   };
-  template = prev.callPackage ./template.nix { };
   handbrake = prev.handbrake.override { libbluray = libbluray-custom; };
   libvirt-greg = prev.libvirt.overrideAttrs {
     postInstall = prev.libvirt.postInstall + "rm -r $out/lib/systemd/system/libvirtd.service";
