@@ -62,7 +62,7 @@ in
       {
         mode = "n";
         key = "<C-g>";
-        action = "<Esc>:Neotree float git_status toggle<CR>";
+        action = "<Esc>:Git<CR>";
       }
       (winMove "h")
       (winMove "j")
@@ -140,6 +140,12 @@ in
   } // (if (lib.versionAtLeast lib.version "24.11") then {
     web-devicons.enable = true;
   } else { });
+  userCommands = {
+    Ggr = {
+      command = "Ggrep! <q-args> | cw | redraw!";
+      nargs = "+";
+    };
+  };
   extraConfigLua = builtins.replaceStrings [ "@git@" ] [ "${pkgs.git}/bin/git" ] (builtins.readFile ./extra.lua);
   extraConfigVim = builtins.readFile ./extra.vimrc;
   extraPlugins = with pkgs.vimPlugins; [
