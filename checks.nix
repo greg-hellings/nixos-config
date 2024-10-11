@@ -7,7 +7,7 @@
       deadnix.enable = true;
       # Needs https://github.com/DeterminateSystems/flake-checker/pull/130
       #flake-checker.enable = true;
-      nixpkgs-fmt.enable = true;
+      nixfmt-rfc-style.enable = true;
     };
   };
 }
