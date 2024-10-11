@@ -1,16 +1,12 @@
-{ config, pkgs, lib, inputs, overlays, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
-
   gitlabStateDir = "/var/lib/gitlab";
-
-  container = input: (lib.attrsets.recursiveUpdate
-    {
-      bindMounts."/etc/ssh".hostPath = "/etc/ssh"; # For agenix secrets
-      enableTun = true;
-      privateNetwork = true;
-    }
-    input);
 in
 {
   networking = {
@@ -28,12 +24,14 @@ in
   greg.proxies."git.thehellings.lan" = {
     target = "http://192.168.200.2";
     extraConfig = ''
-      		proxy_set_header X-Forwarded-Proto https;
-      		proxy_set_header X-Forwarded-Ssl on;
-      		'';
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-Ssl on;
+    '';
   };
 
-  system.activationScripts.makeGitlabDir = lib.stringAfter [ "var" ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
+  system.activationScripts.makeGitlabDir = lib.stringAfter [
+    "var"
+  ] "mkdir -p ${gitlabStateDir} && touch ${gitlabStateDir}/touch";
 
   greg.containers.gitlab = {
     tailscale = true;

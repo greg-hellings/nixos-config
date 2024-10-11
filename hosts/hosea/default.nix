@@ -2,7 +2,7 @@
 # your system.	Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ inputs, ... }:
+{ top, ... }:
 let
   wanInterface = "enp2s0";
   lanInterface = "enp1s0";
@@ -10,13 +10,12 @@ let
 in
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      inputs.btc.nixosModules.default
-      ./bitcoin.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    top.btc.nixosModules.default
+    ./bitcoin.nix
+  ];
 
   # Bootloader
   boot = {
@@ -39,10 +38,12 @@ in
       "${wanInterface}".useDHCP = true;
       "${lanInterface}" = {
         useDHCP = false;
-        ipv4.addresses = [{
-          address = lanIpAddress;
-          prefixLength = 16;
-        }];
+        ipv4.addresses = [
+          {
+            address = lanIpAddress;
+            prefixLength = 16;
+          }
+        ];
       };
     };
   };

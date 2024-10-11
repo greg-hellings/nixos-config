@@ -45,49 +45,72 @@
     zed.url = "github:zed-industries/zed/v0.156.x";
   };
 
-  outputs = { self, ... }@inputs:
+  outputs =
+    { self, ... }@top:
     let
       local_overlay = import ./overlays;
+      packages_overlay = (
+        _: prev:
+        (import ./pkgs {
+          inherit self;
+          pkgs = prev;
+        }).packages
+      );
       overlays = [
-        inputs.agenix.overlays.default
+        top.agenix.overlays.default
         local_overlay
-        inputs.nurpkgs.overlay
-        inputs.vsext.overlays.default
-        (_: _: { zed-editor = inputs.zed.packages.x86_64-linux.default; })
+        packages_overlay
+        top.nurpkgs.overlay
+        top.vsext.overlays.default
+        (_: _: { zed-editor = top.zed.packages.x86_64-linux.default; })
       ];
 
     in
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      systems = [ "x86_64-linux" "x86_64-darwin" "aarch64-linux" "aarch64-darwin" ];
+    top.flake-parts.lib.mkFlake { inputs = top; } {
+      systems = [
+        "aarch64-linux"
+        "x86_64-linux"
+        "aarch64-darwin"
+      ];
 
       flake = {
-        nixosConfigurations = (import ./hosts { inherit inputs overlays; });
+        nixosConfigurations = (import ./hosts { inherit top overlays; });
 
-        darwinConfigurations = (import ./darwin { inherit inputs overlays; });
+        darwinConfigurations = (import ./darwin { inherit top overlays; });
 
-        homeConfigurations = (import ./home { inherit inputs overlays; });
+        homeConfigurations = (import ./home { inherit top overlays; });
 
         overlays = {
-          default = local_overlay;
+          default = packages_overlay;
+          local = local_overlay;
         };
 
         modules = import ./modules;
       };
 
-      perSystem = { pkgs, self', system, ... }: {
-        _module.args.pkgs = import inputs.nixstable {
-          inherit system overlays;
+      perSystem =
+        {
+          pkgs,
+          self',
+          system,
+          ...
+        }:
+        {
+          _module.args = {
+            pkgs = import top.nixstable { inherit system overlays; };
+          };
+
+          imports = [ ./pkgs ];
+
+          checks = import ./checks.nix {
+            inherit system;
+            inherit (top) hooks;
+          };
+
+          devShells = import ./shells.nix {
+            inherit self' pkgs;
+            inherit (top) nixvimunstable;
+          };
         };
-
-        checks = import ./checks.nix { inherit system; inherit (inputs) hooks; };
-
-        devShells = import ./shells.nix { inherit self' pkgs; inherit (inputs) nixvimunstable; };
-
-        packages = rec {
-          default = iso;
-          iso = self.nixosConfigurations.iso.config.system.build.isoImage;
-          iso-beta = self.nixosConfigurations.iso-beta.config.system.build.isoImage;
-        };
-      };
     };
 }

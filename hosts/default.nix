@@ -1,28 +1,33 @@
-{ inputs, overlays, ... }:
+{ top, overlays, ... }:
 let
-  wsl = args: (unstable (args // { extraMods = [ inputs.wsl.nixosModules.wsl ]; }));
-  unstable = args: (machine (args // {
-    channel = inputs.nixunstable;
-    hm = inputs.hmunstable;
-    nixvim = inputs.nixvimunstable;
-  }));
+  wsl = args: (unstable (args // { extraMods = [ top.wsl.nixosModules.wsl ]; }));
+  unstable =
+    args:
+    (machine (
+      args
+      // {
+        channel = top.nixunstable;
+        hm = top.hmunstable;
+        nixvim = top.nixvimunstable;
+      }
+    ));
   machine =
-    { channel ? inputs.nixstable
-    , extraMods ? [ ]
-    , name
-    , system ? "x86_64-linux"
-    , hm ? inputs.hm
-    , nixvim ? inputs.nixvimstable
-    ,
+    {
+      channel ? top.nixstable,
+      extraMods ? [ ],
+      name,
+      system ? "x86_64-linux",
+      hm ? top.hm,
+      nixvim ? top.nixvimstable,
     }:
     let
-      nixpkgs = import channel {
-        inherit system;
-      };
+      nixpkgs = import channel { inherit system; };
     in
     channel.lib.nixosSystem {
       inherit system;
-      specialArgs = { inherit nixpkgs inputs overlays; };
+      specialArgs = {
+        inherit nixpkgs top overlays;
+      };
       modules = [
         {
           nixpkgs.overlays = overlays;
@@ -31,17 +36,17 @@ let
             useUserPackages = true;
             users.greg = import ../home/home.nix;
             extraSpecialArgs = {
-              inherit inputs overlays nixvim;
+              inherit top overlays nixvim;
               home = "/home/greg";
               host = name;
             };
             backupFileExtension = "bkp";
           };
         }
-        inputs.agenix.nixosModules.default
+        top.agenix.nixosModules.default
         hm.nixosModules.home-manager
-        inputs.self.modules.nixosModule
-        inputs.nurpkgs.nixosModules.nur
+        top.self.modules.nixosModule
+        top.nurpkgs.nixosModules.nur
         ./${name}
       ] ++ extraMods;
     };
@@ -58,7 +63,13 @@ in
   iso = machine { name = "iso"; };
   iso-beta = unstable { name = "iso"; };
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'
-  nixos = wsl { name = "wsl"; system = "aarch64-linux"; };
+  nixos = wsl {
+    name = "wsl";
+    system = "aarch64-linux";
+  };
   # nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
-  nixos-arm = wsl { name = "wsl"; system = "aarch64-linux"; };
+  nixos-arm = wsl {
+    name = "wsl";
+    system = "aarch64-linux";
+  };
 }

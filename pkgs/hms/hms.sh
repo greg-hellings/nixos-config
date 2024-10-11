@@ -1,5 +1,4 @@
 # vim: set ft=bash:
-set -eo pipefail
 # Build different targets with GUI or not
 
 # Build and switch

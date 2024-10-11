@@ -1,4 +1,10 @@
-{ pkgs, config, lib, inputs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  top,
+  ...
+}:
 
 let
   cfg = config.greg.vscodium;
@@ -17,7 +23,7 @@ in
     programs.vscode = {
       enable = true;
       package = pkgs.vscodium;
-      extensions = with inputs.vsext.extensions."${pkgs.stdenv.system}".vscode-marketplace; [
+      extensions = with top.vsext.extensions."${pkgs.stdenv.system}".vscode-marketplace; [
         arrterian.nix-env-selector
         asvetliakov.vscode-neovim
         batisteo.vscode-django
@@ -49,9 +55,7 @@ in
         "terminal.integrated.defaultProfile.linux" = "tmux";
         "vscode-neovim.neovimInitVimPaths.darwin" = "~/.config/nvim/init.lua";
         "vscode-neovim.neovimInitVimPaths.linux" = "~/.config/nvim/init.lua";
-        "workbench.settings.applyToAllProfiles" = [
-          "direnv.path.executable"
-        ];
+        "workbench.settings.applyToAllProfiles" = [ "direnv.path.executable" ];
       };
     };
   };

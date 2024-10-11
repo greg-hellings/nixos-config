@@ -1,30 +1,31 @@
-{ inputs, overlays, ... }:
+{ top, overlays, ... }:
 let
   mac =
-    { system ? "aarch64-darwin"
-    , name
-    , channel ? inputs.nixunstable
-    , hm ? inputs.hmunstable
-    , extraMods ? [ ]
+    {
+      system ? "aarch64-darwin",
+      name,
+      channel ? top.nixunstable,
+      hm ? top.hmunstable,
+      extraMods ? [ ],
     }:
     let
-      nixpkgs = import channel {
-        inherit system overlays;
-      };
+      nixpkgs = import channel { inherit system overlays; };
     in
-    inputs.darwin.lib.darwinSystem {
+    top.darwin.lib.darwinSystem {
       inherit system;
-      specialArgs = { inherit nixpkgs; };
+      specialArgs = {
+        inherit nixpkgs;
+      };
       modules = [
         {
           nixpkgs.overlays = overlays;
           home-manager.extraSpecialArgs = {
-            inherit inputs;
+            inherit top;
             host = name;
           };
         }
         hm.darwinModules.home-manager
-        inputs.self.modules.darwinModule
+        top.self.modules.darwinModule
         ./${name}
       ] ++ extraMods;
     };

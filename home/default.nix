@@ -1,20 +1,22 @@
-{ inputs
-, overlays
-, ...
-}:
+{ top, overlays, ... }:
 
 rec {
   greghellings =
     let
       system = "x86_64-linux";
-      pkgs = (import inputs.nixunstable { inherit system overlays; config.allowUnfree = true; });
+      pkgs = (
+        import top.nixunstable {
+          inherit system overlays;
+          config.allowUnfree = true;
+        }
+      );
     in
-    inputs.hmunstable.lib.homeManagerConfiguration {
+    top.hmunstable.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [ ./home.nix ];
       extraSpecialArgs = {
-        inherit inputs;
-        nixvim = inputs.nixvimunstable;
+        inherit top;
+        nixvim = top.nixvimunstable;
         gui = false;
         gnome = false;
         host = "ivr";
