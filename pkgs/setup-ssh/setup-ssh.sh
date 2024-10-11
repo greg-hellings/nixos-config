@@ -7,5 +7,5 @@ if [ ! -f "${file}" ]; then
 
 	echo "Authing key to GitHub - may fail"
 	gh auth refresh -h github.com -s admin:public_key
-	gh ssh-key add -t ${HOSTNAME}-auto "${file}" || true
+	gh ssh-key add -t "${HOSTNAME}-auto" "${file}" || true
 fi

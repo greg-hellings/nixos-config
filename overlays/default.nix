@@ -40,13 +40,7 @@ rec {
   ];
 
   # My own packages
-  aacs = prev.callPackage ./aacs.nix { };
-  create_ssl = prev.callPackage ./create_ssl.nix { };
   enwiki-dump = prev.callPackage ./enwiki-dump.nix { };
-  inject = prev.callPackage ./inject.nix { inherit (final) pkgs; };
-  inject-darwin = prev.callPackage ./inject-darwin.nix { inherit (final) pkgs; };
-  setup-ssh = prev.callPackage ./setup-ssh { pkgs = final.pkgs; };
-  upgrade-pg-cluster = prev.callPackage ./upgrade-pg-cluster.nix { };
 
   # Overrides of packages
   brew = prev.callPackage ./homebrew.nix { };
