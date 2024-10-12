@@ -16,5 +16,6 @@ in
     hms = c ./hms { };
     setup-ssh = c ./setup-ssh { };
     upgrade-pg-cluster = c ./upgrade-pg-cluster.nix { };
+    zim = c ./zim.nix { };
   };
 }
