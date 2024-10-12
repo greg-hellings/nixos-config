@@ -7,23 +7,21 @@
 }:
 let
   inherit (lib.attrsets) mapAttrs mapAttrsRecursiveCond;
-  # Converts the inputs from the file into a fetchurl command
+  # Converts the inputs from the file into a fetchtorrent command
   zim =
     type: val:
-    fetchtorrent {
-      inherit (val) hash;
+    (fetchtorrent {
+      inherit (val) hash name;
       url = "https://download.kiwix.org/zim/${type}/${val.name}.torrent";
-      curlOptsList = [ "-L" ];
-    };
-  # Uses the function above to convert the JSON into a structure of fetchurl derivations
-  zims = mapAttrs (_: types: (mapAttrs (type: hash: zim type hash) types)) (
-    builtins.fromJSON (builtins.readFile ./zim/blobs.json)
-  );
-  # Turns the fetchurl derivations into a list of strings, copying the results into a final output
+    });
+  rawZims = builtins.fromJSON (builtins.readFile ./zim/blobs.json);
+  # Uses the function above to convert the JSON into a structure of fetchtorrent derivations
+  zims = mapAttrs (_: types: (mapAttrs (type: info: zim type info) types)) (rawZims);
+  # Turns the fetchtorrent derivations into a list of strings, copying the results into a final output
   copies = builtins.concatStringsSep "\n" (
     lib.attrsets.collect builtins.isString (
       mapAttrsRecursiveCond (as: !(lib.attrsets.isDerivation as)) # don't recurse derivations
-        (_: v: "cp ${v} $out/") # copy derivation to destination
+        (_: v: "ln -s ${v} $out/") # copy derivation to destination
         zims
     )
   );
@@ -33,7 +31,7 @@ stdenv.mkDerivation {
   version = "2024-10";
 
   passthru = {
-    inherit zims;
+    inherit zims rawZims;
     updater = (callPackage ./zim/updater.nix { });
   };
 
@@ -42,6 +40,6 @@ stdenv.mkDerivation {
   # Collect all the zim files into a single folder derivation
   installPhase = ''
     mkdir -p $out
-    echo "${copies}" > $out/derp.txt
+    ${copies}
   '';
 }

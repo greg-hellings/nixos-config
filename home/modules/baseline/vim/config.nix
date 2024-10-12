@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   vim-xonsh = pkgs.vimUtils.buildVimPlugin {
     name = "vim-xonsh";
@@ -46,13 +51,18 @@ in
   };
   keymaps =
     let
-      winMove = key: { mode = "n"; key = "<C-${key}>"; action = "<C-w>${key}<C-w><CR>"; };
+      winMove = key: {
+        mode = "n";
+        key = "<C-${key}>";
+        action = "<C-w>${key}<C-w><CR>";
+      };
     in
-    [{
-      mode = "n";
-      key = "<C-e>";
-      action = "<Esc>:BufExplorer<CR>";
-    }
+    [
+      {
+        mode = "n";
+        key = "<C-e>";
+        action = "<Esc>:BufExplorer<CR>";
+      }
       {
         mode = "n";
         key = "<C-t>";
@@ -67,7 +77,8 @@ in
       (winMove "h")
       (winMove "j")
       (winMove "k")
-      (winMove "l")];
+      (winMove "l")
+    ];
   plugins = {
     airline.enable = true;
     cmp = {
@@ -76,15 +87,24 @@ in
       settings = {
         sources = [
           { name = "nvim_lsp"; }
-          { name = "buffer"; group_index = 2; }
-          { name = "copilot-vim"; group_index = 2; }
-          { name = "path"; gruop_index = 3; }
+          {
+            name = "buffer";
+            group_index = 2;
+          }
+          {
+            name = "copilot-vim";
+            group_index = 2;
+          }
+          {
+            name = "path";
+            gruop_index = 3;
+          }
         ];
         mapping = {
           "<C-Space>" = "cmp.mapping.complete()";
           "<CR>" = "cmp.mapping.confirm({ select = true })";
-          "<C-f>" = "cmp.mapping.scroll_docs(4)";
-          "<C-b>" = "cmp.mapping.scroll_docs(-4)";
+          "<C-f>" = "cmp.mapping.select_next_item()";
+          "<C-b>" = "cmp.mapping.select_prev_item()";
           "<C-c>" = "cmp.mapping.abort()";
         };
       };
@@ -137,16 +157,16 @@ in
     };
     neo-tree.enable = true;
     notify.enable = true;
-  } // (if (lib.versionAtLeast lib.version "24.11") then {
-    web-devicons.enable = true;
-  } else { });
+  } // (if (lib.versionAtLeast lib.version "24.11") then { web-devicons.enable = true; } else { });
   userCommands = {
     Ggr = {
       command = "Ggrep! <q-args> | cw | redraw!";
       nargs = "+";
     };
   };
-  extraConfigLua = builtins.replaceStrings [ "@git@" ] [ "${pkgs.git}/bin/git" ] (builtins.readFile ./extra.lua);
+  extraConfigLua = builtins.replaceStrings [ "@git@" ] [ "${pkgs.git}/bin/git" ] (
+    builtins.readFile ./extra.lua
+  );
   extraConfigVim = builtins.readFile ./extra.vimrc;
   extraPlugins = with pkgs.vimPlugins; [
     bufexplorer
