@@ -27,7 +27,6 @@ in
         arrterian.nix-env-selector
         asvetliakov.vscode-neovim
         batisteo.vscode-django
-        bungcip.better-toml
         donjayamanne.python-environment-manager
         golang.go
         kevinrose.vsc-python-indent
@@ -36,6 +35,8 @@ in
         ms-python.python
         njpwerner.autodocstring
         rust-lang.rust-analyzer
+        tamasfe.even-better-toml
+        vadimcn.vscode-lldb
         vscjava.vscode-java-test
         vscjava.vscode-java-dependency
         vscjava.vscode-java-debug
@@ -43,7 +44,7 @@ in
       ];
       userSettings = {
         "direnv.restart.automatic" = true;
-        "direnv.path.executable" = "/home/gregory.hellings/.nix-profile/bin/direnv";
+        "direnv.path.executable" = (lib.getExe pkgs.direnv);
         "extensions.autoUpdate" = false;
         "extensions.experimental.affinity" = {
           "asvetliakov.vscode-neovim" = 1;
