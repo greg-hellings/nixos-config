@@ -18,19 +18,21 @@
       substituters = [
         "https://cache.garnix.io"
         "https://ai.cachix.org"
+        "https://nixpkgs-python.cachix.org"
+        "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
         "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
         "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
+        "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
+        "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
   };
 
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [
-      "jitsi-meet-1.0.8043"
-    ];
+    permittedInsecurePackages = [ "jitsi-meet-1.0.8043" ];
   };
 
   # Base packages that need to be in all my hosts
