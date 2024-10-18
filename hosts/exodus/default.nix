@@ -1,14 +1,20 @@
-{ ... }:
+{ config, ... }:
 
 {
-  imports = [
-    ./hardware-configuration.nix
-  ];
+  imports = [ ./hardware-configuration.nix ];
 
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    binfmt.emulatedSystems = [
+      "i686-linux"
+      "aarch64-linux"
+    ];
   };
+
+  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 
   networking.hostName = "exodus";
   greg = {
