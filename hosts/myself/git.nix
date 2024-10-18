@@ -45,6 +45,7 @@ in
   age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
   age.secrets.docker-auth.file = ../../secrets/gitlab/docker-auth.age;
   age.secrets.runner-qemu.file = ../../secrets/gitlab/myself-qemu-runner-reg.age;
+  systemd.services.gitlab-runner.after = [ "network-online.target" ];
   services.gitlab-runner = {
     enable = true;
     settings = {
