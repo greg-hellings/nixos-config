@@ -1,4 +1,12 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+let
+  builderHosts = [ "myself" ];
+in
 {
   # Enable flakes
   nix = {
@@ -32,7 +40,37 @@
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
+
+    buildMachines = (
+      lib.map (host: {
+        hostName = "${host}-builder";
+        system = "x86_64-linux";
+        protocol = "ssh-ng";
+        maxJobs = 12;
+        speedFactor = 2;
+        supportedFeatures = [
+          "nixos-test"
+          "benchmark"
+          "big-parallel"
+          "kvm"
+        ];
+      }) (lib.filter (x: x != config.networking.hostName) builderHosts)
+    );
+    distributedBuilds = true;
+    extraOptions = ''
+      builders-use-substitutes = true
+    '';
   };
+
+  programs.ssh.extraConfig = (
+    builtins.concatStringsSep "\n" (
+      lib.map (x: ''
+        Host ${x}-builder
+          Hostname ${x}.home
+          User remote-builder-user
+      '') builderHosts
+    )
+  );
 
   nixpkgs.config = {
     allowUnfree = true;
