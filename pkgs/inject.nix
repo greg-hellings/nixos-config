@@ -5,7 +5,7 @@ writeShellApplication {
   runtimeInputs = [ git ];
   text = ''
     hostname="''${1}"
-    if [ -n "''${hostname}"]; then
+    if [ -n "''${hostname}" ]; then
       echo "You must provide a hostname";
       exit 1;
     fi
@@ -50,7 +50,7 @@ writeShellApplication {
     cp /etc/nixos.bk/hardware-configuration.nix /etc/nixos
     chown -R greg nixos
 
-    echo "Now you should be able to just run `nixos-rebuild switch` to enable the flake functionality"
-    echo "After that and adding the entry to the flake, run `nixos-rebuild boot --flake '.#''${hostname}'` and reboot"
+    echo "Now you should be able to just run 'nixos-rebuild switch' to enable the flake functionality"
+    echo "After that and adding the entry to the flake, run 'nixos-rebuild boot --flake '.#''${hostname}' and reboot"
   '';
 }

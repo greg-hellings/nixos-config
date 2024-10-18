@@ -30,7 +30,7 @@ writeShellApplication {
 
     # Build NixOS for this system
     pushd "''${dir}"
-    nix build "~/.config/darwin#darwinConfigurations.$(hostname -s).system"
+    nix build "''${HOME}/.config/darwin#darwinConfigurations.$(hostname -s).system"
     ./result/sw/bin/darwin-rebuild switch --flake ~/.config/darwin
     popd
     rm -r "''${dir}"
