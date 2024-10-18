@@ -8,7 +8,10 @@
     ./minio.nix
   ];
 
-  greg.tailscale.enable = true;
+  greg = {
+    tailscale.enable = true;
+    remote-builder.enable = true;
+  };
 
   services = {
     openssh.enable = true;
@@ -28,25 +31,27 @@
     };
     interfaces = {
       enp38s0 = {
-        ipv4.addresses = [{
-          address = "10.42.1.6";
-          prefixLength = 16;
-        }
+        ipv4.addresses = [
+          {
+            address = "10.42.1.6";
+            prefixLength = 16;
+          }
           {
             address = "10.42.100.1";
             prefixLength = 16;
-          }];
+          }
+        ];
       };
       san = {
-        ipv4.addresses = [{
-          address = "10.201.1.1";
-          prefixLength = 24;
-        }];
+        ipv4.addresses = [
+          {
+            address = "10.201.1.1";
+            prefixLength = 24;
+          }
+        ];
       };
     };
-    nameservers = [
-      "10.42.1.5"
-    ];
+    nameservers = [ "10.42.1.5" ];
   };
   users = {
     users = {
@@ -74,14 +79,10 @@
         configurationLimit = 10;
       };
     };
-    binfmt.emulatedSystems = [
-      "aarch64-linux"
-    ];
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
   };
   nixpkgs.config = {
     allowUnfree = true;
-    permittedInsecurePackages = [
-      "nodejs-16.20.2"
-    ];
+    permittedInsecurePackages = [ "nodejs-16.20.2" ];
   };
 }

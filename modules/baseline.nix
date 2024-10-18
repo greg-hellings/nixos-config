@@ -15,6 +15,10 @@
       keep-derivations = true;
       min-free = (toString (1024 * 1024 * 1024));
       max-free = (toString (5 * 1024 * 1024 * 1024));
+      trusted-users = [
+        "greg"
+        "gregory.hellings"
+      ]; # For home and for work machines
       substituters = [
         "https://cache.garnix.io"
         "https://ai.cachix.org"

@@ -1,10 +1,12 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
-  x =
-    if builtins.hasAttr "xonsh-unwrapped" pkgs then
-      pkgs.xonsh else
-      pkgs.xonsh.passthru.wrapper;
+  x = if builtins.hasAttr "xonsh-unwrapped" pkgs then pkgs.xonsh else pkgs.xonsh.passthru.wrapper;
 in
 {
   imports = [
@@ -20,6 +22,7 @@ in
     ./linode.nix
     ./print.nix
     ./proxy.nix
+    ./remote-builder.nix
     ./router.nix
     ./rpi4.nix
     ./sway.nix
@@ -57,17 +60,21 @@ in
 
   programs.xonsh = {
     enable = true;
-    package = (x.override {
-      extraPackages = (ps: with ps; [
-        (ps.toPythonModule pkgs.pipenv)
-        pyyaml
-        requests
-        ruamel-yaml
-        xonsh-apipenv
-        pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
-        pkgs.nur.repos.xonsh-xontribs.xontrib-vox
-      ]);
-    });
+    package = (
+      x.override {
+        extraPackages = (
+          ps: with ps; [
+            (ps.toPythonModule pkgs.pipenv)
+            pyyaml
+            requests
+            ruamel-yaml
+            xonsh-apipenv
+            pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
+            pkgs.nur.repos.xonsh-xontribs.xontrib-vox
+          ]
+        );
+      }
+    );
   };
 
   # Enable the OpenSSH daemon for remote control
@@ -82,9 +89,14 @@ in
   users.users.greg = {
     isNormalUser = true;
     createHome = true;
-    extraGroups = [ "wheel" "networkmanager" ]; # Enable ‘sudo’ for the user.
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ]; # Enable ‘sudo’ for the user.
     shell = config.programs.xonsh.package;
-    openssh.authorizedKeys.keys = lib.strings.splitString "\n" (builtins.readFile ../../home/ssh/authorized_keys);
+    openssh.authorizedKeys.keys = lib.strings.splitString "\n" (
+      builtins.readFile ../../home/ssh/authorized_keys
+    );
   };
 
   i18n.defaultLocale = "en_US.UTF-8";
