@@ -131,6 +131,10 @@
             url = "https://ryantm.github.io/nixpkgs/functions/library/strings/#sec-functions-library-strings";
           }
           {
+            name = "Noogle";
+            url = "https://noogle.dev/";
+          }
+          {
             name = "NUR search";
             url = "https://nur.nix-community.org/";
           }
