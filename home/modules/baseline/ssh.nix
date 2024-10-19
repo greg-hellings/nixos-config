@@ -15,16 +15,18 @@
 
     matchBlocks =
       let
-        nas = { user = "admin"; };
-        owned = { user = "greg"; };
+        nas = {
+          user = "admin";
+        };
+        owned = {
+          user = "greg";
+        };
       in
       {
         inherit nas;
 
         "*" = {
-          dynamicForwards = [{
-            port = 10240;
-          }];
+          dynamicForwards = [ { port = 10240; } ];
         };
 
         "10.42.1.4" = lib.hm.dag.entryBefore [ "10.42.*" ] nas;
@@ -33,7 +35,10 @@
         chronicles = nas;
         "chronicles.thehellings.lan" = lib.hm.dag.entryBefore [ "*.thehellings.lan" ] nas;
 
-        gh = { user = "git"; hostname = "github.com"; };
+        gh = {
+          user = "git";
+          hostname = "github.com";
+        };
         "src" = {
           user = "gitlab";
           hostname = "git.thehellings.lan";

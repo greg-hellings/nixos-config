@@ -19,7 +19,10 @@
   users.users.greg = {
     isNormalUser = true;
     description = "Gregory Hellings";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     packages = with pkgs; [ ];
   };
 }

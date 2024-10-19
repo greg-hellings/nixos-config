@@ -1,4 +1,9 @@
-{ pkgs, lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 {
   imports = [
@@ -29,9 +34,7 @@
     networkmanager.enable = lib.mkForce false;
     hostName = "linode";
     domain = "thehellings.com";
-    nameservers = [
-      "100.88.91.27"
-    ];
+    nameservers = [ "100.88.91.27" ];
   };
 
   age.secrets.runner-deployer = {
@@ -58,17 +61,21 @@
     User = "gitlab-runner";
   };
 
-  security.sudo.extraRules = [{
-    users = [ "gitlab-runner" ];
-    commands = [{
-      command = "/run/current-system/sw/bin/systemctl";
-      options = [ "NOPASSWD" ];
+  security.sudo.extraRules = [
+    {
+      users = [ "gitlab-runner" ];
+      commands = [
+        {
+          command = "/run/current-system/sw/bin/systemctl";
+          options = [ "NOPASSWD" ];
+        }
+        {
+          command = "/run/current-system/sw/bin/podman";
+          options = [ "NOPASSWD" ];
+        }
+      ];
     }
-      {
-        command = "/run/current-system/sw/bin/podman";
-        options = [ "NOPASSWD" ];
-      }];
-  }];
+  ];
 
   environment.systemPackages = with pkgs; [
     bind

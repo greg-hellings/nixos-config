@@ -4,7 +4,8 @@ let
   cfg = config.greg.sway;
 
 in
-with lib; {
+with lib;
+{
   options = {
     greg.sway.enable = mkEnableOption "Enable my default Gnome3 setup";
   };

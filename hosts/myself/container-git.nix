@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   registryPort = 5000;
   vpnIp = "100.78.226.76";
@@ -8,7 +13,12 @@ in
   age.secretsMountPoint = "/run/derp";
   age.secrets =
     let
-      cfg = n: { file = ../../secrets/gitlab/${n}.age; owner = "gitlab"; group = "gitlab"; mode = "0444"; };
+      cfg = n: {
+        file = ../../secrets/gitlab/${n}.age;
+        owner = "gitlab";
+        group = "gitlab";
+        mode = "0444";
+      };
     in
     {
       gitlab-secret = cfg "secret";
@@ -32,16 +42,19 @@ in
       };
     };
 
-  networking.firewall.allowedTCPPorts = [ 80 registryPort ];
+  networking.firewall.allowedTCPPorts = [
+    80
+    registryPort
+  ];
 
   greg.proxies =
     let
       t = {
         target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
         extraConfig = ''
-          			proxy_set_header X-Forwarded-Proto https;
-          			proxy_set_header X-Forwarded-Ssl on;
-          			'';
+          proxy_set_header X-Forwarded-Proto https;
+          proxy_set_header X-Forwarded-Ssl on;
+        '';
       };
     in
     {
@@ -115,33 +128,45 @@ in
             provider = "AWS";
             endpoint = "http://s3.thehellings.lan:9000";
             region = "us-east-1";
-            aws_access_key_id = { _secret = config.age.secrets.minio_access_key_id.path; };
-            aws_secret_access_key = { _secret = config.age.secrets.minio_secret_access_key.path; };
+            aws_access_key_id = {
+              _secret = config.age.secrets.minio_access_key_id.path;
+            };
+            aws_secret_access_key = {
+              _secret = config.age.secrets.minio_secret_access_key.path;
+            };
             path_style = true; # True for MinIO
             aws_signature_version = 2;
           };
           #storage_options = ...;
-          objects = builtins.listToAttrs (builtins.map (x: lib.attrsets.nameValuePair x { bucket = "gitlab-${builtins.replaceStrings [ "_" ] [ "-" ] x}"; }) [
-            "artifacts"
-            "ci_secure_files"
-            "dependency_proxy"
-            "external_diffs"
-            "lfs"
-            "packages"
-            "pages"
-            "terraform_state"
-            "uploads"
-          ]);
+          objects = builtins.listToAttrs (
+            builtins.map
+              (
+                x: lib.attrsets.nameValuePair x { bucket = "gitlab-${builtins.replaceStrings [ "_" ] [ "-" ] x}"; }
+              )
+              [
+                "artifacts"
+                "ci_secure_files"
+                "dependency_proxy"
+                "external_diffs"
+                "lfs"
+                "packages"
+                "pages"
+                "terraform_state"
+                "uploads"
+              ]
+          );
         };
       };
     };
 
     nginx.virtualHosts."gitlab.shire-zebra.ts.net" = {
-      listen = [{
-        addr = vpnIp;
-        port = registryPort;
-        ssl = true;
-      }];
+      listen = [
+        {
+          addr = vpnIp;
+          port = registryPort;
+          ssl = true;
+        }
+      ];
       locations."/" = {
         proxyPass = "http://127.0.0.1:5000/";
         recommendedProxySettings = true;
@@ -156,17 +181,21 @@ in
     # Fetch the SSL certificates for nginx to use
     cron = {
       enable = true;
-      systemCronJobs = [ "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx" ];
+      systemCronJobs = [
+        "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
+      ];
     };
 
     postgresql = {
       enable = true;
       checkConfig = true;
       ensureDatabases = [ "gitlab" ];
-      ensureUsers = [{
-        name = "gitlab";
-        ensureDBOwnership = true;
-      }];
+      ensureUsers = [
+        {
+          name = "gitlab";
+          ensureDBOwnership = true;
+        }
+      ];
       settings = {
         log_connections = true;
         log_statement = "all";
@@ -186,9 +215,7 @@ in
   # to the 100.* addresses
   systemd.services = {
     nginx = rec {
-      after = [
-        "network-online.target"
-      ];
+      after = [ "network-online.target" ];
       wants = after;
       serviceConfig = {
         RestartMaxDelaySec = "30s";

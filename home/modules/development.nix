@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   packages = with pkgs; [
     bruno # but let's not talk about it
@@ -16,10 +21,9 @@ let
     zed-editor
   ];
 in
-with lib; {
+with lib;
+{
   options.greg.development = mkEnableOption "Setup necessary development packages";
 
-  config = mkIf config.greg.development {
-    home.packages = packages;
-  };
+  config = mkIf config.greg.development { home.packages = packages; };
 }

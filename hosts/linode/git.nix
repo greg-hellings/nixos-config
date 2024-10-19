@@ -10,9 +10,9 @@ in
     ssl = true;
     genAliases = false;
     extraConfig = ''
-      		proxy_set_header X-Forwarded-Proto https;
-      		proxy_set_header X-Forwarded-Ssl on;
-      		'';
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-Ssl on;
+    '';
   };
   greg.proxies."registry.thehellings.com" = {
     target = "https://registry.thehellings.lan:5000";

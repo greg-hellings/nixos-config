@@ -1,26 +1,24 @@
 { config, pkgs, ... }:
 
 {
-  environment.systemPackages = [
-    pkgs.upgrade-pg-cluster
-  ];
+  environment.systemPackages = [ pkgs.upgrade-pg-cluster ];
 
   services.postgresql = {
     enable = true;
     package = pkgs.postgresql_15;
     checkConfig = true;
-    ensureDatabases = [
-      "nextcloud"
-    ];
+    ensureDatabases = [ "nextcloud" ];
     #initialScript = pkgs.writeText "create-matrix-db.sql" ''
     #	CREATE ROLE "matrix-synapse" WITH LOGIN;
     #	CREATE DATABASE "synapse" WITH OWNER "matrix-synapse" TEMPLATE template0 LC_COLLATE = "C" LC_CTYPE = "C";
     #	GRANT ALL PRIVILEGES ON DATABASE "synapse" TO "matrix-synapse";
     #'';  # These are done manually in order to set the LC_COLLATE values properly
-    ensureUsers = [{
-      name = "nextcloud";
-      ensureDBOwnership = true;
-    }];
+    ensureUsers = [
+      {
+        name = "nextcloud";
+        ensureDBOwnership = true;
+      }
+    ];
     settings = {
       log_connections = true;
       log_statement = "all";
@@ -34,9 +32,7 @@
 
   services.postgresqlBackup = {
     enable = true;
-    databases = [
-      "nextcloud"
-    ];
+    databases = [ "nextcloud" ];
   };
 
   services.logrotate = {

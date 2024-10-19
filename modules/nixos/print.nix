@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.greg.print;
@@ -16,19 +21,19 @@ with lib;
     # ipp://printer.thehellings.lan:631/ - generic postscript printer
     services.printing = {
       enable = true;
-      drivers = with pkgs; [
-        gutenprint
-      ] ++ (lib.optional pkgs.stdenv.isx86_64 gutenprintBin);
+      drivers = with pkgs; [ gutenprint ] ++ (lib.optional pkgs.stdenv.isx86_64 gutenprintBin);
     };
 
-    hardware.printers.ensurePrinters = [{
-      name = "HomeLexmarkColorPrinter";
-      location = "Home office";
-      deviceUri = "ipp://printer.thehellings.lan:631/";
-      model = "drv:///sample.drv/generic.ppd";
-      ppdOptions = {
-        PageSize = "Letter";
-      };
-    }];
+    hardware.printers.ensurePrinters = [
+      {
+        name = "HomeLexmarkColorPrinter";
+        location = "Home office";
+        deviceUri = "ipp://printer.thehellings.lan:631/";
+        model = "drv:///sample.drv/generic.ppd";
+        ppdOptions = {
+          PageSize = "Letter";
+        };
+      }
+    ];
   };
 }

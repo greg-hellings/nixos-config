@@ -1,8 +1,9 @@
-{ pkgs
-, lib
-, host ? "most"
-, nixvim
-, ...
+{
+  pkgs,
+  lib,
+  host ? "most",
+  nixvim,
+  ...
 }:
 
 {
@@ -12,15 +13,12 @@
     ./modules
   ] ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
 
-
   programs.tmux = {
     enable = true;
     keyMode = "vi";
     terminal = "xterm-256color";
     customPaneNavigationAndResize = true;
-    extraConfig = (lib.strings.concatStringsSep "\n" [
-      "bind P paste-buffer"
-    ]);
+    extraConfig = (lib.strings.concatStringsSep "\n" [ "bind P paste-buffer" ]);
   };
 
   home.stateVersion = "23.05";

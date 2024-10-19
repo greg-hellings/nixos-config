@@ -1,8 +1,6 @@
 { ... }:
 {
-  imports = [
-    ../baseline.nix
-  ];
+  imports = [ ../baseline.nix ];
   system.stateVersion = 4;
   home-manager = {
     useGlobalPkgs = true;

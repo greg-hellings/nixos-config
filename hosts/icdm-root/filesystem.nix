@@ -1,7 +1,8 @@
 { ... }:
 
 let
-in {
+in
+{
   fileSystems."serve" = {
     #device = "10.42.1.4:/volume1/icdm-mysql/";
     #fsType = "nfs";

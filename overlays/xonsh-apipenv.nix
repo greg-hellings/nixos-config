@@ -1,9 +1,9 @@
-{ lib
-, buildPythonPackage
-, fetchFromGitHub
-, toPythonModule
-, pipenv
-,
+{
+  lib,
+  buildPythonPackage,
+  fetchFromGitHub,
+  toPythonModule,
+  pipenv,
 }:
 
 buildPythonPackage rec {
@@ -19,9 +19,7 @@ buildPythonPackage rec {
 
   doCheck = false;
 
-  dependencies = [
-    (toPythonModule pipenv)
-  ];
+  dependencies = [ (toPythonModule pipenv) ];
 
   meta = with lib; {
     description = "Auto pipenv support for Xonsh";

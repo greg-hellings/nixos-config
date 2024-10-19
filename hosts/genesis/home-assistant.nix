@@ -26,16 +26,17 @@
       "wyoming"
       "zwave_js"
     ];
-    customComponents = with pkgs.home-assistant-custom-components; [
-      smartthinq-sensors
-    ];
+    customComponents = with pkgs.home-assistant-custom-components; [ smartthinq-sensors ];
 
     config = {
       default_config = { };
-      tts = [{ platform = "google_translate"; }];
+      tts = [ { platform = "google_translate"; } ];
       http = {
         use_x_forwarded_for = true;
-        trusted_proxies = [ "127.0.0.1" "::1" ];
+        trusted_proxies = [
+          "127.0.0.1"
+          "::1"
+        ];
         server_host = "127.0.0.1";
       };
       #"automation manual" = *nix config here* and so on
@@ -75,7 +76,10 @@
     containers.zwave = {
       autoStart = false; # We will try to start it with udev.extraRules listed below, as this option starts it too quickly
       image = "zwavejs/zwave-js-ui:latest";
-      ports = [ "8091:8091" "3000:3000" ];
+      ports = [
+        "8091:8091"
+        "3000:3000"
+      ];
       volumes = [ "/var/lib/zwave:/usr/src/app/store" ];
       extraOptions = [
         "--device"
@@ -93,8 +97,12 @@
   # the container. So we add the creation of /var/lib/{zwave,hass} to the systemd Unit files
   systemd.services = {
     "podman-zwave" = {
-      after = [ "sys-devices-pci0000:00-0000:00:1e.0-0000:02:1b.0-usb2-2\\x2d1-2\\x2d1:1.0-tty-ttyACM0.device" ];
-      wantedBy = [ "sys-devices-pci0000:00-0000:00:1e.0-0000:02:1b.0-usb2-2\\x2d1-2\\x2d1:1.0-tty-ttyACM0.device" ];
+      after = [
+        "sys-devices-pci0000:00-0000:00:1e.0-0000:02:1b.0-usb2-2\\x2d1-2\\x2d1:1.0-tty-ttyACM0.device"
+      ];
+      wantedBy = [
+        "sys-devices-pci0000:00-0000:00:1e.0-0000:02:1b.0-usb2-2\\x2d1-2\\x2d1:1.0-tty-ttyACM0.device"
+      ];
       serviceConfig = {
         StateDirectory = "zwave";
         StateDirectoryMode = pkgs.lib.mkForce "0777";
@@ -103,9 +111,8 @@
   };
 
   services.udev.extraRules = ''
-    	SUBSYSTEM=="tty", KERNEL=="ttyACM0", TAG+="systemd"
-    	'';
-
+    SUBSYSTEM=="tty", KERNEL=="ttyACM0", TAG+="systemd"
+  '';
 
   greg.proxies = {
     "smart.home".target = "http://127.0.0.1:8123/";
@@ -116,7 +123,10 @@
   # Ensure that both ports are up and running. We keep 8123 directly open because we are on the LAN and sometimes want to connect
   # directly for troubleshooting Nginx configuration
   networking.firewall = {
-    allowedTCPPorts = [ 80 443 ];
+    allowedTCPPorts = [
+      80
+      443
+    ];
   };
 
   greg.backup.jobs.zwave = {

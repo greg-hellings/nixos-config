@@ -41,9 +41,7 @@ in
       listen = true;
       rpc = {
         address = ip;
-        allowip = [
-          "100.1.1.1/8"
-        ];
+        allowip = [ "100.1.1.1/8" ];
       };
     };
     clightning = {
@@ -74,6 +72,5 @@ in
     };
   };
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages = with pkgs; [ ];
 }

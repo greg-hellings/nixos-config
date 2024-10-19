@@ -1,4 +1,9 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.greg.databases;
@@ -7,12 +12,17 @@ in
 {
   options.greg.databases = lib.mkOption {
     default = { };
-    type = with lib.types; attrsOf (submodule (
-      { ... }: {
-        # Options reserved for future expansion
-        options = { };
-      }
-    ));
+    type =
+      with lib.types;
+      attrsOf (
+        submodule (
+          { ... }:
+          {
+            # Options reserved for future expansion
+            options = { };
+          }
+        )
+      );
   };
 
   config = lib.mkIf (dbs != [ ]) {
@@ -22,7 +32,10 @@ in
         package = pkgs.postgresql_15;
         checkConfig = true;
         ensureDatabases = dbs;
-        ensureUsers = map (db: { name = db; ensureDBOwnership = true; }) dbs;
+        ensureUsers = map (db: {
+          name = db;
+          ensureDBOwnership = true;
+        }) dbs;
         settings = {
           log_connections = true;
           log_statement = "all";

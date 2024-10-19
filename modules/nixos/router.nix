@@ -1,22 +1,39 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   names = mylist: (lib.strings.concatMapStringsSep "," (x: ''"${x}"'') mylist);
   # Pass the names of the wan/lan ports
   nftConfig =
-    { wan
-    , lan
-    , limitedLan ? [ ]
-    , openPorts ? [ "ssh" "67" "53" ]
-    , # ssh, dhcpd, dns
-      openUDPPorts ? [ "67" "53" ] # dhcpd, dns
+    {
+      wan,
+      lan,
+      limitedLan ? [ ],
+      openPorts ? [
+        "ssh"
+        "67"
+        "53"
+      ],
+      # ssh, dhcpd, dns
+      openUDPPorts ? [
+        "67"
+        "53"
+      ], # dhcpd, dns
     }:
     let
       lanList = names lan;
       allLan = names (lan ++ limitedLan);
       wanName = names wan;
-      portsString = lib.strings.concatMapStringsSep "\n" (x: "iifname { ${lanList}, \"tailscale0\" } tcp dport ${toString x} accept") openPorts;
-      udpPortsString = lib.strings.concatMapStringsSep "\n" (x: "iifname { ${lanList}, \"tailscale0\" } udp dport ${toString x} accept") openUDPPorts;
+      portsString = lib.strings.concatMapStringsSep "\n" (
+        x: "iifname { ${lanList}, \"tailscale0\" } tcp dport ${toString x} accept"
+      ) openPorts;
+      udpPortsString = lib.strings.concatMapStringsSep "\n" (
+        x: "iifname { ${lanList}, \"tailscale0\" } udp dport ${toString x} accept"
+      ) openUDPPorts;
     in
     lib.strings.concatStringsSep "\n" [
       "table ip filter {"
@@ -61,7 +78,8 @@ let
   cfg = config.greg.router;
 
 in
-with lib; {
+with lib;
+{
   options.greg.router = {
     enable = mkEnableOption "Enable NFTables and routing";
     wan = mkOption {
@@ -82,11 +100,13 @@ with lib; {
   config = mkIf cfg.enable {
     networking.nftables = {
       enable = true;
-      ruleset = (nftConfig {
-        inherit (cfg) lan wan;
-        openPorts = config.networking.firewall.allowedTCPPorts;
-        openUDPPorts = config.networking.firewall.allowedUDPPorts;
-      });
+      ruleset = (
+        nftConfig {
+          inherit (cfg) lan wan;
+          openPorts = config.networking.firewall.allowedTCPPorts;
+          openUDPPorts = config.networking.firewall.allowedUDPPorts;
+        }
+      );
     };
 
     environment.systemPackages = [

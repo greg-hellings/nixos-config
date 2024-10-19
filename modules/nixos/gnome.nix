@@ -1,10 +1,16 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   cfg = config.greg.gnome;
 
 in
-with lib; {
+with lib;
+{
   options = {
     greg.gnome.enable = mkEnableOption "Enable my default Gnome3 setup";
   };
@@ -24,9 +30,7 @@ with lib; {
         xkb.layout = "us";
       };
 
-      udev.packages = with pkgs; [
-        gnome-settings-daemon
-      ];
+      udev.packages = with pkgs; [ gnome-settings-daemon ];
 
       pipewire.enable = true;
 

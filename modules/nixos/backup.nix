@@ -1,4 +1,9 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.greg.backup;
@@ -14,7 +19,8 @@ let
     type = "sendonly";
   };
 
-  makeRestic = _: job:
+  makeRestic =
+    _: job:
     let
       who = "${config.services.syncthing.user}:${config.services.syncthing.group}";
     in
@@ -27,48 +33,50 @@ let
     };
 
 in
-with lib; {
+with lib;
+{
   options = {
     greg.backup = {
       jobs = mkOption {
         default = { };
 
-        type = with types; attrsOf (submodule (
-          { ... }:
-          {
-            options = {
-              src = mkOption {
-                type = types.str;
-                description = "Local path (string form) to backup from";
-              };
+        type =
+          with types;
+          attrsOf (
+            submodule (
+              { ... }:
+              {
+                options = {
+                  src = mkOption {
+                    type = types.str;
+                    description = "Local path (string form) to backup from";
+                  };
 
-              dest = mkOption {
-                type = types.str;
-              };
+                  dest = mkOption { type = types.str; };
 
-              id = mkOption {
-                type = types.str;
-                description = "The unique folder ID for this";
-              };
-            };
-          }
-        ));
+                  id = mkOption {
+                    type = types.str;
+                    description = "The unique folder ID for this";
+                  };
+                };
+              }
+            )
+          );
       };
     };
   };
 
-  config = mkIf ((attrValues cfg.jobs) != [ ])
-    {
-      age.secrets = {
-        restic-pw.file = ../../secrets/restic-pw.age;
-        restic-env.file = ../../secrets/restic-env.age;
-      };
-      greg.syncthing = {
-        enable = true;
-      };
-      services = {
-        syncthing.settings.folders = mapAttrs makeSyncFolders cfg.jobs;
-        restic.backups = mapAttrs makeRestic cfg.jobs;
-      };
+  config = mkIf ((attrValues cfg.jobs) != [ ]) {
+    age.secrets = {
+      restic-pw.file = ../../secrets/restic-pw.age;
+      restic-env.file = ../../secrets/restic-env.age;
     };
+    greg.syncthing = {
+      enable = true;
+    };
+    services = {
+      syncthing.settings.folders = mapAttrs makeSyncFolders cfg.jobs;
+      restic.backups = mapAttrs makeRestic cfg.jobs;
+    };
+  };
 }

@@ -1,10 +1,16 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.greg.rpi4;
 
 in
-with lib; {
+with lib;
+{
   options = {
     greg.rpi4 = {
       enable = mkEnableOption "Enable support for Raspberry Pi 4s";

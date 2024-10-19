@@ -2,16 +2,20 @@
 # your system.	Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./ceph.nix
-      ./hardware-configuration.nix
-      ./minio.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./ceph.nix
+    ./hardware-configuration.nix
+    ./minio.nix
+  ];
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -32,25 +36,27 @@
     };
     interfaces = {
       enp68s0 = {
-        ipv4.addresses = [{
-          address = "10.42.1.8";
-          prefixLength = 16;
-        }
+        ipv4.addresses = [
+          {
+            address = "10.42.1.8";
+            prefixLength = 16;
+          }
           {
             address = "10.42.100.1";
             prefixLength = 16;
-          }];
+          }
+        ];
       };
       san = {
-        ipv4.addresses = [{
-          address = "10.201.1.2";
-          prefixLength = 24;
-        }];
+        ipv4.addresses = [
+          {
+            address = "10.201.1.2";
+            prefixLength = 24;
+          }
+        ];
       };
     };
-    nameservers = [
-      "10.42.1.5"
-    ];
+    nameservers = [ "10.42.1.5" ];
   };
   greg = {
     home = true;

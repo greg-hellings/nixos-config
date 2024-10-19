@@ -67,9 +67,11 @@
     };
 
     configHeader = builtins.readFile ./xonsh_header.xsh;
-    configFooter = (builtins.readFile ./xonsh_footer.xsh) + (builtins.concatStringsSep "\n" [
-      "with open('${pkgs.stdenv.cc}/nix-support/dynamic-linker', 'r') as fp:"
-      "    $NIX_LD = fp.read().strip()"
-    ]);
+    configFooter =
+      (builtins.readFile ./xonsh_footer.xsh)
+      + (builtins.concatStringsSep "\n" [
+        "with open('${pkgs.stdenv.cc}/nix-support/dynamic-linker', 'r') as fp:"
+        "    $NIX_LD = fp.read().strip()"
+      ]);
   };
 }

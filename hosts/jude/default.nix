@@ -25,7 +25,10 @@
     firewall = {
       enable = false;
       allowedTCPPorts = [ 21000 ];
-      allowedUDPPorts = [ 21000 21010 ];
+      allowedUDPPorts = [
+        21000
+        21010
+      ];
     };
   };
   greg = {
@@ -38,48 +41,50 @@
 
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
-  environment.systemPackages = with pkgs; lib.mkMerge [
-    [
-      # for Immersed
-      cudatoolkit
-      immersed-vr
-      libva
-    ]
-    [
-      bind # For things like nslookup
-      create_ssl
-      distrobox
-      expect
-      gimp
-      go
-      gparted
-      gnucash
-      graphviz
-      flock
-      ffmpeg
-      handbrake
-      imagemagick
-      libtheora
-      libxml2
-      linode-cli
-      makemkv
-      oathToolkit
-      usbutils
-      vagrant
-      ventoy
-    ]
+  environment.systemPackages =
+    with pkgs;
+    lib.mkMerge [
+      [
+        # for Immersed
+        cudatoolkit
+        immersed-vr
+        libva
+      ]
+      [
+        bind # For things like nslookup
+        create_ssl
+        distrobox
+        expect
+        gimp
+        go
+        gparted
+        gnucash
+        graphviz
+        flock
+        ffmpeg
+        handbrake
+        imagemagick
+        libtheora
+        libxml2
+        linode-cli
+        makemkv
+        oathToolkit
+        usbutils
+        vagrant
+        ventoy
+      ]
 
-    [
-      # Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
-      gst_all_1.gstreamer
-      gst_all_1.gst-plugins-base
-      gst_all_1.gst-plugins-good
-      gst_all_1.gst-plugins-bad
-      gst_all_1.gst-plugins-ugly
-      gst_all_1.gst-libav
-      gst_all_1.gst-vaapi
-    ]
-  ];
+      [
+        # Video/Audio data composition framework tools like "gst-inspect", "gst-launch" ...
+        gst_all_1.gstreamer
+        gst_all_1.gst-plugins-base
+        gst_all_1.gst-plugins-good
+        gst_all_1.gst-plugins-bad
+        gst_all_1.gst-plugins-ugly
+        gst_all_1.gst-libav
+        gst_all_1.gst-vaapi
+      ]
+    ];
   fileSystems = {
     "/boot" = {
       device = "/dev/nvme0n1p1";

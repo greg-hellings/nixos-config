@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 {
   options.greg.pypackage = lib.mkOption {
     description = "Enable Gnome support and settings";

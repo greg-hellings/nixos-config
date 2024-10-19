@@ -3,7 +3,8 @@
 let
   cfg = config.greg.syncthing;
 in
-with lib; {
+with lib;
+{
   options.greg.syncthing = {
     enable = mkEnableOption "Setup my personal minimal configuration for Syncthing";
   };

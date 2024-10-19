@@ -37,18 +37,22 @@ in
       # This is our LAN port
       "${lan}" = {
         useDHCP = false;
-        ipv4.addresses = [{
-          address = "${lanIP}";
-          prefixLength = 16;
-        }];
+        ipv4.addresses = [
+          {
+            address = "${lanIP}";
+            prefixLength = 16;
+          }
+        ];
       };
 
       "${iot}" = {
         useDHCP = false;
-        ipv4.addresses = [{
-          address = "${iotIP}";
-          prefixLength = 24;
-        }];
+        ipv4.addresses = [
+          {
+            address = "${iotIP}";
+            prefixLength = 24;
+          }
+        ];
       };
     };
     firewall = {
@@ -90,15 +94,19 @@ in
     ########
     _3proxy = {
       enable = true;
-      services = [{
-        type = "socks";
-        auth = [ "strong" ];
-        bindPort = proxyPort;
-        acl = [{
-          rule = "allow";
-          users = [ "greg" ];
-        }];
-      }];
+      services = [
+        {
+          type = "socks";
+          auth = [ "strong" ];
+          bindPort = proxyPort;
+          acl = [
+            {
+              rule = "allow";
+              users = [ "greg" ];
+            }
+          ];
+        }
+      ];
       #usersFile = "/run/agenix/3proxy";
       denyPrivate = false;
     };
@@ -140,7 +148,7 @@ in
           "4c:a1:61:05:cd:52,192.168.66.61" # Rainbird
           "48:d6:d5:5d:81:21,192.168.66.65" # Google Home
           "6c:29:90:3e:e2:02,192.168.66.66" # wiz
-          "28:87:ba:0e:ca:da,192.168.66.74" #
+          "28:87:ba:0e:ca:da,192.168.66.74"
           "28:87:ba:0e:c9:fd,192.168.66.75" # Master closet
           "54:af:97:c2:0f:a1,192.168.66.76" # Master toilet
           "54:af:97:83:ed:33,192.168.66.80"
@@ -174,9 +182,7 @@ in
     # Update adblock list
     cron = {
       enable = true;
-      systemCronJobs = [
-        "* * * * * root ${adblockUpdate} 2>&1 > /var/log/adblock.log"
-      ];
+      systemCronJobs = [ "* * * * * root ${adblockUpdate} 2>&1 > /var/log/adblock.log" ];
     };
   }; # End of services configuration
 

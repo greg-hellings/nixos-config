@@ -19,7 +19,9 @@ in
         # the actual application server at matrix.thehellings.com
         locations."= /.well-known/matrix/server".extraConfig =
           let
-            server = { "m.server" = "${fqdn}:443"; };
+            server = {
+              "m.server" = "${fqdn}:443";
+            };
           in
           ''
             add_header Content-Type application/json;
@@ -29,8 +31,12 @@ in
         locations."= /.well-known/matrix/client".extraConfig =
           let
             client = {
-              "m.homeserver" = { "base_url" = "https://${fqdn}"; };
-              "m.identity_server" = { "base_url" = "https://vector.im"; };
+              "m.homeserver" = {
+                "base_url" = "https://${fqdn}";
+              };
+              "m.identity_server" = {
+                "base_url" = "https://vector.im";
+              };
             };
           in
           ''
@@ -58,6 +64,9 @@ in
   # Open networking ports for the server
   networking.firewall = {
     enable = true;
-    allowedTCPPorts = [ 80 443 ];
+    allowedTCPPorts = [
+      80
+      443
+    ];
   };
 }

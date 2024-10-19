@@ -1,9 +1,15 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 let
   cfg = config.services.kiwix-serve;
 in
-with lib; {
+with lib;
+{
   options.services.kiwix-serve = {
     enable = mkEnableOption "Enable the Kiwix web server";
 
@@ -22,16 +28,15 @@ with lib; {
     proxy = mkOption {
       type = types.str;
       default = "";
-      description = ''Upstream proxy, if any, to configure with kiwix. Specify
-				host and port. E.g. "localhost:8080"
-			'';
+      description = ''
+        Upstream proxy, if any, to configure with kiwix. Specify
+        				host and port. E.g. "localhost:8080"
+        			'';
     };
   };
 
   config = mkIf cfg.enable {
-    environment.systemPackages = [
-      pkgs.kiwix-tools
-    ];
+    environment.systemPackages = [ pkgs.kiwix-tools ];
 
     systemd.services.kiwix-serve = {
       enable = true;

@@ -5,7 +5,14 @@ let
   genesis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEI9jbTPmEWQ0F2bLYmnIOLmBnag1fkKxHRjz3X8lB/k root@genesis";
   hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz";
   jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0";
-  systems = [ genesis linode jude myself hosea jeremiah ];
+  systems = [
+    genesis
+    linode
+    jude
+    myself
+    hosea
+    jeremiah
+  ];
 
   user_genesis_virt = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFWPSFQT0AH77wrwRhiskcBS0w4ZakBRdJywYYBsnm3S greg@genesis";
   user_ivr = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYzms+KIe5/bYF3uCyFjA5e1AgMPLIA3c4k417coqBe gregory.hellings@ls23003";
@@ -43,7 +50,6 @@ in
 
   "restic-env.age".publicKeys = everyone;
   "restic-pw.age".publicKeys = everyone;
-
 
   "dendrite.age".publicKeys = everyone;
   "dendrite_key.age".publicKeys = everyone;
