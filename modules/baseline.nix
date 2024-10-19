@@ -31,12 +31,14 @@ in
         "https://cache.garnix.io"
         "https://ai.cachix.org"
         "https://nixpkgs-python.cachix.org"
+        "https://greg-hellings.cachix.org"
         "https://nix-community.cachix.org"
       ];
       trusted-public-keys = [
         "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
         "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
         "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
+        "greg-hellings.cachix.org-1:y01Jl/L5evlhxdnUW6n56AiI1k8g1wxWhTxJCe7XSco="
         "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
       ];
     };
@@ -82,6 +84,7 @@ in
     agenix
     bitwarden-cli
     bmon
+    cachix
     diffutils
     git
     gnupatch

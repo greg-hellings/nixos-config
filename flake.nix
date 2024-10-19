@@ -5,8 +5,14 @@
   description = "Greg's machines!";
 
   nixConfig = {
-    extra-substituters = [ "https://cache.garnix.io" ];
-    extra-trusted-public-keys = [ "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g" ];
+    extra-substituters = [
+      "https://greg-hellings.cachix.org"
+      "https://cache.garnix.io"
+    ];
+    extra-trusted-public-keys = [
+      "greg-hellings.cachix.org-1:y01Jl/L5evlhxdnUW6n56AiI1k8g1wxWhTxJCe7XSco="
+      "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g"
+    ];
   };
 
   inputs = {
