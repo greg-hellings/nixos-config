@@ -27,6 +27,7 @@ let
       inherit system;
       specialArgs = {
         inherit nixpkgs top overlays;
+        inherit (top) self;
       };
       modules = [
         {

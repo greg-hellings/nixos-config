@@ -2,10 +2,13 @@
   pkgs,
   config,
   lib,
+  self,
   ...
 }:
 let
-  builderHosts = [ "jude" "myself" ];
+  builderHosts = (
+    lib.attrNames (lib.filterAttrs (_: v: v.config.greg.remote-builder.enable) self.nixosConfigurations)
+  );
 in
 {
   # Enable flakes
