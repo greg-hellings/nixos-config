@@ -37,6 +37,7 @@
     gnome.enable = true;
     kde.enable = false;
     print.enable = true;
+    remote-builder.enable = true;
   };
 
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
@@ -70,7 +71,6 @@
         makemkv
         oathToolkit
         usbutils
-        vagrant
         ventoy
       ]
 
@@ -120,6 +120,6 @@
       open = true;
     };
     pulseaudio.enable = false; # This conflicts with pipewire
-    system76.enableAll = true;
+    system76.enableAll = false;
   };
 }

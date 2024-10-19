@@ -5,7 +5,7 @@
   ...
 }:
 let
-  builderHosts = [ "myself" ];
+  builderHosts = [ "jude" "myself" ];
 in
 {
   # Enable flakes

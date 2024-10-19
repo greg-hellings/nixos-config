@@ -64,6 +64,7 @@ with lib;
         preStart = "${pkgs.kmod}/bin/modprobe kvm_${cfg.system}";
         postStop = "${pkgs.kmod}/bin/rmmod kvm_${cfg.system} kvm";
         conflicts = [ "vbox.service" ];
+        #overrideStrategy = "asDropin";
       };
       vbox = {
         preStart = "${pkgs.kmod}/bin/modprobe vboxdrv vboxnetadp vboxnetflt";

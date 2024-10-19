@@ -1,4 +1,4 @@
-_: prev:
+_final: prev:
 
 let
   myPackages =
@@ -44,8 +44,5 @@ rec {
     withBDplus = true;
   };
   handbrake = prev.handbrake.override { libbluray = libbluray-custom; };
-  libvirt-greg = prev.libvirt.overrideAttrs {
-    postInstall = prev.libvirt.postInstall + "rm -r $out/lib/systemd/system/libvirtd.service";
-  };
   pipenv-ivr = prev.callPackage ./pipenv.nix { };
 }
