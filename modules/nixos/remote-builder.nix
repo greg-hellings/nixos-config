@@ -19,6 +19,13 @@ with lib;
       isNormalUser = true;
       useDefaultShell = true;
     };
+    # The builder user needs to be trusted to submit builds
     nix.settings.trusted-users = [ config.users.users.remote-builder-user.name ];
+    # If the system is powerful enough to be a remote builder, it should
+    # be powerful enough to do some basic qemu stuff
+    boot.binfmt.emulatedSystems = [
+      "i686-linux"
+      "aarch64-linux"
+    ];
   };
 }
