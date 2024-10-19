@@ -47,7 +47,7 @@
       [
         # for Immersed
         cudatoolkit
-        immersed-vr
+        immersed
         libva
       ]
       [

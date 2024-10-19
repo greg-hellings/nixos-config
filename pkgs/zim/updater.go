@@ -23,6 +23,7 @@ func getTypes() []string {
 		"wikibooks",
 		"gutenberg",
 		"phet",
+		"ted",
 	}
 }
 

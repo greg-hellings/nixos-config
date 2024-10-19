@@ -216,6 +216,7 @@ in
   systemd.services = {
     nginx = rec {
       after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
       wants = after;
       serviceConfig = {
         RestartMaxDelaySec = "30s";

@@ -1,12 +1,19 @@
-{ self', pkgs, nixvimunstable, ... }:
+{
+  self',
+  pkgs,
+  nixvimunstable,
+  ...
+}:
 let
   system = pkgs.system;
-  vim = (nixvimunstable.legacyPackages.${system}.makeNixvim
-    (import ./home/modules/baseline/vim/config.nix {
-      inherit pkgs;
-      inherit (pkgs) lib;
-      config.nixpkgs.config.allowUnfree = false; # I have tried to allow it, but I don't seem able to do so
-    })
+  vim = (
+    nixvimunstable.legacyPackages.${system}.makeNixvim (
+      import ./home/modules/baseline/vim/config.nix {
+        inherit pkgs;
+        inherit (pkgs) lib;
+        config.nixpkgs.config.allowUnfree = false; # I have tried to allow it, but I don't seem able to do so
+      }
+    )
   );
 in
 {
