@@ -66,7 +66,7 @@ def _rebuild(args):
         with TemporaryDirectory() as td:
             pushd @(td)
             import platform
-            nom build f"/etc/nixos#nixosConfigurations.{hostname}.config.build.toplevel"
+            nom build f"/etc/nixos#nixosConfigurations.{hostname}.config.system.build.toplevel"
             if g`result`:
                 nvd diff /run/current-system result
                 sudo result/bin/switch-to-configuration switch
