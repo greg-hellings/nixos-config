@@ -146,7 +146,7 @@ in
         nixd.enable = true;
         pylsp.enable = true;
         pyright.enable = true;
-        rust-analyzer = {
+        rust_analyzer = {
           # No need to have these installed on every one of my systems
           installCargo = false;
           installRustc = false;
