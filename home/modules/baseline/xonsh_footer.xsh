@@ -65,7 +65,6 @@ def _rebuild(args):
     else:
         with TemporaryDirectory() as td:
             pushd @(td)
-            import platform
             nom build f"/etc/nixos#nixosConfigurations.{hostname}.config.system.build.toplevel"
             if g`result`:
                 nvd diff /run/current-system result
