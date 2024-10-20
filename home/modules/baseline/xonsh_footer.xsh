@@ -46,12 +46,6 @@ def _glrestart(args):
     sudo nixos-container run gitlab -- systemctl restart nginx
 aliases['glrestart'] = _glrestart
 
-def _cfetch(args):
-    bw_unlock()
-    $CIRCLECI_CLI_TOKEN=$(bw get password CircleCI)
-    compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache/fetch/cmd/fetch:fetch
-aliases['cfetch'] = _cfetch
-
 def _aws_creds(args):
     $AWS_ACCESS_KEY_ID=$(bw get username "AWS Access Key")
     $AWS_SECRET_ACCESS_KEY=$(bw get password "AWS Access Key")

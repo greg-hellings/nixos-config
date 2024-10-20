@@ -99,8 +99,6 @@ in
     iperf
     killall
     nano
-    nix-output-monitor
-    nvd
     pciutils
     pwgen
     unzip

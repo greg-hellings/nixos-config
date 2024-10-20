@@ -1,6 +1,16 @@
 { pkgs, config, ... }:
 
 {
+  # Programs that are used in the settings file
+  home.packages = with pkgs; [
+    bitwarden-cli
+    copier
+    git
+    gnused
+    nix-output-monitor
+    nvd
+  ];
+
   programs.xonsh = {
     enable = true;
 
@@ -49,7 +59,6 @@
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
       ls = "ls --color";
       ll = "ls -l --color";
-      tf = "terraform";
 
       # Tailscale related ones
       tsup = "sudo tailscale up";
