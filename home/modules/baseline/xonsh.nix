@@ -54,6 +54,7 @@
       nixup = "nix flake lock --update-input";
       stable = "nix flake lock --update-input nixpkgs --update-input hm --update-input nixvimstable";
       unstable = "nix flake lock --update-input nixunstable --update-input hmunstable --update-input nixvimunstable --update-input nurpkgs --update-input vsext --update-input wsl";
+      updateScript = "nix-shell maintainers/scripts/update.nix --argstr package";
 
       # General
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
