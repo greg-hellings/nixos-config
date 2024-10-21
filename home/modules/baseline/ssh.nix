@@ -43,6 +43,10 @@
           user = "gitlab";
           hostname = "git.thehellings.lan";
         };
+        ivr = {
+          user = "git";
+          hostname = "gitlab.com";
+        };
 
         "*.thehellings.lan" = owned;
         "10.42.*" = owned;
