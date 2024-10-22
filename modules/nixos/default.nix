@@ -31,7 +31,7 @@ in
     ./vmdev.nix
   ];
 
-  environment.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
+  #environment.sessionVariables.MOZ_ENABLE_WAYLAND = "0";
   environment.systemPackages = with pkgs; [
     btrfs-progs
     coreutils-full

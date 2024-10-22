@@ -29,7 +29,7 @@ with lib;
   config = mkIf cfg.enable {
     environment.systemPackages = with pkgs; [
       dmidecode
-      guestfs-tools
+      #guestfs-tools
       libguestfs
       OVMFFull
       packer

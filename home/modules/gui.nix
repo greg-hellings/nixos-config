@@ -10,9 +10,6 @@ let
 
   excludes = systems: opts: (if (builtins.all (x: pkgs.system != x) systems) then opts else [ ]);
 
-  # For now, we ignore this and don't install it
-  ffPkgs = pkgs.firefox.override { cfg.enableGnomeExtensions = true; };
-
   vars = {
     XDG_CURRENT_DESKTOP = "GNOME";
   };
@@ -70,7 +67,6 @@ in
 
       programs.firefox = {
         enable = (!pkgs.stdenv.hostPlatform.isDarwin);
-        package = ffPkgs;
         policies = {
           DisableAppUpdate = true;
         };
