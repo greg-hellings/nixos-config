@@ -45,6 +45,7 @@
       # Python related ones
       ac = "vox activate";
       d = "vox deactivate";
+      s = "nix run \".#runserver\"";
 
       # Nix related ones
       gl-nging = "sudo nixos-container run gitlab -- systemctl restart nginx";

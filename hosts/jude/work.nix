@@ -2,7 +2,7 @@
 
 {
   services.mongodb = {
-    enable = true;
+    enable = false;
   };
   environment.systemPackages = with pkgs; [ mongodb-compass ];
 }
