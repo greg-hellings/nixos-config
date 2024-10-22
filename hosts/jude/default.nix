@@ -6,6 +6,7 @@
     ./hardware-configuration.nix
     ./podman.nix
     ./virt.nix
+    ./work.nix
   ];
   programs = {
     steam.enable = true;
