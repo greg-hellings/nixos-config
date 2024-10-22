@@ -17,6 +17,7 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    hardware.bluetooth.enable = true;
     # Sets up a basic KDE installation
     services =
       {
@@ -24,8 +25,10 @@ with lib;
           enable = true;
           xkb.layout = "us";
           # Trackpad support
-          libinput.enable = true;
         };
+
+        libinput.enable = true;
+        blueman.enable = true;
 
         pipewire = {
           enable = true;

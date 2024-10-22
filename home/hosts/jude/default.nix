@@ -9,7 +9,7 @@
     development = true;
     gui = true;
     sway = false;
-    gnome = true;
+    gnome = false;
     vscodium = true;
   };
 
