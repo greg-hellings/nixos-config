@@ -17,7 +17,9 @@ with lib;
   };
 
   config = mkIf cfg.enable {
-    hardware.bluetooth.enable = true;
+    hardware = {
+      bluetooth.enable = true;
+    };
     # Sets up a basic KDE installation
     services =
       {
@@ -55,7 +57,6 @@ with lib;
     environment.systemPackages = with pkgs; [
       kalendar
       korganizer
-      plasma-pa
     ];
   };
 }
