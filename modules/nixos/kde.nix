@@ -21,6 +21,7 @@ with lib;
       bluetooth.enable = true;
     };
     # Sets up a basic KDE installation
+    systemd.services.bluetooth.requiredBy = [ "multi-user.target" ];
     services =
       {
         xserver = {
