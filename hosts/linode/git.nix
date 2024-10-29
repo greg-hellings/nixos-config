@@ -23,6 +23,10 @@ in
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
 
+  systemd.services.haproxy = {
+    after = [ "sys-devices-virtual-net-tailscale0.device" ];
+  };
+
   services.haproxy = {
     enable = true;
     config = builtins.concatStringsSep "\n" [
