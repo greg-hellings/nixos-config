@@ -1,11 +1,11 @@
-{ pkgs, config, ...}:
+{ ... }:
 
 {
-	# Bootloader.
-	boot = {
-		loader.grub = {
-			enable = true;
-			device = "/dev/sda";
-		};
-	};
+  # Bootloader.
+  boot = {
+    loader.grub = {
+      enable = true;
+      device = "/dev/sda";
+    };
+  };
 }

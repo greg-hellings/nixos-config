@@ -1,6 +1,6 @@
-# vim: set ft=python :
+# vim: set ft=xonsh :
 
-from tempfile import NamedTemporaryFile
+from tempfile import NamedTemporaryFile, TemporaryDirectory
 
 def bw_unlock():
     """Unlocks the BitWarden CLI and adds the resulting session code to the
@@ -37,16 +37,14 @@ def _ivr(args):
     vpn("350Main", "IVR Technology")
 aliases['ivr'] = _ivr
 
+def _ivr2(args):
+    vpn("gregory_hellings@ra.ivrtechnology.com", "IVR Technology")
+aliases['ivr2'] = _ivr2
+
 def _glrestart(args):
     sudo nixos-container run gitlab -- systemctl restart gitlab
     sudo nixos-container run gitlab -- systemctl restart nginx
 aliases['glrestart'] = _glrestart
-
-def _cfetch(args):
-    bw_unlock()
-    $CIRCLECI_CLI_TOKEN=$(bw get password CircleCI) 
-    compass workspace exec bazel run src/go/compass.com/tools/circleci_results_cache/fetch/cmd/fetch:fetch
-aliases['cfetch'] = _cfetch
 
 def _aws_creds(args):
     $AWS_ACCESS_KEY_ID=$(bw get username "AWS Access Key")
@@ -55,10 +53,17 @@ aliases['aws_creds'] = _aws_creds
 
 def _rebuild(args):
     system = uname()
+    hostname = system.nodename
     if system.sysname == 'Darwin':
         darwin-rebuild --flake ~/.config/darwin switch
     else:
-        sudo nixos-rebuild switch
+        with TemporaryDirectory() as td:
+            pushd @(td)
+            nom build f"/etc/nixos#nixosConfigurations.{hostname}.config.system.build.toplevel"
+            if g`result`:
+                nvd diff /run/current-system result
+                sudo result/bin/switch-to-configuration switch
+            popd
 aliases['rebuild'] = _rebuild
 
 def _yaml2json(args, stdin=None, stdout=None):
