@@ -62,6 +62,7 @@ def _rebuild(args):
             nom build f"/etc/nixos#nixosConfigurations.{hostname}.config.system.build.toplevel"
             if g`result`:
                 nvd diff /run/current-system result
+                sudo result/bin/switch-to-configuration boot
                 sudo result/bin/switch-to-configuration switch
             popd
 aliases['rebuild'] = _rebuild
