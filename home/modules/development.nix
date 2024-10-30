@@ -18,7 +18,6 @@ let
     nixpkgs-review
     nodejs
     process-compose
-    zed-editor
   ];
 in
 with lib;

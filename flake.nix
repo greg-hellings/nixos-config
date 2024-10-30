@@ -48,7 +48,6 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    zed.url = "github:zed-industries/zed/v0.156.x";
   };
 
   outputs =
@@ -68,7 +67,6 @@
         packages_overlay
         top.nurpkgs.overlay
         top.vsext.overlays.default
-        (_: _: { zed-editor = top.zed.packages.x86_64-linux.default; })
       ];
 
     in
