@@ -2,11 +2,13 @@ builds:
   exclude:
     - devShells.i686-linux.default
     - packages.x86_64-linux.default  # just duplicates
+    - packages.aarch64-linux.zim
+    - packages.x86_64-linux.zim
+    - nixosConfigurations.iso
+    - nixosConfigurations.iso-beta
   include:
     - devShells.*.default
     - homeConfigurations.*
     - nixosConfigurations.*
-    - packages.x86_64-linux.iso
-    - packages.x86_64-linux.iso-beta
     - packages.aarch64-linux.*
     - packages.aarch64-darwin.*
