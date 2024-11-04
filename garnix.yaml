@@ -3,6 +3,7 @@ builds:
     - devShells.i686-linux.default
     - packages.x86_64-linux.default  # just duplicates
     - packages.aarch64-linux.zim
+    - packages.aarch64-darwin.zim
     - packages.x86_64-linux.zim
     - nixosConfigurations.iso
     - nixosConfigurations.iso-beta
