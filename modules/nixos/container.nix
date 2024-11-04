@@ -34,6 +34,7 @@ let
             container.builder
           ];
 
+          _module.args.self = null; # Prevents containers from getting builder access
           nixpkgs.overlays = overlays;
 
           networking = {

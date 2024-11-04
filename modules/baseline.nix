@@ -6,9 +6,13 @@
   ...
 }:
 let
-  builderHosts = (
-    lib.attrNames (lib.filterAttrs (_: v: v.config.greg.remote-builder.enable) self.nixosConfigurations)
-  );
+  builderHosts =
+    if self != null then
+      (lib.attrNames (
+        lib.filterAttrs (_: v: v.config.greg.remote-builder.enable) self.nixosConfigurations
+      ))
+    else
+      [ ];
 in
 {
   # Enable flakes
