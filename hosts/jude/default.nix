@@ -35,8 +35,8 @@
   greg = {
     tailscale.enable = true;
     sway.enable = false;
-    gnome.enable = false;
-    kde.enable = true;
+    gnome.enable = true;
+    kde.enable = false;
     print.enable = true;
     remote-builder.enable = true;
   };
