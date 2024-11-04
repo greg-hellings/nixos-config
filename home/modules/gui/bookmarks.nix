@@ -185,6 +185,10 @@
             name = "REI Scripts";
             url = "https://reiconveyorbelt.com/no-excuses/";
           }
+          {
+            name = "Ellis foreclosures";
+            url = "https://co.ellis.tx.us/Archive.aspx?AMID=60";
+          }
         ];
       }
       {
@@ -201,6 +205,10 @@
           {
             name = "Bitcoin dashboard";
             url = "http://hosea.home:60845";
+          }
+          {
+            name = "Syncthing - nas";
+            url = "http://nas.home:8384/#";
           }
         ];
       }
