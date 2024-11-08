@@ -18,6 +18,7 @@ def bw_unlock():
     return token
 
 def vpn(con, bwname):
+    nmcli c down @(con)
     bw_unlock()
     base=$(bw get password @(bwname))
     secret=$(bw get totp @(bwname))
