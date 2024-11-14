@@ -98,6 +98,18 @@ in
     );
   };
 
+  security.sudo.extraRules = [
+    {
+      users = [ "greg" ];
+      commands = [
+        {
+          command = "ALL";
+          options = [ "NOPASSWD" ];
+        }
+      ];
+    }
+  ];
+
   i18n.defaultLocale = "en_US.UTF-8";
 
   console = {
