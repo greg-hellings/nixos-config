@@ -61,7 +61,6 @@ with lib;
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.dash-to-dock
       gnomeExtensions.gsconnect
-      gnomeExtensions.stocks-extension
       gnomeExtensions.tailscale-qs
       gnomeExtensions.vitals
     ];
