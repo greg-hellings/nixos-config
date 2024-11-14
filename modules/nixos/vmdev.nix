@@ -32,6 +32,7 @@ with lib;
       #guestfs-tools
       libguestfs
       OVMFFull
+      nixos-generators
       packer
       virt-manager
       xorriso
