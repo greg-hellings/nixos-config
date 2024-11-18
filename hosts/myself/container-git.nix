@@ -54,6 +54,7 @@ in
         extraConfig = ''
           proxy_set_header X-Forwarded-Proto https;
           proxy_set_header X-Forwarded-Ssl on;
+          client_max_body_size 10000m;
         '';
       };
     in
@@ -123,7 +124,7 @@ in
       extraConfig = {
         object_store = {
           enabled = true;
-          proxy_download = false; # Tell them to reach out to object storage themselves!
+          proxy_download = true; # Tell them to reach out to object storage themselves!
           connection = {
             provider = "AWS";
             endpoint = "http://s3.thehellings.lan:9000";
@@ -171,11 +172,11 @@ in
         proxyPass = "http://127.0.0.1:5000/";
         recommendedProxySettings = true;
       };
-      extraConfig = builtins.concatStringsSep "\n" [
-        "ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;"
-        "ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;"
-        "client_max_body_size 250m;"
-      ];
+      extraConfig = ''
+        ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;
+        ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;
+        client_max_body_size 10000m ;
+      '';
     };
 
     # Fetch the SSL certificates for nginx to use

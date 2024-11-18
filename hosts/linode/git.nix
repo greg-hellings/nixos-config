@@ -12,6 +12,7 @@ in
     extraConfig = ''
       proxy_set_header X-Forwarded-Proto https;
       proxy_set_header X-Forwarded-Ssl on;
+      client_max_body_size 100000m;
     '';
   };
   greg.proxies."registry.thehellings.com" = {
