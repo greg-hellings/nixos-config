@@ -125,6 +125,7 @@ in
           uris = [
             "qemu:///session"
             "qemu:///system"
+            "qemu+ssh://root@isaiah/system"
           ];
         };
       };
