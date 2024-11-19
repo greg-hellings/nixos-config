@@ -19,6 +19,7 @@ with lib;
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwbFyuS9zcwZ7hGSpAWtx9NJq/elSLN8jYpr+/1nXd8 root@linode"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXza2Pj05pdzGbiPDc/RF13nHhIZZ63u/WV/BS7bOjf root@genesis"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTNTcHmNFB931L5vDAsdOkTc9wFyGpuTMdhc0VYLXME root@myself"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJc/EIBk7lRKBsJQ5Lindz0WIRNUE1z9xeUqhsRN9Pus root@jeremiah"
       ];
       homeMode = "500";
       isNormalUser = true;

@@ -61,6 +61,7 @@
   greg = {
     home = true;
     tailscale.enable = true;
+    remote-builder.enable = true;
   };
   environment.systemPackages = with pkgs; [
     curl
@@ -117,10 +118,12 @@
       "network.target"
       "network-online.target"
       "systemd-resolved.service"
+      "tailscaled.service"
     ];
-    wants = [
+    requires = [
       "network-online.target"
       "systemd-resolved.service"
+      "tailscaled.service"
     ];
     preStart = builtins.concatStringsSep "\n" [
       "${pkgs.kmod}/bin/modprobe vboxdrv"
