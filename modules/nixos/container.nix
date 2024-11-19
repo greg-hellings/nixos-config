@@ -18,6 +18,7 @@ let
     in
     {
       autoStart = true;
+      timeoutStartSec = "20min";
       hostAddress = "192.168.${container.subnet}.1";
       localAddress = "192.168.${container.subnet}.2";
       privateNetwork = true;
