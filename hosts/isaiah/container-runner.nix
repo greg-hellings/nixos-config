@@ -28,7 +28,7 @@
       age = {
         identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
         secrets.runner-reg = {
-          file = ../../secrets/gitlab/myself-${name}-runner-reg.age;
+          file = ../../secrets/gitlab/isaiah-${name}-runner-reg.age;
           owner = "gitlab-runner";
         };
       };
