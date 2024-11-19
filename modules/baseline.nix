@@ -115,12 +115,8 @@ in
       isaiah = {
         extraHostNames = [
           "isaiah.home"
-          "myself"
           "isaiah.thehellings.lan"
-          "myself.home"
-          "myself.thehellings.lan"
-          "isaiah.builder"
-          "myself-builder"
+          "isaiah-builder"
         ];
         publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf";
       };

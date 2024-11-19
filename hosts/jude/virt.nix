@@ -21,7 +21,7 @@
     };
   };
 
-  age.secrets.runner-reg.file = ../../secrets/gitlab/myself-vbox-runner-reg.age;
+  age.secrets.runner-reg.file = ../../secrets/gitlab/isaiah-vbox-runner-reg.age;
 
   services.gitlab-runner = {
     enable = true;

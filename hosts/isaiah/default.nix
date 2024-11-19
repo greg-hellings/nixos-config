@@ -13,11 +13,20 @@
     remote-builder.enable = true;
   };
 
+  virtualisation.libvirtd = {
+    enable = true;
+    onBoot = "ignore"; # only restart VMs labeled 'autostart'
+    qemu.ovmf.enable = true;
+  };
+
   services = {
-    openssh.enable = true;
+    openssh = {
+      enable = true;
+      settings.PermitRootLogin = "yes";
+    };
   };
   networking = {
-    hostName = "myself";
+    hostName = "isaiah";
     useDHCP = false;
     defaultGateway = {
       address = " 10.42.1.1";
@@ -58,6 +67,7 @@
       greg = {
         extraGroups = [
           "kvm"
+          "libvirtd"
           "sudo"
           "wheel"
         ];

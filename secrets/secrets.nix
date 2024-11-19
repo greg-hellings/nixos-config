@@ -1,7 +1,7 @@
 let
   linode = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMv9Zud3kZOl86gtmkn+uj3D4kiXWDPtyUL02VVLNR4Q";
   jude = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOos0zQePsa+T6Z2dsKbPOvEdrBQ8a6mx3s7pN6ysCI0 root@jude";
-  myself = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf";
+  isaiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf";
   genesis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEI9jbTPmEWQ0F2bLYmnIOLmBnag1fkKxHRjz3X8lB/k root@genesis";
   hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz";
   jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0";
@@ -9,7 +9,7 @@ let
     genesis
     linode
     jude
-    myself
+    isaiah
     hosea
     jeremiah
   ];
@@ -18,7 +18,7 @@ let
   user_ivr = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYzms+KIe5/bYF3uCyFjA5e1AgMPLIA3c4k417coqBe gregory.hellings@ls23003";
   user_jude = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINnRc/kBhxcjpUtiRQY+BXnSObdp0jFL1395wAQxJip7 greg@jude";
   user_linode = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINAX6pNx5mbwIa8X+GzktyNijfYmJUpgROFpRxSW9js0 greg@linode";
-  user_myself = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAl6DJVrPSujvJSAEA5Q8tRrzfJs/c6DMwqwQEUFffIR greg@myself";
+  user_isaiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAl6DJVrPSujvJSAEA5Q8tRrzfJs/c6DMwqwQEUFffIR greg@isaiah";
   user_hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrqJQvDspLi1vXQRJ/Z5kN/F8jCBHvaXjo+5zLuIYjR greg@hosea";
   user_jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYIiecdyM9c7tXgR96983K3wqiJeQRMbrzGIF8Wy6uO greg@jeremiah";
 
@@ -27,7 +27,7 @@ let
     user_ivr
     user_jude
     user_linode
-    user_myself
+    user_isaiah
     user_hosea
     user_jeremiah
   ];
@@ -62,10 +62,10 @@ in
   "gitlab/key.age".publicKeys = everyone;
   "gitlab/cert.age".publicKeys = everyone;
   "gitlab/jeremiah-runner-reg.age".publicKeys = everyone;
-  "gitlab/myself-qemu-runner-reg.age".publicKeys = everyone;
-  "gitlab/myself-vbox-runner-reg.age".publicKeys = everyone;
-  "gitlab/myself-podman-runner-reg.age".publicKeys = everyone;
-  "gitlab/myself-shell-runner-reg.age".publicKeys = everyone;
+  "gitlab/isaiah-qemu-runner-reg.age".publicKeys = everyone;
+  "gitlab/isaiah-vbox-runner-reg.age".publicKeys = everyone;
+  "gitlab/isaiah-podman-runner-reg.age".publicKeys = everyone;
+  "gitlab/isaiah-shell-runner-reg.age".publicKeys = everyone;
   "gitlab/linode-deployer-runner-reg.age".publicKeys = everyone;
   "gitlab/docker-auth.age".publicKeys = everyone;
 

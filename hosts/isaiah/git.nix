@@ -42,9 +42,9 @@ in
   #####################################################################################
   #################### Local Podman/Docker Runner #####################################
   #####################################################################################
-  age.secrets.runner-reg.file = ../../secrets/gitlab/myself-podman-runner-reg.age;
+  age.secrets.runner-reg.file = ../../secrets/gitlab/isaiah-podman-runner-reg.age;
   age.secrets.docker-auth.file = ../../secrets/gitlab/docker-auth.age;
-  age.secrets.runner-qemu.file = ../../secrets/gitlab/myself-qemu-runner-reg.age;
+  age.secrets.runner-qemu.file = ../../secrets/gitlab/isaiah-qemu-runner-reg.age;
   systemd.services.gitlab-runner = {
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];

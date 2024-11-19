@@ -60,7 +60,7 @@ in
   linode = machine { name = "linode"; };
   hosea = unstable { name = "hosea"; };
   jeremiah = unstable { name = "jeremiah"; };
-  myself = unstable { name = "myself"; };
+  isaiah = unstable { name = "isaiah"; };
   iso = machine { name = "iso"; };
   iso-beta = unstable { name = "iso"; };
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'
