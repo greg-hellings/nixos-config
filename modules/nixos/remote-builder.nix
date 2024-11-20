@@ -20,6 +20,7 @@ with lib;
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFXza2Pj05pdzGbiPDc/RF13nHhIZZ63u/WV/BS7bOjf root@genesis"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDTNTcHmNFB931L5vDAsdOkTc9wFyGpuTMdhc0VYLXME root@isaiah"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJc/EIBk7lRKBsJQ5Lindz0WIRNUE1z9xeUqhsRN9Pus root@jeremiah"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLOqwbp4hFYkiJpokh9i2RToa/6tQcwthDNQH69tyBF root@vm-matrix.thehellings.lan"
       ];
       homeMode = "500";
       isNormalUser = true;
