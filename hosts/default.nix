@@ -1,5 +1,6 @@
 { top, overlays, ... }:
 let
+  vm = args: (unstable (args // { extraMods = [ top.nixos-generators.nixosModules.all-formats ]; }));
   wsl = args: (unstable (args // { extraMods = [ top.wsl.nixosModules.wsl ]; }));
   unstable =
     args:
@@ -61,6 +62,9 @@ in
   hosea = unstable { name = "hosea"; };
   jeremiah = unstable { name = "jeremiah"; };
   isaiah = unstable { name = "isaiah"; };
+
+  vm-matrix = vm { name = "vm-matrix"; };
+
   iso = machine { name = "iso"; };
   iso-beta = unstable { name = "iso"; };
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'

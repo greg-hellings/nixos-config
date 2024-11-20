@@ -4,7 +4,6 @@
     ./ceph.nix
     ./hardware-configuration.nix
     ./git.nix
-    ./matrix.nix
     ./minio.nix
   ];
 

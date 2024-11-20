@@ -37,6 +37,10 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixstable";
     };
+    nixos-generators = {
+      url = "github:nix-community/nixos-generators";
+      inputs.nixpkgs.follows = "nixunstable";
+    };
     nixvimstable.url = "github:nix-community/nixvim/nixos-24.05";
     nixvimunstable.url = "github:nix-community/nixvim/main";
     nix23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
@@ -57,9 +61,9 @@
       packages_overlay = (
         _: prev:
         (import ./pkgs {
-          inherit self;
+          inherit self top;
           pkgs = prev;
-        }).packages
+        })
       );
       overlays = [
         top.agenix.overlays.default
@@ -104,7 +108,7 @@
             pkgs = import top.nixstable { inherit system overlays; };
           };
 
-          imports = [ ./pkgs ];
+          packages = import ./pkgs { inherit pkgs top; };
 
           checks = import ./checks.nix {
             inherit system;
