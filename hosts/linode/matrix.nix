@@ -55,7 +55,7 @@ in
         locations."/".extraConfig = "return 404;";
 
         locations."/_matrix" = {
-          proxyPass = "http://matrix.shire-zebra.ts.net:8448"; # Lacking the trailing / is correct
+          proxyPass = "http://vm-matrix.shire-zebra.ts.net:8448"; # Lacking the trailing / is correct
         };
       };
     };
