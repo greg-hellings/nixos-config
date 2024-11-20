@@ -8,7 +8,11 @@ in
   greg = {
     tailscale.enable = true;
   };
-  networking.firewall.allowedTCPPorts = [ config.services.dendrite.httpPort ];
+  networking = {
+    hostName = "vm-matrix";
+    domain = "thehellings.lan";
+    firewall.allowedTCPPorts = [ config.services.dendrite.httpPort ];
+  };
 
   # Environment secrets
   age = {

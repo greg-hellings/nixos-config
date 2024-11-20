@@ -14,10 +14,7 @@
 
   virtualisation.libvirtd = {
     enable = true;
-    allowedBridges = [
-      "virbr0"
-      "br0"
-    ];
+    allowedBridges = [ "virbr0" ];
     onBoot = "ignore"; # only restart VMs labeled 'autostart'
     qemu.ovmf.enable = true;
   };
@@ -35,22 +32,11 @@
       address = " 10.42.1.1";
       interface = "enp38s0";
     };
-    bridges = {
-      br0.interfaces = [ "enp39s0" ];
-    };
     interfaces = {
       enp38s0 = {
         ipv4.addresses = [
           {
             address = "10.42.1.6";
-            prefixLength = 16;
-          }
-        ];
-      };
-      br0 = {
-        ipv4.addresses = [
-          {
-            address = "10.42.90.1";
             prefixLength = 16;
           }
         ];
