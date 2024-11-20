@@ -3,7 +3,11 @@ let
   conn = "postgresql:///dendrite?sslmode=disable&host=/run/postgresql";
 in
 {
+  imports = [ ./hardware-configuration.nix ];
+
   environment.systemPackages = with pkgs; [ upgrade-pg-cluster ];
+
+  boot.loader.grub.devices = [ "/dev/vda" ];
 
   greg = {
     tailscale.enable = true;
