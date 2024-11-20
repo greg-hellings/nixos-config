@@ -14,6 +14,10 @@
 
   virtualisation.libvirtd = {
     enable = true;
+    allowedBridges = [
+      "virbr0"
+      "br0"
+    ];
     onBoot = "ignore"; # only restart VMs labeled 'autostart'
     qemu.ovmf.enable = true;
   };
@@ -31,11 +35,8 @@
       address = " 10.42.1.1";
       interface = "enp38s0";
     };
-    vlans = {
-      san = {
-        id = 616;
-        interface = "enp39s0";
-      };
+    bridges = {
+      br0.interfaces = [ "enp39s0" ];
     };
     interfaces = {
       enp38s0 = {
@@ -44,22 +45,19 @@
             address = "10.42.1.6";
             prefixLength = 16;
           }
-          {
-            address = "10.42.100.1";
-            prefixLength = 16;
-          }
         ];
       };
-      san = {
+      br0 = {
         ipv4.addresses = [
           {
-            address = "10.201.1.1";
-            prefixLength = 24;
+            address = "10.42.90.1";
+            prefixLength = 16;
           }
         ];
       };
     };
     nameservers = [ "10.42.1.5" ];
+    firewall.checkReversePath = lib.mkForce false;
   };
   users = {
     users = {
@@ -76,8 +74,13 @@
   };
   system.stateVersion = lib.mkForce "24.05";
   boot = {
+    binfmt.emulatedSystems = [ "aarch64-linux" ];
     extraModprobeConfig = "options kvm_amd nested=1";
-    supportedFilesystems = [ "ntfs" ];
+    kernel.sysctl = {
+      "net.bridge.bridge-nf-call-ip6tables" = 0;
+      "net.bridge.bridge-nf-call-iptables" = 0;
+      "net.bridge.bridge-nf-call-arptables" = 0;
+    };
     loader = {
       efi = {
         canTouchEfiVariables = true;
@@ -88,7 +91,7 @@
         configurationLimit = 10;
       };
     };
-    binfmt.emulatedSystems = [ "aarch64-linux" ];
+    supportedFilesystems = [ "ntfs" ];
   };
   nixpkgs.config = {
     allowUnfree = true;
