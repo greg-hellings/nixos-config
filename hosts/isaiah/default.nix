@@ -1,10 +1,8 @@
 { lib, ... }:
 {
   imports = [
-    ./ceph.nix
     ./hardware-configuration.nix
     ./git.nix
-    ./minio.nix
   ];
 
   greg = {
