@@ -60,8 +60,6 @@ in
       allowedUDPPorts = [
         dhcpPort
         dnsPort
-        1900 # Jellyfin auto-discovery
-        7359 # Jellyfin auto-discovery
       ];
       allowedTCPPorts = [
         dnsPort
@@ -74,21 +72,7 @@ in
 
   environment.etc."hosts.d/local".text = extraHosts;
 
-  fileSystems = {
-    "/media" = {
-      device = "10.42.1.4:/volume1/video/";
-      fsType = "nfs";
-      options = [ "ro" ];
-    };
-  };
-
   services = {
-    # Video services
-    jellyfin = {
-      enable = true;
-      openFirewall = true;
-    };
-
     #########
     # Blind service proxy behind the walls of the VPN
     ########
@@ -145,10 +129,6 @@ in
       systemCronJobs = [ "* * * * * root ${adblockUpdate} 2>&1 > /var/log/adblock.log" ];
     };
   }; # End of services configuration
-
-  greg.proxies = {
-    "jellyfin.home".target = "http://localhost:8096/";
-  };
 
   environment.systemPackages = with pkgs; [
     bind

@@ -108,7 +108,7 @@
             pkgs = import top.nixstable { inherit system overlays; };
           };
 
-          packages = import ./pkgs { inherit pkgs top; };
+          packages = (import ./pkgs { inherit pkgs top; }) // (import ./vms { inherit top; });
 
           checks = import ./checks.nix {
             inherit system;

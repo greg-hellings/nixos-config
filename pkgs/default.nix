@@ -1,4 +1,4 @@
-{ pkgs, top, ... }:
+{ pkgs, ... }:
 
 let
   c = pkgs.callPackage;
@@ -16,6 +16,4 @@ in
   setup-ssh = c ./setup-ssh { };
   upgrade-pg-cluster = c ./upgrade-pg-cluster.nix { };
   zim = c ./zim.nix { };
-
-  matrix = top.nixosConfigurations.vm-matrix.config.formats.qcow;
 }

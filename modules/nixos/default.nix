@@ -41,7 +41,7 @@ in
     xfsprogs
   ];
 
-  system.stateVersion = "24.05";
+  system.stateVersion = "24.11";
 
   nix = {
     gc.dates = "weekly";
@@ -93,6 +93,7 @@ in
       "networkmanager"
     ]; # Enable ‘sudo’ for the user.
     shell = config.programs.xonsh.package;
+    initialPassword = "password";
     openssh.authorizedKeys.keys = lib.strings.splitString "\n" (
       builtins.readFile ../../home/ssh/authorized_keys
     );

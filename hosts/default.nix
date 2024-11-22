@@ -63,6 +63,7 @@ in
   jeremiah = unstable { name = "jeremiah"; };
   isaiah = unstable { name = "isaiah"; };
 
+  vm-jellyfin = vm { name = "vm-jellyfin"; };
   vm-matrix = vm { name = "vm-matrix"; };
 
   iso = machine { name = "iso"; };

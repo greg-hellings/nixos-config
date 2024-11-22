@@ -108,18 +108,26 @@
       #  hw-address = ""; # hosea
       #  ip-address = "10.42.1.7";
       #}
-      #{
-      #  hw-address = ""; # jeremiah
-      #  ip-address = "10.42.1.8";
-      #}
+      {
+        hw-address = "b4:2e:99:aa:22:3c"; # jeremiah
+        ip-address = "10.42.1.8";
+      }
       {
         hw-address = "c8:5e:a9:54:9e:c6"; # IVR laptop Wi-Fi
         ip-address = "10.42.1.9";
       }
 
+      ########################################
+      #             VM servers               #
+      ########################################
+
       {
         hw-address = "52:54:00:2a:74:2f";
-        ip-address = "10.43.4.1";
+        ip-address = "10.43.4.1"; # Dendrite
+      }
+      {
+        hw-address = "52:54:00:6e:eb:83";
+        ip-address = "10.43.4.2"; # Jellyfin
       }
 
       ########################################
