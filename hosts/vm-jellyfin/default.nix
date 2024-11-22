@@ -36,6 +36,4 @@
     enable = true;
     openFirewall = true;
   };
-
-  virtualisation.diskSize = 100 * 1024;
 }
