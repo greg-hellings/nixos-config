@@ -53,7 +53,7 @@
       nixdu = "sudo nix-store --gc --print-roots | egrep -v r\"^(/nix/var|/run/\\w+-system|\\{memory|/proc)\"";
       nixtest = "nixpkgs-review rev HEAD";
       nixup = "nix flake lock --update-input";
-      stable = "nix flake lock --update-input nixpkgs --update-input hm --update-input nixvimstable";
+      stable = "nix flake lock --update-input nixstable --update-input hm --update-input nixvimstable";
       unstable = "nix flake lock --update-input nixunstable --update-input hmunstable --update-input nixvimunstable --update-input nurpkgs --update-input vsext --update-input wsl";
       updateScript = "nix-shell maintainers/scripts/update.nix --argstr package";
       deploy = "nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host";
