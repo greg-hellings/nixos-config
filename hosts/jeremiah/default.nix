@@ -31,7 +31,7 @@
     hostName = "jeremiah"; # Define your hostname.
     useDHCP = false;
     defaultGateway = {
-      address = " 10.42.1.1";
+      address = " 10.42.1.2";
       interface = "enp68s0";
     };
     interfaces = {
