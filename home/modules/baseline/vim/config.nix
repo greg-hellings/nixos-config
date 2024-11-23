@@ -1,9 +1,4 @@
-{
-  config,
-  pkgs,
-  lib,
-  ...
-}:
+{ config, pkgs, ... }:
 let
   vim-xonsh = pkgs.vimUtils.buildVimPlugin {
     name = "vim-xonsh";
@@ -157,7 +152,8 @@ in
     };
     neo-tree.enable = true;
     notify.enable = true;
-  } // (if (lib.versionAtLeast lib.version "24.11") then { web-devicons.enable = true; } else { });
+    web-devicons.enable = true;
+  };
   userCommands = {
     Ggr = {
       command = "Ggrep! <q-args> | cw | redraw!";

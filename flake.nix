@@ -29,22 +29,16 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     hooks.url = "github:cachix/git-hooks.nix";
-    hm = {
-      url = "github:nix-community/home-manager/release-24.05";
-      inputs.nixpkgs.follows = "nixstable";
-    };
     hmunstable = {
       url = "github:nix-community/home-manager/master";
-      inputs.nixpkgs.follows = "nixstable";
+      inputs.nixpkgs.follows = "nixunstable";
     };
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    nixvimstable.url = "github:nix-community/nixvim/nixos-24.05";
     nixvimunstable.url = "github:nix-community/nixvim/main";
     nix23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
-    nixstable.url = "github:nixos/nixpkgs/nixos-24.05";
     nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nurpkgs.url = "github:nix-community/NUR";
     vsext.url = "github:nix-community/nix-vscode-extensions";
@@ -105,7 +99,7 @@
         }:
         {
           _module.args = {
-            pkgs = import top.nixstable { inherit system overlays; };
+            pkgs = import top.nixunstable { inherit system overlays; };
           };
 
           packages = (import ./pkgs { inherit pkgs top; }) // (import ./vms { inherit top; });

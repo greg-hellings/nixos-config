@@ -54,11 +54,11 @@ let
     };
 in
 {
-  genesis = machine { name = "genesis"; };
+  genesis = unstable { name = "genesis"; };
   exodus = unstable { name = "exodus"; };
   jude = unstable { name = "jude"; };
   icdm-root = unstable { name = "icdm-root"; };
-  linode = machine { name = "linode"; };
+  linode = unstable { name = "linode"; };
   hosea = unstable { name = "hosea"; };
   jeremiah = unstable { name = "jeremiah"; };
   isaiah = unstable { name = "isaiah"; };
@@ -66,8 +66,7 @@ in
   vm-jellyfin = vm { name = "vm-jellyfin"; };
   vm-matrix = vm { name = "vm-matrix"; };
 
-  iso = machine { name = "iso"; };
-  iso-beta = unstable { name = "iso"; };
+  iso = unstable { name = "iso"; };
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'
   nixos = wsl {
     name = "wsl";

@@ -7,7 +7,7 @@ in
 
   environment.systemPackages = with pkgs; [ upgrade-pg-cluster ];
 
-  boot.loader.grub.devices = [ "/dev/vda" ];
+  boot.loader.grub.devices = [ "/dev/disk/by-label/ESP" ];
 
   greg = {
     tailscale.enable = true;
@@ -34,7 +34,6 @@ in
       isSystemUser = true;
       group = "dendrite";
     };
-    greg.initialPassword = "password";
   };
   users.groups.dendrite = { };
 

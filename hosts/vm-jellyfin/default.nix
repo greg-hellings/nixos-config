@@ -2,7 +2,7 @@
 
 {
   imports = [ ];
-  #boot.loader.grub.devices = [ "/dev/vda" ];
+  boot.loader.grub.devices = [ "/dev/disk/by-label/ESP" ];
 
   greg = {
     proxies."jellyfin.home".target = "http://localhost:8096/";
@@ -10,6 +10,10 @@
   };
 
   fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-label/nixos";
+      fsType = "ext4";
+    };
     "/music" = {
       device = "10.42.1.4:/volume1/music";
       fsType = "nfs";
