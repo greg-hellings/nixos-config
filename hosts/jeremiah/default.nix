@@ -105,12 +105,10 @@
     after = [
       "network.target"
       "network-online.target"
-      "systemd-resolved.service"
       "tailscaled.service"
     ];
     requires = [
       "network-online.target"
-      "systemd-resolved.service"
       "tailscaled.service"
     ];
     preStart = builtins.concatStringsSep "\n" [
