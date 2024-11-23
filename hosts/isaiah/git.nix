@@ -17,7 +17,7 @@ in
     nat = {
       enable = true;
       internalInterfaces = [ "ve-+" ];
-      externalInterface = "enp38s0";
+      externalInterface = "br0";
     };
   };
 
