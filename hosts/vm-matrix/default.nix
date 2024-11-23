@@ -89,7 +89,7 @@ in
           private_key = config.age.secrets.dendrite_key.path;
         };
         client_api = {
-          registration_enabled = false;
+          registration_disabled = true;
           registration_shared_secret = "\${REGISTRATION_SHARED_SECRET}";
         };
       }
