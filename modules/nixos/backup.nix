@@ -8,7 +8,15 @@
 let
   cfg = config.greg.backup;
 
-  where = j: "${config.services.syncthing.dataDir}/${j.dest}";
+  where = j: "${config.services.syncthing.dataDir}/daily.0/${j.dest}";
+
+  postexec = pkgs.writeShellApplication {
+    name = "postexec";
+    runtimeInputs = [ pkgs.coreutils ];
+    text = ''
+      chown -R ${config.services.syncthing.user} ${config.services.syncthing.dataDir}
+    '';
+  };
 
   makeSyncFolders = _: job: {
     devices = [ "chronicles" ];
@@ -19,19 +27,7 @@ let
     type = "sendonly";
   };
 
-  makeRestic =
-    _: job:
-    let
-      who = "${config.services.syncthing.user}:${config.services.syncthing.group}";
-    in
-    rec {
-      initialize = true;
-      passwordFile = config.age.secrets.restic-pw.path;
-      paths = [ job.src ];
-      repository = where job;
-      backupCleanupCommand = ''${pkgs.coreutils}/bin/chown -R ${who} "${repository}"'';
-    };
-
+  makeRsnapshot = _: job: "backup	${job.src}/	${job.dest}/";
 in
 with lib;
 {
@@ -76,7 +72,22 @@ with lib;
     };
     services = {
       syncthing.settings.folders = mapAttrs makeSyncFolders cfg.jobs;
-      restic.backups = mapAttrs makeRestic cfg.jobs;
+      rsnapshot = {
+        enable = true;
+        enableManualRsnapshot = true;
+        extraConfig =
+          ''
+            snapshot_root	${config.services.syncthing.dataDir}/
+            retain	daily	7
+            retain	weekly	2
+            cmd_postexec	${lib.getExe postexec}
+          ''
+          + (builtins.concatStringsSep "\n" (mapAttrsToList makeRsnapshot cfg.jobs));
+        cronIntervals = {
+          daily = "19 02 * * *"; # At 2:19 am every day
+          weekly = "19 01 * * 1"; # At 1:19 am every Monday
+        };
+      };
     };
   };
 }

@@ -66,18 +66,10 @@ in
 
   virtualisation.docker.enable = true;
 
-  programs.ssh.extraConfig = lib.strings.concatStringsSep "\n" [
-    "Host nas"
-    "    User backup"
-    "    IdentityFile /etc/ssh/duplicity_ed25519"
-    "    StrictHostKeyChecking no"
-    "    UserKnownHostsFile /dev/null"
-  ];
-
   greg.backup.jobs.nas-backup = {
     src = "/var/gitlab/state/backup/";
     dest = "gitlab";
-    id = "yha^-s45h";
+    id = "container-gitlab";
   };
 
   services = {
