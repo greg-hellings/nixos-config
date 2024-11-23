@@ -2,7 +2,7 @@
 # them by the following commands:
 # nix run nixpkgs.matrix-synapse
 # register_new_matrix_user -k "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa" http://localhost:8448
-{ config, ... }:
+{ config, lib, ... }:
 let
   domain = "${config.networking.domain}";
   fqdn = "matrix.${domain}";
@@ -52,11 +52,19 @@ in
         forceSSL = true;
 
         # Not the appropriate place for the chat client
-        locations."/".extraConfig = "return 404;";
-
-        locations."/_matrix" = {
-          proxyPass = "http://matrix.shire-zebra.ts.net:8448"; # Lacking the trailing / is correct
-        };
+        locations =
+          (builtins.listToAttrs (
+            builtins.map
+              (val: lib.nameValuePair "/_${val}" { proxyPass = "http://matrix.shire-zebra.ts.net:8448"; })
+              [
+                "matrix"
+                "synapse"
+                "dendrite"
+              ]
+          ))
+          // {
+            "/".extraConfig = "return 404;";
+          };
       };
     };
   };
