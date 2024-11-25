@@ -22,6 +22,7 @@
     };
     subnet4 = [
       {
+        id = 1;
         subnet = "10.42.0.0/16";
         pools = [ { pool = "10.42.2.0 - 10.42.3.255"; } ];
         interface = lan;
@@ -111,12 +112,13 @@
             ip-address = "10.42.4.1"; # Dendrite
           }
           {
-            hw-address = "52:54:00:70:ce:fa";
+            hw-address = "BC:24:11:A2:F3:6A";
             ip-address = "10.42.4.2"; # Jellyfin
           }
         ];
       }
       {
+        id = 66;
         subnet = "192.168.66.0/24";
         pools = [ { pool = "192.168.66.2 - 192.168.66.254"; } ];
         interface = iot;

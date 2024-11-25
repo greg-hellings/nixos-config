@@ -1,7 +1,6 @@
-{ ... }:
+{ lib, ... }:
 
 {
-  imports = [ ];
   boot.loader.grub.devices = [ "/dev/disk/by-label/ESP" ];
 
   greg = {
@@ -33,11 +32,16 @@
 
   networking = {
     hostName = "vm-jellyfin";
-    domain = "thehellings.lan";
+    domain = lib.mkForce null; # The proxmox generator fails at this, somehow
   };
 
-  services.jellyfin = {
-    enable = true;
-    openFirewall = true;
+  services = {
+    jellyfin = {
+      enable = true;
+      openFirewall = true;
+    };
+    qemuGuest.enable = true;
   };
+
+  virtualisation.diskSize = 20 * 1024;
 }
