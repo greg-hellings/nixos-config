@@ -195,6 +195,19 @@
         name = "Tools";
         bookmarks = [
           {
+            name = "Proxmoxes";
+            bookmarks = [
+              {
+                name = "PVE1";
+                url = "https://10.42.1.1:8006/";
+              }
+              {
+                name = "Isaiah";
+                url = "https://isaiah.home:8006/";
+              }
+            ];
+          }
+          {
             name = "Password Hash";
             url = "https://unix4lyfe.org/crypt/";
           }
