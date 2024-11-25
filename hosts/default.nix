@@ -1,4 +1,4 @@
-{ top, overlays, ... }:
+{ top, ... }@all:
 let
   vm = args: (unstable (args // { extraMods = [ top.nixos-generators.nixosModules.all-formats ]; }));
   wsl = args: (unstable (args // { extraMods = [ top.wsl.nixosModules.wsl ]; }));
@@ -23,6 +23,7 @@ let
     }:
     let
       nixpkgs = import channel { inherit system; };
+      overlays = all.overlays ++ [ top.proxmox.overlays.${system} ];
     in
     channel.lib.nixosSystem {
       inherit system;

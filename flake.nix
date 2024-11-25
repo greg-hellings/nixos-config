@@ -33,6 +33,7 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixunstable";
     };
+    proxmox.url = "github:SaumonNet/proxmox-nixos";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixunstable";
