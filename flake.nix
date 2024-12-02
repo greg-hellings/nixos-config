@@ -33,7 +33,9 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    proxmox.url = "github:SaumonNet/proxmox-nixos";
+    #proxmox.url = "github:SaumonNet/proxmox-nixos";
+    # To enable backups: https://github.com/SaumonNet/proxmox-nixos/pull/45
+    proxmox.url = "github:blecher-at/proxmox-nixos/fix-backup-pve-manager";
     nixos-generators = {
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixunstable";

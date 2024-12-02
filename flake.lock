@@ -843,15 +843,16 @@
         "utils": "utils"
       },
       "locked": {
-        "lastModified": 1732473775,
-        "narHash": "sha256-WnckT473A+DcYYdzLFWgP4RSAvBNaSRw7fJuKySX+Og=",
-        "owner": "SaumonNet",
+        "lastModified": 1732553351,
+        "narHash": "sha256-xxUUbQYOdKiMN4qjAog07HkUy6STYdUGMX7oLSlS+kk=",
+        "owner": "blecher-at",
         "repo": "proxmox-nixos",
-        "rev": "06fbc351ff461d26a8276f44088450c965195e10",
+        "rev": "09047f655a0df7c50f176953a42bf6d6027e05cb",
         "type": "github"
       },
       "original": {
-        "owner": "SaumonNet",
+        "owner": "blecher-at",
+        "ref": "fix-backup-pve-manager",
         "repo": "proxmox-nixos",
         "type": "github"
       }
