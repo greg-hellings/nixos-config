@@ -8,7 +8,7 @@
 {
   # The Hack font is used in the Fugitive sidebars
   fonts.fontconfig.enable = true;
-  home.packages = [ (pkgs.nerdfonts.override { fonts = [ "Hack" ]; }) ];
+  home.packages = with pkgs.nerd-fonts; [ hack ];
 
   programs.nixvim = (import ./vim/config.nix { inherit config pkgs lib; }) // {
     enable = true;
