@@ -48,6 +48,10 @@
           hostname = "gitlab.com";
         };
 
+        "ivr.thehellings.lan" = lib.hm.dag.entryBefore [ "ivr" ] {
+          user = "gregory.hellings";
+        };
+
         "*.thehellings.lan" = owned;
         "10.42.*" = owned;
 
