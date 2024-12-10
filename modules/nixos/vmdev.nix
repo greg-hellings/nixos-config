@@ -46,6 +46,7 @@ with lib;
         enable = true;
         onBoot = "ignore"; # Do not auto-restart VMs on boot, unless they are marked autostart
         qemu.ovmf.enable = true;
+        qemu.swtpm.enable = true;
       };
 
       virtualbox.host = {
