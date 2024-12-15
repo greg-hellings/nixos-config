@@ -28,6 +28,8 @@ in
         asvetliakov.vscode-neovim
         batisteo.vscode-django
         donjayamanne.python-environment-manager
+        github.copilot
+        github.copilot-chat
         golang.go
         kevinrose.vsc-python-indent
         jnoortheen.nix-ide
