@@ -15,8 +15,10 @@
     '';
 
     packages = with pkgs; [
+      audacity
       (mumble.override { pulseSupport = true; })
       #logseq
+      webcamoid
     ];
   };
 
