@@ -153,6 +153,7 @@ in
               octotree
               okta-browser-plugin
               refined-github
+              sponsorblock
               tree-style-tab
               ublock-origin
             ];
