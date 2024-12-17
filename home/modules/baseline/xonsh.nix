@@ -62,7 +62,7 @@
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
       ls = "ls --color";
       ll = "ls -l --color";
-      zed = "nix run \"github:zed-industries/zed/v0.164.x\"";
+      zed = "nix run \"github:zed-industries/zed/v0.163.x\"";
 
       # Tailscale related ones
       tsup = "sudo tailscale up";
