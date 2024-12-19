@@ -49,7 +49,7 @@ let
         top.agenix.nixosModules.default
         hm.nixosModules.home-manager
         top.self.modules.nixosModule
-        top.nurpkgs.nixosModules.nur
+        top.nurpkgs.modules.nixos.default
         ./${name}
       ] ++ extraMods;
     };
