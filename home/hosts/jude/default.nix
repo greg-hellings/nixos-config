@@ -7,6 +7,7 @@
     sway = false;
     gnome = false;
     vscodium = true;
+    zed = true;
   };
 
   home = {

@@ -10,5 +10,6 @@
     ./sway.nix
     ./vscodium.nix
     ./xonsh.nix
+    ./zed.nix
   ];
 }
