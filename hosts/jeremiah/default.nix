@@ -86,7 +86,7 @@
           authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
           environmentVariables = {
             EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-            STORAGE_URL = "http://s3.thehellings.lan:9000";
+            STORAGE_URL = "s3.thehellings.lan:9000";
           };
         };
       };
