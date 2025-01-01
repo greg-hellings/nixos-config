@@ -2,7 +2,6 @@
   lan,
   iot,
   lanIP,
-  iotIP,
   routerIP,
 }:
 {
@@ -125,11 +124,17 @@
         option-data = [
           {
             name = "domain-name-servers";
-            data = iotIP;
+            data = "1.0.0.1,1.1.1.1";
           }
           {
             name = "routers";
             data = "192.168.66.1";
+          }
+        ];
+        reservations = [
+          {
+            hw-address = "d0:17:69:c6:09:49"; # Daikin
+            ip-address = "192.168.66.10";
           }
         ];
       }
