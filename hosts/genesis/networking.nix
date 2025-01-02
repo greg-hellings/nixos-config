@@ -99,7 +99,6 @@ in
       import ./networking/dhcp.nix {
         inherit
           iot
-          iotIP
           lan
           lanIP
           routerIP

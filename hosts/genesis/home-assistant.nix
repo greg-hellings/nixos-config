@@ -11,24 +11,27 @@
       "calendar"
       "cast"
       "daikin"
-      "eufy"
+      "ipp"
       "lovelace"
+      "met"
       "nest"
       "nextcloud"
       "ping"
       "piper"
       "radio_browser"
-      "rainbird"
       "roborock"
       "smart_meter_texas"
       "speedtestdotnet"
       "solaredge"
       "whisper"
-      "wiz"
       "wyoming"
       "zwave_js"
     ];
-    customComponents = with pkgs.home-assistant-custom-components; [ smartthinq-sensors ];
+    customComponents = with pkgs.home-assistant-custom-components; [
+      pkgs.python3.pkgs.daikinone
+      nest_protect
+      smartthinq-sensors
+    ];
 
     config = {
       default_config = { };

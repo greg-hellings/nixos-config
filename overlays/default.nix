@@ -30,6 +30,7 @@ rec {
         cp = python-final.callPackage;
       in
       {
+        daikinone = cp ./daikinone.nix { };
         xonsh-apipenv = cp ./xonsh-apipenv.nix { };
       }
     )
