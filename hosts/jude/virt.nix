@@ -1,22 +1,44 @@
-{ pkgs, config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
+let
+  passthru = [
+    "1002:164e" # Raphael - embedded GPU
+    "1002:1640" # Rembrandt - Audio
+    #"10de:2507" # RTX 3050 video
+    #"10de:228e" # RTX 3050 audio
+  ];
+in
 {
   greg.vmdev.enable = true;
 
-  systemd.services = {
-    gitlab-runner = {
-      conflicts = [ "libvirtd.service" ];
-      preStart = builtins.concatStringsSep "\n" [
-        "${pkgs.kmod}/bin/modprobe vboxnetflt vboxdrv"
-        "${pkgs.kmod}/bin/modprobe vboxnetadp"
-      ];
-      postStop = "${pkgs.kmod}/bin/rmmod vboxnetflt vboxnetadp vboxdrv";
-      wantedBy = pkgs.lib.mkForce [ ];
-      serviceConfig.User = "root";
-    };
-  };
-
   age.secrets.runner-reg.file = ../../secrets/gitlab/isaiah-vbox-runner-reg.age;
+
+  # These options enable sharing of the GPU with the VM
+  boot = {
+    # Order matters here, to prevent the AMD driver from getting to the driver before
+    # vfio-pci does
+    initrd.kernelModules = [
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+
+      "amdgpu"
+      #"nvidia"
+      #"nvidia_modeset"
+      #"nvidia_uvm"
+      #"nvidia_drm"
+    ];
+    kernelParams = [
+      "amd_iommu=on"
+      ("vfio-pci.ids=" + (lib.concatStringsSep "," passthru))
+    ];
+  };
+  hardware.opengl.enable = true;
 
   services.gitlab-runner = {
     enable = true;
@@ -31,53 +53,24 @@
     };
   };
 
-  virtualisation = {
-    libvirtd.hooks.qemu = {
-      "win11-prepare-begin-bind_vfio.sh" = pkgs.writeShellApplication {
-        name = "bind_vfio.sh";
-        runtimeInputs = with pkgs; [
-          kmod
-          libvirt
-        ];
-        text = ''
-          guest="$1"
-          stage="$2"
-          state="$3"
-
-          if [ "$guest" == "win11" ] && [ "$stage" == "prepare" ] && [ "$state" == "begin" ]; then
-            for f in vfio vfio_iommu_type1 vfio_pci; do
-              modprobe "$f"
-            done
-
-            virsh nodedev-detach pci_0000_10_00_0
-            virsh nodedev-detach pci_0000_10_00_1
-          fi
-        '';
-      };
-
-      "win11-release-end-unbind_vfio.sh" = pkgs.writeShellApplication {
-        name = "unbind_vfio.sh";
-        runtimeInputs = with pkgs; [
-          kmod
-          libvirt
-        ];
-        text = ''
-          guest="$1"
-          stage="$2"
-          state="$3"
-
-          if [ "$guest" == "win11" ] && [ "$stage" == "release" ] && [ "$state" == "end" ]; then
-            virsh nodedev-reattach pci_0000_10_00_1
-            virsh nodedev-reattach pci_0000_10_00_0
-
-            for f in vfio_pci vfio_iommu_type1 vfio; do
-              modprobe -r "$f"
-            done
-          fi
-        '';
-      };
+  systemd.services = {
+    gitlab-runner = {
+      conflicts = [ "libvirtd.service" ];
+      preStart = builtins.concatStringsSep "\n" [
+        "${pkgs.kmod}/bin/modprobe vboxnetflt vboxdrv"
+        "${pkgs.kmod}/bin/modprobe vboxnetadp"
+      ];
+      postStop = "${pkgs.kmod}/bin/rmmod vboxnetflt vboxnetadp vboxdrv";
+      wantedBy = pkgs.lib.mkForce [ ];
+      serviceConfig.User = "root";
     };
-    lxd.enable = false;
-    waydroid.enable = false;
+  };
+
+  virtualisation = {
+    libvirtd.hooks.qemu =
+      {
+      };
+
+    spiceUSBRedirection.enable = true;
   };
 }

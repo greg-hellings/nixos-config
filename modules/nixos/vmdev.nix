@@ -45,7 +45,10 @@ with lib;
       libvirtd = {
         enable = true;
         onBoot = "ignore"; # Do not auto-restart VMs on boot, unless they are marked autostart
-        qemu.ovmf.enable = true;
+        qemu.ovmf = {
+          enable = true;
+          packages = [ pkgs.OVMFFull.fd ];
+        };
         qemu.swtpm.enable = true;
       };
 

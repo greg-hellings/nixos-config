@@ -46,4 +46,9 @@ rec {
   };
   handbrake = prev.handbrake.override { libbluray = libbluray-custom; };
   pipenv-ivr = prev.callPackage ./pipenv.nix { };
+  OVMFFull = prev.OVMFFull.override {
+    secureBoot = true;
+    msVarsTemplate = true;
+    tpmSupport = true;
+  };
 }
