@@ -7,6 +7,7 @@
 let
   packages = with pkgs; [
     bruno # but let's not talk about it
+    bruno-cli
     cargo
     gh-copilot
     mariadb
