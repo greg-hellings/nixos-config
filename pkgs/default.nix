@@ -13,7 +13,10 @@ in
   inject-darwin = c ./inject-darwin.nix { };
   inject = c ./inject.nix { };
   hms = c ./hms { };
+  qemu-hook = c ./qemu-hook.nix { };
   setup-ssh = c ./setup-ssh { };
   upgrade-pg-cluster = c ./upgrade-pg-cluster.nix { };
+  vfio_startup = c ./vfio_startup.nix { };
+  vfio_shutdown = c ./vfio_shutdown.nix { };
   zim = c ./zim.nix { };
 }

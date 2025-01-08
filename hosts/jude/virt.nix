@@ -27,7 +27,7 @@ in
       "vfio"
       "vfio_iommu_type1"
 
-      "amdgpu"
+      #"amdgpu"
       #"nvidia"
       #"nvidia_modeset"
       #"nvidia_uvm"
@@ -35,6 +35,7 @@ in
     ];
     kernelParams = [
       "amd_iommu=on"
+      "iommu=pt"
       ("vfio-pci.ids=" + (lib.concatStringsSep "," passthru))
     ];
   };
@@ -64,12 +65,28 @@ in
       wantedBy = pkgs.lib.mkForce [ ];
       serviceConfig.User = "root";
     };
+
+    "libvirtd-nosleep@" = {
+      description = "Prevent sleep while %i is running";
+      serviceConfig = {
+        Type = "simple";
+        ExecStart = ''
+          ${pkgs.systemd}/bin/systemd-inhibit --what=sleep --why="Libvirt domain %i is running" --who=%U --mode=block sleep infinity
+        '';
+      };
+    };
   };
 
   virtualisation = {
-    libvirtd.hooks.qemu =
-      {
+    libvirtd = {
+      extraConfig = ''
+        log_filters="1:qemu"
+        log_outputs="1:file:/var/log/libvirt/libvirtd.log"
+      '';
+      hooks.qemu = {
+        win10 = lib.getExe pkgs.qemu-hook;
       };
+    };
 
     spiceUSBRedirection.enable = true;
   };

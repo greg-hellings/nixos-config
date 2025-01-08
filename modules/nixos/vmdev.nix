@@ -34,7 +34,9 @@ with lib;
       OVMFFull
       nixos-generators
       packer
+      swtpm
       virt-manager
+      virtio-win
       xorriso
     ];
 
@@ -45,11 +47,16 @@ with lib;
       libvirtd = {
         enable = true;
         onBoot = "ignore"; # Do not auto-restart VMs on boot, unless they are marked autostart
-        qemu.ovmf = {
-          enable = true;
-          packages = [ pkgs.OVMFFull.fd ];
+        qemu = {
+          ovmf = {
+            enable = true;
+            packages = [ pkgs.OVMFFull.fd ];
+          };
+          swtpm = {
+            enable = true;
+            package = pkgs.swtpm;
+          };
         };
-        qemu.swtpm.enable = true;
       };
 
       virtualbox.host = {
