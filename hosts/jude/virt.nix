@@ -66,7 +66,7 @@ in
       serviceConfig.User = "root";
     };
 
-    "libvirtd-nosleep@" = {
+    "libvirt-nosleep@" = {
       description = "Prevent sleep while %i is running";
       serviceConfig = {
         Type = "simple";
