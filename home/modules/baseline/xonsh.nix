@@ -62,6 +62,7 @@
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
       ls = "ls --color";
       ll = "ls -l --color";
+      z = "zeditor .";
 
       # Tailscale related ones
       tsup = "sudo tailscale up";
