@@ -15,6 +15,8 @@
     enable = true;
 
     sessionVariables = {
+      # This is for pushing builds to my local S3 cache
+      AWS_SHARED_CREDENTIALS_FILE = "/run/agenix/cache-credentials";
       CLICOLOR = 1;
       EDITOR = "nvim";
       # vte_new_tab_cwd causes new Terminal tabs to open in the
@@ -48,15 +50,16 @@
       s = "nix run \".#runserver\"";
 
       # Nix related ones
+      deploy = "nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host";
       gl-nging = "sudo nixos-container run gitlab -- systemctl restart nginx";
       nb = "nix build -L";
       nixdu = "sudo nix-store --gc --print-roots | egrep -v r\"^(/nix/var|/run/\\w+-system|\\{memory|/proc)\"";
       nixtest = "nixpkgs-review rev HEAD";
       nixup = "nix flake lock --update-input";
+      nixcopy = "nix copy --to \"s3://binary-cache/?profile=default&endpoint=nas.home%3A9000&scheme=http\"";
       stable = "nix flake lock --update-input nixstable --update-input hm --update-input nixvimstable";
       unstable = "nix flake lock --update-input nixunstable --update-input hmunstable --update-input nixvimunstable --update-input nurpkgs --update-input vsext --update-input wsl";
       updateScript = "nix-shell maintainers/scripts/update.nix --argstr package";
-      deploy = "nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host";
 
       # General
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";

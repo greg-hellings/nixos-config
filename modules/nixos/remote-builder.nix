@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 let
   cfg = config.greg.remote-builder;
@@ -10,7 +15,46 @@ with lib;
   };
 
   config = mkIf cfg.enable {
+    age.secrets = {
+      # Don't forget to also update home/modules/baseline/xonsh.nix if this changes
+      cache-credentials = {
+        file = ../../secrets/cache-credentials.age;
+        owner = "greg";
+        group = "nixbld";
+        mode = "660";
+      };
+      private-cache = {
+        file = ../../secrets/cache-private-key.age;
+        group = "nixbld";
+        mode = "660";
+      };
+    };
+
+    # If the system is powerful enough to be a remote builder, it should
+    # be powerful enough to do some basic qemu stuff
+    boot.binfmt.emulatedSystems = [
+      "i686-linux"
+      "aarch64-linux"
+    ];
+
     greg.tailscale.enable = true;
+
+    # The builder user needs to be trusted to submit builds
+    nix.settings = {
+      post-build-hook = getExe (
+        pkgs.writeShellScriptBin "upload-to-cache.sh" ''
+          set -eu
+          set -f
+          export AWS_SHARED_CREDENTIALS_FILE=${config.age.secrets.cache-credentials.path}
+          export IFS=' '
+          echo "Uploading paths " $OUT_PATHS
+          nix copy --to "s3://binary-cache/?scheme=http&endpoint=nas.home%3A9000&profile=default" $OUT_PATHS
+        ''
+      );
+      secret-key-files = config.age.secrets.private-cache.path;
+      trusted-users = [ config.users.users.remote-builder-user.name ];
+    };
+
     users.users.remote-builder-user = {
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4fNCnomQEsFKQZp16LXRqkfXHzzZbGAYJWPMvlGGQy root@exodus"
@@ -26,13 +70,5 @@ with lib;
       isNormalUser = true;
       useDefaultShell = true;
     };
-    # The builder user needs to be trusted to submit builds
-    nix.settings.trusted-users = [ config.users.users.remote-builder-user.name ];
-    # If the system is powerful enough to be a remote builder, it should
-    # be powerful enough to do some basic qemu stuff
-    boot.binfmt.emulatedSystems = [
-      "i686-linux"
-      "aarch64-linux"
-    ];
   };
 }
