@@ -1,14 +1,25 @@
 builds:
   exclude:
+    # i686 is something we don't care about
     - devShells.i686-linux.default
-    - packages.x86_64-linux.default  # just duplicates
+    # Duplicate package
+    - packages.x86_64-linux.default
+    # Just data, no need to build
     - packages.aarch64-linux.zim
     - packages.aarch64-darwin.zim
     - packages.x86_64-linux.zim
+    # VM images don't need to be built separately
+    # on different targets
     - packages.aarch64-linux.jellyfin
     - packages.aarch64-linux.matrix
     - packages.aarch64-darwin.jellyfin
     - packages.aarch64-darwin.matrix
+    # These three don't exist where QEmu doesn't
+    - packages.aarch64-darwin.qemu-hook
+    - packages.aarch64-darwin.vfio_shutdown
+    - packages.aarch64-darwin.vfio_startup
+    # These are just images which I will build when
+    # I feel like it
     - nixosConfigurations.iso
     - nixosConfigurations.iso-beta
   include:
