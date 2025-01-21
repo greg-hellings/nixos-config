@@ -6,6 +6,8 @@ let
   hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz";
   jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0";
   matrix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIbvNNYrsT9sSBSwIL9c0LiHDaOiztlTJZAGgTDGUHq root@vm-matrix";
+  exodus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxmnCj2E9DxcnefPW+n4yCuLShxqr0p024riogdeXA3";
+
   systems = [
     genesis
     linode
@@ -14,6 +16,7 @@ let
     hosea
     jeremiah
     matrix
+    exodus
   ];
 
   user_genesis_virt = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFWPSFQT0AH77wrwRhiskcBS0w4ZakBRdJywYYBsnm3S greg@genesis";
@@ -23,6 +26,7 @@ let
   user_isaiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAl6DJVrPSujvJSAEA5Q8tRrzfJs/c6DMwqwQEUFffIR greg@isaiah";
   user_hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrqJQvDspLi1vXQRJ/Z5kN/F8jCBHvaXjo+5zLuIYjR greg@hosea";
   user_jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYIiecdyM9c7tXgR96983K3wqiJeQRMbrzGIF8Wy6uO greg@jeremiah";
+  user_exodus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC189EnvWjNUp3xSzPMAtw85oQEsvP1tQR1TK640nLx6 greg@exodus";
 
   users = [
     user_genesis_virt
@@ -32,6 +36,7 @@ let
     user_isaiah
     user_hosea
     user_jeremiah
+    user_exodus
   ];
 
   everyone = systems ++ users;
@@ -49,6 +54,25 @@ in
   "linode-forgejo-runner.age".publicKeys = everyone;
   "jude-forgejo-runner.age".publicKeys = everyone;
   "minio.age".publicKeys = everyone;
+
+  "cache-private-key.age".publicKeys = [
+    jeremiah
+    isaiah
+    jude
+    user_jeremiah
+    user_isaiah
+    user_jude
+    user_exodus
+  ];
+  "cache-credentials.age".publicKeys = [
+    jeremiah
+    isaiah
+    jude
+    user_jeremiah
+    user_isaiah
+    user_jude
+    user_exodus
+  ];
 
   "restic-env.age".publicKeys = everyone;
   "restic-pw.age".publicKeys = everyone;
