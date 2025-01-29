@@ -76,11 +76,11 @@
   services = {
     gitlab-runner = {
       enable = true;
-      settings.concurrent = 5;
+      settings.concurrent = 7;
       services = {
         shell = {
           executor = "shell";
-          limit = 1;
+          limit = 7;
           authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
           environmentVariables = {
             EFI_DIR = "${pkgs.OVMF.fd}/FV/";
