@@ -10,7 +10,9 @@ let
     bruno-cli
     cargo
     gh-copilot
-    mariadb
+    gnumake
+    libcap.dev
+    libmysqlclient.dev
     nix-eval-jobs
     nix-fast-build
     nix-output-monitor

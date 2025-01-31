@@ -4,6 +4,7 @@ let
   myPackages =
     pypackages: with pypackages; [
       black
+      build
       dateutil
       ipython
       mypy
@@ -11,6 +12,7 @@ let
       pyyaml
       responses
       ruamel-yaml
+      setuptools
       tox
       typing-extensions
       virtualenv

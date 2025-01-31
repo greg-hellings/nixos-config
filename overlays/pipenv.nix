@@ -6,8 +6,6 @@
   installShellFiles,
 }:
 
-with python3.pkgs;
-
 let
 
   runtimeDeps =
@@ -15,8 +13,11 @@ let
     with ps;
     [
       certifi
+      pysocks
       setuptools
-      pip
+      (pip.overridePythonAttrs {
+        dependencies = [ ps.pysocks ];
+      })
       virtualenv
       virtualenv-clone
     ]
@@ -25,7 +26,7 @@ let
   pythonEnv = python3.withPackages runtimeDeps;
 
 in
-buildPythonApplication rec {
+python3.pkgs.buildPythonApplication rec {
   pname = "pipenv";
   version = "2023.11.15";
   format = "pyproject";
@@ -39,7 +40,7 @@ buildPythonApplication rec {
 
   env.LC_ALL = "en_US.UTF-8";
 
-  nativeBuildInputs = [
+  nativeBuildInputs = with python3.pkgs; [
     installShellFiles
     setuptools
     wheel
@@ -60,7 +61,7 @@ buildPythonApplication rec {
     export HOME="$TMPDIR"
   '';
 
-  nativeCheckInputs = [
+  nativeCheckInputs = with python3.pkgs; [
     mock
     pytestCheckHook
     pytest-xdist
