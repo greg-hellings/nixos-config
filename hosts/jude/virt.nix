@@ -39,7 +39,7 @@ in
       ("vfio-pci.ids=" + (lib.concatStringsSep "," passthru))
     ];
   };
-  hardware.opengl.enable = true;
+  hardware.graphics.enable = true;
 
   services.gitlab-runner = {
     enable = true;

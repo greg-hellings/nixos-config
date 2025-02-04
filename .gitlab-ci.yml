@@ -1,0 +1,23 @@
+stages:
+  - eval
+  - build
+
+default:
+  tags:
+    - nix
+
+"Evaluate for builds":
+  stage: eval
+  artifacts:
+    paths:
+      - gitlab-ci-continue.yml
+  script: nix run ".#gen-build" > gitlab-ci-continue.yml
+
+"Trigger builds":
+  stage: build
+  trigger:
+    include:
+      - artifact: gitlab-ci-continue.yml
+        job: "Evaluate for builds"
+  variables:
+    PARENT_PIPELINE_ID: $CI_PIPELINE_ID

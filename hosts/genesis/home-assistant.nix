@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 
 {
   virtualisation.podman.enable = true;
@@ -28,7 +28,7 @@
       "zwave_js"
     ];
     customComponents = with pkgs.home-assistant-custom-components; [
-      pkgs.python3.pkgs.daikinone
+      config.services.home-assistant.package.python.pkgs.daikinone
       nest_protect
       smartthinq-sensors
     ];
