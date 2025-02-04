@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 let
   vim-xonsh = pkgs.vimUtils.buildVimPlugin {
     name = "vim-xonsh";
@@ -87,10 +87,6 @@ in
             group_index = 2;
           }
           {
-            name = "copilot-vim";
-            group_index = 2;
-          }
-          {
             name = "path";
             gruop_index = 3;
           }
@@ -103,10 +99,6 @@ in
           "<C-c>" = "cmp.mapping.abort()";
         };
       };
-    };
-    copilot-vim = {
-      enable = (config.nixpkgs.config ? "allowUnfree" && config.nixpkgs.config.allowUnfree);
-      settings.workspace_folders = [ "~/src/ivr" ];
     };
     direnv.enable = true;
     gitgutter.enable = true;

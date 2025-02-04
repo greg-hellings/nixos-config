@@ -13,7 +13,10 @@ rec {
     in
     top.hmunstable.lib.homeManagerConfiguration {
       inherit pkgs;
-      modules = [ ./home.nix ];
+      modules = [
+        ../modules/nix-conf.nix
+        ./home.nix
+      ];
       extraSpecialArgs = {
         inherit top;
         nixvim = top.nixvimunstable;

@@ -7,7 +7,6 @@
 }:
 
 {
-  nixpkgs.config.allowUnfreePredicate = (_: true);
   imports = [
     nixvim.homeManagerModules.default
     ./modules
