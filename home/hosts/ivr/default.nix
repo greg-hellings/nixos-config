@@ -33,6 +33,7 @@ in
     gui = true;
     pypackage = py;
     vscodium = true;
+    zed = true;
   };
 
   nixpkgs.config = {
