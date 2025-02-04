@@ -107,6 +107,7 @@
       pulse.enable = true;
       wireplumber.enable = true;
     };
+    pulseaudio.enable = false; # This conflicts with pipewire
     locate.enable = true;
     xserver.videoDrivers = [ "nvidia" ];
   };
@@ -117,7 +118,6 @@
       nvidiaSettings = true;
       open = true;
     };
-    pulseaudio.enable = false; # This conflicts with pipewire
     system76 = {
       firmware-daemon.enable = true;
       #kernel-modules.enable = true;

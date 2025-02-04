@@ -66,7 +66,7 @@
         top.agenix.overlays.default
         local_overlay
         packages_overlay
-        top.nurpkgs.overlay
+        top.nurpkgs.overlays.default
         top.vsext.overlays.default
       ];
 
