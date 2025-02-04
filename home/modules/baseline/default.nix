@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ../../../modules/nix-conf.nix
     ./ansible.nix
     ./bash.nix
     ./direnv.nix
