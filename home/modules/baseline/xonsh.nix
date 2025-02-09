@@ -65,6 +65,7 @@
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
       ls = "ls --color";
       ll = "ls -l --color";
+      win = "sudo virsh start win10";
       z = "zeditor .";
 
       # Tailscale related ones
