@@ -13,10 +13,6 @@
       "aarch64-linux"
     ];
   };
-
-  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
-
-  networking.hostName = "exodus";
   greg = {
     home = true;
     gnome.enable = true;
@@ -26,5 +22,14 @@
       enable = true;
       system = "intel";
     };
+  };
+
+  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+
+  networking.hostName = "exodus";
+
+  virtualisation = {
+    podman.enable = true;
+    oci-containers.backend = "podman";
   };
 }
