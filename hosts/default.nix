@@ -54,7 +54,7 @@ let
       ] ++ extraMods;
     };
 in
-{
+rec {
   genesis = unstable { name = "genesis"; };
   exodus = unstable { name = "exodus"; };
   jude = unstable { name = "jude"; };
@@ -65,6 +65,7 @@ in
   isaiah = unstable { name = "isaiah"; };
 
   vm-jellyfin = vm { name = "vm-jellyfin"; };
+  jellyfin = vm-jellyfin;
   vm-matrix = vm { name = "vm-matrix"; };
 
   iso = unstable { name = "iso"; };

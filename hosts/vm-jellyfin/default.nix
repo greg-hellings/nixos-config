@@ -5,6 +5,7 @@
 
   greg = {
     proxies."jellyfin.home".target = "http://localhost:8096/";
+    proxies."jellyfin.thehellings.lan".target = "http://localhost:8096/";
     tailscale.enable = true;
   };
 
