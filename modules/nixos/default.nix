@@ -5,9 +5,6 @@
   ...
 }:
 
-let
-  x = if builtins.hasAttr "xonsh-unwrapped" pkgs then pkgs.xonsh else pkgs.xonsh.passthru.wrapper;
-in
 {
   imports = [
     ../baseline.nix
@@ -59,20 +56,12 @@ in
 
   programs.xonsh = {
     enable = true;
-    package = (
-      x.override {
-        extraPackages = (
-          ps: with ps; [
-            (ps.toPythonModule pkgs.pipenv)
-            pyyaml
-            requests
-            ruamel-yaml
-            xonsh-apipenv
-            pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
-            pkgs.nur.repos.xonsh-xontribs.xontrib-vox
-          ]
-        );
-      }
+    extraPackages = (
+      ps: with ps; [
+        xonsh-apipenv
+        pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
+        pkgs.nur.repos.xonsh-xontribs.xontrib-vox
+      ]
     );
   };
 

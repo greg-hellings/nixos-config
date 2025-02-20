@@ -44,7 +44,7 @@
     nix23_05.url = "github:NixOS/nixpkgs/nixos-23.05";
     nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nurpkgs.url = "github:nix-community/NUR";
-    vsext.url = "github:nix-community/nix-vscode-extensions";
+    vsext.url = "github:greg-hellings/nix-vscode-extensions/fix-json";
     wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixunstable";
