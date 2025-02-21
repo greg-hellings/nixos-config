@@ -49,6 +49,7 @@ in
       direnv
       home-manager
       mysql-workbench
+      nixStable
       pipenv-ivr
       poetry
       robo3t
