@@ -84,7 +84,10 @@ in
       port = 443;
       extraConfig = {
         gitlab = {
-          trustedProxies = [ "100.109.86.8/32" ];
+          trustedProxies = [
+            "100.78.226.76/32" # The container itself
+            "100.115.57.8/32" # Public server's IP
+          ];
         };
       };
       initialRootEmail = "greg@thehellings.com";
