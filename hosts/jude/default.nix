@@ -60,7 +60,6 @@
         gimp
         go
         gparted
-        gnucash
         graphviz
         flock
         ffmpeg

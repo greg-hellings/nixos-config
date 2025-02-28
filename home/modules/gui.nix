@@ -49,7 +49,6 @@ in
               bitwarden
               discord
               endeavour
-              gnucash
               jellyfin-media-player
               #logseq
               nextcloud-client
