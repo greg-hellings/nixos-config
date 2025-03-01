@@ -19,7 +19,7 @@ in
     target = "https://registry.thehellings.lan:5000";
     ssl = true;
     genAliases = false;
-    extraConfig = "client_max_body_size 250m;";
+    extraConfig = "client_max_body_size 25000m;";
   };
 
   networking.firewall.allowedTCPPorts = [ sshPort ];

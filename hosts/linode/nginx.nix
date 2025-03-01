@@ -11,6 +11,7 @@ in
   services.nginx = {
     enable = true;
 
+    clientMaxBodySize = "25000m"; # To help with uploading container images
     # If there are recommended settings, let's use them!
     recommendedGzipSettings = true;
     recommendedOptimisation = true;

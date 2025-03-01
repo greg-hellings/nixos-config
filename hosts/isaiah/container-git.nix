@@ -155,23 +155,26 @@ in
       };
     };
 
-    nginx.virtualHosts."gitlab.shire-zebra.ts.net" = {
-      listen = [
-        {
-          addr = vpnIp;
-          port = registryPort;
-          ssl = true;
-        }
-      ];
-      locations."/" = {
-        proxyPass = "http://127.0.0.1:4567/";
-        recommendedProxySettings = true;
+    nginx = {
+      clientMaxBodySize = "25000m";
+      virtualHosts."gitlab.shire-zebra.ts.net" = {
+        listen = [
+          {
+            addr = vpnIp;
+            port = registryPort;
+            ssl = true;
+          }
+        ];
+        locations."/" = {
+          proxyPass = "http://127.0.0.1:4567/";
+          recommendedProxySettings = true;
+        };
+        extraConfig = ''
+          ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;
+          ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;
+          client_max_body_size 10000m ;
+        '';
       };
-      extraConfig = ''
-        ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;
-        ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;
-        client_max_body_size 10000m ;
-      '';
     };
 
     # Fetch the SSL certificates for nginx to use
