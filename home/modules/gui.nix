@@ -150,7 +150,7 @@ in
               "doh-rollout.doneFirstRun" = true;
               "signon.rememberSignons" = false;
             };
-            extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+            extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
               bitwarden
               gsconnect
               foxyproxy-standard
