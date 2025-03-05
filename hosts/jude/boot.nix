@@ -4,7 +4,7 @@
   # Use the systemd-boot EFI boot loader.
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
-    kernelPackages = pkgs.linuxPackages_latest;
+    kernelPackages = pkgs.linuxPackages_zen;
     supportedFilesystems = [ "ntfs" ];
     loader = {
       timeout = 15;
