@@ -23,6 +23,7 @@
       audacity
       (mumble.override { pulseSupport = true; })
       #logseq
+      super-productivity
       webcamoid
     ];
   };
