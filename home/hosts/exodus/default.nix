@@ -12,5 +12,6 @@
     cargo
     freeciv
     #freeciv_qt
+    wineWowPackages.stable
   ];
 }
