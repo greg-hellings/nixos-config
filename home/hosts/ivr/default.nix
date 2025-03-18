@@ -52,6 +52,7 @@ in
       nixStable
       pipenv-ivr
       poetry
+      pre-commit
       robo3t
       x
     ];
