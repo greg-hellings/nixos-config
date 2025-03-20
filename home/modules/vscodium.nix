@@ -22,7 +22,6 @@ in
     # An alternative editor to vim, when I need it for some things
     programs.vscode = {
       enable = true;
-      #package = pkgs.vscodium;
       profiles.default = {
         extensions =
           with top.vsext.extensions."${pkgs.stdenv.system}".vscode-marketplace;

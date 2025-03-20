@@ -1,15 +1,10 @@
 {
   pkgs,
   lib,
-  top,
   ...
 }:
 let
-  nix23 = import top.nix23_05 {
-    inherit (pkgs.stdenv) system;
-    overlays = [ top.self.overlays.default ];
-  };
-  py = nix23.python311.withPackages (
+  py = pkgs.python311.withPackages (
     p: with p; [
       pyyaml
       ruamel-yaml
@@ -36,11 +31,6 @@ in
     zed = true;
   };
 
-  nixpkgs.config = {
-    allowUnfree = true;
-    permittedInsecurePackages = [ "jitsi-meet-1.0.8043" ];
-  };
-
   home = {
     packages = with pkgs; [
       aacs
@@ -52,6 +42,7 @@ in
       nixStable
       pipenv-ivr
       poetry
+      poetryPlugins.poetry-plugin-export
       pre-commit
       robo3t
       x

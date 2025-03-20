@@ -7,14 +7,21 @@ rec {
       pkgs = (
         import top.nixunstable {
           inherit system overlays;
-          config.allowUnfree = true;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+          };
         }
       );
     in
     top.hmunstable.lib.homeManagerConfiguration {
       inherit pkgs;
       modules = [
-        ../modules/nix-conf.nix
+        (import ../modules/nix-conf.nix {
+          inherit pkgs;
+          inherit (pkgs) lib;
+          cache = false;
+        })
         ./home.nix
       ];
       extraSpecialArgs = {
