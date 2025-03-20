@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   lib,
   self,
   ...
@@ -15,6 +14,9 @@ let
       [ ];
 in
 {
+  # This is a dumb hack to pass the value into the import below, but it's how we have to do it,
+  # since that's how the module system works
+  _module.args.cache = true;
   imports = [
     ./nix-conf.nix
   ];

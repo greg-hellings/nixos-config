@@ -1,7 +1,7 @@
 {
   pkgs,
-  cache ? true,
   lib,
+  cache,
   ...
 }:
 
