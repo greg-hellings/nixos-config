@@ -41,8 +41,13 @@ in
       mysql-workbench
       nixStable
       pipenv-ivr
-      poetry
-      poetryPlugins.poetry-plugin-export
+      (poetry.withPlugins (
+        ps: with ps; [
+          poetry-audit-plugin
+          poetry-plugin-export
+          poetry-plugin-shell
+        ]
+      ))
       pre-commit
       robo3t
       x
