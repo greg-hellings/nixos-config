@@ -2,7 +2,6 @@
   pkgs,
   config,
   lib,
-  top,
   ...
 }:
 
@@ -24,7 +23,7 @@ in
       enable = true;
       profiles.default = {
         extensions =
-          with top.vsext.extensions."${pkgs.stdenv.system}".vscode-marketplace;
+          with pkgs.vscode-marketplace;
           [
             arrterian.nix-env-selector
             asvetliakov.vscode-neovim
@@ -44,7 +43,7 @@ in
             vscjava.vscode-java-debug
             wholroyd.jinja
           ]
-          ++ (with top.vsext.extensions."${pkgs.stdenv.system}".vscode-marketplace-release; [
+          ++ (with pkgs.vscode-marketplace-release; [
             github.copilot
             github.copilot-chat
           ]);
