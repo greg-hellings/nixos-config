@@ -17,12 +17,13 @@
     package = pkgs.nixStable;
 
     settings = {
+      cores = 0; # Use all cores for builds
+      download-buffer-size = 500 * 1024 * 1024;
       experimental-features = "nix-command flakes";
       keep-outputs = true;
       keep-derivations = true;
       min-free = (toString (1024 * 1024 * 1024));
       max-free = (toString (5 * 1024 * 1024 * 1024));
-      cores = 0; # Use all cores for builds
       trusted-users = [
         "greg"
         "gregory.hellings"
