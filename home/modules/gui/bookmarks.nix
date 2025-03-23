@@ -225,6 +225,15 @@
           }
         ];
       }
+      {
+        name = "REI";
+        bookmarks = [
+          {
+            name = "Door Loop";
+            url = "https://btrgpm.app.doorloop.com/home";
+          }
+        ];
+      }
     ];
   }
 ]
