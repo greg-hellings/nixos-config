@@ -53,7 +53,7 @@ with lib;
         );
         uploadRunner = getExe (
           pkgs.writeShellScriptBin "uploade-to-cache-runner.sh" ''
-            sum=$(printf "$OUT_PATHS" | ${lib.getExe' pkgs.coreutils-full "sha256sum"})
+            sum=$(printf "$OUT_PATHS" | ${lib.getExe' pkgs.coreutils-full "sha256sum"} | cut -d " " -f1)
             ${lib.getExe' config.systemd.package "systemd-run"} \
                 --unit "upload-$(${lib.getExe' pkgs.coreutils "date"} +%s%3N)-$sum" \
                 --property Type=exec \
