@@ -21,6 +21,7 @@
 
     packages = with pkgs; [
       audacity
+      bitwarden-cli
       (mumble.override { pulseSupport = true; })
       #logseq
       super-productivity

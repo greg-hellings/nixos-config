@@ -107,9 +107,7 @@ in
   # Base packages that need to be in all my hosts
   environment.systemPackages = with pkgs; [
     agenix
-    bitwarden-cli
     bmon
-    cachix
     diffutils
     git
     gnupatch

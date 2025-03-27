@@ -9,9 +9,9 @@
     zed = true;
   };
   home.packages = with pkgs; [
+    bitwarden-cli
     cargo
     freeciv
-    #freeciv_qt
     wineWowPackages.stable
   ];
 }
