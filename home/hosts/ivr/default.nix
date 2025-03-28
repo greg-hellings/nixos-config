@@ -38,6 +38,9 @@ in
       bitwarden-cli
       direnv
       home-manager
+      k9s
+      kubectl
+      minikube
       mysql-workbench
       nixStable
       pipenv-ivr
@@ -50,6 +53,7 @@ in
       ))
       pre-commit
       robo3t
+      skaffold
       x
     ];
     file.".pip/pip.conf".text = (
@@ -66,4 +70,13 @@ in
     homeDirectory = lib.mkForce "/home/gregory.hellings";
   };
   programs.tmux.shell = (lib.getExe x);
+  services.podman = {
+    enable = true;
+    settings = {
+      registries.search = [
+        "docker.io"
+        "quay.io"
+      ];
+    };
+  };
 }
