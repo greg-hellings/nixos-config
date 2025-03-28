@@ -24,9 +24,26 @@
       ".bazelproject"
     ];
     extraConfig = {
+      branch.sort = "-committerdate";
+      column.ui = "auto";
+      commit.verbose = "true";
+      diff = {
+        algorithm = "histogram";
+        colorMoved = "plain";
+        mnemonicPrefix = "true";
+        renames = "true";
+      };
       init.defaultBranch = "main";
       push.default = "upstream";
       pull.rebase = "false";
+      rebase = {
+        autoSquash = "true";
+        updateRefs = "true";
+      };
+      rerere = {
+        autoupdate = "true";
+        enabled = "true";
+      };
       tag.sort = "version:refname";
     };
   };
