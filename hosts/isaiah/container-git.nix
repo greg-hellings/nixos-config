@@ -73,6 +73,14 @@ in
   };
 
   services = {
+    # Fetch the SSL certificates for nginx to use
+    cron = {
+      enable = true;
+      systemCronJobs = [
+        "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
+      ];
+    };
+
     gitlab = {
       enable = true;
       backup = {
@@ -177,12 +185,17 @@ in
       };
     };
 
-    # Fetch the SSL certificates for nginx to use
-    cron = {
+    openssh.enable = true;
+
+    logrotate = {
       enable = true;
-      systemCronJobs = [
-        "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
-      ];
+      settings = {
+        "/var/lib/postgresql/*/log/*.log" = {
+          enable = true;
+          compress = true;
+          compresscmd = "${pkgs.xz}/bin/xz";
+        };
+      };
     };
 
     postgresql = {
@@ -207,7 +220,6 @@ in
       enable = true;
     };
     resolved.enable = true;
-    openssh.enable = true;
   };
 
   # Do not start nginx until we have tailscaled up and running, so it can bind
