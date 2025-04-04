@@ -57,6 +57,7 @@
         create_ssl
         distrobox
         expect
+        fswatch
         gimp
         go
         gparted
