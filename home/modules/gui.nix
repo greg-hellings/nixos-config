@@ -78,7 +78,10 @@ in
         };
         profiles = {
           default = {
-            bookmarks = import ./gui/bookmarks.nix;
+            bookmarks = {
+              force = true;
+              settings = import ./gui/bookmarks.nix;
+            };
             id = 0;
             isDefault = true;
             search = {
