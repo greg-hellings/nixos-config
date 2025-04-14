@@ -67,6 +67,7 @@ rec {
   vm-jellyfin = vm { name = "vm-jellyfin"; };
   jellyfin = vm-jellyfin;
   vm-matrix = vm { name = "vm-matrix"; };
+  proxmoxtemplate = unstable { name = "proxmoxtemplate"; };
 
   iso = unstable { name = "iso"; };
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'

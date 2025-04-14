@@ -11,11 +11,7 @@ let
 in
 with lib;
 {
-  options.greg.print.enable = mkOption {
-    type = types.bool;
-    default = true;
-    description = "Configures the system to print with my home printer";
-  };
+  options.greg.print.enable = mkEnableOption "Configures the system to print with my home printer";
 
   config = mkIf cfg.enable {
     # ipp://printer.thehellings.lan:631/ - generic postscript printer

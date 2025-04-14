@@ -45,13 +45,13 @@
     settings.auto-optimise-store = true;
   };
 
-  # I am a fan of network manager, myself
+  # Network Manager pulls in too many deps
   networking = {
     search = [
       "thehellings.lan"
       "home"
     ];
-    networkmanager.enable = true;
+    networkmanager.enable = false;
   };
 
   programs.xonsh = {
@@ -79,7 +79,6 @@
     createHome = true;
     extraGroups = [
       "wheel"
-      "networkmanager"
     ]; # Enable ‘sudo’ for the user.
     shell = config.programs.xonsh.package;
     initialPassword = "password";
