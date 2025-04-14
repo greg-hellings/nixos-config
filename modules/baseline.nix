@@ -53,7 +53,7 @@ in
           "git.home"
           "git.thehellings.lan"
         ];
-        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKCH6L3YT7W8regzG395UWfRVfjYyUMJtmM+3w579bsT";
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC7hesFWwlmSbWPJWUiF8fIppy5a83yXw84O0Ytz+Zyq";
       };
       hosea = {
         extraHostNames = [
