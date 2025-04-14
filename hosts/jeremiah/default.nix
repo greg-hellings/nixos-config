@@ -6,6 +6,7 @@
   config,
   pkgs,
   lib,
+  top,
   ...
 }:
 
@@ -13,6 +14,7 @@
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    top.proxmox.nixosModules.proxmox-ve
   ];
 
   # Bootloader.
@@ -40,6 +42,11 @@
       options = [ "subvol=var" ];
       device = "/dev/nvme0n1p1";
     };
+    "/media/proxmox" = {
+      device = "10.42.1.4:/volume1/proxmox";
+      fsType = "nfs";
+      options = [ "noatime" ];
+    };
   };
 
   greg = {
@@ -51,12 +58,15 @@
   networking = {
     hostName = "jeremiah"; # Define your hostname.
     useDHCP = false;
+    bridges.br0 = {
+      interfaces = [ "enp68s0" ];
+    };
     defaultGateway = {
       address = " 10.42.1.2";
-      interface = "enp68s0";
+      interface = "br0";
     };
     interfaces = {
-      enp68s0 = {
+      br0 = {
         ipv4.addresses = [
           {
             address = "10.42.1.8";
@@ -75,7 +85,7 @@
 
   services = {
     gitlab-runner = {
-      enable = true;
+      enable = false;
       settings.concurrent = 7;
       services = {
         shell = {
@@ -89,6 +99,7 @@
         };
       };
     };
+    proxmox-ve.enable = true;
   };
 
   systemd.services."gitlab-runner" = {
@@ -106,13 +117,5 @@
       User = "root";
       DynamicUser = lib.mkForce false;
     };
-  };
-
-  virtualisation.virtualbox.host = {
-    enable = true;
-    enableExtensionPack = true;
-    enableHardening = false;
-    headless = true;
-    enableWebService = true;
   };
 }

@@ -205,6 +205,10 @@
                 name = "Isaiah";
                 url = "https://isaiah.home:8006/";
               }
+              {
+                name = "Jeremiah";
+                url = "https://jeremiah.home:8006/";
+              }
             ];
           }
           {
