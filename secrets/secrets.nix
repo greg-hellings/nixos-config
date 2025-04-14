@@ -3,12 +3,14 @@ let
   jude = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOos0zQePsa+T6Z2dsKbPOvEdrBQ8a6mx3s7pN6ysCI0 root@jude";
   isaiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf";
   genesis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEI9jbTPmEWQ0F2bLYmnIOLmBnag1fkKxHRjz3X8lB/k root@genesis";
+  gitlab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC7hesFWwlmSbWPJWUiF8fIppy5a83yXw84O0Ytz+Zyq";
   hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz";
   jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0";
   matrix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIbvNNYrsT9sSBSwIL9c0LiHDaOiztlTJZAGgTDGUHq root@vm-matrix";
   exodus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxmnCj2E9DxcnefPW+n4yCuLShxqr0p024riogdeXA3";
 
   systems = [
+    gitlab
     genesis
     linode
     jude
@@ -19,6 +21,7 @@ let
     exodus
   ];
 
+  user_gitlab = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEwX8DZRRbZ+Iwo90dROg/61lisazAAGK/W8aqWfWcJr greg@nixos";
   user_genesis_virt = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFWPSFQT0AH77wrwRhiskcBS0w4ZakBRdJywYYBsnm3S greg@genesis";
   user_ivr = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYzms+KIe5/bYF3uCyFjA5e1AgMPLIA3c4k417coqBe gregory.hellings@ls23003";
   user_jude = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINnRc/kBhxcjpUtiRQY+BXnSObdp0jFL1395wAQxJip7 greg@jude";
@@ -29,6 +32,7 @@ let
   user_exodus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC189EnvWjNUp3xSzPMAtw85oQEsvP1tQR1TK640nLx6 greg@exodus";
 
   users = [
+    user_gitlab
     user_genesis_virt
     user_ivr
     user_jude
