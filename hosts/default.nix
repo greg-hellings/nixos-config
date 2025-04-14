@@ -64,6 +64,7 @@ rec {
   jeremiah = unstable { name = "jeremiah"; };
   isaiah = unstable { name = "isaiah"; };
 
+  vm-gitlab = vm { name = "vm-gitlab"; };
   vm-jellyfin = vm { name = "vm-jellyfin"; };
   jellyfin = vm-jellyfin;
   vm-matrix = vm { name = "vm-matrix"; };
