@@ -99,7 +99,10 @@
         };
       };
     };
-    proxmox-ve.enable = true;
+    proxmox-ve = {
+      enable = true;
+      ipAddress = (builtins.elemAt config.networking.interfaces.br0.ipv4.addresses 0).address;
+    };
   };
 
   systemd.services."gitlab-runner" = {
