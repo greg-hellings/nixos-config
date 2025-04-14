@@ -18,6 +18,7 @@
 # VMs
 10.42.4.1 matrix matrix.thehellings.lan
 10.42.4.2 jellyfin jellyfin.thehellings.lan vm-jellyfin vm-jellyfin.thehellings.lan
+10.42.4.3 git gitlab git.thehellings.lan gitlab.thehellings.lan
 
 # IPMI
 10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan
@@ -27,7 +28,7 @@
 100.88.91.27 dns.home
 100.80.99.48 exodus.home
 100.88.91.27 genesis.home smart.home zwave.home nixcache.home gitcache.home dashy.home uptime.home speed.home
-100.78.226.76 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan
+100.91.131.66 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan
 100.68.203.1 hosea.home hosea.shire-zebra.ts.net
 100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net
 100.102.186.39 jeremiah.home jeremiah.shire-zebra.ts.net

@@ -114,6 +114,10 @@
             hw-address = "BC:24:11:A2:F3:A6";
             ip-address = "10.42.4.2"; # Jellyfin
           }
+          {
+            hw-address = "BC:24:11:6E:0C:40";
+            ip-address = "10.42.4.3";
+          }
         ];
       }
       {
