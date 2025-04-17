@@ -26,7 +26,10 @@
 
   nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
 
-  networking.hostName = "exodus";
+  networking = {
+    hostName = "exodus";
+    networkmanager.enable = lib.mkForce true;
+  };
 
   virtualisation = {
     podman.enable = true;

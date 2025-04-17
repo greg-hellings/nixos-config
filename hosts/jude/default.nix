@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  lib,
+  pkgs,
+  config,
+  ...
+}:
 
 {
   imports = [
@@ -21,6 +26,7 @@
 
   networking = {
     hostName = "jude";
+    networkmanager.enable = lib.mkForce true;
     enableIPv6 = false;
     interfaces.enp12s0.useDHCP = true;
     firewall = {

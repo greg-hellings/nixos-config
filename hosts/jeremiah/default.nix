@@ -42,6 +42,15 @@
       options = [ "subvol=var" ];
       device = "/dev/nvme0n1p1";
     };
+    "/var/pve" = {
+      fsType = "btrfs";
+      options = [ "subvol=pve" ];
+      device = "/dev/nvme0n1p1";
+    };
+    "/btrfs" = {
+      fsType = "btrfs";
+      device = "/dev/nvme0n1p1";
+    };
     "/media/proxmox" = {
       device = "10.42.1.4:/volume1/proxmox";
       fsType = "nfs";
