@@ -1,14 +1,16 @@
-{ lib, ... }:
+{ pkgs, ... }:
 
 {
   imports = [ ./hardware-configuration.nix ];
 
   # Bootloader.
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot = {
+    initrd.kernelModules = [ "amdgpu" ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
   };
-
 
   greg = {
     home = true;
@@ -16,6 +18,15 @@
     proxies."jellyfin.thehellings.lan".target = "http://localhost:8096/";
     tailscale.enable = true;
   };
+
+  environment.systemPackages = with pkgs; [
+    clinfo
+    glxinfo
+    jellyfin-ffmpeg
+    libva-utils
+    radeontop
+    vulkan-tools
+  ];
 
   fileSystems = {
     "/music" = {
@@ -35,8 +46,17 @@
     };
   };
 
+  hardware = {
+    enableAllFirmware = true;
+    enableRedistributableFirmware = true;
+    graphics = {
+      enable = true;
+    };
+  };
+
   networking = {
     hostName = "vm-jellyfin";
+    firewall.allowedTCPPorts = [ 80 ];
   };
 
   services = {
@@ -46,4 +66,9 @@
     };
     qemuGuest.enable = true;
   };
+
+  users.users.jellyfin.extraGroups = [
+    "video"
+    "render"
+  ];
 }
