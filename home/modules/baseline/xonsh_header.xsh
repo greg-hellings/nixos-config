@@ -11,6 +11,11 @@ from sys import platform
 # set -x == trace on; $XONSH_TRACE_SUBPROC = True
 # $? == _.rtn
 
+
+# Does virtualenv support
+xontrib load vox
+# Faster coreutils
+xontrib load coreutils
 xontrib load direnv
 xontrib load coreutils
 xontrib load xonsh-apipenv

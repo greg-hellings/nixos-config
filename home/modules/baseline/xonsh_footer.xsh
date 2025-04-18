@@ -128,11 +128,6 @@ aliases['cleanup'] = _cleanup
 #
 ###
 
-# Does virtualenv support
-xontrib load vox
-# Faster coreutils
-xontrib load coreutils
-
 # Allows identifying JSON as if it was Python by adding some new builtins to the language
 import builtins
 builtins.true = True
