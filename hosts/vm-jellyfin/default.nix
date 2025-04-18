@@ -18,10 +18,6 @@
   };
 
   fileSystems = {
-    "/" = {
-      device = "/dev/disk/by-label/nixos";
-      fsType = "ext4";
-    };
     "/music" = {
       device = "10.42.1.4:/volume1/music";
       fsType = "nfs";
