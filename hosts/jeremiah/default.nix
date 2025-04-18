@@ -10,6 +10,9 @@
   ...
 }:
 
+let
+  passthru = [ ];
+in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -18,9 +21,21 @@
   ];
 
   # Bootloader.
-  boot.loader = {
-    systemd-boot.enable = true;
-    efi.canTouchEfiVariables = true;
+  boot = {
+    initrd.kernelModules = [
+      "vfio_pci"
+      "vfio"
+      "vfio_iommu_type1"
+    ];
+    kernelParams = [
+      "amd_iommu=on"
+      "iommu=pt"
+      ("vfio-pci.ids=" + (lib.concatStringsSep "," passthru))
+    ];
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
