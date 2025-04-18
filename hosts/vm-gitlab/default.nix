@@ -201,8 +201,6 @@ in
       };
     };
 
-    openssh.enable = true;
-
     logrotate = {
       enable = true;
       settings = {
@@ -213,6 +211,8 @@ in
         };
       };
     };
+
+    openssh.enable = true;
 
     postgresql = {
       enable = true;
@@ -231,6 +231,8 @@ in
         log_filename = "postgresql.log";
       };
     };
+
+    qemuGuest.enable = true;
 
     redis.servers.gitlab = {
       enable = true;
