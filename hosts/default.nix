@@ -66,7 +66,6 @@ rec {
 
   vm-gitlab = vm { name = "vm-gitlab"; };
   vm-jellyfin = vm { name = "vm-jellyfin"; };
-  jellyfin = vm-jellyfin;
   vm-matrix = vm { name = "vm-matrix"; };
   proxmoxtemplate = unstable { name = "proxmoxtemplate"; };
 
