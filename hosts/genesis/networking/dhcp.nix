@@ -111,7 +111,7 @@
             ip-address = "10.42.4.1"; # Dendrite
           }
           {
-            hw-address = "BC:24:11:A2:F3:A6";
+            hw-address = "BC:24:11:8F:91:77";
             ip-address = "10.42.4.2"; # Jellyfin
           }
           {
