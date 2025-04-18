@@ -41,6 +41,7 @@ in
       k9s
       kubectl
       minikube
+      mise
       mysql-workbench
       nixStable
       pipenv-ivr

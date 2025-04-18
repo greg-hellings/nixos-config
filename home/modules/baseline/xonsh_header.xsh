@@ -14,6 +14,7 @@ from sys import platform
 xontrib load direnv
 xontrib load coreutils
 xontrib load xonsh-apipenv
+$APIPENV="1"
 
 # Insert to the front, because when we spawn xonsh in tmux we have raw python3
 # paths added before these. That ends up screwing with finding the python3 version

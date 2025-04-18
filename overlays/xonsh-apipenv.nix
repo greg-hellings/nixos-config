@@ -6,15 +6,15 @@
   pipenv,
 }:
 
-buildPythonPackage {
+buildPythonPackage rec {
   pname = "xonsh-apipenv";
-  version = "0.5.0";
+  version = "0.6.0";
 
   src = fetchFromGitHub {
     owner = "greg-hellings";
     repo = "xontrib-apipenv";
-    rev = "0.5.0";
-    hash = "sha256-QJatIiIP1YVT8M5vLUPHmf/8CGZ34cXMBXQmfSgY5C4=";
+    rev = version;
+    hash = "sha256-Wa8iev0ow1oh95tPCv5tAJUMBYiStWms8I31WbVcOok=";
   };
 
   dependencies = [ (toPythonModule pipenv) ];
