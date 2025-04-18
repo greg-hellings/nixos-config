@@ -1,9 +1,17 @@
 { lib, ... }:
 
 {
-  boot.loader.grub.devices = [ "/dev/disk/by-label/ESP" ];
+  imports = [ ./hardware-configuration.nix ];
+
+  # Bootloader.
+  boot.loader = {
+    systemd-boot.enable = true;
+    efi.canTouchEfiVariables = true;
+  };
+
 
   greg = {
+    home = true;
     proxies."jellyfin.home".target = "http://localhost:8096/";
     proxies."jellyfin.thehellings.lan".target = "http://localhost:8096/";
     tailscale.enable = true;
@@ -33,7 +41,6 @@
 
   networking = {
     hostName = "vm-jellyfin";
-    domain = lib.mkForce null; # The proxmox generator fails at this, somehow
   };
 
   services = {
@@ -43,6 +50,4 @@
     };
     qemuGuest.enable = true;
   };
-
-  virtualisation.diskSize = 20 * 1024;
 }
