@@ -27,8 +27,6 @@ in
     development = true;
     gui = true;
     pypackage = py;
-    vscodium = true;
-    zed = true;
   };
 
   home = {
