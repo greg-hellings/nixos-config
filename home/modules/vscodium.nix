@@ -62,6 +62,12 @@ in
           "vscode-neovim.neovimInitVimPaths.darwin" = "~/.config/nvim/init.lua";
           "vscode-neovim.neovimInitVimPaths.linux" = "~/.config/nvim/init.lua";
           "workbench.settings.applyToAllProfiles" = [ "direnv.path.executable" ];
+          "github.copilot.enable" = {
+            "*" = false;
+            "plaintext" = false;
+            "markdown" = false;
+            "scminput" = false;
+          };
         };
       };
     };

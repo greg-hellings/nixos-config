@@ -27,6 +27,7 @@ in
     development = true;
     gui = true;
     pypackage = py;
+    vscodium = true;
   };
 
   home = {
