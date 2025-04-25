@@ -116,7 +116,7 @@
           }
           {
             hw-address = "BC:24:11:6E:0C:40";
-            ip-address = "10.42.4.3";
+            ip-address = "10.42.4.3"; # Gitlab
           }
         ];
       }
