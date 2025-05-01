@@ -85,10 +85,10 @@ in
             id = 0;
             isDefault = true;
             search = {
-              default = "DuckDuckGo";
+              default = "ddg";
               force = true;
               engines = {
-                Google.metaData.alias = "@g";
+                google.metaData.alias = "@g";
                 "Nix Packages" = {
                   urls = [
                     {
