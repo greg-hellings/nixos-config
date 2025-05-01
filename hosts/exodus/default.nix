@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   imports = [ ./hardware-configuration.nix ];
@@ -13,6 +18,9 @@
       "aarch64-linux"
     ];
   };
+
+  environment.defaultPackages = [ pkgs.code-cursor ];
+
   greg = {
     home = true;
     gnome.enable = true;
