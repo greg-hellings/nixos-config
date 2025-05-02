@@ -14,6 +14,7 @@
     ./work.nix
   ];
   programs = {
+    adb.enable = true;
     steam.enable = true;
     nix-index = {
       enable = true;
@@ -129,4 +130,8 @@
       #kernel-modules.enable = true;
     };
   };
+  users.users.greg.extraGroups = [
+    "adbusers"
+    "kvm"
+  ];
 }
