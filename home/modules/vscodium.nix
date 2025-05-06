@@ -34,6 +34,8 @@ in
             jnoortheen.nix-ide
             mkhl.direnv
             ms-python.python
+            ms-vscode.makefile-tools
+            ms-vscode-remote.remote-ssh
             njpwerner.autodocstring
             rust-lang.rust-analyzer
             tamasfe.even-better-toml
