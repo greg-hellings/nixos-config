@@ -14,7 +14,7 @@ in
   config = lib.mkIf cfg {
     home.packages = with pkgs; [
       nil
-      zed-editor-fhs
+      zed-editor
     ];
   };
 }
