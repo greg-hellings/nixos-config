@@ -1,4 +1,4 @@
-{ ... }:
+{ config, pkgs, ... }:
 {
   imports = [ ../baseline.nix ];
 
@@ -12,9 +12,21 @@
     };
   };
 
+  fonts.packages = with pkgs; [
+    dejavu_fonts
+    hack-font
+    nerdfonts
+  ];
+
   nix = {
     gc.interval.Hour = 24;
     settings.auto-optimise-store = false; # Darwin bugs?
+  };
+
+  power.sleep = {
+    allowSleepByPowerButton = true;
+    computer = "never";
+    display = 30;
   };
 
   programs = {
@@ -24,7 +36,36 @@
 
   services.nix-daemon.enable = true;
 
-  system.stateVersion = 4;
+  system = {
+    defaults = {
+      finder = {
+        AppleShowAllExtensions = true;
+        AppleShowAllFiles = true;
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowMountedServersOnDesktop = true;
+        ShowPathbar = true;
+        ShowRemovableMediaOnDesktop = true;
+        ShowStatusBar = true;
+      };
+      LaunchServices.LSQuarantine = false;
+      menuExtraClock = {
+        Show24Hour = true;
+        ShowDate = true;
+      };
+      screencapture = {
+        include-date = true;
+        location = "${config.home-manager.extraSpecialArgs.home}/Photos/Screeneries";
+      };
+      trackpad = {
+        Dragging = false;
+        TrackpadRightClick = true;
+      };
+    };
+    startup.chime = false;
+    stateVersion = 6;
+  };
+
+  time.timeZone = "America/Chicago";
 
   users.users."gregory.hellings".home = "/Users/gregory.hellings";
 }
