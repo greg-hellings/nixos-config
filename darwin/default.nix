@@ -1,12 +1,12 @@
 { top, overlays, ... }:
 let
+  inherit (top.nixunstable) lib;
   mac =
     {
       system ? "aarch64-darwin",
       name,
       channel ? top.nixunstable,
       hm ? top.hmunstable,
-      extraMods ? [ ],
     }:
     let
       nixpkgs = import channel { inherit system overlays; };
@@ -26,8 +26,7 @@ let
         }
         hm.darwinModules.home-manager
         top.self.modules.darwinModule
-        ./${name}
-      ] ++ extraMods;
+      ] ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
     };
 in
 rec {
