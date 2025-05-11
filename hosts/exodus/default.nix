@@ -2,11 +2,15 @@
   config,
   lib,
   pkgs,
+  top,
   ...
 }:
 
 {
-  imports = [ ./hardware-configuration.nix ];
+  imports = [
+    ./hardware-configuration.nix
+    top.nix-hardware.nixosModules.framework-11th-gen-intel
+  ];
 
   boot = {
     loader = {
@@ -37,6 +41,10 @@
   networking = {
     hostName = "exodus";
     networkmanager.enable = lib.mkForce true;
+  };
+
+  services = {
+    fwupd.enable = true;
   };
 
   virtualisation = {

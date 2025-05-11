@@ -1,7 +1,8 @@
 {
+  config,
   lib,
   pkgs,
-  config,
+  top,
   ...
 }:
 
@@ -12,6 +13,7 @@
     ./podman.nix
     ./virt.nix
     ./work.nix
+    top.nix-hardware.nixosModules.system76
   ];
   programs = {
     adb.enable = true;

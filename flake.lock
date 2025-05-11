@@ -421,6 +421,21 @@
         "type": "github"
       }
     },
+    "nix-hardware": {
+      "locked": {
+        "lastModified": 1746814339,
+        "narHash": "sha256-hf2lICJzwACWuzHCmZn5NI6LUAOgGdR1yh8ip+duyhk=",
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "rev": "3c5e12673265dfb0de3d9121420c0c2153bf21e0",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixlib": {
       "locked": {
         "lastModified": 1736643958,
@@ -724,6 +739,7 @@
         "flake-parts": "flake-parts",
         "hmunstable": "hmunstable",
         "hooks": "hooks",
+        "nix-hardware": "nix-hardware",
         "nixos-generators": "nixos-generators",
         "nixunstable": "nixunstable",
         "nixvimunstable": "nixvimunstable",
