@@ -44,7 +44,11 @@
   };
 
   services = {
-    fwupd.enable = true;
+    fprintd.enable = true;
+    fwupd = {
+      enable = true;
+      extraRemotes = [ "lvfs-testing" ];
+    };
   };
 
   virtualisation = {
