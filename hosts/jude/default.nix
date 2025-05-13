@@ -41,6 +41,9 @@
       ];
     };
   };
+
+  nixpkgs.config.permittedInsecurePackages = [ "ventoy-1.1.05" ];
+
   greg = {
     tailscale.enable = true;
     sway.enable = false;
