@@ -12,6 +12,7 @@
     bitwarden-cli
     cargo
     freeciv
+    gimp
     wineWowPackages.stable
   ];
 }
