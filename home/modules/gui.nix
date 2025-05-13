@@ -47,10 +47,8 @@ in
             ]
             [
               bitwarden
-              discord
               endeavour
               jellyfin-media-player
-              #logseq
               nextcloud-client
               slack
             ]
