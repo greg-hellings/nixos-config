@@ -34,7 +34,6 @@
           "http://nas.home:9000/binary-cache/"
         ])
         ++ [
-          "https://cache.garnix.io"
           "https://ai.cachix.org"
           "https://nixpkgs-python.cachix.org"
           "https://greg-hellings.cachix.org"
@@ -44,7 +43,6 @@
       trusted-public-keys = [
         "nix.thehellings.lan:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
         "nix.home:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
-        "cache.garnix.io:CTFPyKSLcx5RMJKfLo5EEPUObbA78b0YQ2DTCJXqr9g="
         "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
         "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
         "greg-hellings.cachix.org-1:y01Jl/L5evlhxdnUW6n56AiI1k8g1wxWhTxJCe7XSco="

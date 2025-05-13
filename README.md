@@ -1,5 +1,3 @@
-[![built with garnix](https://img.shields.io/endpoint.svg?url=https%3A%2F%2Fgarnix.io%2Fapi%2Fbadges%2Fgreg-hellings%2Fnixos-config%3Fbranch%3Dmain)](https://garnix.io)
-
 This is a unified repo to contain my personal configurations for NixOS machines.
 
 # How To Use This
