@@ -7,7 +7,7 @@
     host_key_checking=False
     # Also available: profile_roles
     callback_enabled=timer,profile_tasks
-    stdout_callback=yaml
+    callback_result_format=yaml
     nocows=1
     cow_selection=tux
     collections_path=~/src
