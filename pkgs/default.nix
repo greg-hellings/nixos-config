@@ -20,4 +20,5 @@ in
   vfio_startup = c ./vfio_startup.nix { };
   vfio_shutdown = c ./vfio_shutdown.nix { };
   zim = c ./zim.nix { };
+  zed-bin = c ./zed-bin.nix { };
 }
