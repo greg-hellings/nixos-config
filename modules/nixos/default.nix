@@ -17,6 +17,7 @@
     ./kde.nix
     ./kiwix-serve.nix
     ./linode.nix
+    ./podman.nix
     ./print.nix
     ./proxy.nix
     ./remote-builder.nix

@@ -23,10 +23,20 @@
   boot.kernelModules = [ "kvm-amd" ];
   boot.extraModulePackages = [ ];
 
-  fileSystems."/" = {
-    #device = "/dev/disk/by-uuid/27ae91ed-32e9-411e-8227-0d99e360fbbf";
-    device = "/dev/nvme0n1p4";
-    fsType = "btrfs";
+  fileSystems = {
+    "/" = {
+      #device = "/dev/disk/by-uuid/27ae91ed-32e9-411e-8227-0d99e360fbbf";
+      device = "/dev/nvme0n1p4";
+      fsType = "btrfs";
+    };
+    "/boot" = {
+      device = "/dev/nvme0n1p1";
+      fsType = "auto";
+    };
+    "/windows11" = {
+      device = "/dev/nvme1n1p2";
+      fsType = "ntfs-3g";
+    };
   };
 
   swapDevices = [ ];

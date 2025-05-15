@@ -10,50 +10,22 @@
   imports = [
     ./boot.nix
     ./hardware-configuration.nix
-    ./podman.nix
     ./virt.nix
     ./work.nix
     top.nix-hardware.nixosModules.system76
   ];
-  programs = {
-    adb.enable = true;
-    steam.enable = true;
-    nix-index = {
-      enable = true;
-      enableBashIntegration = false;
-      enableFishIntegration = false;
-      enableZshIntegration = false;
-    };
-    nix-ld.enable = false;
-  };
 
-  networking = {
-    hostName = "jude";
-    networkmanager.enable = lib.mkForce true;
-    enableIPv6 = false;
-    interfaces.enp12s0.useDHCP = true;
-    firewall = {
-      enable = false;
-      allowedTCPPorts = [ 21000 ];
-      allowedUDPPorts = [
-        21000
-        21010
-      ];
-    };
-  };
-
-  nixpkgs.config.permittedInsecurePackages = [ "ventoy-1.1.05" ];
+  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
   greg = {
     tailscale.enable = true;
     sway.enable = false;
     gnome.enable = true;
     kde.enable = false;
+    podman.enable = true;
     print.enable = true;
     remote-builder.enable = true;
   };
-
-  boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
   environment.systemPackages =
     with pkgs;
@@ -98,31 +70,7 @@
         gst_all_1.gst-vaapi
       ]
     ];
-  fileSystems = {
-    "/boot" = {
-      device = "/dev/nvme0n1p1";
-      fsType = "auto";
-    };
-    "/windows11" = {
-      device = "/dev/nvme1n1p2";
-      fsType = "ntfs-3g";
-    };
-  };
 
-  # Let's do a sound thing
-  services = {
-    pipewire = {
-      enable = true;
-      alsa.enable = true;
-      audio.enable = true;
-      jack.enable = true;
-      pulse.enable = true;
-      wireplumber.enable = true;
-    };
-    pulseaudio.enable = false; # This conflicts with pipewire
-    locate.enable = true;
-    xserver.videoDrivers = [ "nvidia" ];
-  };
   hardware = {
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.vulkan_beta;
@@ -139,6 +87,51 @@
       #kernel-modules.enable = true;
     };
   };
+
+  networking = {
+    hostName = "jude";
+    networkmanager.enable = lib.mkForce true;
+    enableIPv6 = false;
+    interfaces.enp12s0.useDHCP = true;
+    firewall = {
+      enable = false;
+      allowedTCPPorts = [ 21000 ];
+      allowedUDPPorts = [
+        21000
+        21010
+      ];
+    };
+  };
+
+  nixpkgs.config.permittedInsecurePackages = [ "ventoy-1.1.05" ];
+
+  programs = {
+    adb.enable = true;
+    steam.enable = true;
+    nix-index = {
+      enable = true;
+      enableBashIntegration = false;
+      enableFishIntegration = false;
+      enableZshIntegration = false;
+    };
+    nix-ld.enable = false;
+  };
+
+  # Let's do a sound thing
+  services = {
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      audio.enable = true;
+      jack.enable = true;
+      pulse.enable = true;
+      wireplumber.enable = true;
+    };
+    pulseaudio.enable = false; # This conflicts with pipewire
+    locate.enable = true;
+    xserver.videoDrivers = [ "nvidia" ];
+  };
+
   users.users.greg.extraGroups = [
     "adbusers"
     "kvm"

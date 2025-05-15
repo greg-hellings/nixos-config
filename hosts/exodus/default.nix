@@ -28,6 +28,7 @@
   greg = {
     home = true;
     gnome.enable = true;
+    podman.enable = true;
     print.enable = true;
     tailscale.enable = true;
     vmdev = {
@@ -52,7 +53,6 @@
   };
 
   virtualisation = {
-    podman.enable = true;
     oci-containers.backend = "podman";
   };
 }
