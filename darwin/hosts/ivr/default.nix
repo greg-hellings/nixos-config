@@ -9,6 +9,7 @@
         name = "libvirt";
         restart_service = true;
       }
+      "nushell"
       "qemu"
     ];
     casks = [
@@ -18,6 +19,7 @@
       "firefox"
       "onlyoffice"
       "pgadmin4"
+      "tabby"
       "vagrant"
       "visual-studio-code"
       "zed"
