@@ -30,7 +30,7 @@
     git
     gnupatch
     hms
-    htop
+    btop
     inetutils
     jq
     nano

@@ -115,7 +115,7 @@ in
     findutils
     file
     hms # My own home manager switcher
-    htop
+    btop
     iperf
     killall
     nano
