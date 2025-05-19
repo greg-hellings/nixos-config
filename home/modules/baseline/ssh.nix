@@ -43,6 +43,11 @@
           user = "gitlab";
           hostname = "git.thehellings.lan";
         };
+        srcpub = {
+          user = "gitlab";
+          hostname = "src.thehellings.com";
+          port = 2222;
+        };
         ivr = {
           user = "git";
           hostname = "gitlab.com";
