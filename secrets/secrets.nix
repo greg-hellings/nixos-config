@@ -105,4 +105,10 @@ in
 
   "minio_secret_access_key.age".publicKeys = everyone;
   "minio_access_key_id.age".publicKeys = everyone;
+
+  "kubernetes/kubernetesToken.age".publicKeys = [
+    isaiah
+    user_isaiah
+    user_jude
+  ];
 }

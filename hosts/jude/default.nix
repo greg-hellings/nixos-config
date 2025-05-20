@@ -103,8 +103,6 @@
     };
   };
 
-  nixpkgs.config.permittedInsecurePackages = [ "ventoy-1.1.05" ];
-
   programs = {
     adb.enable = true;
     steam.enable = true;

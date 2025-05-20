@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   top,
   ...
 }:
@@ -38,16 +37,8 @@
     supportedFilesystems = [ "ntfs" ];
   };
 
-  environment.systemPackages = with pkgs; [
-    curl
-    gawk
-    git
-    unzip
-    wget
-    zstd
-  ];
-
   greg = {
+    kubernetes.enable = true;
     tailscale.enable = true;
     remote-builder.enable = true;
   };
@@ -93,13 +84,6 @@
     useDHCP = false;
   };
 
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      permittedInsecurePackages = [ "nodejs-16.20.2" ];
-    };
-  };
-
   services = {
     gitlab-runner = {
       enable = true;
@@ -133,50 +117,21 @@
             "/cache"
           ];
         };
-        # qemu = {
-        #   executor = "shell";
-        #   limit = 5;
-        #   authenticationTokenConfigFile = config.age.secrets.runner-qemu.path;
-        #   environmentVariables = {
-        #     EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-        #     STORAGE_URL = "s3.thehellings.lan:9000";
-        #   };
-        # };
       };
     };
+    k3s.clusterInit = true; # This is the first node in the cluster
     openssh = {
       enable = true;
       settings.PermitRootLogin = "yes";
     };
-    proxmox-ve = {
-      enable = true;
-      ipAddress = (builtins.elemAt config.networking.interfaces.br0.ipv4.addresses 0).address;
-    };
   };
-
-  system.stateVersion = lib.mkForce "24.05";
 
   systemd.services.gitlab-runner = {
     after = [ "network-online.target" ];
     requires = [ "network-online.target" ];
   };
 
-  users = {
-    users = {
-      greg = {
-        extraGroups = [
-          "kvm"
-          "libvirtd"
-          "sudo"
-          "wheel"
-        ];
-        isNormalUser = true;
-      };
-    };
-  };
-
   virtualisation = {
-    podman.enable = true;
     libvirtd = {
       enable = true;
       allowedBridges = [
@@ -186,6 +141,5 @@
       onBoot = "ignore"; # only restart VMs labeled 'autostart'
       qemu.ovmf.enable = true;
     };
-    oci-containers.backend = "podman";
   };
 }
