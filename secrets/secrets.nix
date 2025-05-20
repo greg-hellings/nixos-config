@@ -108,7 +108,11 @@ in
 
   "kubernetes/kubernetesToken.age".publicKeys = [
     isaiah
+    jeremiah
+    jude
+    linode
     user_isaiah
+    user_jeremiah
     user_jude
   ];
 }

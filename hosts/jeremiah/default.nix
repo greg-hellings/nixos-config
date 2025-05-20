@@ -75,6 +75,7 @@ in
 
   greg = {
     home = true;
+    kubernetes.enable = true;
     tailscale.enable = true;
     remote-builder.enable = true;
   };
