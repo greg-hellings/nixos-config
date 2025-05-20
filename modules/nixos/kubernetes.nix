@@ -18,7 +18,19 @@ in
     age.secrets.kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
 
     networking.firewall = {
-      allowedTCPPorts = [ 6443 ];
+      allowedTCPPorts =
+        [
+          6443
+        ]
+        ++ (
+          if cfg.agentOnly then
+            [
+              2379
+              2380
+            ]
+          else
+            [ ]
+        );
       allowedUDPPorts = [ 8472 ];
     };
 
@@ -31,6 +43,9 @@ in
         "--service-cidr=10.221.0.0/16"
         "--write-kubeconfig-mode 0640"
         "--write-kubeconfig-group kubeconfig"
+        "--tls-san ${config.networking.hostName}.home"
+        "--tls-san ${config.networking.hostName}.thehellings.lan"
+        "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
       ];
       serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
     };
