@@ -24,12 +24,12 @@ in
         ]
         ++ (
           if cfg.agentOnly then
+            [ ]
+          else
             [
               2379
               2380
             ]
-          else
-            [ ]
         );
       allowedUDPPorts = [ 8472 ];
     };
