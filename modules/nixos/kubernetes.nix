@@ -26,6 +26,10 @@ in
       enable = true;
       role = if cfg.agentOnly then "agent" else "server";
       tokenFile = config.age.secrets.kubernetesToken.path;
+      extraFlags = [
+        "--cluster-cidr=10.211.0.0/16"
+        "--service-cidr=10.221.0.0/16"
+      ];
       serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
     };
   };
