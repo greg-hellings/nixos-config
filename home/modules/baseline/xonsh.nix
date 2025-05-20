@@ -63,6 +63,9 @@
 
       # General
       gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
+      k = "kubectl";
+      kn = "kubectl get nodes -o wide";
+      kp = "kubectl get pods -o wide";
       ls = "ls --color";
       ll = "ls -l --color";
       win = "sudo virsh start win10";

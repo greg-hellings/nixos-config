@@ -52,12 +52,9 @@
   };
 
   networking = {
-    bridges.br0 = {
-      interfaces = [ "enp38s0" ];
-    };
     defaultGateway = {
       address = " 10.42.1.1";
-      interface = "br0";
+      interface = "enp38s0";
     };
     firewall = {
       enable = true;
@@ -66,7 +63,7 @@
     };
     hostName = "isaiah";
     interfaces = {
-      br0 = {
+      enp38s0 = {
         ipv4.addresses = [
           {
             address = "10.42.1.6";
@@ -76,11 +73,6 @@
       };
     };
     nameservers = [ "10.42.1.5" ];
-    nat = {
-      enable = true;
-      internalInterfaces = [ "ve-+" ];
-      externalInterface = "br0";
-    };
     useDHCP = false;
   };
 

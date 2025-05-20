@@ -29,8 +29,15 @@ in
       extraFlags = [
         "--cluster-cidr=10.211.0.0/16"
         "--service-cidr=10.221.0.0/16"
+        "--write-kubeconfig-mode 0640"
+        "--write-kubeconfig-group kubeconfig"
       ];
       serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
+    };
+
+    users = {
+      groups.kubeconfig = { };
+      users.greg.extraGroups = [ "kubeconfig" ];
     };
   };
 }
