@@ -22,6 +22,7 @@
     sway.enable = false;
     gnome.enable = true;
     kde.enable = false;
+    kubernetes.enable = true;
     podman.enable = true;
     print.enable = true;
     remote-builder.enable = true;
@@ -117,6 +118,7 @@
 
   # Let's do a sound thing
   services = {
+    k3s.extraFlags = [ "--tls-san 10.42.0.6" ];
     pipewire = {
       enable = true;
       alsa.enable = true;
