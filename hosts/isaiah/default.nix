@@ -1,5 +1,5 @@
 {
-  config,
+  #config,
   lib,
   top,
   ...
@@ -11,8 +11,6 @@
   ];
 
   age.secrets = {
-    runner-reg.file = ../../secrets/gitlab/isaiah-podman-runner-reg.age;
-    docker-auth.file = ../../secrets/gitlab/docker-auth.age;
     runner-qemu.file = ../../secrets/gitlab/isaiah-qemu-runner-reg.age;
   };
 
@@ -82,45 +80,15 @@
       settings = {
         concurrent = 5;
       };
-      services = {
-        default = {
-          executor = "docker";
-          authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
-          dockerImage = "gitlab.shire-zebra.ts.net:5000/greg/ci-images/fedora:latest";
-          dockerAllowedImages = [
-            "alpine:*"
-            "debian:*"
-            "docker:*"
-            "fedora:*"
-            "python:*"
-            "ubuntu:*"
-            "registry.gitlab.com/gitlab-org/*"
-            "registry.thehellings.com/*/*/*:*"
-            "gitlab.shire-zebra.ts.net:5000/*/*/*:*"
-          ];
-          dockerAllowedServices = [
-            "docker:*"
-            "registry.thehellings.com/*/*/*:*"
-            "gitlab.shire-zebra.ts.net:5000/*/*/*:*"
-          ];
-          dockerPrivileged = true;
-          dockerVolumes = [
-            "/certs/client"
-            "/cache"
-          ];
+      services =
+        {
         };
-      };
     };
     k3s.clusterInit = true; # This is the first node in the cluster
     openssh = {
       enable = true;
       settings.PermitRootLogin = "yes";
     };
-  };
-
-  systemd.services.gitlab-runner = {
-    after = [ "network-online.target" ];
-    requires = [ "network-online.target" ];
   };
 
   virtualisation = {

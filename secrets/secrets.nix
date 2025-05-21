@@ -94,10 +94,8 @@ in
   "gitlab/jeremiah-runner-reg.age".publicKeys = everyone;
   "gitlab/isaiah-qemu-runner-reg.age".publicKeys = everyone;
   "gitlab/isaiah-vbox-runner-reg.age".publicKeys = everyone;
-  "gitlab/isaiah-podman-runner-reg.age".publicKeys = everyone;
   "gitlab/isaiah-shell-runner-reg.age".publicKeys = everyone;
   "gitlab/linode-deployer-runner-reg.age".publicKeys = everyone;
-  "gitlab/docker-auth.age".publicKeys = everyone;
 
   "acme_password.age".publicKeys = everyone;
   "ca/intermediate_key.age".publicKeys = everyone;
