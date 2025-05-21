@@ -1,5 +1,5 @@
 {
-  #config,
+  config,
   lib,
   top,
   ...
@@ -11,7 +11,7 @@
   ];
 
   age.secrets = {
-    runner-qemu.file = ../../secrets/gitlab/isaiah-qemu-runner-reg.age;
+    runner-reg.file = ../../secrets/gitlab/kubernetes-k3s-local.age;
   };
 
   boot = {
@@ -80,9 +80,12 @@
       settings = {
         concurrent = 5;
       };
-      services =
-        {
+      services = {
+        kubernetes = {
+          authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
+          executor = "shell";
         };
+      };
     };
     k3s.clusterInit = true; # This is the first node in the cluster
     openssh = {
