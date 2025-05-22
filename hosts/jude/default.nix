@@ -118,7 +118,10 @@
 
   # Let's do a sound thing
   services = {
-    k3s.extraFlags = [ "--tls-san 10.42.0.6" ];
+    k3s.extraFlags = [
+      "--tls-san 10.42.0.6"
+      "--bind-address 10.42.0.6"
+    ];
     pipewire = {
       enable = true;
       alsa.enable = true;
