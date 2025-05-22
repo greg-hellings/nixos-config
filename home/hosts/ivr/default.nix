@@ -4,13 +4,7 @@
   ...
 }:
 let
-  py = pkgs.python311.withPackages (
-    p: with p; [
-      pyyaml
-      ruamel-yaml
-      tox
-    ]
-  );
+  username = "gregory.hellings";
   x = pkgs.xonsh.override {
     extraPackages = (
       ps: [
@@ -23,10 +17,12 @@ let
   };
 in
 {
+  # Disables hitting local cache
+  _module.args.cache = lib.mkForce false;
   greg = {
     development = true;
     gui = true;
-    pypackage = py;
+    pypackage = pkgs.python311;
     vscodium = true;
   };
 
@@ -34,14 +30,12 @@ in
     packages = with pkgs; [
       aacs
       ansible
-      bitwarden-cli
       direnv
       home-manager
       k9s
       kubectl
       minikube
       mise
-      mysql-workbench
       nixStable
       pipenv-ivr
       (poetry.withPlugins (
@@ -52,7 +46,6 @@ in
         ]
       ))
       pre-commit
-      robo3t
       skaffold
       x
     ];
@@ -66,17 +59,8 @@ in
         "    https://pypidev.ivrtechnology.com/simple/"
       ]
     );
-    username = "gregory.hellings";
-    homeDirectory = lib.mkForce "/home/gregory.hellings";
+    username = username;
+    homeDirectory = "/Users/${username}";
   };
   programs.tmux.shell = (lib.getExe x);
-  services.podman = {
-    enable = true;
-    settings = {
-      registries.search = [
-        "docker.io"
-        "quay.io"
-      ];
-    };
-  };
 }

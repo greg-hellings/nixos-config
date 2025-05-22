@@ -32,6 +32,7 @@
 
   environment.systemPackages = with pkgs; [
     btrfs-progs
+    bitwarden-cli
     coreutils-full
     efibootmgr
     psmisc
@@ -56,15 +57,90 @@
     networkmanager.enable = false;
   };
 
-  programs.xonsh = {
-    enable = true;
-    extraPackages = (
-      ps: with ps; [
-        xonsh-apipenv
-        pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
-        pkgs.nur.repos.xonsh-xontribs.xontrib-vox
-      ]
-    );
+  programs = {
+    xonsh = {
+      enable = true;
+      extraPackages = (
+        ps: with ps; [
+          xonsh-apipenv
+          pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
+          pkgs.nur.repos.xonsh-xontribs.xontrib-vox
+        ]
+      );
+    };
+    ssh.knownHosts = {
+      chronicles = {
+        extraHostNames = [
+          "chronicles.thehellings.lan"
+          "chronicles.home"
+          "nas"
+          "nas.thehellings.lan"
+          "nas.home"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBecZUva9OnZuXLaBun6/1ITo5f9p0YMLPD+q0egLRS";
+      };
+      dns = {
+        extraHostNames = [
+          "dns"
+          "dns.me.ts"
+          "dns.home"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKRCXdhXWHEvw84V9JC5bAGovvj12DLVphcEnsTHDjxW";
+      };
+      "genesis" = {
+        extraHostNames = [
+          "genesis.shire-zebra.ts.net"
+          "genesis.home"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEI9jbTPmEWQ0F2bLYmnIOLmBnag1fkKxHRjz3X8lB/k";
+      };
+      "git" = {
+        extraHostNames = [
+          "git.home"
+          "git.thehellings.lan"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC7hesFWwlmSbWPJWUiF8fIppy5a83yXw84O0Ytz+Zyq";
+      };
+      hosea = {
+        extraHostNames = [
+          "hosea.home"
+          "hosea.thehellings.lan"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz";
+      };
+      isaiah = {
+        extraHostNames = [
+          "isaiah.home"
+          "isaiah.thehellings.lan"
+          "isaiah-builder"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf";
+      };
+      jeremiah = {
+        extraHostNames = [
+          "jeremiah.home"
+          "jeremiah.thehellings.lan"
+          "jeremiah-builder"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0";
+      };
+      jude = {
+        extraHostNames = [
+          "jude.home"
+          "jude.thehellings.lan"
+          "jude-builder"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOos0zQePsa+T6Z2dsKbPOvEdrBQ8a6mx3s7pN6ysCI0";
+      };
+      linode = {
+        extraHostNames = [
+          "linode.home"
+          "linode.thehellings.lan"
+          "thehellings.com"
+        ];
+        publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMv9Zud3kZOl86gtmkn+uj3D4kiXWDPtyUL02VVLNR4Q";
+      };
+    };
   };
 
   # Enable the OpenSSH daemon for remote control

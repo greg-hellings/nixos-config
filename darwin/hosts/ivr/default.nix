@@ -1,9 +1,12 @@
 { ... }:
+let
+  username = "gregory.hellings";
+in
 {
-  #environment.loginShell = lib.getExe pkgs.xonsh;
-  homebrews = {
+  homebrew = {
     enable = true;
     brews = [
+      "bitwarden-cli"
       "direnv"
       {
         name = "libvirt";
@@ -14,6 +17,7 @@
     ];
     casks = [
       "alt-tab"
+      "bitwarden"
       "bruno"
       "chromium"
       "firefox"
@@ -24,5 +28,13 @@
       "visual-studio-code"
       "zed"
     ];
+    user = username;
+  };
+
+  system.primaryUser = username;
+
+  users.users."${username}" = {
+    name = username;
+    home = "/Users/${username}";
   };
 }

@@ -4,22 +4,22 @@
 
   home-manager = {
     useGlobalPkgs = true;
-    users."gregory.hellings" = import ../../home/home.nix;
+    users."${config.system.primaryUser}" = import ../../home/home.nix;
     extraSpecialArgs = {
+      inherit (config.users.users."${config.system.primaryUser}") home;
       gnome = false;
       gui = false;
-      home = "/Users/gregory.hellings";
     };
   };
 
   fonts.packages = with pkgs; [
     dejavu_fonts
-    hack-font
-    nerdfonts
+    nerd-fonts.hack
   ];
 
   nix = {
-    gc.interval.Hour = 24;
+    enable = true;
+    gc.interval.Hour = 3;
     settings.auto-optimise-store = false; # Darwin bugs?
   };
 
@@ -34,10 +34,13 @@
     bash.enable = true;
   };
 
-  services.nix-daemon.enable = true;
-
   system = {
     defaults = {
+      CustomSystemPreferences = {
+        ".GlobalPreferences" = {
+          "com.apple.swipescrolldirection" = 0;
+        };
+      };
       finder = {
         AppleShowAllExtensions = true;
         AppleShowAllFiles = true;
@@ -50,7 +53,7 @@
       LaunchServices.LSQuarantine = false;
       menuExtraClock = {
         Show24Hour = true;
-        ShowDate = true;
+        ShowDate = 2;
       };
       screencapture = {
         include-date = true;
@@ -66,6 +69,4 @@
   };
 
   time.timeZone = "America/Chicago";
-
-  users.users."gregory.hellings".home = "/Users/gregory.hellings";
 }

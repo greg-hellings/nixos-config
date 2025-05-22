@@ -14,14 +14,17 @@ let
     top.darwin.lib.darwinSystem {
       inherit system;
       specialArgs = {
+        inherit (top) self;
         inherit nixpkgs;
       };
       modules = [
         {
           nixpkgs.overlays = overlays;
-          home-manager.extraSpecialArgs = {
-            inherit top;
-            host = name;
+          home-manager = {
+            extraSpecialArgs = {
+              inherit top;
+              host = name;
+            };
           };
         }
         hm.darwinModules.home-manager
@@ -30,6 +33,5 @@ let
     };
 in
 rec {
-  la23002 = mac { name = "ivr"; };
-  LA23002 = la23002;
+  "MacBook-Pro" = mac { name = "ivr"; };
 }

@@ -39,7 +39,7 @@ let
             useUserPackages = true;
             users.greg = import ../home/home.nix;
             extraSpecialArgs = {
-              inherit top overlays nixvim;
+              inherit top overlays;
               home = "/home/greg";
               host = name;
             };
