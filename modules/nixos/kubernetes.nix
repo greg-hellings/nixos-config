@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.greg.kubernetes;
 in
@@ -16,6 +21,12 @@ in
 
   config = lib.mkIf cfg.enable {
     age.secrets.kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
+
+    environment.systemPackages = [
+      pkgs.kubernetes-helm
+      pkgs.kustomize
+      pkgs.k9s
+    ];
 
     networking.firewall = {
       allowedTCPPorts =
