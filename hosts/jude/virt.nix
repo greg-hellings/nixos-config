@@ -14,9 +14,48 @@ let
   ];
 in
 {
-  greg.vmdev.enable = true;
+  specialisation = {
+    vbox.configuration = {
 
-  age.secrets.runner-reg.file = ../../secrets/gitlab/isaiah-vbox-runner-reg.age;
+      greg = {
+        podman.enable = lib.mkForce false;
+        vmdev.enable = lib.mkForce false;
+      };
+
+      users.extraGroups.vboxusers.members = [ "greg" ];
+
+      virtualisation = {
+        virtualbox.host = {
+          enable = true;
+          enableExtensionPack = true;
+        };
+      };
+
+      services.gitlab-runner.services = lib.mkForce {
+        vbox = {
+          authenticationTokenConfigFile = config.age.secrets.vbox.path;
+          environmentVariables = {
+            EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+          };
+          executor = "shell";
+          limit = 5;
+        };
+      };
+
+      systemd.services.gitlab-runner = {
+        serviceConfig = {
+          DevicePolicy = lib.mkForce "auto";
+          User = "root";
+          DynamicUser = lib.mkForce false;
+        };
+      };
+    };
+  };
+
+  age.secrets = {
+    qemu.file = ../../secrets/gitlab/nixos-qemu-shell.age;
+    vbox.file = ../../secrets/gitlab/nixos-vbox-shell.age;
+  };
 
   # These options enable sharing of the GPU with the VM
   boot = {
@@ -39,15 +78,18 @@ in
       ("vfio-pci.ids=" + (lib.concatStringsSep "," passthru))
     ];
   };
+
+  greg.vmdev.enable = true;
+
   hardware.graphics.enable = true;
 
   services.gitlab-runner = {
     enable = true;
     settings.concurrent = 5;
-    services.vbox = {
+    services.qemu = {
       executor = "shell";
       limit = 5;
-      authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
+      authenticationTokenConfigFile = config.age.secrets.qemu.path;
       environmentVariables = {
         EFI_DIR = "${pkgs.OVMF.fd}/FV/";
       };
@@ -55,17 +97,6 @@ in
   };
 
   systemd.services = {
-    gitlab-runner = {
-      conflicts = [ "libvirtd.service" ];
-      preStart = builtins.concatStringsSep "\n" [
-        "${pkgs.kmod}/bin/modprobe vboxnetflt vboxdrv"
-        "${pkgs.kmod}/bin/modprobe vboxnetadp"
-      ];
-      postStop = "${pkgs.kmod}/bin/rmmod vboxnetflt vboxnetadp vboxdrv";
-      wantedBy = pkgs.lib.mkForce [ ];
-      serviceConfig.User = "root";
-    };
-
     "libvirt-nosleep@" = {
       description = "Prevent sleep while %i is running";
       serviceConfig = {
