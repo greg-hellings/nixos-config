@@ -6,6 +6,10 @@
 }:
 
 let
+  environmentVariables = {
+    EFI_DIR = "${pkgs.OVMF.fd}/FV/";
+    STORAGE_URL = "s3.thehellings.lan:9000";
+  };
   passthru = [
     "1002:164e" # Raphael - embedded GPU
     "1002:1640" # Rembrandt - Audio
@@ -33,10 +37,8 @@ in
 
       services.gitlab-runner.services = lib.mkForce {
         vbox = {
+          inherit environmentVariables;
           authenticationTokenConfigFile = config.age.secrets.vbox.path;
-          environmentVariables = {
-            EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-          };
           executor = "shell";
           limit = 5;
         };
@@ -87,12 +89,10 @@ in
     enable = true;
     settings.concurrent = 5;
     services.qemu = {
+      inherit environmentVariables;
       executor = "shell";
       limit = 5;
       authenticationTokenConfigFile = config.age.secrets.qemu.path;
-      environmentVariables = {
-        EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-      };
     };
   };
 
