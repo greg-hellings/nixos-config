@@ -93,7 +93,32 @@
     hostName = "jude";
     networkmanager.enable = lib.mkForce true;
     enableIPv6 = false;
-    interfaces.enp12s0.useDHCP = true;
+    useDHCP = false;
+    interfaces = {
+      # This seems to be direct mother board interface
+      enp12s0.useDHCP = true;
+      #enp12s0.ipv4.addresses = [
+      #{
+      #address = "10.42.1.11";
+      #prefixLength = 16;
+      #}
+      #];
+      # This seems to be the one that comes through the monitor hookup
+      enp14s0u1u2.ipv4.addresses = [
+        {
+          address = "10.42.1.10";
+          prefixLength = 16;
+        }
+      ];
+    };
+    defaultGateway = {
+      address = "10.42.1.1";
+      interface = "enp14s0u1u2";
+    };
+    nameservers = [
+      "10.42.1.5"
+      "10.42.1.1"
+    ];
     firewall = {
       enable = false;
       allowedTCPPorts = [ 21000 ];
@@ -118,10 +143,14 @@
 
   # Let's do a sound thing
   services = {
-    k3s.extraFlags = [
-      "--tls-san 10.42.0.6"
-      "--bind-address 10.42.0.6"
-    ];
+    k3s.extraFlags =
+      let
+        ip = (builtins.head config.networking.interfaces.enp14s0u1u2.ipv4.addresses).address;
+      in
+      [
+        "--tls-san ${ip}"
+        "--bind-address ${ip}"
+      ];
     pipewire = {
       enable = true;
       alsa.enable = true;
