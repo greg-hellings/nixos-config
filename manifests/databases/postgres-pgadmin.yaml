@@ -1,15 +1,4 @@
 apiVersion: v1
-kind: Secret
-metadata:
-  name: postgres-user-pgadmin
-  labels:
-    cnpg.io/reload: "true"
-type: kubernetes.io/basic-auth
-stringData:
-  username: pgadmin
-  password: pgadmin
----
-apiVersion: v1
 kind: ConfigMap
 metadata:
   name: config-pgadmin

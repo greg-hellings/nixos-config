@@ -21,3 +21,16 @@ default:
         job: "Evaluate for builds"
   variables:
     PARENT_PIPELINE_ID: $CI_PIPELINE_ID
+
+"Build image":
+  stage: build
+  parallel:
+    matrix:
+      - IMG:
+          - img-bitwarden
+  script:
+    - podman login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - nix build ".#${IMG}"
+    - podman load -i result
+    - podman tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
+    - podman push "$CI_REGISTRY/greg/ci-images/${IMG}:latest"

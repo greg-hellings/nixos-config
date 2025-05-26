@@ -1,0 +1,6 @@
+namespace: bitwarden
+
+resources:
+  - deployment.yaml
+  - service.yaml
+  - cluster-stores.yaml

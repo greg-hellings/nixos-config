@@ -6,3 +6,4 @@ result
 # where I am storing my repo
 nix.conf
 manifests/postgres/charts
+manifests/external-secrets/charts

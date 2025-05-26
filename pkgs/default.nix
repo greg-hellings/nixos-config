@@ -14,6 +14,7 @@ in
   hms = c ./hms { };
   inject-darwin = c ./inject-darwin.nix { };
   inject = c ./inject.nix { };
+  img-bitwarden = c ./img-bitwarden.nix { };
   qemu-hook = c ./qemu-hook.nix { };
   setup-ssh = c ./setup-ssh { };
   upgrade-pg-cluster = c ./upgrade-pg-cluster.nix { };

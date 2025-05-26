@@ -1,2 +1,4 @@
 resources:
+  - external-secrets.yaml
+  - bitwarden.yaml
   - db.yaml

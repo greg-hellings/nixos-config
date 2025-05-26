@@ -20,7 +20,10 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    age.secrets.kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
+    age.secrets = {
+      kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
+      bw_secret.file = ../../secrets/kubernetes/bw_secret.age;
+    };
 
     environment.systemPackages = [
       pkgs.kubectl-cnpg
