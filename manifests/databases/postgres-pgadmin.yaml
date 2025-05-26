@@ -1,0 +1,118 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: postgres-user-pgadmin
+  labels:
+    cnpg.io/reload: "true"
+type: kubernetes.io/basic-auth
+stringData:
+  username: pgadmin
+  password: pgadmin
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: config-pgadmin
+data:
+  servers.json: |
+    {
+        "Servers": {
+          "1": {
+            "Name": "Postgres",
+            "Group": "Servers",
+            "Port": 5432,
+            "Username": "pgadmin",
+            "Host": "postgres-rw",
+            "SSLMode": "allow",
+            "MaintenanceDB": "postgres"
+          }
+        }
+    }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: service-pgadmin
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: http
+  selector:
+    app: pgadmin
+  type: ClusterIP
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: pgadmin
+spec:
+  serviceName: service-pgadmin
+  podManagementPolicy: Parallel
+  replicas: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: pgadmin
+  template:
+    metadata:
+      labels:
+        app: pgadmin
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: pgadmin
+          image: "dpage/pgadmin4:9.3"
+          imagePullPolicy: Always
+          env:
+            - name: PGADMIN_DEFAULT_EMAIL
+              value: greg@thehellings.com
+            - name: PGADMIN_DEFAULT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-user-pgadmin
+                  key: password
+            - name: PGADMIN_SERVER_JSON_FILE
+              value: /config-pgadmin-vol/servers.json
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: config-pgadmin-vol
+              mountPath: /config-pgadmin-vol/
+              readOnly: true
+            - name: pgadmin-data
+              mountPath: /var/lib/pgadmin
+      volumes:
+        - name: config-pgadmin-vol
+          configMap:
+            name: config-pgadmin
+  volumeClaimTemplates:
+    - metadata:
+        name: pgadmin-data
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 3Gi
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-pgadmin
+  annotations:
+    ingressClassName: traefik
+spec:
+  rules:
+    - host: pgadmin.thehellings.lan
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: service-pgadmin
+                port:
+                  number: 80

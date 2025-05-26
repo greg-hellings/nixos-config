@@ -1,0 +1,26 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  instances: 3
+  storage:
+    size: 10Gi
+  primaryUpdateStrategy: unsupervised
+
+  managed:
+    roles:
+      - name: gitlab
+        ensure: present
+        comment: Gitlab user
+        login: true
+        superuser: false
+        passwordSecret:
+          name: postgres-user-gitlab
+      - name: pgadmin
+        ensure: present
+        comment: PG Admin user
+        login: true
+        superuser: true
+        passwordSecret:
+          name: postgres-user-pgadmin

@@ -42,7 +42,7 @@
     nixvimunstable.url = "github:nix-community/nixvim/main";
     nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nurpkgs.url = "github:nix-community/NUR";
-    vsext.url = "github:greg-hellings/nix-vscode-extensions/fix-json";
+    vsext.url = "github:nix-community/nix-vscode-extensions";
     wsl = {
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixunstable";

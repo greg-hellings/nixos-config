@@ -23,6 +23,7 @@ in
     age.secrets.kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
 
     environment.systemPackages = [
+      pkgs.kubectl-cnpg
       pkgs.kubernetes-helm
       pkgs.kustomize
       pkgs.k9s

@@ -5,3 +5,4 @@ result
 # On home-manager only installs, this is built into the same dir
 # where I am storing my repo
 nix.conf
+manifests/postgres/charts

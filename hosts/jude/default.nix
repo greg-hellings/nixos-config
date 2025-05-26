@@ -149,7 +149,7 @@
       in
       [
         "--tls-san ${ip}"
-        "--bind-address ${ip}"
+        #"--bind-address ${ip}"
       ];
     pipewire = {
       enable = true;
