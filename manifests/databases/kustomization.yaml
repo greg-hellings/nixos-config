@@ -4,3 +4,4 @@ resources:
   - postgres-cluster.yaml
   - postgres-gitlab.yaml
   - postgres-pgadmin.yaml
+  - postgres-matrix.yaml

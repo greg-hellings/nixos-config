@@ -21,8 +21,9 @@ in
 
   config = lib.mkIf cfg.enable {
     age.secrets = {
-      kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
       bw_secret.file = ../../secrets/kubernetes/bw_secret.age;
+      dendrite_key.file = ../../secrets/dendrite_key.age;
+      kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
     };
 
     environment.systemPackages = [

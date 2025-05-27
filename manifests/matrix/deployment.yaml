@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dendrite
+  labels:
+    app: dendrite
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dendrite
+  template:
+    metadata:
+      labels:
+        app: dendrite
+    spec:
+      containers:
+        - name: dendrite
+          image: ghcr.io/element-hq/dendrite-monolith:latest
+          ports:
+            - containerPort: 8008
+              name: http
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/dendrite
+      volumes:
+        - name: config-volume
+          secret:
+            secretName: dendrite-config

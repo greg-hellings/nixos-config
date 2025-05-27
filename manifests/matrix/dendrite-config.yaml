@@ -1,0 +1,189 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: dendrite-config
+spec:
+  data:
+    - &secret
+      secretKey: username
+      sourceRef:
+        storeRef:
+          name: bitwarden-login
+          kind: ClusterSecretStore
+      remoteRef: &remoteRef
+        key: 36d1046b-727e-4e09-a391-b2e90171d3d0
+        property: username
+    - <<: *secret
+      secretKey: password
+      remoteRef:
+        <<: *remoteRef
+        property: password
+    - secretKey: matrix_pem
+      sourceRef:
+        storeRef:
+          name: bitwarden-notes
+          kind: ClusterSecretStore
+      remoteRef:
+        key: 6de3500c-7c6e-4419-b4f5-b2ea0018ff28
+  target:
+    name: dendrite-config
+    deletionPolicy: Delete
+    template:
+      engineVersion: v2
+      data:
+        matrix.pem: "{{ .matrix_pem }}"
+        dendrite.yaml: |
+          version: 2
+          global:
+            server_name: thehellings.com
+            key_id: ed25519:auto
+            private_key: /etc/dendrite/matrix.pem
+            database:
+              connection_string: "postgres://{{ .username | urlquery }}:{{ .password | urlquery }}@postgres-rw.db.svc.cluster.local/matrix?sslmode=disable"
+              max_open_conns: 90
+              max_idle_conns: 2
+              conn_max_lifetime: -1
+            well_known_server_name: "http://matrix.thehellings.com"
+            well_known_client_name: "http://matrix.thehellings.com"
+            well_known_sliding_sync_proxy: ""
+            disable_federation: false
+            presence:
+              enable_inbound: false
+              enable_outbound: false
+            trusted_third_party_id_servers:
+              - matrix.org
+              - vector.im
+            jetstream:
+              storage_path: /var/dendrite
+              addresses: []
+              topic_prefix: Dendrite
+              in_memory: false
+              disable_tls_validation: true
+              credentials_path: ""
+            metrics:
+              enabled: false
+              basic_auth:
+                username: metrics
+                password: metrics
+            sentry:
+              enabled: false
+              dsn: ""
+              environment: ""
+            dns_cache:
+              enabled: false
+              cache_size: 256
+              cache_lifetime: 5m0s
+            server_notices:
+              enabled: true
+              local_part: _server
+              display_name: Server Alert
+              avatar_url: ""
+              room_name: Server Alert
+            report_stats:
+              enabled: false
+              endpoint: https://panopticon.matrix.org/push
+            cache:
+              max_size_estimated: 1073741824
+              max_age: 1h0m0s
+          app_service_api:
+            disable_tls_validation: false
+            legacy_auth: false
+            legacy_paths: false
+            config_files: []
+          client_api:
+            registration_disabled: true
+            registration_requires_token: false
+            registration_shared_secret: ""
+            guests_disabled: false
+            enable_registration_captcha: false
+            recaptcha_api_js_url: ""
+            recaptcha_sitekey_class: ""
+            recaptcha_form_field: ""
+            recaptcha_public_key: ""
+            recaptcha_private_key: ""
+            recaptcha_bypass_secret: ""
+            recaptcha_siteverify_api: ""
+            turn:
+              turn_user_lifetime: ""
+              turn_uris: []
+              turn_shared_secret: ""
+              turn_username: ""
+              turn_password: ""
+            rate_limiting:
+              enabled: true
+              threshold: 5
+              cooloff_ms: 500
+              exempt_user_ids: []
+          federation_api:
+            send_max_retries: 16
+            enable_relays: false
+            p2p_retries_until_assumed_offline: 1
+            disable_tls_validation: false
+            disable_http_keepalives: false
+            key_perspectives:
+            - server_name: matrix.org
+              keys:
+              - key_id: ed25519:auto
+                public_key: Noi6WqcDj0QmPxCNQqgezwTlBKrfqehY1u2FyWP9uYw
+              - key_id: ed25519:a_RXGa
+                public_key: l8Hft5qXKn1vfHrg3p4+W8gELQVo8N13JkluMfmn2sQ
+            prefer_direct_fetch: false
+            deny_networks:
+              - 127.0.0.1/8
+              - 10.0.0.0/8
+              - 172.16.0.0/12
+              - 192.168.0.0/16
+              - 100.64.0.0/10
+              - 169.254.0.0/16
+              - ::1/128
+              - fe80::/64
+              - fc00::/7
+            allow_networks:
+              - 0.0.0.0/0
+          key_server: {}
+          media_api:
+            base_path: /var/dendrite/media
+            max_file_size_bytes: 10485760
+            dynamic_thumbnails: false
+            max_thumbnail_generators: 10
+            thumbnail_sizes:
+              - width: 32
+                height: 32
+                method: crop
+              - width: 96
+                height: 96
+                method: crop
+              - width: 640
+                height: 480
+                method: scale
+          room_server:
+            default_room_version: "10"
+          sync_api:
+            real_ip_header: ""
+            search:
+              enabled: false
+              index_path: /var/dendrite/searchindex
+              in_memory: false
+              language: en
+          user_api:
+            bcrypt_cost: 10
+            openid_token_lifetime_ms: 3600000
+            push_gateway_disable_tls_validation: false
+            auto_join_rooms: []
+            worker_count: 8
+          relay_api: {}
+          mscs:
+            mscs: []
+          tracing:
+            enabled: false
+            jaeger:
+              serviceName: ""
+              disabled: false
+              rpc_metrics: false
+              traceid_128bit: false
+              tags: []
+              sampler: null
+              reporter: null
+              headers: null
+              baggage_restrictions: null
+              throttler: null

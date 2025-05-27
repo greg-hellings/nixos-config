@@ -3,3 +3,4 @@ resources:
   - bitwarden
   - secrets
   - databases
+  - matrix

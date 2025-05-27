@@ -14,7 +14,6 @@ in
       "${domain}" = {
         enableACME = true;
         forceSSL = true;
-
         # This is needed so that servers contacting hellings.com can find
         # the actual application server at matrix.thehellings.com
         locations."= /.well-known/matrix/server".extraConfig =
@@ -51,11 +50,20 @@ in
         enableACME = true;
         forceSSL = true;
 
+        extraConfig = ''
+          error_log /var/log/nginx/debug.log debug;
+        '';
+
         # Not the appropriate place for the chat client
         locations =
           (builtins.listToAttrs (
             builtins.map
-              (val: lib.nameValuePair "/_${val}" { proxyPass = "http://matrix.shire-zebra.ts.net:8448"; })
+              (
+                val:
+                lib.nameValuePair "/_${val}" {
+                  proxyPass = "http://matrix.kubernetes";
+                }
+              )
               [
                 "matrix"
                 "synapse"

@@ -7,14 +7,10 @@ def bw_unlock():
     current environment variables. Also returns the code for them."""
     if "BW_SESSION" in ${...}:
         return $BW_SESSION
-    result = $(bw unlock)
-    while "BW_SESSION" not in result:
-        result = $(bw unlock)
-    lines = result.split("\n")
-    l = [k for k in lines if 'BW_SESSION="' in k][0]
-    left, right = l.split("=", 1)
-    token = right[1:-1]
-    $BW_SESSION = token
+    result = !(bw unlock --raw)
+    while result.returncode != 0:
+        result = !(bw unlock --raw)
+    $BW_SESSION = result.output.strip()
     return token
 
 def vpn(con, bwname):

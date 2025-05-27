@@ -95,7 +95,7 @@ metadata:
     ingressClassName: traefik
 spec:
   rules:
-    - host: pgadmin.thehellings.lan
+    - host: pgadmin.kubernetes
       http:
         paths:
           - path: /
