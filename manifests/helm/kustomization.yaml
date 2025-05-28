@@ -1,4 +1,5 @@
 resources:
   - flux.yaml
+  - traefik.yaml
   - external-secrets.yaml
   - cloudnative-pg.yaml

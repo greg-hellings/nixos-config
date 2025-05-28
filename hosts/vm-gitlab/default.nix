@@ -15,10 +15,10 @@ let
   containerIp = "192.168.200.2";
 in
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   age.secrets =
     let
@@ -36,6 +36,9 @@ in
       gitlab-jws = cfg "jws";
       gitlab-key = cfg "key";
       gitlab-cert = cfg "cert";
+      gitlab-salt = cfg "salt";
+      gitlab-primary-key = cfg "primary-key";
+      gitlab-deterministic-key = cfg "deterministic-key";
 
       minio_access_key_id = {
         file = ../../secrets/minio_access_key_id.age;
@@ -78,7 +81,6 @@ in
     home = true;
     tailscale.enable = true;
   };
-
 
   networking = {
     hostName = "vm-gitlab"; # Define your hostname.
@@ -134,10 +136,13 @@ in
         externalPort = 443;
       };
       secrets = {
-        secretFile = config.age.secrets.gitlab-secret.path;
-        otpFile = config.age.secrets.gitlab-otp.path;
+        activeRecordDeterministicKeyFile = config.age.secrets.gitlab-deterministic-key.path;
+        activeRecordPrimaryKeyFile = config.age.secrets.gitlab-primary-key.path;
+        activeRecordSaltFile = config.age.secrets.gitlab-salt.path;
         dbFile = config.age.secrets.gitlab-db.path;
         jwsFile = config.age.secrets.gitlab-jws.path;
+        otpFile = config.age.secrets.gitlab-otp.path;
+        secretFile = config.age.secrets.gitlab-secret.path;
       };
 
       extraConfig = {

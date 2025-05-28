@@ -5,3 +5,4 @@ resources:
   - postgres-gitlab.yaml
   - postgres-pgadmin.yaml
   - postgres-matrix.yaml
+  - ingress.yaml

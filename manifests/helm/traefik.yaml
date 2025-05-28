@@ -1,0 +1,22 @@
+apiVersion: "helm.cattle.io/v1"
+kind: "HelmChartConfig"
+metadata:
+  name: "traefik"
+  namespace: "kube-system"
+spec:
+  valuesContent: |-
+    additionalArguments:
+      - "--entryPoints.postgres.address=:5432/tcp"
+      - "--api.dashboard=true"
+      - "--api.insecure=true"
+      - "--log.level=DEBUG"
+    ports:
+      postgres:
+        expose:
+          default: true
+        port: 5432
+        exposedPort: 5432
+        protocol: TCP
+      traefik:
+        expose:
+          default: true

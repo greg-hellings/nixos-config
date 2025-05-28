@@ -32,7 +32,7 @@
 100.88.91.27 genesis.home smart.home zwave.home nixcache.home gitcache.home dashy.home uptime.home speed.home
 100.91.131.66 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan
 100.68.203.1 hosea.home hosea.shire-zebra.ts.net
-100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net pgadmin.kubernetes
+100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net pgadmin.kubernetes postgres.kubernetes
 100.102.186.39 jeremiah.home jeremiah.shire-zebra.ts.net matrix.kubernetes
 100.90.74.19 jude.home
 100.115.57.8 linode.home
