@@ -212,6 +212,10 @@
             ];
           }
           {
+            name = "PGAdmin4";
+            url = "http://pgadmin.kubernetes/";
+          }
+          {
             name = "Password Hash";
             url = "https://unix4lyfe.org/crypt/";
           }
@@ -235,6 +239,15 @@
           {
             name = "Door Loop";
             url = "https://btrgpm.app.doorloop.com/home";
+          }
+        ];
+      }
+      {
+        name = "Docs";
+        bookmarks = [
+          {
+            name = "CloudNative PG";
+            url = "https://cloudnative-pg.io/documentation/1.26/";
           }
         ];
       }
