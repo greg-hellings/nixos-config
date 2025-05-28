@@ -22,7 +22,7 @@ in
   greg = {
     development = true;
     gui = true;
-    pypackage = pkgs.python311;
+    pypackage.enable = false;
     vscodium = true;
   };
 
@@ -38,13 +38,6 @@ in
       mise
       nixStable
       pipenv-ivr
-      (poetry.withPlugins (
-        ps: with ps; [
-          poetry-audit-plugin
-          poetry-plugin-export
-          poetry-plugin-shell
-        ]
-      ))
       pre-commit
       skaffold
       x
