@@ -7,10 +7,8 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 cd "$SCRIPT_DIR"
 
 kubectl apply -k namespaces
-kustomize build external-secrets --enable-helm | kubectl apply -f -
-echo -e "\nPausing for a moment to allow the External Secrets stuff to get going\n"
+kubectl apply -f helm/flux.yaml
 sleep 5
-kustomize build postgres --enable-helm | kubectl apply -f - --server-side --force-conflicts
-echo -e "\nPausing for a moment to allow Postgres stuff to get going\n"
+kubectl apply -k helm
 sleep 5
-kubectl apply -k .
+kubectl apply .

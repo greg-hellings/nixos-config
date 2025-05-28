@@ -27,6 +27,7 @@ in
     };
 
     environment.systemPackages = [
+      pkgs.fluxcd
       pkgs.kubectl-cnpg
       pkgs.kubernetes-helm
       pkgs.kustomize
@@ -59,6 +60,7 @@ in
         "--service-cidr=10.221.0.0/16"
         "--write-kubeconfig-mode 0640"
         "--write-kubeconfig-group kubeconfig"
+        "--resolv-conf=/etc/resolv.conf"
         "--tls-san ${config.networking.hostName}.home"
         "--tls-san ${config.networking.hostName}.thehellings.lan"
         "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"

@@ -31,3 +31,28 @@ spec:
         superuser: false
         passwordSecret:
           name: postgres-user-matrix
+  backup:
+    retentionPolicy: "30d"
+    barmanObjectStore:
+      destinationPath: "s3://k3sbackup/postgres"
+      endpointURL: "http://s3.thehellings.lan:9000/"
+      s3Credentials:
+        accessKeyId:
+          name: k3sbackup
+          key: username
+        secretAccessKey:
+          name: k3sbackup
+          key: password
+      wal:
+        compression: gzip
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: postgres-backup
+spec:
+  immediate: true # Create one when this is added to the cluster
+  schedule: "0 0 0 * * *" # Midnight, nightly
+  backupOwnerReference: self
+  cluster:
+    name: postgres
