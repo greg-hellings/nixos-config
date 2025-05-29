@@ -3,6 +3,10 @@ let
   username = "gregory.hellings";
 in
 {
+  greg = {
+    nix.cache = false;
+  };
+
   homebrew = {
     enable = true;
     brews = [
@@ -12,7 +16,9 @@ in
         name = "libvirt";
         restart_service = true;
       }
+      "mysql"
       "nushell"
+      "poetry"
       "qemu"
     ];
     casks = [
@@ -22,15 +28,14 @@ in
       "chromium"
       "firefox"
       "microsoft-teams"
-      "mysql"
       "onlyoffice"
       "pgadmin4"
-      "poetry"
       "tabby"
       "twine"
       "vagrant"
       "visual-studio-code"
       "zed"
+      "zoho-workdrive"
     ];
     user = username;
   };
