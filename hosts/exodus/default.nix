@@ -55,4 +55,6 @@
   virtualisation = {
     oci-containers.backend = "podman";
   };
+
+  users.users.greg.extraGroups = [ "podman" ];
 }
