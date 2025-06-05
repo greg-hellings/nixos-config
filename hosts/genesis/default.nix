@@ -7,12 +7,10 @@
 let
   dashy_port = "8080";
   speedtest_port = "19472";
-  uptime_kuma_port = "4000";
 in
 {
   imports = [
     # Include the results of the hardware scan.
-    ./acme.nix
     ./hardware-configuration.nix
     ./home-assistant.nix
     ./networking.nix
@@ -25,7 +23,6 @@ in
       "speed.home".target = "http://localhost:${speedtest_port}";
       "speedtest.thehellings.lan".target = "http://localhost:${speedtest_port}";
       "dashy.home".target = "http://localhost:${dashy_port}";
-      "uptime.home".target = "http://localhost:${uptime_kuma_port}";
     };
   };
 
@@ -35,14 +32,6 @@ in
     device = "/dev/vda";
     useOSProber = true;
   };
-
-  #boot.loader = {
-  #	systemd-boot.enable = true;
-  #	efi = {
-  #		canTouchEfiVariables = true;
-  #		efiSysMountPoint = "/boot/efi";
-  #	};
-  #};
 
   environment.systemPackages = with pkgs; [
     awscli2
@@ -137,12 +126,6 @@ in
             ];
           }
         ];
-      };
-    };
-    uptime-kuma = {
-      enable = true;
-      settings = {
-        PORT = uptime_kuma_port;
       };
     };
   };

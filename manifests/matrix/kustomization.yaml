@@ -1,0 +1,7 @@
+namespace: matrix
+
+resources:
+  - dendrite-config.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml

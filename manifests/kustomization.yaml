@@ -1,0 +1,7 @@
+resources:
+  - namespaces
+  - helm
+  - bitwarden
+  - secrets
+  - databases
+  - matrix

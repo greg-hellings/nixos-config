@@ -58,36 +58,8 @@ with lib;
           };
         };
       };
-
-      virtualbox.host = {
-        enable = true;
-        enableExtensionPack = true;
-      };
     };
-
-    # Configuration for vbox user performance
-    users.extraGroups.vboxusers.members = [ cfg.user ];
 
     boot.extraModprobeConfig = "options kvm_${cfg.system} nested=1";
-
-    # Configure the services more
-    systemd.services = {
-      libvirtd = {
-        preStart = "${pkgs.kmod}/bin/modprobe kvm_${cfg.system}";
-        postStop = "${pkgs.kmod}/bin/rmmod kvm_${cfg.system} kvm";
-        conflicts = [ "vbox.service" ];
-        #overrideStrategy = "asDropin";
-      };
-      vbox = {
-        preStart = "${pkgs.kmod}/bin/modprobe vboxdrv vboxnetadp vboxnetflt";
-        postStop = "${pkgs.kmod}/bin/rmmod vboxnetadp vboxnetflt vboxdrv";
-        script = "echo Started";
-        conflicts = [ "libvirtd.service" ];
-        unitConfig = {
-          Type = "oneshot";
-          RemainAfterExit = "yes";
-        };
-      };
-    };
   };
 }

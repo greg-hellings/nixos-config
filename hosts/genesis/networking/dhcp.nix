@@ -101,6 +101,14 @@
             hw-address = "c8:5e:a9:54:9e:c6"; # IVR laptop Wi-Fi
             ip-address = "10.42.1.9";
           }
+          {
+            hw-address = "c8:4b:d6:ca:20:8f";
+            ip-address = "10.42.1.10"; # Jude - but maybe through the monitor?
+          }
+          {
+            hw-address = "04:7c:16:d5:60:6f";
+            ip-address = "10.42.1.11"; # Jude - but straight in the motherboard
+          }
 
           ########################################
           #             VM servers               #

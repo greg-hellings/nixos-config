@@ -2,13 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Bootloader.
   boot.loader = {
@@ -16,8 +16,10 @@
     efi.canTouchEfiVariables = true;
   };
 
-  environment.systemPackages = with pkgs; [
-  ];
+  environment.systemPackages =
+    with pkgs;
+    [
+    ];
 
   greg = {
     home = true;
@@ -43,6 +45,8 @@
     nameservers = [ "10.42.1.5" ];
   };
 
+  services.qemuGuest.enable = true;
+
   system.stateVersion = "24.11"; # Did you read the comment?
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -50,6 +54,6 @@
     isNormalUser = true;
     description = "Greg Hellings";
     extraGroups = [ "wheel" ];
-    packages = with pkgs; [];
+    packages = with pkgs; [ ];
   };
 }

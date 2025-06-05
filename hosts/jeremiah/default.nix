@@ -106,7 +106,7 @@ in
   #####################################################################################
   #################### Virtualbox Runner ##############################################
   #####################################################################################
-  age.secrets.runner-reg.file = ../../secrets/gitlab/jeremiah-runner-reg.age;
+  age.secrets.runner-reg.file = ../../secrets/gitlab/nixos-qemu-shell.age;
 
   services = {
     gitlab-runner = {

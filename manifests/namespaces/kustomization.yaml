@@ -1,0 +1,4 @@
+resources:
+  - bitwarden.yaml
+  - db.yaml
+  - matrix.yaml

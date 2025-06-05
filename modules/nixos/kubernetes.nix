@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   cfg = config.greg.kubernetes;
 in
@@ -15,11 +20,26 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    age.secrets.kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
+    age.secrets = {
+      bw_secret.file = ../../secrets/kubernetes/bw_secret.age;
+      dendrite_key.file = ../../secrets/dendrite_key.age;
+      kubernetesToken.file = ../../secrets/kubernetes/kubernetesToken.age;
+    };
+
+    environment.systemPackages = [
+      pkgs.fluxcd
+      pkgs.kubectl-cnpg
+      pkgs.kubernetes-helm
+      pkgs.kustomize
+      pkgs.k9s
+    ];
 
     networking.firewall = {
       allowedTCPPorts =
         [
+          80
+          443
+          5432
           6443
         ]
         ++ (
@@ -43,6 +63,7 @@ in
         "--service-cidr=10.221.0.0/16"
         "--write-kubeconfig-mode 0640"
         "--write-kubeconfig-group kubeconfig"
+        "--resolv-conf=/etc/resolv.conf"
         "--tls-san ${config.networking.hostName}.home"
         "--tls-san ${config.networking.hostName}.thehellings.lan"
         "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"

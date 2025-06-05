@@ -83,6 +83,7 @@ in
 
   "dendrite.age".publicKeys = everyone;
   "dendrite_key.age".publicKeys = everyone;
+
   "gitlab/secret.age".publicKeys = everyone;
   "gitlab/otp.age".publicKeys = everyone;
   "gitlab/db.age".publicKeys = everyone;
@@ -91,13 +92,13 @@ in
   # Then pipe the resulting files to agenix -e <foo>
   "gitlab/key.age".publicKeys = everyone;
   "gitlab/cert.age".publicKeys = everyone;
-  "gitlab/jeremiah-runner-reg.age".publicKeys = everyone;
-  "gitlab/isaiah-qemu-runner-reg.age".publicKeys = everyone;
-  "gitlab/isaiah-vbox-runner-reg.age".publicKeys = everyone;
-  "gitlab/isaiah-podman-runner-reg.age".publicKeys = everyone;
-  "gitlab/isaiah-shell-runner-reg.age".publicKeys = everyone;
+  "gitlab/salt.age".publicKeys = everyone;
+  "gitlab/primary-key.age".publicKeys = everyone;
+  "gitlab/deterministic-key.age".publicKeys = everyone;
+  "gitlab/nixos-qemu-shell.age".publicKeys = everyone;
+  "gitlab/nixos-vbox-shell.age".publicKeys = everyone;
+  "gitlab/kubernetes-k3s-local.age".publicKeys = everyone;
   "gitlab/linode-deployer-runner-reg.age".publicKeys = everyone;
-  "gitlab/docker-auth.age".publicKeys = everyone;
 
   "acme_password.age".publicKeys = everyone;
   "ca/intermediate_key.age".publicKeys = everyone;
@@ -106,6 +107,7 @@ in
   "minio_secret_access_key.age".publicKeys = everyone;
   "minio_access_key_id.age".publicKeys = everyone;
 
+  "kubernetes/bw_secret.age".publicKeys = everyone;
   "kubernetes/kubernetesToken.age".publicKeys = [
     isaiah
     jeremiah
