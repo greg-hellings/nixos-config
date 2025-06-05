@@ -55,5 +55,19 @@ in
     username = username;
     homeDirectory = "/Users/${username}";
   };
-  programs.tmux.shell = (lib.getExe x);
+
+  programs = {
+    direnv = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
+    nushell = {
+      enable = true;
+    };
+    starship = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
+    tmux.shell = (lib.getExe x);
+  };
 }
