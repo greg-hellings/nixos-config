@@ -57,6 +57,10 @@ in
           sort-method = "name";
           sort-type = "ascending";
         };
+        "org/gnome/mutter" = {
+          # Enables quarter-point scaling options
+          experimental-features = [ "scale-monitor-framebuffer" ];
+        };
         "org/gnome/nautilus/preferences" = {
           default-folder-viewer = "icon-view";
           search-filter-time-type = "last_modified";
