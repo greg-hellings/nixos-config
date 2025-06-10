@@ -7,7 +7,7 @@
     ./direnv.nix
     ./git.nix
     ./ssh.nix
-    ./vim.nix
+    ./vim
     ./xonsh.nix
   ];
 }

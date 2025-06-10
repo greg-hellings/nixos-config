@@ -22,6 +22,7 @@ in
   greg = {
     development = true;
     gui = true;
+    nix.cache = false;
     pypackage.enable = false;
     vscodium = true;
   };

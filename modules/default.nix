@@ -1,8 +1,8 @@
 let
   nixos = (import ./nixos);
-  darwin = (import ./darwin);
+  hm = (import ./hm);
 in
 {
+  homeManagerModule = hm;
   nixosModule = nixos;
-  darwinModule = darwin;
 }

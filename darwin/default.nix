@@ -14,8 +14,8 @@ let
     top.darwin.lib.darwinSystem {
       inherit system;
       specialArgs = {
+        inherit nixpkgs overlays top;
         inherit (top) self;
-        inherit nixpkgs;
       };
       modules = [
         {
@@ -28,7 +28,9 @@ let
           };
         }
         hm.darwinModules.home-manager
-        top.self.modules.darwinModule
+        # Local changes
+        ../modules/nix-conf.nix
+        ./baseline.nix
       ] ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
     };
 in

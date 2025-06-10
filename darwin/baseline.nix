@@ -1,17 +1,9 @@
-{ config, pkgs, ... }:
 {
-  imports = [ ../baseline.nix ];
-
-  home-manager = {
-    useGlobalPkgs = true;
-    users."${config.system.primaryUser}" = import ../../home/home.nix;
-    extraSpecialArgs = {
-      inherit (config.users.users."${config.system.primaryUser}") home;
-      gnome = false;
-      gui = false;
-    };
-  };
-
+  config,
+  pkgs,
+  ...
+}:
+{
   fonts.packages = with pkgs; [
     dejavu_fonts
     nerd-fonts.hack
@@ -57,7 +49,7 @@
       };
       screencapture = {
         include-date = true;
-        location = "${config.home-manager.extraSpecialArgs.home}/Photos/Screeneries";
+        location = "~/Photos/Screeneries";
       };
       trackpad = {
         Dragging = false;
