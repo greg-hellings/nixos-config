@@ -9,7 +9,6 @@ let
       // {
         channel = top.nixunstable;
         hm = top.hmunstable;
-        nixvim = top.nixvimunstable;
       }
     ));
   machine =

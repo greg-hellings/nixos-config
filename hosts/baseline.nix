@@ -18,7 +18,7 @@ let
 in
 {
   imports = [
-    ./nix-conf.nix
+    ../modules/nix-conf.nix
   ];
 
   console = {
