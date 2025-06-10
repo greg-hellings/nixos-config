@@ -34,5 +34,5 @@ let
     };
 in
 {
-  inherit ivr;
+  "MacBook-Pro.local" = ivr;
 }

@@ -103,7 +103,7 @@
           }
           {
             hw-address = "c8:4b:d6:ca:20:8f";
-            ip-address = "10.42.1.10"; # Jude - but maybe through the monitor?
+            ip-address = "10.42.1.10"; # The monitor
           }
           {
             hw-address = "04:7c:16:d5:60:6f";
