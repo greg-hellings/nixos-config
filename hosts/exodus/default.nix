@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   top,
   ...
 }:
@@ -22,8 +21,6 @@
       "aarch64-linux"
     ];
   };
-
-  environment.defaultPackages = [ pkgs.code-cursor ];
 
   greg = {
     home = true;
