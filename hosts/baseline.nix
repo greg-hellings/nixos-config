@@ -53,18 +53,6 @@ in
     xfsprogs
   ];
 
-  home-manager = {
-    backupFileExtension = "bkp";
-    useGlobalPkgs = true;
-    useUserPackages = true;
-    users.greg = import ../home/home.nix;
-    extraSpecialArgs = {
-      inherit top overlays;
-      home = "/home/greg";
-      host = config.networking.hostName;
-    };
-  };
-
   i18n.defaultLocale = "en_US.UTF-8";
 
   nix = {

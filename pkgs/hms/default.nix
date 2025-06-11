@@ -1,3 +1,7 @@
-{ writeShellScriptBin, ... }:
+{ writeShellApplication, coreutils-full, nix-output-monitor, ... }:
 
-writeShellScriptBin "hms" (builtins.readFile ./hms.sh)
+writeShellApplication {
+  name = "hms";
+  runtimeInputs = [ coreutils-full nix-output-monitor ];
+  text = (builtins.readFile ./hms.sh);
+}

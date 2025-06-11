@@ -35,4 +35,5 @@ in
   exodus = greg "exodus";
   jude = greg "jude";
   isaiah = greg "isaiah";
+  jeremiah = greg "jeremiah";
 }
