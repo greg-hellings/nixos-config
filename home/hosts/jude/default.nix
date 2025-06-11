@@ -4,7 +4,6 @@
   greg = {
     development = true;
     gui = true;
-    sway = false;
     gnome = false;
     vscodium = true;
     zed = true;

@@ -20,7 +20,6 @@
     ./remote-builder.nix
     ./router.nix
     ./rpi4.nix
-    ./sway.nix
     ./syncthing.nix
     ./tailscale.nix
     ./vmdev.nix
