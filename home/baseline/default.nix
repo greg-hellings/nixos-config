@@ -6,6 +6,7 @@
     ./bash.nix
     ./direnv.nix
     ./git.nix
+    ./nushell.nix
     ./ssh.nix
     ./vim
     ./xonsh.nix

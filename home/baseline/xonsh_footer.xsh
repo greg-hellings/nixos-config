@@ -129,3 +129,5 @@ import builtins
 builtins.true = True
 builtins.false = False
 builtins.null = None
+
+exec($(carapace _carapace xonsh))
