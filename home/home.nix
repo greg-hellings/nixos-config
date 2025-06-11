@@ -3,9 +3,18 @@
   lib,
   host ? "most",
   top,
+  username,
   ...
 }:
-
+let
+  homeDirectory =
+    if pkgs.stdenv.hostPlatform.isDarwin then
+      "/Users/${username}"
+    else if username == "root" then
+      "/root"
+    else
+      "/home/${username}";
+in
 {
   imports = [
     top.nixvimunstable.homeManagerModules.nixvim
@@ -13,30 +22,33 @@
     ./baseline
   ] ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
 
-  home.stateVersion = "25.05";
+  home = {
+    inherit homeDirectory username;
 
-  home.packages = with pkgs; [
-    copier
-    diffutils
-    findutils
-    gh
-    git
-    gnupatch
-    hms
-    btop
-    inetutils
-    jq
-    nano
-    nix-prefetch
-    nmap
-    openssl
-    setup-ssh
-    tmux
-    tree
-    unzip
-    wget
-    zip
-  ];
+    packages = with pkgs; [
+      copier
+      diffutils
+      findutils
+      gh
+      git
+      gnupatch
+      hms
+      btop
+      inetutils
+      jq
+      nano
+      nix-prefetch
+      nmap
+      openssl
+      setup-ssh
+      tmux
+      tree
+      unzip
+      wget
+      zip
+    ];
+    stateVersion = "25.05";
+  };
 
   programs.tmux = {
     enable = true;

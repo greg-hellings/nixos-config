@@ -210,7 +210,7 @@ in
     shell = config.programs.xonsh.package;
     initialPassword = "password";
     openssh.authorizedKeys.keys = lib.strings.splitString "\n" (
-      builtins.readFile ../../home/ssh/authorized_keys
+      builtins.readFile ../home/ssh/authorized_keys
     );
   };
 

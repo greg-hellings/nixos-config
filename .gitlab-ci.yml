@@ -1,6 +1,7 @@
 stages:
   - eval
   - build
+  - push
 
 default:
   tags:
@@ -24,13 +25,27 @@ default:
 
 "Build image":
   stage: build
-  parallel:
+  parallel: &parallel
     matrix:
       - IMG:
           - img-bitwarden
+  artifacts:
+    paths:
+      - "*.tar.gz"
   script:
     - nix run "nixpkgs#podman" -- login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - nix build ".#${IMG}"
-    - nix run "nixpkgs#podman" -- load -i result
-    - nix run "nixpkgs#podman" -- tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
-    - nix run "nixpkgs#podman" -- push "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
+    - cp -L result "${IMG}.tar.gz"
+
+"Push Image":
+  stage: push
+  parallel: *parallel
+  dependencies:
+    - "Build image"
+  image: podman:latest
+  tags:
+    - kubernetes
+  script:
+    - podman load -i "${IMG}.tar.gz"
+    - podman tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
+    - podman push "$CI_REGISTRY/greg/ci-images/${IMG}:latest"

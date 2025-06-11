@@ -13,10 +13,8 @@ let
         allowUnfreePredicate = _: true;
       };
     });
-  ivr =
-    let
-      system = "aarch64-darwin";
-    in
+  user =
+    system: host: username:
     top.hmunstable.lib.homeManagerConfiguration {
       pkgs = pkgs system;
       modules = [
@@ -24,15 +22,17 @@ let
         ./home.nix
       ];
       extraSpecialArgs = {
-        inherit top;
+        inherit top host username;
         nixvim = top.nixvimunstable;
         gui = false;
         gnome = false;
-        host = "ivr";
-        username = "gregory.hellings";
       };
     };
+  greg = host: (user "x86_64-linux" host "greg");
 in
 {
-  "MacBook-Pro.local" = ivr;
+  "MacBook-Pro.local" = user "aarch64-darwin" "ivr" "gregory.hellings";
+  exodus = greg "exodus";
+  jude = greg "jude";
+  isaiah = greg "isaiah";
 }

@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   top,
   ...
@@ -75,18 +74,6 @@
   };
 
   services = {
-    gitlab-runner = {
-      enable = true;
-      settings = {
-        concurrent = 5;
-      };
-      services = {
-        kubernetes = {
-          authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
-          executor = "shell";
-        };
-      };
-    };
     k3s.clusterInit = true; # This is the first node in the cluster
     openssh = {
       enable = true;
