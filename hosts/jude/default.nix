@@ -167,5 +167,6 @@
   users.users.greg.extraGroups = [
     "adbusers"
     "kvm"
+    "podman"
   ];
 }
