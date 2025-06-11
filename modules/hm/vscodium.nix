@@ -39,7 +39,6 @@ in
             njpwerner.autodocstring
             rust-lang.rust-analyzer
             tamasfe.even-better-toml
-            vadimcn.vscode-lldb
             vscjava.vscode-java-test
             vscjava.vscode-java-dependency
             vscjava.vscode-java-debug

@@ -1,25 +1,21 @@
-{ config, pkgs, ... }:
 {
-  imports = [ ../baseline.nix ];
-
-  home-manager = {
-    useGlobalPkgs = true;
-    users."gregory.hellings" = import ../../home/home.nix;
-    extraSpecialArgs = {
-      gnome = false;
-      gui = false;
-      home = "/Users/gregory.hellings";
-    };
-  };
+  config,
+  pkgs,
+  ...
+}:
+{
+  environment.systemPackages = with pkgs; [
+    hms
+  ];
 
   fonts.packages = with pkgs; [
     dejavu_fonts
-    hack-font
-    nerdfonts
+    nerd-fonts.hack
   ];
 
   nix = {
-    gc.interval.Hour = 24;
+    enable = true;
+    gc.interval.Hour = 3;
     settings.auto-optimise-store = false; # Darwin bugs?
   };
 
@@ -34,10 +30,13 @@
     bash.enable = true;
   };
 
-  services.nix-daemon.enable = true;
-
   system = {
     defaults = {
+      CustomSystemPreferences = {
+        ".GlobalPreferences" = {
+          "com.apple.swipescrolldirection" = 0;
+        };
+      };
       finder = {
         AppleShowAllExtensions = true;
         AppleShowAllFiles = true;
@@ -50,11 +49,11 @@
       LaunchServices.LSQuarantine = false;
       menuExtraClock = {
         Show24Hour = true;
-        ShowDate = true;
+        ShowDate = 2;
       };
       screencapture = {
         include-date = true;
-        location = "${config.home-manager.extraSpecialArgs.home}/Photos/Screeneries";
+        location = "~/Photos/Screeneries";
       };
       trackpad = {
         Dragging = false;
@@ -66,6 +65,4 @@
   };
 
   time.timeZone = "America/Chicago";
-
-  users.users."gregory.hellings".home = "/Users/gregory.hellings";
 }

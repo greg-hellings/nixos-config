@@ -1,28 +1,49 @@
 { ... }:
+let
+  username = "gregory.hellings";
+in
 {
-  #environment.loginShell = lib.getExe pkgs.xonsh;
-  homebrews = {
+  greg = {
+    nix.cache = false;
+  };
+
+  homebrew = {
     enable = true;
     brews = [
+      "bitwarden-cli"
       "direnv"
       {
         name = "libvirt";
         restart_service = true;
       }
+      "mysql"
       "nushell"
+      "poetry"
       "qemu"
     ];
     casks = [
       "alt-tab"
+      "bitwarden"
       "bruno"
       "chromium"
       "firefox"
+      "microsoft-teams"
       "onlyoffice"
       "pgadmin4"
       "tabby"
+      "twine"
       "vagrant"
       "visual-studio-code"
       "zed"
+      "zoho-workdrive"
     ];
+    user = username;
+  };
+
+  system.primaryUser = username;
+
+  users.users."${username}" = {
+    name = username;
+    home = "/Users/${username}";
   };
 }

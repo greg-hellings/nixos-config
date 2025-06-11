@@ -2,7 +2,6 @@
 
 {
   imports = [
-    ./baseline
     ./development.nix
     ./gnome.nix
     ./gui.nix

@@ -78,7 +78,7 @@ func main() {
 	// flake output type. Therefore, it just informs you that it is
 	// part of the output, but does not evaluate deeper to tell you
 	// what the name of it is. I will just do this manually for now.
-	pipeline["Build Home config "] = NewGitlabCIJob("homeConfigurations.\"gregory.hellings\".activationPackage")
+	pipeline["Build Home config "] = NewGitlabCIJob("homeConfigurations.\"greg\".activationPackage")
 
 	if flakeOutput.Apps != nil {
 		for appName := range flakeOutput.Apps {

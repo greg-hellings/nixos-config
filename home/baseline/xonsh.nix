@@ -3,7 +3,6 @@
 {
   # Programs that are used in the settings file
   home.packages = with pkgs; [
-    bitwarden-cli
     copier
     git
     gnused

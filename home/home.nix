@@ -2,27 +2,20 @@
   pkgs,
   lib,
   host ? "most",
-  nixvim,
+  top,
   ...
 }:
 
 {
   imports = [
-    nixvim.homeManagerModules.default
-    ./modules
+    top.nixvimunstable.homeManagerModules.nixvim
+    top.self.modules.homeManagerModule
+    ./baseline
   ] ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
 
-  programs.tmux = {
-    enable = true;
-    keyMode = "vi";
-    terminal = "xterm-256color";
-    customPaneNavigationAndResize = true;
-    extraConfig = (lib.strings.concatStringsSep "\n" [ "bind P paste-buffer" ]);
-  };
+  home.stateVersion = "25.05";
 
-  home.stateVersion = "23.05";
   home.packages = with pkgs; [
-    bitwarden-cli
     copier
     diffutils
     findutils
@@ -44,4 +37,12 @@
     wget
     zip
   ];
+
+  programs.tmux = {
+    enable = true;
+    keyMode = "vi";
+    terminal = "xterm-256color";
+    customPaneNavigationAndResize = true;
+    extraConfig = (lib.strings.concatStringsSep "\n" [ "bind P paste-buffer" ]);
+  };
 }

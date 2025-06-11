@@ -29,8 +29,8 @@ default:
       - IMG:
           - img-bitwarden
   script:
-    - podman login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - nix run "nixpkgs#podman" -- login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
     - nix build ".#${IMG}"
-    - podman load -i result
-    - podman tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
-    - podman push "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
+    - nix run "nixpkgs#podman" -- load -i result
+    - nix run "nixpkgs#podman" -- tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
+    - nix run "nixpkgs#podman" -- push "$CI_REGISTRY/greg/ci-images/${IMG}:latest"

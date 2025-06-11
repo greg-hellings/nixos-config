@@ -11,8 +11,6 @@ let
     cargo
     gh-copilot
     gnumake
-    libcap.dev
-    libmysqlclient.dev
     nix-eval-jobs
     nix-fast-build
     nix-output-monitor

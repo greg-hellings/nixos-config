@@ -9,7 +9,6 @@ let
       // {
         channel = top.nixunstable;
         hm = top.hmunstable;
-        nixvim = top.nixvimunstable;
       }
     ));
   machine =
@@ -19,7 +18,6 @@ let
       name,
       system ? "x86_64-linux",
       hm ? top.hm,
-      nixvim ? top.nixvimstable,
     }:
     let
       nixpkgs = import channel { inherit system; };
@@ -32,29 +30,18 @@ let
         inherit (top) self;
       };
       modules = [
-        {
-          nixpkgs.overlays = overlays;
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.greg = import ../home/home.nix;
-            extraSpecialArgs = {
-              inherit top overlays nixvim;
-              home = "/home/greg";
-              host = name;
-            };
-            backupFileExtension = "bkp";
-          };
-        }
+        # Imported ones
         top.agenix.nixosModules.default
         hm.nixosModules.home-manager
-        top.self.modules.nixosModule
         top.nurpkgs.modules.nixos.default
+        # Local ones
+        ./baseline.nix
+        top.self.modules.nixosModule
         ./${name}
       ] ++ extraMods;
     };
 in
-rec {
+{
   genesis = unstable { name = "genesis"; };
   exodus = unstable { name = "exodus"; };
   jude = unstable { name = "jude"; };

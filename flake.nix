@@ -39,7 +39,10 @@
       url = "github:nix-community/nixos-generators";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    nixvimunstable.url = "github:nix-community/nixvim/main";
+    nixvimunstable = {
+      url = "github:nix-community/nixvim/main";
+      inputs.nixpkgs.follows = "nixunstable";
+    };
     nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nurpkgs.url = "github:nix-community/NUR";
     vsext.url = "github:nix-community/nix-vscode-extensions";

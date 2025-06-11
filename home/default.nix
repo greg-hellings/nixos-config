@@ -1,27 +1,26 @@
-{ top, overlays, ... }:
-
-rec {
-  greghellings =
+{
+  overlays,
+  top,
+  ...
+}:
+let
+  pkgs =
+    system:
+    (import top.nixunstable {
+      inherit system overlays;
+      config = {
+        allowUnfree = true;
+        allowUnfreePredicate = _: true;
+      };
+    });
+  ivr =
     let
-      system = "x86_64-linux";
-      pkgs = (
-        import top.nixunstable {
-          inherit system overlays;
-          config = {
-            allowUnfree = true;
-            allowUnfreePredicate = _: true;
-          };
-        }
-      );
+      system = "aarch64-darwin";
     in
     top.hmunstable.lib.homeManagerConfiguration {
-      inherit pkgs;
+      pkgs = pkgs system;
       modules = [
-        (import ../modules/nix-conf.nix {
-          inherit pkgs;
-          inherit (pkgs) lib;
-          cache = false;
-        })
+        ../modules/nix-conf.nix
         ./home.nix
       ];
       extraSpecialArgs = {
@@ -33,6 +32,7 @@ rec {
         username = "gregory.hellings";
       };
     };
-
-  "gregory.hellings" = greghellings;
+in
+{
+  "MacBook-Pro.local" = ivr;
 }

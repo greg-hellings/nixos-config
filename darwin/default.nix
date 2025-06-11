@@ -14,22 +14,26 @@ let
     top.darwin.lib.darwinSystem {
       inherit system;
       specialArgs = {
-        inherit nixpkgs;
+        inherit nixpkgs overlays top;
+        inherit (top) self;
       };
       modules = [
         {
           nixpkgs.overlays = overlays;
-          home-manager.extraSpecialArgs = {
-            inherit top;
-            host = name;
+          home-manager = {
+            extraSpecialArgs = {
+              inherit top;
+              host = name;
+            };
           };
         }
         hm.darwinModules.home-manager
-        top.self.modules.darwinModule
+        # Local changes
+        ../modules/nix-conf.nix
+        ./baseline.nix
       ] ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
     };
 in
 rec {
-  la23002 = mac { name = "ivr"; };
-  LA23002 = la23002;
+  "MacBook-Pro" = mac { name = "ivr"; };
 }

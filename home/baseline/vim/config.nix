@@ -1,15 +1,4 @@
 { pkgs, ... }:
-let
-  vim-xonsh = pkgs.vimUtils.buildVimPlugin {
-    name = "vim-xonsh";
-    src = pkgs.fetchFromGitHub {
-      owner = "meatballs";
-      repo = "vim-xonsh";
-      rev = "929f35e";
-      hash = "sha256-ugHLu2Z9bTtQsIp4FQPKxgjVe9oZNjfQYrP+aHu+/uU=";
-    };
-  };
-in
 {
   colorschemes.gruvbox.enable = true;
   globals = {
@@ -162,7 +151,6 @@ in
 
     context-vim
     vim-indent-guides
-    vim-xonsh
   ];
   viAlias = true;
   vimAlias = true;

@@ -52,7 +52,7 @@ def _rebuild(args):
     system = uname()
     hostname = system.nodename
     if system.sysname == 'Darwin':
-        darwin-rebuild --flake ~/.config/darwin switch
+        sudo darwin-rebuild switch
     else:
         with TemporaryDirectory() as td:
             pushd @(td)
