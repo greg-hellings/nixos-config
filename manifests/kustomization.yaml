@@ -5,3 +5,4 @@ resources:
   - secrets
   - databases
   - matrix
+  - gitlab-runner

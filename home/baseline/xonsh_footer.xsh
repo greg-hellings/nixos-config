@@ -11,7 +11,7 @@ def bw_unlock():
     while result.returncode != 0:
         result = !(bw unlock --raw)
     $BW_SESSION = result.output.strip()
-    return token
+    return $BW_SESSION
 
 def vpn(con, bwname):
     nmcli c down @(con)

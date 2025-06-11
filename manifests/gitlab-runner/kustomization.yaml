@@ -1,0 +1,4 @@
+namespace: gitlab-runner
+
+resources:
+  - chart.yaml

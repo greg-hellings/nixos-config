@@ -11,4 +11,4 @@ kubectl apply -f helm/flux.yaml
 sleep 5
 kubectl apply -k helm
 sleep 5
-kubectl apply .
+kubectl apply -k .

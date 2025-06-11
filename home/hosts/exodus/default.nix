@@ -13,6 +13,10 @@
     cargo
     freeciv
     gimp
+    k9s
+    kubernetes-helm
+    kubectl
+    kubectl-cnpg
     wineWowPackages.stable
   ];
 }
