@@ -42,10 +42,12 @@ default:
   parallel: *parallel
   dependencies:
     - "Build image"
-  image: podman:latest
+  image: "docker:28-cli"
+  services:
+    - "docker:28-dind"
   tags:
     - kubernetes
   script:
-    - podman load -i "${IMG}.tar.gz"
-    - podman tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
-    - podman push "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
+    - docker load -i "${IMG}.tar.gz"
+    - docker tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
+    - docker push "$CI_REGISTRY/greg/ci-images/${IMG}:latest"
