@@ -50,11 +50,33 @@ in
     stateVersion = "25.05";
   };
 
-  programs.tmux = {
-    enable = true;
-    keyMode = "vi";
-    terminal = "xterm-256color";
-    customPaneNavigationAndResize = true;
-    extraConfig = (lib.strings.concatStringsSep "\n" [ "bind P paste-buffer" ]);
+  programs = {
+    broot = {
+      enable = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = pkgs.stdenv.hostPlatform.isDarwin;
+    };
+    keychain = {
+      enable = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = pkgs.stdenv.hostPlatform.isDarwin;
+      keys = [
+        "id_rsa"
+        "id_ed25519"
+        "personal_ed25519"
+      ];
+    };
+    tmux = {
+      enable = true;
+      keyMode = "vi";
+      terminal = "xterm-256color";
+      customPaneNavigationAndResize = true;
+      extraConfig = (lib.strings.concatStringsSep "\n" [ "bind P paste-buffer" ]);
+    };
+    yazi = {
+      enable = true;
+      enableNushellIntegration = true;
+      enableZshIntegration = pkgs.stdenv.hostPlatform.isDarwin;
+    };
   };
 }

@@ -40,7 +40,7 @@
         OS_CLOUD = "default";
         PROMPT = "{vte_new_tab_cwd}{env_name}{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {short_cwd}{branch_color}{curr_branch: {}}{RESET} {BOLD_BLUE}{prompt_end}{RESET} ";
         SWORD_PATH = "${config.home.homeDirectory}/.sword/";
-        TIMEFORMAT = "%3Uu %3Ss %3lR %P%%";
+        #TIMEFORMAT = "%3Uu %3Ss %3lR %P%%";
         # Tells vox where to find virtualenvs
         VIRTUALENV_HOME = "${config.home.homeDirectory}/venv/";
         XONSH_COLOR_STYLE = "default";

@@ -9,6 +9,10 @@
       enable = true;
       enableNushellIntegration = true;
     };
+    direnv = {
+      enable = true;
+      enableNushellIntegration = true;
+    };
     nushell = {
       enable = true;
       environmentVariables = {
@@ -17,7 +21,7 @@
         GOBIN = "${config.home.homeDirectory}/src/bin";
         LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN = "1";
         SWORD_PATH = "${config.home.homeDirectory}/.sword/";
-        TIMEFORMAT = "%3Uu %3Ss %3lR %P%%";
+        #TIMEFORMAT = "%3Uu %3Ss %3lR %P%%";
         VIRTUALENV_HOME = "${config.home.homeDirectory}/venv/";
       };
       extraConfig = ''
