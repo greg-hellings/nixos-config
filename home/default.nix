@@ -32,6 +32,7 @@ let
 in
 {
   "MacBook-Pro.local" = user "aarch64-darwin" "ivr" "gregory.hellings";
+  genesis = greg "genesis";
   exodus = greg "exodus";
   jude = greg "jude";
   isaiah = greg "isaiah";
