@@ -11,12 +11,10 @@
 
 let
   registryPort = 5000;
-  vpnIp = "100.91.131.66";
-  containerIp = "192.168.200.2";
+  vpnIp = "100.117.28.111";
 in
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -55,30 +53,12 @@ in
       };
     };
 
-  greg.proxies =
-    let
-      t = {
-        target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
-        extraConfig = ''
-          proxy_set_header X-Forwarded-Proto https;
-          proxy_set_header X-Forwarded-Ssl on;
-          client_max_body_size 10000m;
-        '';
-      };
-    in
-    {
-      "${containerIp}" = t;
-      "${vpnIp}" = t;
-      "git.thehellings.lan" = t;
-    };
-
-  greg.backup.jobs.nas-backup = {
-    src = "/var/gitlab/state/backup/";
-    dest = "gitlab";
-    id = "container-gitlab";
-  };
-
   greg = {
+    backup.jobs.nas-backup = {
+      src = "/var/gitlab/state/backup/";
+      dest = "gitlab";
+      id = "container-gitlab";
+    };
     home = true;
     tailscale.enable = true;
   };
@@ -96,7 +76,7 @@ in
     cron = {
       enable = true;
       systemCronJobs = [
-        "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
+        "0 0 1 */2 * cd /etc/certs && tailscale cert vm-gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
       ];
     };
 
@@ -114,8 +94,8 @@ in
       extraConfig = {
         gitlab = {
           trustedProxies = [
-            "${vpnIp}/32" # The container itself
-            "100.115.57.8/32" # Public server's IP
+            "${vpnIp}/32" # The system itself
+            "100.109.86.8/32" # Public server's IP
           ];
         };
         object_store = {
@@ -188,22 +168,29 @@ in
     };
 
     nginx = {
+      enable = true;
       clientMaxBodySize = "25000m";
-      virtualHosts."gitlab.shire-zebra.ts.net" = {
+      virtualHosts."vm-gitlab.shire-zebra.ts.net" = {
         listen = [
           {
             addr = "0.0.0.0";
             port = registryPort;
             ssl = true;
           }
+          {
+            addr = "0.0.0.0";
+            port = 443;
+            ssl = true;
+          }
         ];
         locations."/" = {
-          proxyPass = "http://127.0.0.1:4567/";
+          proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+          #proxyPass = "http://127.0.0.1:4567/";
           recommendedProxySettings = true;
         };
         extraConfig = ''
-          ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;
-          ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;
+          ssl_certificate /etc/certs/vm-gitlab.shire-zebra.ts.net.crt ;
+          ssl_certificate_key /etc/certs/vm-gitlab.shire-zebra.ts.net.key ;
           client_max_body_size 10000m ;
         '';
       };
