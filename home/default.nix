@@ -36,5 +36,6 @@ in
   jude = greg "jude";
   isaiah = greg "isaiah";
   jeremiah = greg "jeremiah";
+  linode = greg "linode";
   vm-gitlab = greg "vm-gitlab";
 }
