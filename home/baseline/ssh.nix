@@ -41,7 +41,7 @@
         };
         "src" = {
           user = "gitlab";
-          hostname = "git.thehellings.lan";
+          hostname = "vm-gitlab.shire-zebra.ts.net";
         };
         srcpub = {
           user = "gitlab";
