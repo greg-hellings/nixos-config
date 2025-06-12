@@ -6,7 +6,7 @@ let
 in
 {
   greg.proxies."${srcDomain}" = {
-    target = "http://vm-gitlab.shire-zebra.ts.net";
+    target = "https://vm-gitlab.shire-zebra.ts.net";
     ssl = true;
     genAliases = false;
     extraConfig = ''
