@@ -41,8 +41,7 @@ in
         ]; # For home and for work machines
         substituters =
           (lib.optionals cfg.cache [
-            "http://nas.thehellings.lan:9000/binary-cache/"
-            "http://nas.home:9000/binary-cache/"
+            "http://chronicles.shire-zebra.ts.net:9000/binary-cache/"
           ])
           ++ [
             "https://ai.cachix.org"
@@ -52,8 +51,7 @@ in
             "https://cache.nixos.org"
           ];
         trusted-public-keys = [
-          "nix.thehellings.lan:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
-          "nix.home:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
+          "chronicles.shire-zebra.ts.net:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
           "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
           "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
           "greg-hellings.cachix.org-1:y01Jl/L5evlhxdnUW6n56AiI1k8g1wxWhTxJCe7XSco="

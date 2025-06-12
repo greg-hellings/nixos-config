@@ -87,6 +87,7 @@ in
   "gitlab/secret.age".publicKeys = everyone;
   "gitlab/otp.age".publicKeys = everyone;
   "gitlab/db.age".publicKeys = everyone;
+  "gitlab/db-password.age".publicKeys = everyone;
   "gitlab/jws.age".publicKeys = everyone;
   # openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.crt -days 365 -nodes -subj '/CN=issuer'
   # Then pipe the resulting files to agenix -e <foo>

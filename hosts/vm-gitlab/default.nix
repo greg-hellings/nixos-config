@@ -11,12 +11,10 @@
 
 let
   registryPort = 5000;
-  vpnIp = "100.91.131.66";
-  containerIp = "192.168.200.2";
+  vpnIp = "100.117.28.111";
 in
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
 
@@ -33,6 +31,7 @@ in
       gitlab-secret = cfg "secret";
       gitlab-otp = cfg "otp";
       gitlab-db = cfg "db";
+      gitlab-db-password = cfg "db-password";
       gitlab-jws = cfg "jws";
       gitlab-key = cfg "key";
       gitlab-cert = cfg "cert";
@@ -54,30 +53,12 @@ in
       };
     };
 
-  greg.proxies =
-    let
-      t = {
-        target = "http://unix:/run/gitlab/gitlab-workhorse.socket";
-        extraConfig = ''
-          proxy_set_header X-Forwarded-Proto https;
-          proxy_set_header X-Forwarded-Ssl on;
-          client_max_body_size 10000m;
-        '';
-      };
-    in
-    {
-      "${containerIp}" = t;
-      "${vpnIp}" = t;
-      "git.thehellings.lan" = t;
-    };
-
-  greg.backup.jobs.nas-backup = {
-    src = "/var/gitlab/state/backup/";
-    dest = "gitlab";
-    id = "container-gitlab";
-  };
-
   greg = {
+    backup.jobs.nas-backup = {
+      src = "/var/gitlab/state/backup/";
+      dest = "gitlab";
+      id = "container-gitlab";
+    };
     home = true;
     tailscale.enable = true;
   };
@@ -95,7 +76,7 @@ in
     cron = {
       enable = true;
       systemCronJobs = [
-        "0 0 1 */2 * cd /etc/certs && tailscale cert gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
+        "0 0 1 */2 * cd /etc/certs && tailscale cert vm-gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
       ];
     };
 
@@ -105,47 +86,18 @@ in
         keepTime = 288;
         startAt = [ "03:00" ];
       };
-      host = "src.thehellings.com";
-      https = true;
-      port = 443;
+      databaseHost = "postgres.kubernetes";
+      databaseName = "gitlab";
+      databaseUsername = "gitlab";
+      databasePasswordFile = config.age.secrets.gitlab-db-password.path;
+      databaseCreateLocally = false;
       extraConfig = {
         gitlab = {
           trustedProxies = [
-            "${vpnIp}/32" # The container itself
-            "100.115.57.8/32" # Public server's IP
+            "${vpnIp}/32" # The system itself
+            "100.109.86.8/32" # Public server's IP
           ];
         };
-      };
-      initialRootEmail = "greg@thehellings.com";
-      initialRootPasswordFile = pkgs.writeText "initialRootPassword" "root_password";
-      pages = {
-        enable = true;
-        settings.pages-domain = "pages.thehellings.com";
-      };
-      puma = {
-        threadsMax = 6;
-        threadsMin = 2;
-        workers = 6;
-      };
-      redisUrl = "unix:${config.services.redis.servers.gitlab.unixSocket}";
-      registry = {
-        enable = true;
-        certFile = config.age.secrets.gitlab-cert.path;
-        keyFile = config.age.secrets.gitlab-key.path;
-        externalAddress = "registry.thehellings.com";
-        externalPort = 443;
-      };
-      secrets = {
-        activeRecordDeterministicKeyFile = config.age.secrets.gitlab-deterministic-key.path;
-        activeRecordPrimaryKeyFile = config.age.secrets.gitlab-primary-key.path;
-        activeRecordSaltFile = config.age.secrets.gitlab-salt.path;
-        dbFile = config.age.secrets.gitlab-db.path;
-        jwsFile = config.age.secrets.gitlab-jws.path;
-        otpFile = config.age.secrets.gitlab-otp.path;
-        secretFile = config.age.secrets.gitlab-secret.path;
-      };
-
-      extraConfig = {
         object_store = {
           enabled = true;
           proxy_download = true; # Tell them to reach out to object storage themselves!
@@ -182,66 +134,78 @@ in
           );
         };
       };
+      host = "src.thehellings.com";
+      https = true;
+      initialRootEmail = "greg@thehellings.com";
+      initialRootPasswordFile = pkgs.writeText "initialRootPassword" "root_password";
+      pages = {
+        enable = true;
+        settings.pages-domain = "pages.thehellings.com";
+      };
+      port = 443;
+      puma = {
+        threadsMax = 6;
+        threadsMin = 2;
+        workers = 6;
+      };
+      redisUrl = "unix:${config.services.redis.servers.gitlab.unixSocket}";
+      registry = {
+        enable = true;
+        certFile = config.age.secrets.gitlab-cert.path;
+        keyFile = config.age.secrets.gitlab-key.path;
+        externalAddress = "registry.thehellings.com";
+        externalPort = 443;
+      };
+      secrets = {
+        activeRecordDeterministicKeyFile = config.age.secrets.gitlab-deterministic-key.path;
+        activeRecordPrimaryKeyFile = config.age.secrets.gitlab-primary-key.path;
+        activeRecordSaltFile = config.age.secrets.gitlab-salt.path;
+        dbFile = config.age.secrets.gitlab-db.path;
+        jwsFile = config.age.secrets.gitlab-jws.path;
+        otpFile = config.age.secrets.gitlab-otp.path;
+        secretFile = config.age.secrets.gitlab-secret.path;
+      };
     };
 
     nginx = {
+      enable = true;
       clientMaxBodySize = "25000m";
-      virtualHosts."gitlab.shire-zebra.ts.net" = {
+      virtualHosts."vm-gitlab.shire-zebra.ts.net" = {
         listen = [
           {
             addr = "0.0.0.0";
             port = registryPort;
             ssl = true;
           }
+          {
+            addr = "0.0.0.0";
+            port = 443;
+            ssl = true;
+          }
         ];
         locations."/" = {
-          proxyPass = "http://127.0.0.1:4567/";
+          proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+          #proxyPass = "http://127.0.0.1:4567/";
           recommendedProxySettings = true;
         };
         extraConfig = ''
-          ssl_certificate /etc/certs/gitlab.shire-zebra.ts.net.crt ;
-          ssl_certificate_key /etc/certs/gitlab.shire-zebra.ts.net.key ;
+          ssl_certificate /etc/certs/vm-gitlab.shire-zebra.ts.net.crt ;
+          ssl_certificate_key /etc/certs/vm-gitlab.shire-zebra.ts.net.key ;
           client_max_body_size 10000m ;
         '';
       };
     };
 
-    logrotate = {
-      enable = true;
-      settings = {
-        "/var/lib/postgresql/*/log/*.log" = {
-          enable = true;
-          compress = true;
-          compresscmd = "${pkgs.xz}/bin/xz";
-        };
-      };
-    };
-
     openssh.enable = true;
 
-    postgresql = {
-      enable = true;
-      checkConfig = true;
-      ensureDatabases = [ "gitlab" ];
-      ensureUsers = [
-        {
-          name = "gitlab";
-          ensureDBOwnership = true;
-        }
-      ];
-      settings = {
-        log_connections = true;
-        log_statement = "all";
-        logging_collector = true;
-        log_filename = "postgresql.log";
-      };
-    };
+    postgresql.enable = true;
 
     qemuGuest.enable = true;
 
     redis.servers.gitlab = {
       enable = true;
     };
+
     resolved.enable = true;
   };
 
