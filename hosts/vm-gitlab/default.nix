@@ -169,30 +169,48 @@ in
 
     nginx = {
       enable = true;
-      clientMaxBodySize = "25000m";
-      virtualHosts."vm-gitlab.shire-zebra.ts.net" = {
-        listen = [
-          {
-            addr = "0.0.0.0";
-            port = registryPort;
-            ssl = true;
-          }
-          {
-            addr = "0.0.0.0";
-            port = 443;
-            ssl = true;
-          }
-        ];
-        locations."/" = {
-          proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
-          #proxyPass = "http://127.0.0.1:4567/";
-          recommendedProxySettings = true;
+      clientMaxBodySize = "10000m"; # 10 GB is fine, right?
+      virtualHosts = {
+        "vm-gitlab.shire-zebra.ts.net" = {
+          listen = [
+            {
+              addr = "0.0.0.0";
+              port = 443;
+              ssl = true;
+            }
+          ];
+          locations."/" = {
+            proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
+            recommendedProxySettings = true;
+          };
+          locations."/v2" = {
+            proxyPass = "http://127.0.0.1:4567/";
+            recommendedProxySettings = true;
+          };
+          extraConfig = ''
+            ssl_certificate /etc/certs/vm-gitlab.shire-zebra.ts.net.crt ;
+            ssl_certificate_key /etc/certs/vm-gitlab.shire-zebra.ts.net.key ;
+            client_max_body_size 10000m ;
+          '';
         };
-        extraConfig = ''
-          ssl_certificate /etc/certs/vm-gitlab.shire-zebra.ts.net.crt ;
-          ssl_certificate_key /etc/certs/vm-gitlab.shire-zebra.ts.net.key ;
-          client_max_body_size 10000m ;
-        '';
+        "registry" = {
+          listen = [
+            {
+              addr = "0.0.0.0";
+              port = registryPort;
+              ssl = true;
+            }
+          ];
+          locations."/" = {
+            proxyPass = "http://127.0.0.1:4567/";
+            recommendedProxySettings = true;
+          };
+          extraConfig = ''
+            ssl_certificate /etc/certs/vm-gitlab.shire-zebra.ts.net.crt ;
+            ssl_certificate_key /etc/certs/vm-gitlab.shire-zebra.ts.net.key ;
+            client_max_body_size 10000m ;
+          '';
+        };
       };
     };
 
