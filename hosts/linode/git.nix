@@ -16,10 +16,14 @@ in
     '';
   };
   greg.proxies."registry.thehellings.com" = {
-    target = "https://vm-gitlab.shire-zebra.ts.net:5000";
+    target = "http://vm-gitlab.shire-zebra.ts.net:5000";
     ssl = true;
     genAliases = false;
-    extraConfig = "client_max_body_size 25000m;";
+    extraConfig = ''
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-Ssl on;
+      client_max_body_size 25000m;
+    '';
   };
 
   networking.firewall.allowedTCPPorts = [ sshPort ];

@@ -169,7 +169,7 @@ in
 
     nginx = {
       enable = true;
-      clientMaxBodySize = "10000m"; # 10 GB is fine, right?
+      clientMaxBodySize = "25000m";
       virtualHosts = {
         "vm-gitlab.shire-zebra.ts.net" = {
           listen = [
@@ -181,10 +181,6 @@ in
           ];
           locations."/" = {
             proxyPass = "http://unix:/run/gitlab/gitlab-workhorse.socket";
-            recommendedProxySettings = true;
-          };
-          locations."/v2" = {
-            proxyPass = "http://127.0.0.1:4567/";
             recommendedProxySettings = true;
           };
           extraConfig = ''
@@ -208,8 +204,11 @@ in
           extraConfig = ''
             ssl_certificate /etc/certs/vm-gitlab.shire-zebra.ts.net.crt ;
             ssl_certificate_key /etc/certs/vm-gitlab.shire-zebra.ts.net.key ;
-            client_max_body_size 10000m ;
+            client_max_body_size 25000m ;
           '';
+          serverAliases = [
+            "vm-gitlab.shire-zebra.ts.net"
+          ];
         };
       };
     };
