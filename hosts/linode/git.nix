@@ -16,7 +16,7 @@ in
     '';
   };
   greg.proxies."registry.thehellings.com" = {
-    target = "http://vm-gitlab.shire-zebra.ts.net:5000";
+    target = "https://vm-gitlab.shire-zebra.ts.net:5000";
     ssl = true;
     genAliases = false;
     extraConfig = ''
