@@ -21,8 +21,8 @@
     packages = with pkgs; [
       audacity
       bitwarden-cli
+      element
       (mumble.override { pulseSupport = true; })
-      #logseq
       super-productivity
       webcamoid
     ];
