@@ -38,7 +38,9 @@ in
             ms-vscode-remote.remote-ssh
             njpwerner.autodocstring
             rust-lang.rust-analyzer
+            slint.slint
             tamasfe.even-better-toml
+            vadimcn.vscode-lldb
             vscjava.vscode-java-test
             vscjava.vscode-java-dependency
             vscjava.vscode-java-debug
