@@ -21,9 +21,10 @@
     packages = with pkgs; [
       audacity
       bitwarden-cli
-      element
+      element-desktop
       (mumble.override { pulseSupport = true; })
       super-productivity
+      vagrant
       webcamoid
     ];
   };
