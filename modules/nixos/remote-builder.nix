@@ -48,6 +48,7 @@ with lib;
             set -f
             export AWS_SHARED_CREDENTIALS_FILE=${config.age.secrets.cache-credentials.path}
             export IFS=' '
+            ${getExe config.nix.package} store sign --recursive --key-file "${config.age.secrets.private-cache.path}" "$@"
             ${getExe config.nix.package} copy --to "s3://binary-cache/?scheme=http&endpoint=nas.home%3A9000&profile=default" "$@"
           ''
         );
