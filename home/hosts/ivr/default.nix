@@ -37,6 +37,7 @@ in
       kubectl
       minikube
       mise
+      nil
       nixStable
       pipenv-ivr
       pre-commit

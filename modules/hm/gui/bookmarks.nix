@@ -64,6 +64,19 @@
             ];
           }
           {
+            name = "IC";
+            bookmarks = [
+              {
+                name = "Azure Portal/Console";
+                url = "https://portal.azure.com";
+              }
+              {
+                name = "Azure Code";
+                url = "https://dev.azure.com";
+              }
+            ];
+          }
+          {
             name = "Processes";
             bookmarks = [
               {
@@ -77,6 +90,10 @@
               {
                 name = "DB Request";
                 url = "https://ivrtg.aha.io/develop/features/INFR-1073";
+              }
+              {
+                name = "Deploy";
+                url = "https://ivrtg.aha.io/develop/features/EN-1000";
               }
               {
                 name = "Server list";
