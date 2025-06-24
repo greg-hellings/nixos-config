@@ -69,6 +69,14 @@ in
     starship = {
       enable = true;
       enableNushellIntegration = true;
+      settings = {
+        directory = {
+          home_symbol = "~";
+          truncate_to_repo = false;
+          truncation_length = 0;
+          use_os_path_sep = true;
+        };
+      };
     };
     tmux.shell = (lib.getExe x);
   };
