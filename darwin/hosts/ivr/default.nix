@@ -23,9 +23,11 @@ in
     ];
     casks = [
       "alt-tab"
+      "audacity"
       "bitwarden"
       "bruno"
       "chromium"
+      "dbeaver-community"
       "firefox"
       "microsoft-teams"
       "onlyoffice"
