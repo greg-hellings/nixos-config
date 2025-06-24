@@ -1,1 +1,76 @@
-{"en":{"gutenberg":{"name":"gutenberg_en_all_2023-08.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"phet":{"name":"phet_en_all_2023-04.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikibooks":{"name":"wikibooks_en_all_maxi_2021-03.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikipedia":{"name":"wikipedia_en_all_maxi_2024-01.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikisource":{"name":"wikisource_en_all_maxi_2022-09.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikiversity":{"name":"wikiversity_en_all_maxi_2021-03.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wiktionary":{"name":"wiktionary_en_all_nopic_2024-05.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="}},"fr":{"gutenberg":{"name":"gutenberg_fr_all_2023-08.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"phet":{"name":"phet_fr_all_2023-04.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikibooks":{"name":"wikibooks_fr_all_maxi_2024-06.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikipedia":{"name":"wikipedia_fr_all_maxi_2024-05.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikisource":{"name":"wikisource_fr_all_maxi_2022-04.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikiversity":{"name":"wikiversity_fr_all_maxi_2021-02.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wiktionary":{"name":"wiktionary_fr_all_nopic_2024-06.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="}},"ht":{"phet":{"name":"phet_ht_all_2023-04.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikipedia":{"name":"wikipedia_ht_all_maxi_2024-06.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="},"wikisource":{"name":"wikisource_ht_all_maxi_2019-03.zim","hash":"sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="}}}
+{
+  "en": {
+    "gutenberg": {
+      "name": "gutenberg_en_all_2023-08.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "phet": {
+      "name": "phet_en_all_2023-04.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikibooks": {
+      "name": "wikibooks_en_all_maxi_2021-03.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikipedia": {
+      "name": "wikipedia_en_all_maxi_2024-01.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikisource": {
+      "name": "wikisource_en_all_maxi_2022-09.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikiversity": {
+      "name": "wikiversity_en_all_maxi_2021-03.zim",
+      "hash": "sha256-w/3J2neHPWbz1kK2qR0OB64mkwuDI7RJMuoAWz9yyZs="
+    },
+    "wiktionary": {
+      "name": "wiktionary_en_all_nopic_2024-05.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    }
+  },
+  "fr": {
+    "gutenberg": {
+      "name": "gutenberg_fr_all_2023-08.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "phet": {
+      "name": "phet_fr_all_2023-04.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikibooks": {
+      "name": "wikibooks_fr_all_maxi_2024-06.zim",
+      "hash": "sha256-w/3J2neHPWbz1kK2qR0OB64mkwuDI7RJMuoAWz9yyZs="
+    },
+    "wikipedia": {
+      "name": "wikipedia_fr_all_maxi_2024-05.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikisource": {
+      "name": "wikisource_fr_all_maxi_2022-04.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikiversity": {
+      "name": "wikiversity_fr_all_maxi_2021-02.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wiktionary": {
+      "name": "wiktionary_fr_all_nopic_2024-06.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    }
+  },
+  "ht": {
+    "phet": {
+      "name": "phet_ht_all_2023-04.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikipedia": {
+      "name": "wikipedia_ht_all_maxi_2024-06.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    },
+    "wikisource": {
+      "name": "wikisource_ht_all_maxi_2019-03.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
+    }
+  }
+}

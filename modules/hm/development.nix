@@ -19,6 +19,7 @@ let
     nixpkgs-review
     nodejs
     process-compose
+    subversion
   ];
 in
 with lib;

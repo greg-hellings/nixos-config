@@ -160,14 +160,17 @@
 
   # Let's do a sound thing
   services = {
-    k3s.extraFlags =
-      let
-        ip = (builtins.head config.networking.interfaces.enp14s0u1u2.ipv4.addresses).address;
-      in
-      [
-        "--tls-san ${ip}"
-        #"--bind-address ${ip}"
-      ];
+    k3s = {
+      disableAgent = true;
+      extraFlags =
+        let
+          ip = (builtins.head config.networking.interfaces.enp14s0u1u2.ipv4.addresses).address;
+        in
+        [
+          "--tls-san ${ip}"
+          #"--bind-address ${ip}"
+        ];
+    };
     pipewire = {
       enable = true;
       alsa.enable = true;

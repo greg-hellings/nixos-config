@@ -29,9 +29,16 @@ in
       ports = [ "${homepage}:80" ];
     };
   };
-  greg.proxies."thehellings.com" = {
-    target = "http://${homepage}/";
-    ssl = true;
-    genAliases = false;
+  greg.proxies = {
+    "thehellings.com" = {
+      target = "http://${homepage}/";
+      ssl = true;
+      genAliases = false;
+    };
+    "doubles.thehellings.com" = {
+      target = "http://localhost:8081";
+      ssl = true;
+      genAliases = false;
+    };
   };
 }
