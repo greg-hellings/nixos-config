@@ -5,7 +5,7 @@
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "phet": {
-      "name": "phet_en_all_2023-04.zim",
+      "name": "phet_en_all_2025-03.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikibooks": {
@@ -21,8 +21,8 @@
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikiversity": {
-      "name": "wikiversity_en_all_maxi_2021-03.zim",
-      "hash": "sha256-w/3J2neHPWbz1kK2qR0OB64mkwuDI7RJMuoAWz9yyZs="
+      "name": "wikiversity_en_all_maxi_2025-05.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wiktionary": {
       "name": "wiktionary_en_all_nopic_2024-05.zim",
@@ -35,19 +35,19 @@
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "phet": {
-      "name": "phet_fr_all_2023-04.zim",
+      "name": "phet_fr_all_2025-03.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikibooks": {
-      "name": "wikibooks_fr_all_maxi_2024-06.zim",
-      "hash": "sha256-w/3J2neHPWbz1kK2qR0OB64mkwuDI7RJMuoAWz9yyZs="
+      "name": "wikibooks_fr_all_maxi_2025-06.zim",
+      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikipedia": {
       "name": "wikipedia_fr_all_maxi_2024-05.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikisource": {
-      "name": "wikisource_fr_all_maxi_2022-04.zim",
+      "name": "wikisource_fr_all_maxi_2025-06.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikiversity": {
@@ -55,17 +55,17 @@
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wiktionary": {
-      "name": "wiktionary_fr_all_nopic_2024-06.zim",
+      "name": "wiktionary_fr_all_nopic_2025-03.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     }
   },
   "ht": {
     "phet": {
-      "name": "phet_ht_all_2023-04.zim",
+      "name": "phet_ht_all_2025-03.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikipedia": {
-      "name": "wikipedia_ht_all_maxi_2024-06.zim",
+      "name": "wikipedia_ht_all_maxi_2025-05.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikisource": {

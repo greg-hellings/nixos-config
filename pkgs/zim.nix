@@ -2,7 +2,7 @@
   callPackage,
   fetchtorrent,
   lib,
-  stdenv,
+  stdenvNoCC,
   ...
 }:
 let
@@ -10,9 +10,21 @@ let
   # Converts the inputs from the file into a fetchtorrent command
   zim =
     type: val:
-    (fetchtorrent {
-      inherit (val) hash name;
-      url = "https://download.kiwix.org/zim/${type}/${val.name}.torrent";
+    stdenvNoCC.mkDerivation (finalAttrs: {
+      inherit (val) name;
+      src = (
+        fetchtorrent {
+          inherit (val) hash;
+          url = "https://download.kiwix.org/zim/${type}/${val.name}.torrent";
+          backend = "rqbit";
+          postUnpack = "ls -lR";
+        }
+      );
+      phases = [ "installPhase" ];
+      installPhase = ''
+        ls -lR ${finalAttrs.src}
+        cp ${finalAttrs.src} $out
+      '';
     });
   rawZims = builtins.fromJSON (builtins.readFile ./zim/blobs.json);
   # Uses the function above to convert the JSON into a structure of fetchtorrent derivations
@@ -26,7 +38,7 @@ let
     )
   );
 in
-stdenv.mkDerivation {
+stdenvNoCC.mkDerivation {
   name = "zims";
   version = "2024-10";
 
