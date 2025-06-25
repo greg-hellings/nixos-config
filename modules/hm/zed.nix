@@ -46,11 +46,32 @@ in
       installRemoteServer = true;
       userKeymaps = [
         {
+          context = "Editor && (showing_completions || showing code actions)";
+          bindings = {
+            enter = "editor::Newline";
+            escape = "editor:Cancel";
+          };
         }
       ];
       userSettings = {
+        agent = {
+          default_model = {
+            provider = "copilot_chat";
+            model = "claude-4";
+          };
+          single_file_review = true;
+          version = "2";
+        };
         baseKeymap = "VSCode";
         buffer_font_size = 16;
+        edit_predictions = {
+          copilot = {
+            proxy = null;
+            proxy_no_verify = null;
+          };
+          enable_in_text_threads = false;
+          mode = "subtle";
+        };
         features = {
           copilot = true;
         };
@@ -62,6 +83,9 @@ in
           mode = "system";
           light = "Gruvbox Dark";
           dark = "One Dark";
+        };
+        vim = {
+          toggle_relative_line_numbers = true;
         };
         vim_mode = true;
         ui_font_size = 20;
