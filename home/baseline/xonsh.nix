@@ -56,7 +56,6 @@
         s = "nix run \".#runserver\"";
 
         # Nix related ones
-        deploy = "nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host";
         gl-nging = "sudo nixos-container run gitlab -- systemctl restart nginx";
         nb = "nix build -L";
         nixdu = "sudo nix-store --gc --print-roots | egrep -v r\"^(/nix/var|/run/\\w+-system|\\{memory|/proc)\"";
