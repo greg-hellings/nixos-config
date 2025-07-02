@@ -20,12 +20,6 @@ in
 {
   specialisation = {
     vbox.configuration = {
-
-      greg = {
-        podman.enable = lib.mkForce false;
-        vmdev.enable = lib.mkForce false;
-      };
-
       users.extraGroups.vboxusers.members = [ "greg" ];
 
       virtualisation = {
@@ -80,8 +74,6 @@ in
       ("vfio-pci.ids=" + (lib.concatStringsSep "," passthru))
     ];
   };
-
-  greg.vmdev.enable = true;
 
   hardware.graphics.enable = true;
 

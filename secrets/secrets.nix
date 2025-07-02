@@ -48,6 +48,7 @@ in
 {
   # Demo of how to create it
   "matrix.age".publicKeys = everyone;
+  "tailscale.age".publicKeys = everyone;
   # At the point where you want to use it, put
   # age.secrets.matrix.file = ../../secrets/matrix.age;
   # Then you can reference the file at /run/agenix/matrix

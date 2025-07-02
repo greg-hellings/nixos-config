@@ -27,6 +27,7 @@ in
     };
 
     environment.systemPackages = [
+      pkgs.etcd
       pkgs.fluxcd
       pkgs.kubectl-cnpg
       pkgs.kubernetes-helm

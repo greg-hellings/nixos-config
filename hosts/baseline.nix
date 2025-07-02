@@ -4,7 +4,6 @@
   overlays,
   pkgs,
   self,
-  top,
   ...
 }:
 let
@@ -148,11 +147,11 @@ in
           ];
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0";
         };
-        jude = {
+        zeke = {
           extraHostNames = [
-            "jude.home"
-            "jude.thehellings.lan"
-            "jude-builder"
+            "zeke.home"
+            "zeke.thehellings.lan"
+            "zeke-builder"
           ];
           publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOos0zQePsa+T6Z2dsKbPOvEdrBQ8a6mx3s7pN6ysCI0";
         };
@@ -170,6 +169,7 @@ in
 
   # Enable the OpenSSH daemon for remote control
   services = {
+    locate.enable = true;
     openssh = {
       enable = true;
       settings.X11Forwarding = true;

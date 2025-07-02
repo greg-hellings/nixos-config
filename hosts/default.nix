@@ -44,7 +44,7 @@ in
 {
   genesis = unstable { name = "genesis"; };
   exodus = unstable { name = "exodus"; };
-  jude = unstable { name = "jude"; };
+  zeke = unstable { name = "zeke"; };
   icdm-root = unstable { name = "icdm-root"; };
   linode = unstable { name = "linode"; };
   hosea = unstable { name = "hosea"; };

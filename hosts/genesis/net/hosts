@@ -13,9 +13,10 @@
 10.42.1.7 hosea hosea.thehellings.lan
 10.42.1.8 jeremiah jeremiah.thehellings.lan minio-02.thehellings.lan
 10.42.1.9 ivr ivr.thehellings.lan
-10.42.1.10 jude jude.thehellings.lan
-10.42.1.11 jude1 jude1.thehellings.lan
+# 10 - monitor
+# 11 - old jude
 10.42.1.12 tv
+10.42.1.13 zeke zeke.thehellings.lan
 
 # VMs
 10.42.4.1 matrix matrix.thehellings.lan
@@ -34,7 +35,7 @@
 100.68.203.1 hosea.home hosea.shire-zebra.ts.net
 100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net pgadmin.kubernetes postgres.kubernetes
 100.102.186.39 jeremiah.home jeremiah.shire-zebra.ts.net matrix.kubernetes
-100.90.74.19 jude.home
+100.90.74.19 zeke.home
 100.115.57.8 linode.home
 100.65.5.38 matrix.home matrix.shire-zebra.ts.net
 100.127.55.22 jellyfin.home

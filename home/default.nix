@@ -35,7 +35,7 @@ in
   "MacBook-Prolocal.local" = user "aarch64-darwin" "ivr" "gregory.hellings";
   "jude.thehellings.lan" = user "aarch64-darwin" "ivr" "gregory.hellings"; # This is annoying, but DNS is a pain for the shared docking station
   exodus = greg "exodus";
-  jude = greg "jude";
+  zeke = greg "zeke";
   isaiah = greg "isaiah";
   jeremiah = greg "jeremiah";
   linode = greg "linode";
