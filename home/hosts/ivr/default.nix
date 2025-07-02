@@ -41,6 +41,8 @@ in
       nixStable
       pipenv-ivr
       pre-commit
+      python311
+      python3Packages.flake8
       skaffold
       x
     ];

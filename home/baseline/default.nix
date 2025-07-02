@@ -8,6 +8,7 @@
     ./git.nix
     ./nushell.nix
     ./ssh.nix
+    ./tools.nix
     ./vim
     ./xonsh.nix
   ];
