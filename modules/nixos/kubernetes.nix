@@ -43,6 +43,8 @@ in
       pkgs.kubernetes-helm
       pkgs.kustomize
       pkgs.k9s
+      pkgs.openiscsi
+      pkgs.nfs-utils # Needed for Longhorn
     ];
 
     networking.firewall = {
@@ -111,6 +113,10 @@ in
             '';
           };
         };
+      openiscsi = {
+        enable = true;
+        name = "${config.networking.hostName}-initiatorhost";
+      };
     };
 
     users = {

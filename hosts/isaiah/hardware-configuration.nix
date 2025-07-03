@@ -46,6 +46,11 @@
     fsType = "btrfs";
   };
 
+  fileSystems."/var/lib/longhorn" = {
+    device = "/dev/disk/by-uuid/b9f5ace7-d224-4aff-8770-d5a9d22be2ae";
+    fsType = "xfs";
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking
