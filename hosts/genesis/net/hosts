@@ -23,6 +23,9 @@
 10.42.4.2 jellyfin jellyfin.thehellings.lan vm-jellyfin vm-jellyfin.thehellings.lan
 10.42.4.3 git gitlab git.thehellings.lan gitlab.thehellings.lan
 
+# VIP
+10.42.5.1 pgadmin.cluter postgres.cluster matrix.cluster
+
 # IPMI
 10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan
 

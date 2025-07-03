@@ -75,7 +75,11 @@ in
 
   greg = {
     home = true;
-    kubernetes.enable = true;
+    kubernetes = {
+      enable = true;
+      vipInterface = "br0";
+      priority = 254;
+    };
     tailscale.enable = true;
     remote-builder.enable = true;
   };

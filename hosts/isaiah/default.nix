@@ -35,7 +35,11 @@
   };
 
   greg = {
-    kubernetes.enable = true;
+    kubernetes = {
+      enable = true;
+      vipInterface = "enp38s0";
+      priority = 255;
+    };
     tailscale.enable = true;
     remote-builder.enable = true;
   };
