@@ -184,31 +184,6 @@
         ];
       }
       {
-        name = "SubTo";
-        bookmarks = [
-          {
-            name = "Kajabi";
-            url = "https://www.subtocourse.com/login";
-          }
-          {
-            name = "SubTo Fund";
-            url = "https://frontend.koreconx.com/auth/login";
-          }
-          {
-            name = "Creive Title";
-            url = "https://getcreativetitle.com/";
-          }
-          {
-            name = "REI Scripts";
-            url = "https://reiconveyorbelt.com/no-excuses/";
-          }
-          {
-            name = "Ellis foreclosures";
-            url = "https://co.ellis.tx.us/Archive.aspx?AMID=60";
-          }
-        ];
-      }
-      {
         name = "Tools";
         bookmarks = [
           {
@@ -225,6 +200,15 @@
               {
                 name = "Jeremiah";
                 url = "https://jeremiah.home:8006/";
+              }
+            ];
+          }
+          {
+            name = "Kubernetes";
+            bookmarks = [
+              {
+                name = "Longhorn";
+                url = "http://longhorn.kubernetes";
               }
             ];
           }
@@ -256,6 +240,31 @@
           {
             name = "Door Loop";
             url = "https://btrgpm.app.doorloop.com/home";
+          }
+          {
+            name = "SubTo";
+            bookmarks = [
+              {
+                name = "Kajabi";
+                url = "https://www.subtocourse.com/login";
+              }
+              {
+                name = "SubTo Fund";
+                url = "https://frontend.koreconx.com/auth/login";
+              }
+              {
+                name = "Creive Title";
+                url = "https://getcreativetitle.com/";
+              }
+              {
+                name = "REI Scripts";
+                url = "https://reiconveyorbelt.com/no-excuses/";
+              }
+              {
+                name = "Ellis foreclosures";
+                url = "https://co.ellis.tx.us/Archive.aspx?AMID=60";
+              }
+            ];
           }
         ];
       }
