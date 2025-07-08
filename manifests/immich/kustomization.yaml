@@ -1,0 +1,6 @@
+resources:
+  - namespace.yaml
+  - postgres-user-secret.yaml
+  - database.yaml
+  - pvc.yaml
+  - ingress.yaml

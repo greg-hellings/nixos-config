@@ -11,14 +11,14 @@ for n in isaiah jeremiah zeke; do
     kubectl label nodes "${n}" "node.longhorn.io/create-default-disk=config"
 done
 # Now, configure longhorn settings for each node
-kubectl annotate nodes isaiah 'node.longhorn.io/default-disks-config=[
-  { "path": "/var/lib/longhorn", "allowScheduling" : true }
+kubectl annotate nodes --overwrite isaiah 'node.longhorn.io/default-disks-config=[
+  { "path": "/var/lib/longhorn", "allowScheduling" : true, "tags": ["hdd", "large"]}
 ]'
-kubectl annotate nodes jeremiah 'node.longhorn.io/default-disks-config=[
-  { "path": "/var/lib/longhorn", "allowScheduling" : true }
+kubectl annotate nodes --overwrite jeremiah 'node.longhorn.io/default-disks-config=[
+  { "path": "/var/lib/longhorn", "allowScheduling" : true, "tags": ["hdd", "large"]}
 ]'
-kubectl annotate nodes zeke 'node.longhorn.io/default-disks-config=[
-  { "path": "/var/lib/longhorn", "allowScheduling" : true }
+kubectl annotate nodes --overwrite zeke 'node.longhorn.io/default-disks-config=[
+  { "path": "/var/lib/longhorn", "allowScheduling" : trues, "tags": ["ssd", "fast"]}
 ]'
 
 kubectl apply -k namespaces
@@ -29,3 +29,13 @@ sleep 15
 kubectl apply -k helm
 sleep 5
 kubectl apply -k .
+sleep 5
+# https://cloudnative-pg.io
+helm repo add cnpg https://cloudnative-pg.github.io/charts/
+helm upgrade --install cnpg \
+    --create-namespace --namespace cnpg-system \
+    cnpg/cloudnative-pg \
+    -f values/cnpg.yaml \
+    --wait
+
+./immich/apply.sh

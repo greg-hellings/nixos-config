@@ -1,0 +1,74 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  namespace: db
+  name: pgvector
+spec:
+  imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:16-v0.3.0"
+  instances: 1
+  storage:
+    size: 10Gi
+  primaryUpdateStrategy: unsupervised
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+
+  bootstrap:
+    initdb:
+      database: immich
+      owner: immich
+      secret:
+        name: postgres-user-immich
+      dataChecksums: true
+      postInitApplicationSQL:
+        - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+        - SET search_path TO "$user", public, vectors;
+        - CREATE EXTENSION IF NOT EXISTS "vectors";
+        - CREATE EXTENSION IF NOT EXISTS "cube";
+        - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+        - ALTER SCHEMA vectors OWNER TO "immich";
+        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA vectors TO "immich";
+        - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
+  managed:
+    roles:
+      - name: immich
+        ensure: present
+        comment: Immich DB user
+        login: true
+        superuser: false
+        passwordSecret:
+          name: postgres-user-immich
+  backup:
+    retentionPolicy: "30d"
+    barmanObjectStore:
+      destinationPath: "s3://k3sbackup/pgvector"
+      endpointURL: "http://s3.thehellings.lan:9000/"
+      s3Credentials:
+        accessKeyId:
+          name: k3sbackup
+          key: username
+        secretAccessKey:
+          name: k3sbackup
+          key: password
+      wal:
+        compression: gzip
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  namespace: db
+  name: database-immich
+spec:
+  name: immich
+  owner: immich
+  cluster:
+    name: pgvector
+  extensions:
+    - name: vectors
+      ensure: present
+    - name: vectorchord
+      ensure: present
+    - name: cube
+      ensure: present
+    - name: earthdistance
+      ensure: present

@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  namespace: immich
+  name: immich-storage
+spec:
+  storageClassName: longhorn-default
+  volumeName: immich-storage
+  resources:
+    requests:
+      storage: 250Gi
+  accessModes:
+    - ReadWriteOnce
+---
+#apiVersion: v1
+#kind: PersistentVolume
+#metadata:
+  #namespace: immich
+  #name: immich-storage
+#spec:
+  #storageClassName: longhorn-default
+  #capacity:
+    #storage: 250Gi
+  #volumeMode: Filesystem
+  #accessModes:
+    #- ReadWriteOnce
+  #csi:
+    #driver: driver.longhorn.io
+    #volumeHandle: immich-storage

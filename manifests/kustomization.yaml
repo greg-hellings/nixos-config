@@ -1,8 +1,10 @@
 resources:
   - namespaces
+  - pvc
   - helm
   - bitwarden
   - secrets
   - databases
   - matrix
   - gitlab-runner
+  - immich
