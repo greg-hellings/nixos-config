@@ -98,6 +98,14 @@ in
         '';
       };
     };
+
+    gitlab-runner = {
+      serviceConfig = {
+        DevicePolicy = lib.mkForce "auto";
+        User = "root";
+        DynamicUser = lib.mkForce false;
+      };
+    };
   };
 
   virtualisation = {
