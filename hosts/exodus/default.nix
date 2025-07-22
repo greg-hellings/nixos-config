@@ -41,6 +41,8 @@
     networkmanager.enable = lib.mkForce true;
   };
 
+  programs.adb.enable = true;
+
   services = {
     fprintd.enable = true;
     fwupd = {
@@ -53,5 +55,9 @@
     oci-containers.backend = "podman";
   };
 
-  users.users.greg.extraGroups = [ "podman" ];
+  users.users.greg.extraGroups = [
+    "adbusers"
+    "kvm"
+    "podman"
+  ];
 }
