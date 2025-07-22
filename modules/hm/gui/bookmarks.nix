@@ -238,10 +238,6 @@
         name = "REI";
         bookmarks = [
           {
-            name = "Door Loop";
-            url = "https://btrgpm.app.doorloop.com/home";
-          }
-          {
             name = "SubTo";
             bookmarks = [
               {
@@ -265,6 +261,14 @@
                 url = "https://co.ellis.tx.us/Archive.aspx?AMID=60";
               }
             ];
+          }
+          {
+            name = "Door Loop";
+            url = "https://btrgpm.app.doorloop.com/home";
+          }
+          {
+            name = "HELOC payoff calculator";
+            url = "https://acceleratedstrategies.com/free-calculator/";
           }
         ];
       }
