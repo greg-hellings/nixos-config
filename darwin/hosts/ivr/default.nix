@@ -19,6 +19,9 @@ in
       "mysql"
       "nushell"
       "poetry"
+      "podman"
+      "podman-compose"
+      "pytest"
       "qemu"
     ];
     casks = [
@@ -32,6 +35,7 @@ in
       "microsoft-teams"
       "onlyoffice"
       "pgadmin4"
+      "podman-desktop"
       "tabby"
       "twine"
       "vagrant"
