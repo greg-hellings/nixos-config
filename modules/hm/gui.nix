@@ -69,7 +69,7 @@ in
           ]);
 
       programs.firefox = {
-        enable = true; #(!pkgs.stdenv.hostPlatform.isDarwin);
+        enable = true; # (!pkgs.stdenv.hostPlatform.isDarwin);
         package = pkgs.firefox-bin;
         policies = {
           DisableAppUpdate = true;
