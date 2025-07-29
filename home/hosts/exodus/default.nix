@@ -14,9 +14,11 @@
     freeciv
     gimp
     k9s
+    kdePackages.kdenlive
     kubernetes-helm
     kubectl
     kubectl-cnpg
+    mumble
     wineWowPackages.stable
   ];
 }
