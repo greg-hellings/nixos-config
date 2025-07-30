@@ -50,10 +50,6 @@
       url = "github:nix-community/NixOS-WSL";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    zed = {
-      url = "github:HPsaucii/zed-editor-flake";
-      inputs.nixpkgs.follows = "nixunstable";
-    };
   };
 
   outputs =
@@ -66,9 +62,6 @@
           inherit self top;
           pkgs = prev;
         })
-        // {
-          zed-editor = top.zed.packages."${prev.stdenv.hostPlatform.system}".zed-editor;
-        }
       );
       overlays = [
         top.agenix.overlays.default

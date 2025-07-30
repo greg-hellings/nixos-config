@@ -221,24 +221,6 @@
         "type": "github"
       }
     },
-    "flake-parts_4": {
-      "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib_2"
-      },
-      "locked": {
-        "lastModified": 1753121425,
-        "narHash": "sha256-TVcTNvOeWWk1DXljFxVRp+E0tzG1LhrVjOGGoMHuXio=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "644e0fc48951a860279da645ba77fe4a6e814c5e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems_2"
@@ -486,21 +468,6 @@
         "type": "github"
       }
     },
-    "nixpkgs-lib_2": {
-      "locked": {
-        "lastModified": 1751159883,
-        "narHash": "sha256-urW/Ylk9FIfvXfliA1ywh75yszAbiTEVgpPeinFyVZo=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "14a40a1d7fb9afa4739275ac642ed7301a9ba1ab",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "github"
-      }
-    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1748437600,
@@ -713,8 +680,7 @@
         "nurpkgs": "nurpkgs",
         "proxmox": "proxmox",
         "vsext": "vsext",
-        "wsl": "wsl",
-        "zed": "zed"
+        "wsl": "wsl"
       }
     },
     "systems": {
@@ -862,27 +828,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "NixOS-WSL",
-        "type": "github"
-      }
-    },
-    "zed": {
-      "inputs": {
-        "flake-parts": "flake-parts_4",
-        "nixpkgs": [
-          "nixunstable"
-        ]
-      },
-      "locked": {
-        "lastModified": 1753710377,
-        "narHash": "sha256-BzLY5DaMNIgz1VMNlIVN4JmLdFk5RKDvnRmKcSm9kWw=",
-        "owner": "HPsaucii",
-        "repo": "zed-editor-flake",
-        "rev": "9428722af57e98fa38fd157dbf37cb173c39d09c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "HPsaucii",
-        "repo": "zed-editor-flake",
         "type": "github"
       }
     }
