@@ -42,6 +42,7 @@
     };
     tailscale.enable = true;
     remote-builder.enable = true;
+    runner.enable = true;
   };
 
   fileSystems = {
@@ -82,18 +83,6 @@
     openssh = {
       enable = true;
       settings.PermitRootLogin = "yes";
-    };
-  };
-
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      allowedBridges = [
-        "br0"
-        "virbr0"
-      ];
-      onBoot = "ignore"; # only restart VMs labeled 'autostart'
-      qemu.ovmf.enable = true;
     };
   };
 }

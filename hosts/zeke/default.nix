@@ -16,13 +16,14 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
 
   greg = {
-    tailscale.enable = true;
     kubernetes = {
       enable = true;
       vipInterface = "enp12s0";
       priority = 253;
     };
     remote-builder.enable = true;
+    runner.enable = true;
+    tailscale.enable = true;
   };
 
   hardware = {

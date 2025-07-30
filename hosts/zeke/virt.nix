@@ -1,15 +1,10 @@
 {
-  config,
   lib,
   pkgs,
   ...
 }:
 
 let
-  environmentVariables = {
-    EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-    STORAGE_URL = "s3.thehellings.lan:9000";
-  };
   passthru = [
     "1002:164e" # Raphael - embedded GPU
     "1002:1640" # Rembrandt - Audio
@@ -18,41 +13,7 @@ let
   ];
 in
 {
-  specialisation = {
-    vbox.configuration = {
-      users.extraGroups.vboxusers.members = [ "greg" ];
-
-      virtualisation = {
-        virtualbox.host = {
-          enable = true;
-          enableExtensionPack = true;
-        };
-      };
-
-      services.gitlab-runner.services = lib.mkForce {
-        vbox = {
-          inherit environmentVariables;
-          authenticationTokenConfigFile = config.age.secrets.vbox.path;
-          executor = "shell";
-          limit = 5;
-        };
-      };
-
-      systemd.services.gitlab-runner = {
-        serviceConfig = {
-          DevicePolicy = lib.mkForce "auto";
-          User = "root";
-          DynamicUser = lib.mkForce false;
-        };
-      };
-    };
-  };
-
-  age.secrets = {
-    qemu.file = ../../secrets/gitlab/nixos-qemu-shell.age;
-    vbox.file = ../../secrets/gitlab/nixos-vbox-shell.age;
-  };
-
+  greg.runner.enable = true;
   # These options enable sharing of the GPU with the VM
   boot = {
     # Order matters here, to prevent the AMD driver from getting to the driver before
@@ -77,17 +38,6 @@ in
 
   hardware.graphics.enable = true;
 
-  services.gitlab-runner = {
-    enable = true;
-    settings.concurrent = 5;
-    services.qemu = {
-      inherit environmentVariables;
-      executor = "shell";
-      limit = 5;
-      authenticationTokenConfigFile = config.age.secrets.qemu.path;
-    };
-  };
-
   systemd.services = {
     "libvirt-nosleep@" = {
       description = "Prevent sleep while %i is running";
@@ -96,14 +46,6 @@ in
         ExecStart = ''
           ${pkgs.systemd}/bin/systemd-inhibit --what=sleep --why="Libvirt domain %i is running" --who=%U --mode=block sleep infinity
         '';
-      };
-    };
-
-    gitlab-runner = {
-      serviceConfig = {
-        DevicePolicy = lib.mkForce "auto";
-        User = "root";
-        DynamicUser = lib.mkForce false;
       };
     };
   };

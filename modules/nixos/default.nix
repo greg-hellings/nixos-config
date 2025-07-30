@@ -8,6 +8,7 @@
     ./ceph.nix
     ./container.nix
     ./db.nix
+    ./gitlab-runner.nix
     ./gnome.nix
     ./home.nix
     ./kde.nix
