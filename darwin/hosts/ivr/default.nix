@@ -21,6 +21,10 @@ in
       "poetry"
       "podman"
       "podman-compose"
+      {
+        name = "postgresql@17";
+        restart_service = true;
+      }
       "pytest"
       "qemu"
     ];
@@ -31,6 +35,7 @@ in
       "bruno"
       "chromium"
       "dbeaver-community"
+      "ghostty"
       "firefox"
       "microsoft-teams"
       "onlyoffice"
