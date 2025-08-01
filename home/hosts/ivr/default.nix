@@ -33,6 +33,7 @@ in
       ansible
       direnv
       home-manager
+      just
       k9s
       kubectl
       minikube
