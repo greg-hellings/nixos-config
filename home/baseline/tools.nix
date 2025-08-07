@@ -21,6 +21,7 @@
       attachExistingSession = true;
       enableZshIntegration = pkgs.stdenv.hostPlatform.isDarwin;
       settings = {
+        default_shell = "xonsh";
         keybinds = {
           normal._children = [
             {
