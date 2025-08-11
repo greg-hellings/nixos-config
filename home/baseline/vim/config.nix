@@ -135,6 +135,7 @@
     notify.enable = true;
     remote-nvim.enable = true;
     web-devicons.enable = true;
+    zellij.enable = true;
   };
   userCommands = {
     Ggr = {
