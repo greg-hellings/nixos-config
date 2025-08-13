@@ -5,6 +5,7 @@
       enable = true;
       package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
       settings = {
+        command = "~/.nix-profile/bin/xonsh";
         font-family = "Hacker";
         theme = "Dracula";
         scrollback-limit = "1000000";
@@ -13,10 +14,10 @@
         keybind = [
           "ctrl+n=new_window"
 
-          "ctrl+h=goto_split:left"
-          "ctrl+j=goto_split:down"
-          "ctrl+k=goto_split:up"
-          "ctrl+l=goto_split:right"
+          "ctrl+shift+h=goto_split:left"
+          "ctrl+shift+j=goto_split:down"
+          "ctrl+shift+k=goto_split:up"
+          "ctrl+shift+l=goto_split:right"
 
           "ctrl+b>h=new_split:left"
           "ctrl+b>j=new_split:down"
