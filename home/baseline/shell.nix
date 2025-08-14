@@ -27,7 +27,7 @@
       kn = "kubectl get nodes -o wide";
       kp = "kubectl get pods -o wide";
       win = "sudo virsh start win10";
-      yaml2js = "python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)";
+      yaml2js = "python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)'";
       z = "zeditor .";
 
       # Tailscale related ones
