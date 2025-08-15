@@ -1,6 +1,10 @@
-{ config, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   home = {
+    file = lib.mkIf pkgs.hostPlatform.isDarwin {
+      #"Library/Application Support/com.mitchellh.ghostty/config".source = "${config.home.homeDirectory}/.config/ghostty/config";
+      "Library/Application Support/com.mitchellh.ghostty/config".source = config.xdg.configFile."ghostty/config".source;
+    };
     sessionVariables = {
       AWS_SHARED_CREDENTIALS_FILE = "/run/agenix/cache-credentials";
       CARAPACE_BRIDGES = "zsh,bash";
@@ -56,7 +60,7 @@
       enable = true;
       package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
       settings = {
-        command = if pkgs.stdenv.hostPlatform.isDarwin then "~/.nix-profile/bin/xonsh" else "nu";
+        command = lib.getExe pkgs.nushell;
         font-family = "Hacker";
         theme = "Dracula";
         scrollback-limit = "1000000";
