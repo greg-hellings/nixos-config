@@ -1,14 +1,15 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 {
   home = {
-    file = lib.mkIf pkgs.hostPlatform.isDarwin {
-      #"Library/Application Support/com.mitchellh.ghostty/config".source = "${config.home.homeDirectory}/.config/ghostty/config";
-      "Library/Application Support/com.mitchellh.ghostty/config".source = config.xdg.configFile."ghostty/config".source;
-    };
     sessionVariables = {
       AWS_SHARED_CREDENTIALS_FILE = "/run/agenix/cache-credentials";
       CARAPACE_BRIDGES = "zsh,bash";
-      EDITOR = "nvim";
+      EDITOR = lib.getExe config.programs.neovim.package;
       GOPATH = "${config.home.homeDirectory}/src/go";
       GOBIN = "${config.home.homeDirectory}/src/bin";
       LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN = "1";
@@ -60,7 +61,7 @@
       enable = true;
       package = if pkgs.stdenv.hostPlatform.isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
       settings = {
-        command = lib.getExe pkgs.nushell;
+        command = lib.getExe config.programs.nushell.package;
         font-family = "Hacker";
         theme = "Dracula";
         scrollback-limit = "1000000";

@@ -7,6 +7,7 @@
   programs = {
     nushell = {
       enable = true;
+      environmentVariables = config.home.sessionVariables;
       extraConfig = ''
         use std/util "path add"
         path add ${config.home.homeDirectory}/src/bin
