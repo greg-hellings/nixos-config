@@ -1,5 +1,0 @@
-resources:
-  - bitwarden.yaml
-  - db.yaml
-  - gitlab-runner.yaml
-  - matrix.yaml

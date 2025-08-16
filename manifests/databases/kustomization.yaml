@@ -1,6 +1,8 @@
 namespace: db
 
 resources:
+  - namespace.yaml
+  - secrets.yaml
   - postgres-cluster.yaml
   - postgres-gitlab.yaml
   - postgres-pgadmin.yaml
