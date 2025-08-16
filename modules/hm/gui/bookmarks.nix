@@ -208,13 +208,13 @@
             bookmarks = [
               {
                 name = "Longhorn";
-                url = "http://longhorn.kubernetes";
+                url = "http://longhorn.shire-zebra.ts.net";
+              }
+              {
+                name = "PGAdmin4";
+                url = "http://pgadmin.shire-zebra.ts.net/";
               }
             ];
-          }
-          {
-            name = "PGAdmin4";
-            url = "http://pgadmin.kubernetes/";
           }
           {
             name = "Password Hash";

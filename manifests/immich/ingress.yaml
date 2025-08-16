@@ -22,5 +22,19 @@ spec:
                 name: immich-server
                 port:
                   name: http
-    - <<: *host
-      host: immich.thehellings.com
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: immich
+  name: immich-ingress-tailscale
+spec:
+  defaultBackend:
+    service:
+      name: immich-server
+      port:
+        name: http
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - immich

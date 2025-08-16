@@ -1,21 +1,15 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: dendrite-ingress
-  annotations:
-    ingressClassName: traefik
+  namespace: matrix
+  name: dendrite-ingress-tailscale
 spec:
-  rules:
-    - &host
-      host: matrix.kubernetes
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: dendrite
-                port:
-                  number: 8008
-    - <<: *host
-      host: matrix.thehellings.com
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: dendrite
+      port:
+        number: 8008
+  tls:
+    - hosts:
+        - matrix
