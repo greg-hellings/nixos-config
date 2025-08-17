@@ -28,8 +28,9 @@
     podman.enable = true;
     print.enable = true;
     tailscale.enable = true;
+    runner.enable = true;
     vmdev = {
-      enable = true;
+      enable = false;
       system = "intel";
     };
   };
