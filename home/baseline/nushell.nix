@@ -18,6 +18,7 @@
       settings = {
         buffer_editor = lib.getExe config.programs.nixvim.package;
         "history.isolation" = true;
+        "history.file_format" = "sqlite";
       };
     };
   };
