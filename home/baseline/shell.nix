@@ -24,6 +24,7 @@
       nixtest = "nixpkgs-review rev HEAD";
       nixup = "nix flake lock update";
       nixcopy = "nix copy --to \"s3://binary-cache/?profile=default&endpoint=nas.home%3A9000&scheme=http\"";
+      r = "run0";
       s = "nix run \".#runserver\"";
       updateScript = "nix-shell maintainers/scripts/update.nix --argstr package";
 

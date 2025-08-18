@@ -51,7 +51,7 @@ in
 
     virtualisation = {
       libvirtd = {
-        enable = true;
+        enable = lib.mkDefault true;
         allowedBridges = [
           "br0"
           "virbr0"
@@ -67,6 +67,7 @@ in
         users.extraGroups.vboxusers.members = [ "greg" ];
 
         virtualisation = {
+          libvirtd.enable = false;
           virtualbox.host = {
             enable = true;
             enableExtensionPack = true;
