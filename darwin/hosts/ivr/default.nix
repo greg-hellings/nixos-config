@@ -43,6 +43,7 @@ in
       "firefox"
       "microsoft-teams"
       "mysqlworkbench"
+      "notunes"
       "onlyoffice"
       "pgadmin4"
       "podman-desktop"
