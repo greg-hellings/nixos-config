@@ -17,8 +17,11 @@ let
 
       activate application "Viscosity"
       tell application "System Events" to keystroke item 1 of argv
+      delay 0.1
       tell application "System Events" to keystroke tab
+      delay 0.1
       tell application "System Events" to keystroke item 2 of argv
+      delay 0.1
       tell application "System Events" to keystroke return
     end run
   '';
