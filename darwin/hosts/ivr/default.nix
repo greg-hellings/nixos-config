@@ -50,6 +50,7 @@ in
       "tabby"
       "twine"
       "vagrant"
+      "virtualbox"
       "visual-studio-code"
       "zed"
       "zoho-workdrive"
