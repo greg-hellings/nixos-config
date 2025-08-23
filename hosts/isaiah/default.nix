@@ -28,7 +28,6 @@
       };
       systemd-boot = {
         enable = true;
-        configurationLimit = 10;
       };
     };
     supportedFilesystems = [ "ntfs" ];

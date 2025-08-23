@@ -5,24 +5,55 @@
   config,
   lib,
   modulesPath,
+  pkgs,
   ...
 }:
 
 {
   imports = [ (modulesPath + "/installer/scan/not-detected.nix") ];
 
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usb_storage"
-    "usbhid"
-    "sd_mod"
-    "sr_mod"
-  ];
-  boot.initrd.kernelModules = [ ];
-  boot.kernelModules = [ "kvm-amd" ];
-  boot.extraModulePackages = [ ];
+  boot = {
+    extraModulePackages = [ ];
+    kernelModules = [ "kvm-amd" ];
+    initrd = {
+      availableKernelModules = [
+        "nvme"
+        "xhci_pci"
+        "ahci"
+        "usb_storage"
+        "usbhid"
+        "sd_mod"
+        "sr_mod"
+      ];
+      kernelModules = [ ];
+    };
+    loader = {
+      timeout = 15;
+      systemd-boot = {
+        enable = true;
+        configurationLimit = 20;
+        extraEntries = {
+          "Win2.conf" = (
+            lib.strings.concatStringsSep "\n" [
+              "title Windows 11"
+              "efi /shellx64.efi"
+              "options -nointerrupt -noconsolein -noconsoleout windows11.nsh"
+            ]
+          );
+          "Shell.conf" = (
+            lib.strings.concatStringsSep "\n" [
+              "title EFI Shell"
+              "efi /shell.efi"
+            ]
+          );
+        };
+        extraFiles = {
+          "windows11.nsh" = (pkgs.writeText "windows11.nsh" (lib.strings.concatStringsSep "\n" [ ]));
+          "shell.efi" = "${pkgs.edk2-uefi-shell}/shell.efi";
+        };
+      };
+    };
+  };
 
   fileSystems."/" = {
     device = "/dev/disk/by-uuid/714744ca-dd9d-4713-b571-c6ccfbf56d79";
@@ -37,12 +68,12 @@
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/29E7-E20C";
+    device = "/dev/disk/by-uuid/4A92-3E4B";
     fsType = "vfat";
   };
 
   fileSystems."/myvol" = {
-    device = "/dev/nvme0n1p1";
+    device = "/dev/disk/by-uuid/714744ca-dd9d-4713-b571-c6ccfbf56d79";
     fsType = "btrfs";
   };
 
