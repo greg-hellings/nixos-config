@@ -75,6 +75,10 @@ in
           }
           nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host $host --build-host $buildhost
         }
+
+        def ff [ $file: string ] {
+          ls **/* | where name =~ $file
+        }
       '';
       settings = {
         buffer_editor = lib.getExe config.programs.nixvim.package;
