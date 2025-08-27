@@ -5,7 +5,7 @@ metadata:
 spec:
   instances: 3
   storage:
-    size: 10Gi
+    size: 20Gi
   primaryUpdateStrategy: unsupervised
 
   managed:
