@@ -67,7 +67,7 @@
         })
       );
       charts_overlay = (
-        _f: _p: { inherit (top) chartsMetadata; }
+        _f: _p: { inherit (top.charts) chartsMetadata; }
       );
       overlays = [
         top.agenix.overlays.default
