@@ -6,8 +6,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Change to the script directory
 cd "$SCRIPT_DIR"
 
-kubectl apply -f helm/flux.yaml
-sleep 5
 kubectl apply -f helm/kyverno.yaml
 sleep 15
 kubectl apply -k helm
