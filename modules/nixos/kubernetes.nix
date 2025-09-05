@@ -78,6 +78,23 @@ in
     services = {
       k3s = {
         enable = true;
+        autoDeployCharts = {
+          kyverno = {
+            enable = true;
+            createNamespace = true;
+            name = "kyverno";
+            repo = "https://kyverno.github.io/kyverno/";
+            targetNamespace = "kyverno-system";
+            values = {
+              admissionController.replicas =  3;
+              backgroundController.replicas =  3;
+              cleanupController.replicas =  2;
+              reportsController.replicas =  2;
+              crds.install =  true;
+            };
+            version = "3.4.4";
+          };
+        };
         extraFlags = [
           "--cluster-cidr=10.211.0.0/16"
           "--service-cidr=10.221.0.0/16"
