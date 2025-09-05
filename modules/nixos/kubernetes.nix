@@ -79,9 +79,23 @@ in
       k3s = {
         enable = true;
         autoDeployCharts = {
+          external-secrets = {
+            enable = true;
+            createNamespace = true;
+            #hash = "";
+            name = "external-secrets";
+            repo = "https://charts.external-secrets.io/";
+            targetNamespace = "external-secrets";
+            values = {
+              crds.create = true;
+              includeCRDs = true;
+            };
+            version = "0.17.0";
+          };
           kyverno = {
             enable = true;
             createNamespace = true;
+            #hash = "";
             name = "kyverno";
             repo = "https://kyverno.github.io/kyverno/";
             targetNamespace = "kyverno-system";
