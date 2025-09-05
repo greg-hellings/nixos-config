@@ -8,6 +8,11 @@ let
   cfg = config.greg.kubernetes;
   cert-manager = pkgs.fetchurl {
     url = "https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.yaml";
+    sha256 = "0vx1nfyhl0rzb6psfxplq8pfp18mrrdk83n8rj2ph8q6r15vcih5";
+  };
+  flux = pkgs.fetchurl {
+    url = "https://github.com/fluxcd/flux2/releases/download/v2.5.1/install.yaml";
+    sha256 = "1cjpxfgnzycwnac58gd3naxgmwsj5bdrx0vzh56aiq1m5c0h3dhs";
   };
 in
 {
@@ -86,6 +91,7 @@ in
         ];
         manifests = {
           cert-manager.source = cert-manager;
+          flux.source = flux;
           node-annotations.content = ../../manifests/nodes.yaml;
         };
         role = if cfg.agentOnly then "agent" else "server";
