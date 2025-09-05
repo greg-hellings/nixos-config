@@ -78,6 +78,7 @@ in
           "--write-kubeconfig-mode 0640"
           "--write-kubeconfig-group kubeconfig"
           "--resolv-conf=/etc/resolv.conf"
+          "--node-label node.longhorn.io/create-default-disk=config"
           "--tls-san ${config.networking.hostName}.home"
           "--tls-san ${config.networking.hostName}.thehellings.lan"
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
