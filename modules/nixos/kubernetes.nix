@@ -6,6 +6,9 @@
 }:
 let
   cfg = config.greg.kubernetes;
+  cert-manager = pkgs.fetchurl {
+    url = "https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.yaml";
+  };
 in
 {
   options.greg = {
@@ -82,6 +85,7 @@ in
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
         ];
         manifests = {
+          cert-manager.source = cert-manager;
           node-annotations.content = ../../manifests/nodes.yaml;
         };
         role = if cfg.agentOnly then "agent" else "server";
