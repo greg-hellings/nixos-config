@@ -6,10 +6,6 @@ SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 # Change to the script directory
 cd "$SCRIPT_DIR"
 
-# First, label the nodes to control Longhorn rollout
-for n in isaiah jeremiah zeke; do
-    kubectl label nodes "${n}" "node.longhorn.io/create-default-disk=config"
-done
 # Now, configure longhorn settings for each node
 kubectl annotate nodes --overwrite isaiah 'node.longhorn.io/default-disks-config=[
   { "path": "/var/lib/longhorn", "allowScheduling" : true, "tags": ["hdd", "large"]}
