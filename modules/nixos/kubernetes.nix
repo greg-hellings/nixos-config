@@ -80,24 +80,23 @@ in
         enable = true;
         autoDeployCharts = {
           external-secrets = {
+            inherit (pkgs.chartsMetadata.external-secrets.external-secrets) repo version;
             enable = true;
             createNamespace = true;
-            #hash = "";
+            hash = pkgs.chartsMetadata.external-secrets.external-secrets.chartHash;
             name = "external-secrets";
-            repo = "https://charts.external-secrets.io/";
             targetNamespace = "external-secrets";
             values = {
               crds.create = true;
               includeCRDs = true;
             };
-            version = "0.17.0";
           };
           kyverno = {
+            inherit (pkgs.chartsMetadata.kyverno.kyverno) repo version;
             enable = true;
             createNamespace = true;
-            #hash = "";
+            hash = pkgs.chartsMetadata.kyverno.kyverno.chartHash;
             name = "kyverno";
-            repo = "https://kyverno.github.io/kyverno/";
             targetNamespace = "kyverno-system";
             values = {
               admissionController.replicas =  3;
@@ -106,7 +105,14 @@ in
               reportsController.replicas =  2;
               crds.install =  true;
             };
-            version = "3.4.4";
+          };
+          tailscale = {
+            inherit (pkgs.chartsMetadata.tailscale.tailscale-operator) repo version;
+            enable = true;
+            createNamespace = true;
+            hash = pkgs.chartsMetadata.tailscale.tailscale-operator.chartHash;
+            name = "tailscale-operator";
+            targetNamespace = "tailscale";
           };
         };
         extraFlags = [
@@ -124,6 +130,7 @@ in
           cert-manager.source = cert-manager;
           flux.source = flux;
           node-annotations.content = ../../manifests/nodes.yaml;
+          operator-oauth.content = ../../manifests/external-secrets/operator-oauth.yaml;
         };
         role = if cfg.agentOnly then "agent" else "server";
         serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
