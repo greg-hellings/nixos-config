@@ -70,8 +70,6 @@ in
     services = {
       k3s = {
         enable = true;
-        role = if cfg.agentOnly then "agent" else "server";
-        tokenFile = config.age.secrets.kubernetesToken.path;
         extraFlags = [
           "--cluster-cidr=10.211.0.0/16"
           "--service-cidr=10.221.0.0/16"
@@ -83,7 +81,12 @@ in
           "--tls-san ${config.networking.hostName}.thehellings.lan"
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
         ];
+        manifests = {
+          node-annotations.content = ../../manifests/nodes.yaml;
+        };
+        role = if cfg.agentOnly then "agent" else "server";
         serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
+        tokenFile = config.age.secrets.kubernetesToken.path;
       };
       keepalived =
         let
