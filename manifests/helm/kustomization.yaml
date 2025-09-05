@@ -1,6 +1,4 @@
 resources:
-  - flux.yaml
-  - kyverno.yaml  # Needed to configure Longhorn
   - longhorn.yaml  # Needed for storage
   - traefik.yaml
   - external-secrets.yaml
