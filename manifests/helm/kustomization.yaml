@@ -1,4 +1,3 @@
 resources:
   - longhorn.yaml  # Needed for storage
   - traefik.yaml
-  - external-secrets.yaml
