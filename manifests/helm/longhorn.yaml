@@ -30,6 +30,12 @@ spec:
   values:
     defaultSettings:
       createDefaultDiskLabeledNodes: true
+    persistence:
+      # This should go back to 3 when I have more cluster
+      defaultClassReplicaCount: 2
+    defaultSettings:
+      # This should go back to null when I have more cluster
+      replicaSoftAntiAffinity: true
 ---
 apiVersion: v1
 kind: ConfigMap
