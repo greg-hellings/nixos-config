@@ -27,6 +27,7 @@
 
         "*" = {
           dynamicForwards = [ { port = 10240; } ];
+          extraOptions.LogLevel = "error";
         };
 
         "10.42.1.4" = lib.hm.dag.entryBefore [ "10.42.*" ] nas;
