@@ -67,7 +67,10 @@
         })
       );
       charts_overlay = (
-        _f: _p: { inherit (top.charts) chartsMetadata; }
+        _f: _p: {
+          chartsDerivations = top.charts.chartsDerivations."${_p.stdenv.hostPlatform.system}";
+          kubelib = top.nix-kube-generators.lib;
+        }
       );
       overlays = [
         top.agenix.overlays.default
