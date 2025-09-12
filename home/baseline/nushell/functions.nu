@@ -32,7 +32,7 @@ def deploy [ $host: string, $build: string = "" ] {
     if $buildhost == "linode" {
         $buildhost = "isaiah"
     }
-    nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host $host --build-host $buildhost | complete
+    nixos-rebuild switch --sudo --use-substitutes --target-host $host --build-host $buildhost
 }
 
 def ff [ $file: string ] {
@@ -40,5 +40,5 @@ def ff [ $file: string ] {
 }
 
 def update_all [] {
-    par-map $servers {|e| deploy $e} | explore
+    par-map $servers {|e| deploy $e | complete} | explore
 }
