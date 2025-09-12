@@ -38,6 +38,8 @@ in
         path add /run/current-system/sw/bin
         path add ${config.home.homeDirectory}/.nix-profile/bin
 
+        source ${./nushell/functions.nu}
+
         def --env vpn [] {
           unlock
           let username = ^bw get username f7351f9c-b25b-4317-8352-affc00da4644
@@ -45,8 +47,6 @@ in
           let otp = ^bw get totp 10371487-7f40-4b08-9a45-b33e00de318b
           osascript ${vpn} $username $"($password)($otp)"
         }
-
-        source ${./nushell/functions.nu}
       '';
       settings = {
         buffer_editor = lib.getExe config.programs.nixvim.package;
