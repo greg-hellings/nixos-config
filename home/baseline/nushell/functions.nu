@@ -42,3 +42,13 @@ def ff [ $file: string ] {
 def update_all [] {
     par-map $servers {|e| deploy $e | complete} | explore
 }
+
+def bake [template: string] {
+    let copier = "~/.copier-templates" | path expand
+    if not ($copier | path exists) {
+        git clone srcpub:greg/copier-templates.git $copier
+    }
+    let srcdir = [$copier $template] | path join
+    print $srcdir
+    copier copy $srcdir .
+}
