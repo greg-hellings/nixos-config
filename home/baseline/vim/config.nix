@@ -120,6 +120,7 @@
         gopls.enable = true;
         html.enable = true;
         nixd.enable = true;
+        nushell.enable = true;
         pylsp.enable = true;
         pyright.enable = true;
         rust_analyzer = {
