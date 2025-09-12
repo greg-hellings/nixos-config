@@ -1,3 +1,5 @@
+let servers = [isaiah jeremiah zeke genesis vm-gitlab vm-jellyfin]
+
 def par-map [ items: list, c: closure ] {
   let results = $items | par-each -k $c
   $items | enumerate | reduce -f {} {|e, a| $a | upsert $e.item { $results | get $e.index }}
@@ -30,9 +32,13 @@ def deploy [ $host: string, $build: string = "" ] {
     if $buildhost == "linode" {
         $buildhost = "isaiah"
     }
-    nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host $host --build-host $buildhost
+    nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host $host --build-host $buildhost | complete
 }
 
 def ff [ $file: string ] {
     ls **/* | where name =~ $file
+}
+
+def update_all [] {
+    par-map $servers {|e| deploy $e} | explore
 }
