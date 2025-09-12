@@ -19,3 +19,4 @@ sleep 5
 kubectl apply -k .
 
 ./immich/apply.sh
+./tailscale/apply.sh

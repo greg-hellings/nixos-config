@@ -123,8 +123,8 @@ in
         manifests = {
           cert-manager.source = cert-manager;
           flux.source = flux;
-          node-annotations.source = ../../manifests/nodes.yaml;
-          operator-oauth.source = ../../manifests/secrets/operator-oauth.yaml;
+          node-annotations.source = ../../manifests/auto/nodes.yaml;
+          operator-oauth.source = ../../manifests/auto/operator-oauth.yaml;
         };
         role = if cfg.agentOnly then "agent" else "server";
         serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
