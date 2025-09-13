@@ -31,7 +31,7 @@ spec:
     defaultSettings:
       createDefaultDiskLabeledNodes: true
       # This should go back to null when I have more cluster
-      replicaSoftAntiAffinity: true
+      replicaSoftAntiAffinity: null
     persistence:
       # This should go back to 3 when I have more cluster
       defaultClassReplicaCount: 2
