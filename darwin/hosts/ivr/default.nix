@@ -21,7 +21,6 @@ in
         name = "libvirt";
         restart_service = true;
       }
-      "mysql"
       "nushell"
       "poetry"
       {
@@ -42,7 +41,6 @@ in
       "ghostty"
       "firefox"
       "microsoft-teams"
-      "mysqlworkbench"
       "notunes"
       "onlyoffice"
       "pgadmin4"
