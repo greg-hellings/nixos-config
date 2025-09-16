@@ -4,10 +4,10 @@
     with pkgs;
     [
       dig
-      dnsutils
       jqp
       kubernetes-helm
       iamb
+      lazyssh
       rainfrog
       tenere
       wiki-tui
