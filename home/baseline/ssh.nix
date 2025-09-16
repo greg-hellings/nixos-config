@@ -9,7 +9,6 @@
   };
   programs.ssh = {
     enable = true;
-    serverAliveInterval = 60;
 
     includes = [ "config.local" ];
 
@@ -27,6 +26,7 @@
 
         "*" = {
           dynamicForwards = [ { port = 10240; } ];
+          serverAliveInterval = 60;
           extraOptions.LogLevel = "error";
         };
 
