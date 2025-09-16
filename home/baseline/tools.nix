@@ -6,6 +6,7 @@
       dig
       dnsutils
       jqp
+      kubernetes-helm
       iamb
       rainfrog
       tenere
