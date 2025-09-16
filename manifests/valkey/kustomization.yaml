@@ -1,0 +1,5 @@
+namespace: valkey
+
+resource:
+  - namespace.yaml
+  - chart.yaml
