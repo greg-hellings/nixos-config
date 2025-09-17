@@ -36,6 +36,7 @@ in
       just
       k9s
       kubectl
+      mariadb
       minikube
       mise
       nil
