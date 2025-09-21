@@ -1,3 +1,4 @@
+# vim: set filetype=nushell :
 let servers = [isaiah jeremiah zeke genesis vm-gitlab vm-jellyfin]
 
 def par-map [ items: list, c: closure ] {
@@ -16,11 +17,13 @@ def rebuild [] {
         sudo darwin-rebuild switch
     } else {
         let hostname = uname | get nodename
-            let build = ^nom build $"/etc/nixos#nixosConfigurations.($hostname).config.system.build.toplevel" | complete
-            if build.exit_code == 0 {
-              	nvd diff /run/current-system result
-              		sudo nixos-rebuild switch
-            }
+        let build = ^nom build $"/etc/nixos#nixosConfigurations.($hostname).config.system.build.toplevel"
+        if $env.LAST_EXIT_CODE == 0 {
+            nvd diff /run/current-system result
+            run0 nixos-rebuild switch
+        } else {
+            print "Error during build"
+        }
     }
 }
 
