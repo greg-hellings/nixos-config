@@ -11,6 +11,7 @@
     enable = true;
 
     includes = [ "config.local" ];
+    enableDefaultConfig = false;
 
     matchBlocks =
       let
