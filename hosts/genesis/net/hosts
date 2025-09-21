@@ -17,6 +17,7 @@
 # 11 - old jude
 10.42.1.12 tv
 10.42.1.13 zeke zeke.thehellings.lan
+10.42.1.14 nas1 nas1.thehellings.lan
 
 # VMs
 10.42.4.1 matrix matrix.thehellings.lan
@@ -28,6 +29,7 @@
 
 # IPMI
 10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan
+10.42.100.14 nas1bmc nas1bmc.thehellings.lan
 
 # Tailscale hosts
 100.119.228.115 chronicles.home nas.home chronicles.shire-zebra.ts.net
