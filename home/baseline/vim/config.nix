@@ -150,7 +150,6 @@
   extraConfigVim = builtins.readFile ./extra.vimrc;
   extraPlugins = with pkgs.vimPlugins; [
     bufexplorer
-
     context-vim
     vim-indent-guides
   ];
