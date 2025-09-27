@@ -36,6 +36,7 @@ in
     efibootmgr
     findutils
     file
+    gcc-tune
     git
     gnupatch
     hms # My own home manager switcher
