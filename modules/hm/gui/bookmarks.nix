@@ -232,6 +232,14 @@
             name = "Syncthing - nas";
             url = "http://nas.home:8384/#";
           }
+          {
+            name = "Pinchflat";
+            url = "http://nas1.shire-zebra.ts.net:8945";
+          }
+          {
+            name = "Portainer";
+            url = "http://nas1.shire-zebra.ts.net:31015";
+          }
         ];
       }
       {
