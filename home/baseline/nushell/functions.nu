@@ -32,7 +32,7 @@ def deploy [ $host: string, $build: string = "" ] {
         if $build == "" {
             $buildhost = $host
         }
-    if $buildhost == "linode" {
+    if $buildhost == "linode" or $buildhost == "genesis" {
         $buildhost = "isaiah"
     }
     nixos-rebuild switch --sudo --use-substitutes --target-host $host --build-host $buildhost
