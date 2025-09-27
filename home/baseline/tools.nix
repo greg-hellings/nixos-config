@@ -10,6 +10,7 @@
       lazyssh
       rainfrog
       tenere
+      uv
       wiki-tui
     ]
     ++ (lib.optionals pkgs.stdenv.hostPlatform.isLinux [

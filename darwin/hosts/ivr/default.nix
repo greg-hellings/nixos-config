@@ -11,12 +11,7 @@ in
     enable = true;
     brews = [
       "bitwarden-cli"
-      {
-        name = "colima";
-        restart_service = true;
-      }
       "direnv"
-      "docker-compose"
       {
         name = "libvirt";
         restart_service = true;
@@ -37,7 +32,6 @@ in
       "bruno"
       "chromium"
       "dbeaver-community"
-      "docker"
       "ghostty"
       "firefox"
       "microsoft-teams"
@@ -46,7 +40,6 @@ in
       "pgadmin4"
       "podman-desktop"
       "tabby"
-      "twine"
       "vagrant"
       "virtualbox"
       "visual-studio-code"

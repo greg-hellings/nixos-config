@@ -28,7 +28,10 @@
         "*" = {
           dynamicForwards = [ { port = 10240; } ];
           serverAliveInterval = 60;
-          extraOptions.LogLevel = "error";
+          extraOptions = {
+            LogLevel = "error";
+            SetEnv = "TERM=xterm-256color";
+          };
         };
 
         "10.42.1.4" = lib.hm.dag.entryBefore [ "10.42.*" ] nas;
