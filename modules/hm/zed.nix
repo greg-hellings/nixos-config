@@ -46,10 +46,10 @@ in
       installRemoteServer = true;
       userKeymaps = [
         {
-          context = "Editor && (showing_completions || showing code actions)";
+          context = "Editor && (showing_completions || showing_code_actions)";
           bindings = {
             enter = "editor::Newline";
-            escape = "editor:Cancel";
+            escape = "editor::Cancel";
           };
         }
       ];
