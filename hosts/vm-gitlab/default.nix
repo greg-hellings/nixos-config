@@ -72,14 +72,6 @@ in
   };
 
   services = {
-    # Fetch the SSL certificates for nginx to use
-    cron = {
-      enable = true;
-      systemCronJobs = [
-        "0 0 1 */2 * cd /etc/certs && tailscale cert vm-gitlab.shire-zebra.ts.net && chown nginx * && systemctl reload nginx"
-      ];
-    };
-
     gitlab = {
       enable = true;
       backup = {
@@ -228,17 +220,51 @@ in
 
   # Do not start nginx until we have tailscaled up and running, so it can bind
   # to the 100.* addresses
-  systemd.services = {
-    nginx = rec {
-      after = [ "network-online.target" ];
-      requires = [ "network-online.target" ];
-      wants = after;
-      serviceConfig = {
-        RestartMaxDelaySec = "30s";
-        RestartSteps = "5";
+  systemd = {
+    services = {
+      certRefresh =
+        let
+          script = pkgs.writeShellApplication {
+            name = "cert-refresh";
+            runtimeInputs = [ pkgs.tailscale ];
+
+            text = ''
+              cd /etc/certs
+              tailscale cert vm-gitlab.shire-zebra.ts.net
+              chown nginx ./*
+              systemctl reload nginx
+            '';
+          };
+        in
+        {
+          script = lib.getExe script;
+          serviceConfig = {
+            Type = "oneshot";
+            User = "root";
+          };
+        };
+
+      nginx = rec {
+        after = [ "network-online.target" ];
+        requires = [ "network-online.target" ];
+        wants = after;
+        serviceConfig = {
+          RestartMaxDelaySec = "30s";
+          RestartSteps = "5";
+        };
+      };
+      tailscaled.partOf = [ "network-online.target" ];
+    };
+
+    timers = {
+      "cert-refresh" = {
+        wantedBy = [ "cert-refresh.service" ];
+        timerConfig = {
+          OnCalendar = "monthly";
+          Persistent = true;
+        };
       };
     };
-    tailscaled.partOf = [ "network-online.target" ];
   };
   system.stateVersion = lib.mkForce "24.11";
 }
