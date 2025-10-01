@@ -3,6 +3,7 @@
   lib,
   overlays,
   pkgs,
+  nixpkgs,
   self,
   ...
 }:
@@ -60,7 +61,13 @@ in
     settings.auto-optimise-store = true;
   };
 
-  nixpkgs.overlays = overlays;
+  nixpkgs = {
+    hostPlatform = lib.mkIf (nixpkgs.system == "x86_64-linux") {
+      system = "x86_64-linux";
+      gcc.arch = "x86-64-v3";
+    };
+    overlays = overlays;
+  };
 
   # Network Manager pulls in too many deps
   networking = {
