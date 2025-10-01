@@ -88,7 +88,7 @@ lua <<EOF
 	--	capabilities = capabilities
 	--}
 	--lspconfig.pyright.setup { capabilities = capabilities }
-	lspconfig.ansiblels.setup { capabilities = capabilities }
+	--lspconfig.ansiblels.setup { capabilities = capabilities }
 	lspconfig.jedi_language_server.setup { capabilities = capabilities }
 EOF
 " Set filetype to the way I want it

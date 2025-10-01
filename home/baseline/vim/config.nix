@@ -115,7 +115,6 @@
     lsp = {
       enable = true;
       servers = {
-        ansiblels.enable = true;
         cmake.enable = true;
         gopls.enable = true;
         html.enable = true;

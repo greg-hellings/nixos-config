@@ -59,7 +59,7 @@ local lspconfig = require('lspconfig')
 --	capabilities = capabilities
 --}
 --lspconfig.pyright.setup { capabilities = capabilities }
-lspconfig.ansiblels.setup { capabilities = capabilities }
+--lspconfig.ansiblels.setup { capabilities = capabilities }
 --lspconfig.jedi_language_server.setup { capabilities }
 
 -- ======================================================================

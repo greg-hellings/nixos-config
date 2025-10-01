@@ -35,7 +35,10 @@
     };
   };
 
-  nix.settings.extra-platforms = config.boot.binfmt.emulatedSystems;
+  nix.settings = {
+    extra-platforms = config.boot.binfmt.emulatedSystems;
+    system-features = [ "gccarch-x86-64-v3" ];
+  };
 
   networking = {
     hostName = "exodus";

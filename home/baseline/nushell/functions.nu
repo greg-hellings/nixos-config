@@ -17,7 +17,7 @@ def rebuild [] {
         sudo darwin-rebuild switch
     } else {
         let hostname = uname | get nodename
-        let build = ^nom build $"/etc/nixos#nixosConfigurations.($hostname).config.system.build.toplevel"
+        let build = ^nom build --keep-going $"/etc/nixos#nixosConfigurations.($hostname).config.system.build.toplevel"
         if $env.LAST_EXIT_CODE == 0 {
             nvd diff /run/current-system result
             run0 nixos-rebuild switch
