@@ -13,6 +13,7 @@
     cargo
     freeciv
     gimp
+    gnucash
     k9s
     kdePackages.kdenlive
     kubernetes-helm
