@@ -20,6 +20,7 @@
     kubectl
     kubectl-cnpg
     mumble
+    pre-commit
     wineWowPackages.stable
   ];
 }
