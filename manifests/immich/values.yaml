@@ -1,0 +1,46 @@
+# https://github.com/immich-app/immich-charts/blob/main/charts/immich/values.yaml
+env:
+  DB_HOSTNAME: pgvector-rw.db.svc.cluster.local
+  DB_DATABASE_NAME: immich
+  DB_USERNAME:
+    valueFrom:
+      secretKeyRef:
+        name: postgres-user-immich
+        key: username
+  DB_PASSWORD:
+    valueFrom:
+      secretKeyRef:
+        name: postgres-user-immich
+        key: password
+  REDIS_HOSTNAME: redis-master
+  REDIS_PASSWORD:
+    valueFrom:
+      secretKeyRef:
+        name: redis
+        key: redis-password
+image:
+  tag: "v1.135.3"
+immich:
+  persistence:
+    library:
+      existingClaim: immich-storage
+server:
+  ingress:
+    main:
+      enabled: true
+      annogations:
+        ingressClassName: traefik
+        # Set body size to 10G to allow uploading large things
+        traefik.ingress.kubernetes.io/buffering: |
+          maxrequestbodybytes: 10000000000
+          memrequestbodybytes: 20000000000
+      hosts:
+        - host: immich.cluster
+          paths:
+            - path: "/"
+machine-learning:
+  persistence:
+    cache:
+      type: pvc
+      storageClass: longhorn-default
+      size: 25Gi

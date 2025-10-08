@@ -17,7 +17,7 @@ let
 in
 {
   imports = [
-    top.nixvimunstable.homeManagerModules.nixvim
+    top.nixvimunstable.homeModules.nixvim
     top.self.modules.homeManagerModule
     ./baseline
   ] ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];

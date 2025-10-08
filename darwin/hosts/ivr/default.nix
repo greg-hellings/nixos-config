@@ -16,23 +16,32 @@ in
         name = "libvirt";
         restart_service = true;
       }
-      "mysql"
       "nushell"
       "poetry"
+      {
+        name = "postgresql@17";
+        restart_service = true;
+      }
+      "pytest"
       "qemu"
     ];
     casks = [
       "alt-tab"
+      "audacity"
       "bitwarden"
       "bruno"
       "chromium"
+      "dbeaver-community"
+      "ghostty"
       "firefox"
       "microsoft-teams"
+      "notunes"
       "onlyoffice"
       "pgadmin4"
+      "podman-desktop"
       "tabby"
-      "twine"
       "vagrant"
+      "virtualbox"
       "visual-studio-code"
       "zed"
       "zoho-workdrive"

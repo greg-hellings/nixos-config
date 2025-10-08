@@ -4,11 +4,13 @@
   fetchFromGitHub,
   toPythonModule,
   pipenv,
+  setuptools,
 }:
 
 buildPythonPackage rec {
   pname = "xonsh-apipenv";
   version = "0.6.0";
+  pyproject = true;
 
   src = fetchFromGitHub {
     owner = "greg-hellings";
@@ -18,6 +20,7 @@ buildPythonPackage rec {
   };
 
   dependencies = [ (toPythonModule pipenv) ];
+  build-system = [ setuptools ];
 
   meta = with lib; {
     description = "Auto pipenv support for Xonsh";

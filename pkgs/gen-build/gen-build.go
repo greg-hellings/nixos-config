@@ -41,6 +41,22 @@ func GetNixFlakeOutput() (*NixFlakeOutput, error) {
 	return &flakeOutput, nil
 }
 
+func GetNixHomeManagerOutput() ([]string, error) {
+	cmd := exec.Command("nix", "eval", ".#homeConfigurations", "--apply", "hconf: builtins.filter (name: hconf.${name}.pkgs.hostPlatform.isLinux) (builtins.attrNames hconf)", "--json")
+	output, err := cmd.Output()
+	if err != nil {
+		return nil, err
+	}
+
+	var result []string
+	err = json.Unmarshal(output, &result)
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
+}
+
 type GitlabCIJob struct {
 	Stage  string   `json:"stage"`
 	Tags   []string `json:"tags"`
@@ -73,12 +89,16 @@ func main() {
 			"nix flake check --no-build",
 		},
 	}
-	// Since this is kinda a one-off thing, I can use this directly
-	// homeConfigurations are treated like they are not known as a
-	// flake output type. Therefore, it just informs you that it is
-	// part of the output, but does not evaluate deeper to tell you
-	// what the name of it is. I will just do this manually for now.
-	pipeline["Build Home config "] = NewGitlabCIJob("homeConfigurations.\"greg\".activationPackage")
+
+	if flakeOutput.HomeConfigurations != nil {
+		homeNames, err := GetNixHomeManagerOutput()
+		if err != nil {
+			panic(err)
+		}
+		for i := range homeNames {
+			pipeline["Build Home Configuration "+homeNames[i]] = NewGitlabCIJob("homeConfigurations.\"" + homeNames[i] +"\".activationPackage")
+		}
+	}
 
 	if flakeOutput.Apps != nil {
 		for appName := range flakeOutput.Apps {

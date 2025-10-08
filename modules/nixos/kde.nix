@@ -24,12 +24,6 @@ with lib;
     systemd.services.bluetooth.requiredBy = [ "multi-user.target" ];
     services =
       {
-        xserver = {
-          enable = true;
-          xkb.layout = "us";
-          # Trackpad support
-        };
-
         libinput.enable = true;
         blueman.enable = true;
 
@@ -49,7 +43,7 @@ with lib;
       });
 
     programs.dconf.enable = true;
-    programs.sway.enable = true; # Gives us Wayland
+
     xdg.portal = {
       enable = true;
       wlr.enable = true; # Enables screen sharing in Wayland

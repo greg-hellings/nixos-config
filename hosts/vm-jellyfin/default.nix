@@ -30,17 +30,17 @@
 
   fileSystems = {
     "/music" = {
-      device = "10.42.1.4:/volume1/music";
+      device = "nas1.shire-zebra.ts.net:/mnt/all/music";
       fsType = "nfs";
       options = [ "ro" ];
     };
     "/photo" = {
-      device = "10.42.1.4:/volume1/photo";
+      device = "nas1.shire-zebra.ts.net:/mnt/all/photos";
       fsType = "nfs";
       options = [ "ro" ];
     };
     "/video" = {
-      device = "10.42.1.4:/volume1/video/";
+      device = "nas1.shire-zebra.ts.net:/mnt/all/video/";
       fsType = "nfs";
       options = [ "ro" ];
     };

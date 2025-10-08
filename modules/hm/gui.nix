@@ -49,7 +49,8 @@ in
             [
               bitwarden
               endeavour
-              jellyfin-media-player
+              # Is removed because it depends on qt5-qtwebengine
+              # jellyfin-media-player
               nextcloud-client
               slack
               (pkgs.zoom-us.overrideAttrs {
@@ -69,7 +70,7 @@ in
           ]);
 
       programs.firefox = {
-        enable = true; #(!pkgs.stdenv.hostPlatform.isDarwin);
+        enable = true; # (!pkgs.stdenv.hostPlatform.isDarwin);
         package = pkgs.firefox-bin;
         policies = {
           DisableAppUpdate = true;

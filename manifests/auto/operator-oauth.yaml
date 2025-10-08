@@ -1,14 +1,14 @@
 apiVersion: external-secrets.io/v1
 kind: ExternalSecret
 metadata:
-  name: postgres-user-pgadmin
-  namespace: db
+  name: operator-oauth
+  namespace: tailscale
 spec:
   target:
-    name: postgres-user-pgadmin
+    name: operator-oauth
     deletionPolicy: Delete
     template:
-      type: Opaque
+      type: kubernetes.io/basic-auth
       data:
         username: |-
           {{ .username }}
@@ -21,7 +21,7 @@ spec:
           name: bitwarden-login
           kind: ClusterSecretStore
       remoteRef:
-        key: f333d637-1667-499d-b9a0-b2e9012bd8b7
+        key: ffa188a4-63b2-4926-99f0-b33b0021a4f4
         property: username
     - secretKey: password
       sourceRef:
@@ -29,5 +29,5 @@ spec:
           name: bitwarden-login
           kind: ClusterSecretStore
       remoteRef:
-        key: f333d637-1667-499d-b9a0-b2e9012bd8b7
+        key: ffa188a4-63b2-4926-99f0-b33b0021a4f4
         property: password

@@ -1,8 +1,8 @@
 resources:
-  - namespaces
   - helm
   - bitwarden
   - secrets
   - databases
   - matrix
   - gitlab-runner
+  - immich

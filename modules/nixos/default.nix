@@ -8,6 +8,7 @@
     ./ceph.nix
     ./container.nix
     ./db.nix
+    ./gitlab-runner.nix
     ./gnome.nix
     ./home.nix
     ./kde.nix
@@ -20,7 +21,6 @@
     ./remote-builder.nix
     ./router.nix
     ./rpi4.nix
-    ./sway.nix
     ./syncthing.nix
     ./tailscale.nix
     ./vmdev.nix

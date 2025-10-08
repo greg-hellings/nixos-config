@@ -20,11 +20,9 @@
 
       sessionVariables = {
         # This is for pushing builds to my local S3 cache
-        AWS_SHARED_CREDENTIALS_FILE = "/run/agenix/cache-credentials";
         CARAPACE_BRIDGES = "zsh,bash";
         COMPLETIONS_CONFIRM = "True";
         CLICOLOR = 1;
-        EDITOR = "nvim";
         # vte_new_tab_cwd causes new Terminal tabs to open in the
         # same CWD as the current tab
         LESS_TERMCAP_mb = "\\033[01;31m"; # begin blinking
@@ -36,10 +34,8 @@
         LESS_TERMCAP_ue = "\\033[0m"; # end underline
         LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN = "1";
         LSCOLORS = "ExGxBxDxCxEgEdxbxgxcxd";
-        MAVEN_OPTS = " -Dmaven.wagon.http.ssl.insecure=true";
         OS_CLOUD = "default";
         PROMPT = "{vte_new_tab_cwd}{env_name}{BOLD_GREEN}{user}@{hostname}{BOLD_BLUE} {short_cwd}{branch_color}{curr_branch: {}}{RESET} {BOLD_BLUE}{prompt_end}{RESET} ";
-        SWORD_PATH = "${config.home.homeDirectory}/.sword/";
         #TIMEFORMAT = "%3Uu %3Ss %3lR %P%%";
         # Tells vox where to find virtualenvs
         VIRTUALENV_HOME = "${config.home.homeDirectory}/venv/";
@@ -53,43 +49,10 @@
         # Python related ones
         ac = "vox activate";
         d = "vox deactivate";
-        s = "nix run \".#runserver\"";
 
-        # Nix related ones
-        deploy = "nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host";
-        gl-nging = "sudo nixos-container run gitlab -- systemctl restart nginx";
-        nb = "nix build -L";
-        nixdu = "sudo nix-store --gc --print-roots | egrep -v r\"^(/nix/var|/run/\\w+-system|\\{memory|/proc)\"";
-        nixtest = "nixpkgs-review rev HEAD";
-        nixup = "nix flake lock --update-input";
-        nixcopy = "nix copy --to \"s3://binary-cache/?profile=default&endpoint=nas.home%3A9000&scheme=http\"";
-        stable = "nix flake lock --update-input nixstable --update-input hm --update-input nixvimstable";
-        unstable = "nix flake lock --update-input nixunstable --update-input hmunstable --update-input nixvimunstable --update-input nurpkgs --update-input vsext --update-input wsl";
-        updateScript = "nix-shell maintainers/scripts/update.nix --argstr package";
-
-        # General
         gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
-        k = "kubectl";
-        kn = "kubectl get nodes -o wide";
-        kp = "kubectl get pods -o wide";
         ls = "ls --color";
         ll = "ls -l --color";
-        win = "sudo virsh start win10";
-        z = "zeditor .";
-
-        # Tailscale related ones
-        tsup = "sudo tailscale up";
-        tspub = "sudo tailscale up --exit-node=linode";
-        tshome = "sudo tailscale up --exit-node=2maccabees";
-        tsclear = "sudo tailscale up --exit-node=''";
-
-        # Vagrant related
-        vdown = "vagrant destroy";
-        vhalt = "vagrant halt";
-        vos = "vagrant up --provision --provider openstack";
-        vprov = "vagrant provision";
-        vup = "vagrant up --provision --provider libvirt";
-        vssh = "vagrant ssh";
       };
 
       configHeader = builtins.readFile ./xonsh_header.xsh;

@@ -48,6 +48,7 @@ in
 {
   # Demo of how to create it
   "matrix.age".publicKeys = everyone;
+  "tailscale.age".publicKeys = everyone;
   # At the point where you want to use it, put
   # age.secrets.matrix.file = ../../secrets/matrix.age;
   # Then you can reference the file at /run/agenix/matrix
@@ -87,6 +88,7 @@ in
   "gitlab/secret.age".publicKeys = everyone;
   "gitlab/otp.age".publicKeys = everyone;
   "gitlab/db.age".publicKeys = everyone;
+  "gitlab/db-password.age".publicKeys = everyone;
   "gitlab/jws.age".publicKeys = everyone;
   # openssl req -x509 -newkey rsa:4096 -keyout key.pem -out cert.crt -days 365 -nodes -subj '/CN=issuer'
   # Then pipe the resulting files to agenix -e <foo>

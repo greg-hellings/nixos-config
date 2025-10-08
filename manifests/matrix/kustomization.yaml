@@ -1,6 +1,7 @@
 namespace: matrix
 
 resources:
+  - namespace.yaml
   - dendrite-config.yaml
   - deployment.yaml
   - service.yaml

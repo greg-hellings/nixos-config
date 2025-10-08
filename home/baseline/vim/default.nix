@@ -1,7 +1,8 @@
 {
   config,
-  pkgs,
   lib,
+  nixvim,
+  pkgs,
   ...
 }:
 
@@ -10,7 +11,16 @@
   fonts.fontconfig.enable = true;
   home.packages = with pkgs.nerd-fonts; [ hack ];
 
-  programs.nixvim = (import ./config.nix { inherit config pkgs lib; }) // {
-    enable = true;
-  };
+  programs.nixvim =
+    (import ./config.nix {
+      inherit
+        config
+        nixvim
+        pkgs
+        lib
+        ;
+    })
+    // {
+      enable = true;
+    };
 }

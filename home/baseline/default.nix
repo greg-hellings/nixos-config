@@ -7,7 +7,9 @@
     ./direnv.nix
     ./git.nix
     ./nushell.nix
+    ./shell.nix
     ./ssh.nix
+    ./tools.nix
     ./vim
     ./xonsh.nix
   ];

@@ -36,4 +36,5 @@ let
 in
 rec {
   "MacBook-Pro" = mac { name = "ivr"; };
+  "MacBook-Prolocal" = mac { name = "ivr"; };
 }

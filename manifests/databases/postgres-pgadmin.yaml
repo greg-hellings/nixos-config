@@ -91,17 +91,13 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-pgadmin
-  annotations:
-    ingressClassName: traefik
 spec:
-  rules:
-    - host: pgadmin.kubernetes
-      http:
-        paths:
-          - path: /
-            pathType: Prefix
-            backend:
-              service:
-                name: service-pgadmin
-                port:
-                  number: 80
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: service-pgadmin
+      port:
+        number: 80
+  tls:
+    - hosts:
+        - pgadmin

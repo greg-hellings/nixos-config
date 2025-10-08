@@ -33,6 +33,11 @@
     fsType = "vfat";
   };
 
+  fileSystems."/var/lib/longhorn" = {
+    device = "/dev/disk/by-uuid/1c896717-4a01-4136-825d-6c0160a78256";
+    fsType = "xfs";
+  };
+
   swapDevices = [ ];
 
   # Enables DHCP on each ethernet and wireless interface. In case of scripted networking

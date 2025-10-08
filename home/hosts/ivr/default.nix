@@ -33,13 +33,18 @@ in
       ansible
       direnv
       home-manager
+      just
       k9s
       kubectl
+      mariadb
       minikube
       mise
+      nil
       nixStable
       pipenv-ivr
       pre-commit
+      python311
+      python3Packages.flake8
       skaffold
       x
     ];
@@ -68,7 +73,27 @@ in
     starship = {
       enable = true;
       enableNushellIntegration = true;
+      settings = {
+        directory = {
+          home_symbol = "~";
+          truncate_to_repo = false;
+          truncation_length = 0;
+          use_os_path_sep = true;
+        };
+      };
     };
+    ssh.matchBlocks = lib.listToAttrs (lib.map (key: { name = "${key}.ivrtechnology.com"; value = {}; }) [
+      "apidev1"
+      "asdev1"
+      "agidev1"
+      "kdev1"
+      "kdev2"
+      "kdev3"
+      "webdev4"
+      "webdev5"
+
+      "web4"
+    ]);
     tmux.shell = (lib.getExe x);
   };
 }

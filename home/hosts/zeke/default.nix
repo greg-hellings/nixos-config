@@ -2,12 +2,11 @@
 
 {
   greg = {
-    development = true;
-    gui = true;
-    sway = false;
+    development = false;
+    gui = false;
     gnome = false;
-    vscodium = true;
-    zed = true;
+    vscodium = false;
+    zed = false;
   };
 
   home = {
@@ -20,12 +19,13 @@
     '';
 
     packages = with pkgs; [
-      audacity
+      #audacity
       bitwarden-cli
-      (mumble.override { pulseSupport = true; })
-      #logseq
-      super-productivity
-      webcamoid
+      #element-desktop
+      #(mumble.override { pulseSupport = true; })
+      #super-productivity
+      #vagrant
+      #webcamoid
     ];
   };
 

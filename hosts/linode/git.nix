@@ -6,7 +6,7 @@ let
 in
 {
   greg.proxies."${srcDomain}" = {
-    target = "http://git.thehellings.lan";
+    target = "https://vm-gitlab.shire-zebra.ts.net";
     ssl = true;
     genAliases = false;
     extraConfig = ''
@@ -16,10 +16,14 @@ in
     '';
   };
   greg.proxies."registry.thehellings.com" = {
-    target = "https://registry.thehellings.lan:5000";
+    target = "https://vm-gitlab.shire-zebra.ts.net:5000";
     ssl = true;
     genAliases = false;
-    extraConfig = "client_max_body_size 25000m;";
+    extraConfig = ''
+      proxy_set_header X-Forwarded-Proto https;
+      proxy_set_header X-Forwarded-Ssl on;
+      client_max_body_size 25000m;
+    '';
   };
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
@@ -44,7 +48,7 @@ in
       "	bind *:${toString sshPort}"
       "	timeout client 1h"
       "	mode tcp"
-      "	server git-thehellings-lan git.thehellings.lan:22"
+      "	server git-thehellings-lan vm-gitlab.shire-zebra.ts.net:22"
     ];
   };
 }

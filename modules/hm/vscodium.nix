@@ -34,10 +34,12 @@ in
             jnoortheen.nix-ide
             mkhl.direnv
             ms-python.python
+            ms-vscode.cpptools-extension-pack
             ms-vscode.makefile-tools
             ms-vscode-remote.remote-ssh
             njpwerner.autodocstring
             rust-lang.rust-analyzer
+            slint.slint
             tamasfe.even-better-toml
             vscjava.vscode-java-test
             vscjava.vscode-java-dependency

@@ -63,6 +63,14 @@ def _rebuild(args):
             popd
 aliases['rebuild'] = _rebuild
 
+def _deploy(args):
+    dest = args[0]
+    if dest != "linode":
+        nixos-rebuild switch --use-remote-sudo --use-substitutes --target-host @(dest) --build-host @(dest)
+    else:
+        nixos-rebuild swtich --use-remote-sudo --use-substitutes --target-host @(dest)
+aliases['deploy'] = _deploy
+
 def _yaml2json(args, stdin=None, stdout=None):
     import sys, yaml, json
     from yaml import CLoader

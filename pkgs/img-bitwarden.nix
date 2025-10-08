@@ -3,6 +3,7 @@
   cacert,
   dockerTools,
   lib,
+  wget,
   writeShellApplication,
   ...
 }:
@@ -12,6 +13,7 @@ dockerTools.buildLayeredImage {
   contents = [
     dockerTools.binSh
     dockerTools.caCertificates
+    wget
   ];
   config = {
     Cmd = [

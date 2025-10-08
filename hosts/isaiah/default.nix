@@ -28,16 +28,20 @@
       };
       systemd-boot = {
         enable = true;
-        configurationLimit = 10;
       };
     };
     supportedFilesystems = [ "ntfs" ];
   };
 
   greg = {
-    kubernetes.enable = true;
+    kubernetes = {
+      enable = true;
+      vipInterface = "enp38s0";
+      priority = 255;
+    };
     tailscale.enable = true;
     remote-builder.enable = true;
+    runner.enable = true;
   };
 
   fileSystems = {
@@ -78,18 +82,6 @@
     openssh = {
       enable = true;
       settings.PermitRootLogin = "yes";
-    };
-  };
-
-  virtualisation = {
-    libvirtd = {
-      enable = true;
-      allowedBridges = [
-        "br0"
-        "virbr0"
-      ];
-      onBoot = "ignore"; # only restart VMs labeled 'autostart'
-      qemu.ovmf.enable = true;
     };
   };
 }

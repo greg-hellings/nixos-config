@@ -28,8 +28,9 @@
     podman.enable = true;
     print.enable = true;
     tailscale.enable = true;
+    runner.enable = true;
     vmdev = {
-      enable = true;
+      enable = false;
       system = "intel";
     };
   };
@@ -40,6 +41,8 @@
     hostName = "exodus";
     networkmanager.enable = lib.mkForce true;
   };
+
+  programs.adb.enable = true;
 
   services = {
     fprintd.enable = true;
@@ -53,5 +56,9 @@
     oci-containers.backend = "podman";
   };
 
-  users.users.greg.extraGroups = [ "podman" ];
+  users.users.greg.extraGroups = [
+    "adbusers"
+    "kvm"
+    "podman"
+  ];
 }

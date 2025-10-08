@@ -1,26 +1,15 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 
 {
   programs.bash = {
     enable = true;
     shellAliases = {
-      acp = "rsync --progress -ah";
-      agbuild = "ansible-galaxy collection build";
-      apub = "ansible-galaxy collection publish --api-key \${GALAXY_API_KEY}";
+      gh-personal = "$GH_CONFIG_DIR=\"${config.home.homeDirectory}/.config/gh/personal\" gh";
+      ls = "ls --color";
+      ll = "ls -l --color";
+
       calc = "bc";
       d = "deactivate";
-      devroles = "cd ~/src/ansible_collections/devroles";
-      gohome = "ssh greg@dns.greg-hellings.gmail.com.beta.tailscale.net -D localhost:10080";
-      ll = "ls -l";
-      molcol = "molecule -c ../../tests/molecule.yml";
-      packaging = "cd ~/src/packaging";
-      vdown = "vagrant destroy";
-      vhalt = "vagrant halt";
-      vos = "vagrant up --provision --provider openstack";
-      vprov = "vagrant provision";
-      vssh = "vagrant ssh";
-      vup = "vagrant up --provision --provider libvirt";
-      yaml2js = "python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)";
     };
     sessionVariables = {
       ANSIBLE_COLLECTIONS_PATH = "\${HOME}/src/";

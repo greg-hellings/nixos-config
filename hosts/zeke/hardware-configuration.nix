@@ -33,10 +33,6 @@
       device = "/dev/nvme0n1p1";
       fsType = "auto";
     };
-    "/windows11" = {
-      device = "/dev/nvme1n1p2";
-      fsType = "ntfs-3g";
-    };
   };
 
   swapDevices = [ ];

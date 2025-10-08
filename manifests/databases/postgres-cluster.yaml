@@ -3,9 +3,10 @@ kind: Cluster
 metadata:
   name: postgres
 spec:
-  instances: 3
+  instances: 2
+  enablePDB: false
   storage:
-    size: 10Gi
+    size: 20Gi
   primaryUpdateStrategy: unsupervised
 
   managed:
@@ -31,20 +32,48 @@ spec:
         superuser: false
         passwordSecret:
           name: postgres-user-matrix
-  backup:
-    retentionPolicy: "30d"
-    barmanObjectStore:
-      destinationPath: "s3://k3sbackup/postgres"
-      endpointURL: "http://s3.thehellings.lan:9000/"
-      s3Credentials:
-        accessKeyId:
-          name: k3sbackup
-          key: username
-        secretAccessKey:
-          name: k3sbackup
-          key: password
-      wal:
-        compression: gzip
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: false
+      parameters:
+        barmanObjectName: k3sbackup-objectstore
+
+  # Use this as the target of the bootstrap recovery process
+  # It is important that the `externalClusters` serverName matches
+  # the old name of the original cluster that you are upgrading.
+  # When restoring, set the targetTime to the latest backup that you
+  # want to restore to
+# bootstrap:
+#   recovery:
+#     source: origin
+#     recoveryTarget:
+#       targetTime: "2025-08-25 19:00:40+05"
+# externalClusters:
+#   - name: origin
+#     plugin:
+#       name: barman-cloud.cloudnative-pg.io
+#       parameters:
+#         barmanObjectName: k3sbackup-objectstore
+#         serverName: postgres
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: k3sbackup-objectstore
+spec:
+  configuration:
+    destinationPath: "s3://k3sbackup/postgres"
+    endpointURL: "http://s3.thehellings.lan:9000/"
+    s3Credentials:
+      accessKeyId:
+        name: k3sbackup-secret
+        key: username
+      secretAccessKey:
+        name: k3sbackup-secret
+        key: password
+    wal:
+      compression: gzip
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
@@ -52,7 +81,7 @@ metadata:
   name: postgres-backup
 spec:
   immediate: true # Create one when this is added to the cluster
-  schedule: "0 0 0 * * *" # Midnight, nightly
+  schedule: "0 1 0 * * *" # 1AM, nightly
   backupOwnerReference: self
   cluster:
     name: postgres

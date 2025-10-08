@@ -75,9 +75,17 @@ in
 
   greg = {
     home = true;
-    kubernetes.enable = true;
+    kubernetes = {
+      enable = true;
+      vipInterface = "br0";
+      priority = 254;
+    };
     tailscale.enable = true;
     remote-builder.enable = true;
+    runner = {
+      enable = true;
+      threads = 3;
+    };
   };
 
   networking = {
@@ -109,21 +117,6 @@ in
   age.secrets.runner-reg.file = ../../secrets/gitlab/nixos-qemu-shell.age;
 
   services = {
-    gitlab-runner = {
-      enable = true;
-      settings.concurrent = 3;
-      services = {
-        shell = {
-          executor = "shell";
-          limit = 7;
-          authenticationTokenConfigFile = config.age.secrets.runner-reg.path;
-          environmentVariables = {
-            EFI_DIR = "${pkgs.OVMF.fd}/FV/";
-            STORAGE_URL = "s3.thehellings.lan:9000";
-          };
-        };
-      };
-    };
     proxmox-ve = {
       enable = true;
       ipAddress = (builtins.elemAt config.networking.interfaces.br0.ipv4.addresses 0).address;

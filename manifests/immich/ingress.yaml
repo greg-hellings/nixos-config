@@ -1,0 +1,40 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: immich
+  name: immich
+  annotations:
+    ingressClassName: traefik
+    # Set body size to 10G to allow uploading large things
+    traefik.ingress.kubernetes.io/buffering: |
+      maxrequestbodybytes: 10000000000
+      memrequestbodybytes: 20000000000
+spec:
+  rules:
+    - &host
+      host: immich.kubernetes
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: immich-server
+                port:
+                  name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  namespace: immich
+  name: immich-ingress-tailscale
+spec:
+  defaultBackend:
+    service:
+      name: immich-server
+      port:
+        name: http
+  ingressClassName: tailscale
+  tls:
+    - hosts:
+        - immich

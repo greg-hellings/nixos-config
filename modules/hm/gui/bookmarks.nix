@@ -64,6 +64,19 @@
             ];
           }
           {
+            name = "IC";
+            bookmarks = [
+              {
+                name = "Azure Portal/Console";
+                url = "https://portal.azure.com";
+              }
+              {
+                name = "Azure Code";
+                url = "https://dev.azure.com";
+              }
+            ];
+          }
+          {
             name = "Processes";
             bookmarks = [
               {
@@ -77,6 +90,10 @@
               {
                 name = "DB Request";
                 url = "https://ivrtg.aha.io/develop/features/INFR-1073";
+              }
+              {
+                name = "Deploy";
+                url = "https://ivrtg.aha.io/develop/features/EN-1000";
               }
               {
                 name = "Server list";
@@ -167,31 +184,6 @@
         ];
       }
       {
-        name = "SubTo";
-        bookmarks = [
-          {
-            name = "Kajabi";
-            url = "https://www.subtocourse.com/login";
-          }
-          {
-            name = "SubTo Fund";
-            url = "https://frontend.koreconx.com/auth/login";
-          }
-          {
-            name = "Creive Title";
-            url = "https://getcreativetitle.com/";
-          }
-          {
-            name = "REI Scripts";
-            url = "https://reiconveyorbelt.com/no-excuses/";
-          }
-          {
-            name = "Ellis foreclosures";
-            url = "https://co.ellis.tx.us/Archive.aspx?AMID=60";
-          }
-        ];
-      }
-      {
         name = "Tools";
         bookmarks = [
           {
@@ -212,8 +204,17 @@
             ];
           }
           {
-            name = "PGAdmin4";
-            url = "http://pgadmin.kubernetes/";
+            name = "Kubernetes";
+            bookmarks = [
+              {
+                name = "Longhorn";
+                url = "http://longhorn.shire-zebra.ts.net";
+              }
+              {
+                name = "PGAdmin4";
+                url = "http://pgadmin.shire-zebra.ts.net/";
+              }
+            ];
           }
           {
             name = "Password Hash";
@@ -231,14 +232,51 @@
             name = "Syncthing - nas";
             url = "http://nas.home:8384/#";
           }
+          {
+            name = "Pinchflat";
+            url = "http://nas1.shire-zebra.ts.net:8945";
+          }
+          {
+            name = "Portainer";
+            url = "http://nas1.shire-zebra.ts.net:31015";
+          }
         ];
       }
       {
         name = "REI";
         bookmarks = [
           {
+            name = "SubTo";
+            bookmarks = [
+              {
+                name = "Kajabi";
+                url = "https://www.subtocourse.com/login";
+              }
+              {
+                name = "SubTo Fund";
+                url = "https://frontend.koreconx.com/auth/login";
+              }
+              {
+                name = "Creive Title";
+                url = "https://getcreativetitle.com/";
+              }
+              {
+                name = "REI Scripts";
+                url = "https://reiconveyorbelt.com/no-excuses/";
+              }
+              {
+                name = "Ellis foreclosures";
+                url = "https://co.ellis.tx.us/Archive.aspx?AMID=60";
+              }
+            ];
+          }
+          {
             name = "Door Loop";
             url = "https://btrgpm.app.doorloop.com/home";
+          }
+          {
+            name = "HELOC payoff calculator";
+            url = "https://acceleratedstrategies.com/free-calculator/";
           }
         ];
       }

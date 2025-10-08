@@ -1,4 +1,6 @@
 namespace: gitlab-runner
 
 resources:
+  - namespace.yaml
+  - secrets.yaml
   - chart.yaml

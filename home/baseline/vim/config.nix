@@ -120,6 +120,7 @@
         gopls.enable = true;
         html.enable = true;
         nixd.enable = true;
+        nushell.enable = true;
         pylsp.enable = true;
         pyright.enable = true;
         rust_analyzer = {
@@ -135,6 +136,7 @@
     notify.enable = true;
     remote-nvim.enable = true;
     web-devicons.enable = true;
+    zellij.enable = true;
   };
   userCommands = {
     Ggr = {
@@ -148,7 +150,6 @@
   extraConfigVim = builtins.readFile ./extra.vimrc;
   extraPlugins = with pkgs.vimPlugins; [
     bufexplorer
-
     context-vim
     vim-indent-guides
   ];

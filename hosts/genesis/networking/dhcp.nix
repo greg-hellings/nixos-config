@@ -107,7 +107,7 @@
           }
           {
             hw-address = "04:7c:16:d5:60:6f";
-            ip-address = "10.42.1.11"; # Jude - but straight in the motherboard
+            ip-address = "10.42.1.13"; # Zeke - but straight in the motherboard
           }
 
           ########################################

@@ -81,19 +81,20 @@ func getHash(ch chan result, file, category, language string) {
 	// in the existing file
 	fmt.Printf("Fetching hash for %s\n", file)
 	cmd := exec.Command("nix-prefetch",
-        "--option",
-        "extra-experimental-features",
-        "flakes",
-        fmt.Sprintf(`fetchtorrent {
+		"--option",
+		"extra-experimental-features",
+		"flakes",
+		fmt.Sprintf(`fetchtorrent {
             url="%s/%s/%s.torrent";
             hash="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+            backend="rqbit";
         }`, BASE, category, file),
-    )
-    out, err := cmd.Output()
-    if err != nil {
-        panic(err)
-    }
-	ch <- result{ category, language, strings.TrimSpace(string(out)) }
+	)
+	out, err := cmd.Output()
+	if err != nil {
+		panic(err)
+	}
+	ch <- result{category, language, strings.TrimSpace(string(out))}
 }
 
 func outputIsValid(o map[string]map[string]Zim) bool {
@@ -128,7 +129,7 @@ func main() {
 				if _, ok := output[lang]; !ok {
 					output[lang] = make(map[string]Zim)
 				}
-				output[lang][t] = Zim{ file, "" }
+				output[lang][t] = Zim{file, ""}
 				go getHash(comms, file, t, lang)
 			}
 		}
@@ -144,6 +145,6 @@ func main() {
 			break
 		}
 	}
-	ret, _ := json.Marshal(output)
+	ret, _ := json.MarshalIndent(output, "  ", "")
 	fmt.Println(string(ret))
 }
