@@ -40,4 +40,5 @@ in
   jeremiah = greg "jeremiah";
   linode = greg "linode";
   vm-gitlab = greg "vm-gitlab";
+  vm-jellyfin = greg "vm-jellyfin";
 }

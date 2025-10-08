@@ -10,6 +10,7 @@ in
   aacs = c ./aacs.nix { };
   brew = c ./homebrew.nix { };
   create_ssl = c ./create_ssl.nix { };
+  gcc-tune = c ./gcc-tune.nix { };
   gen-build = c ./gen-build { };
   hms = c ./hms { };
   inject-darwin = c ./inject-darwin.nix { };
