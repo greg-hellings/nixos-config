@@ -48,16 +48,20 @@ in
       skaffold
       x
     ];
-    file.".pip/pip.conf".text = (
-      lib.strings.concatStringsSep "\n" [
-        "[global]"
-        "retries = 1"
-        "index-url = https://pypi.python.org/simple"
-        "extra-index-url ="
-        "    https://pypi.ivrtechnology.com/simple/"
-        "    https://pypidev.ivrtechnology.com/simple/"
-      ]
-    );
+    file = {
+      ".pip/pip.conf".text = ''
+        [global]
+        retries = 1
+        index-url = https://pypi.python.org/simple
+        extra-index-url =
+            https://pypidev.ivrtechnology.com/simple/
+      '';
+      ".config/uv/uv.toml".text = ''
+        [[index]]
+        url = "https://pypidev.ivrtechnology.com"
+        name = "pypidev"
+      '';
+    };
     username = username;
     homeDirectory = "/Users/${username}";
   };
