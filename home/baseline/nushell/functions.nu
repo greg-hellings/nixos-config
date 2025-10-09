@@ -55,3 +55,7 @@ def bake [template: string] {
     print $srcdir
     copier copy $srcdir .
 }
+
+def podman_image_clean [] {
+    podman rmi ...(^podman images --format=json | from json | where {|e| not ("Names" in $e)} | get Id)
+}
