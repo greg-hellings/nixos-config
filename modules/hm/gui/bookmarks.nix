@@ -254,6 +254,10 @@
             name = "Portainer";
             url = "http://nas1.shire-zebra.ts.net:31015";
           }
+          {
+            name = "Restic";
+            url = "http://nas1.shire-zebra.ts.net:30248";
+          }
         ];
       }
       {
