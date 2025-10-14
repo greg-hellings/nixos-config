@@ -59,3 +59,16 @@ def bake [template: string] {
 def podman_image_clean [] {
     podman rmi ...(^podman images --format=json | from json | where {|e| not ("Names" in $e)} | get Id)
 }
+
+def dc [ $cmd: string = "sh" ] {
+    match $cmd {
+        "up" => (devcontainer up --workspace-folder . --docker-path podman),
+        "sh" => (devcontainer exec --workspace-folder . --docker-path podman bash),
+        "down" => (podman compose -f .devcontainer/(open .devcontainer/devcontainer.json | get dockerComposeFile | first) down),
+        _ => (devcontainer --help),
+    }
+}
+
+if ("/usr/local/bin" | path exists) {
+    $env.PATH = $env.PATH | append "/usr/local/bin"
+}
