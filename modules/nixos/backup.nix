@@ -1,33 +1,24 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 
 let
   cfg = config.greg.backup;
 
-  where = j: "${config.services.syncthing.dataDir}/daily.0/${j.dest}";
-
-  postexec = pkgs.writeShellApplication {
-    name = "postexec";
-    runtimeInputs = [ pkgs.coreutils ];
-    text = ''
-      chown -R ${config.services.syncthing.user} ${config.services.syncthing.dataDir}
-    '';
-  };
-
   makeSyncFolders = _: job: {
-    devices = [ "chronicles" ];
-    enable = true;
-    id = job.id;
-    label = job.dest;
-    path = where job;
-    type = "sendonly";
+    inherit (job) user;
+    initialize = true;
+    passwordFile = config.age.secrets.restic-pw.path;
+    paths = [ job.src ];
+    pruneOpts = [
+      "--keep-daily 7"
+      "--keep-weekly 5"
+      "--keep-monthly 12"
+    ];
+    repository = "rest:nas1.shire-zebra.ts.net:30248/${job.dest}";
   };
-
-  makeRsnapshot = _: job: "backup	${job.src}/	${job.dest}/";
 in
 with lib;
 {
@@ -50,9 +41,10 @@ with lib;
 
                   dest = mkOption { type = types.str; };
 
-                  id = mkOption {
+                  user = mkOption {
                     type = types.str;
-                    description = "The unique folder ID for this";
+                    default = "root";
+                    description = "User to run backup as - defaults to root";
                   };
                 };
               }
@@ -67,27 +59,8 @@ with lib;
       restic-pw.file = ../../secrets/restic-pw.age;
       restic-env.file = ../../secrets/restic-env.age;
     };
-    greg.syncthing = {
-      enable = true;
-    };
     services = {
-      syncthing.settings.folders = mapAttrs makeSyncFolders cfg.jobs;
-      rsnapshot = {
-        enable = true;
-        enableManualRsnapshot = true;
-        extraConfig =
-          ''
-            snapshot_root	${config.services.syncthing.dataDir}/
-            retain	daily	7
-            retain	weekly	2
-            cmd_postexec	${lib.getExe postexec}
-          ''
-          + (builtins.concatStringsSep "\n" (mapAttrsToList makeRsnapshot cfg.jobs));
-        cronIntervals = {
-          daily = "19 02 * * *"; # At 2:19 am every day
-          weekly = "19 01 * * 1"; # At 1:19 am every Monday
-        };
-      };
+      restic.backups = mapAttrs makeSyncFolders cfg.jobs;
     };
   };
 }

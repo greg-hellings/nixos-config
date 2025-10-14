@@ -54,6 +54,5 @@
   greg.backup.jobs.greg-postgresql-backup = {
     src = config.services.postgresqlBackup.location;
     dest = "linode-postgres";
-    id = "linode-postgres";
   };
 }
