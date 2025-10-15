@@ -25,7 +25,6 @@ in
     clightning = {
       src = config.services.clightning.replication.local.directory;
       dest = "hosea-clightning";
-      id = "clightning";
     };
   };
 

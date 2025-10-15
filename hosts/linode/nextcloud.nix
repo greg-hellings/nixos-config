@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   age.secrets.nextcloudadmin.file = ../../secrets/nextcloudadmin.age;
@@ -33,5 +38,19 @@
   greg.backup.jobs.nextcloud-bkup = {
     src = "/var/lib/nextcloud";
     dest = "nextcloud-backup";
+    pre = lib.getExe (
+      pkgs.writeShellApplication {
+        name = "nextcloud-backup-pre";
+        runtimeInputs = [ config.services.nextcloud.occ ];
+        text = "nextcloud-occ maintenance:mode --on";
+      }
+    );
+    post = lib.getExe (
+      pkgs.writeShellApplication {
+        name = "nextcloud-backup-post";
+        runtimeInputs = [ config.services.nextcloud.occ ];
+        text = "nextcloud-occ maintenance:mode --off";
+      }
+    );
   };
 }
