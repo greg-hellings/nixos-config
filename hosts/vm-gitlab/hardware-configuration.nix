@@ -34,7 +34,7 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/1fdbe86e-ce6f-4af3-a876-aec35731adab";
+    device = lib.mkDefault "/dev/disk/by-uuid/1fdbe86e-ce6f-4af3-a876-aec35731adab";
     fsType = "ext4";
   };
 

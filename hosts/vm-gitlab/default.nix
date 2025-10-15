@@ -57,7 +57,6 @@ in
     backup.jobs.nas-backup = {
       src = "/var/gitlab/state/backup/";
       dest = "gitlab";
-      id = "gitlab";
     };
     home = true;
     tailscale.enable = true;
