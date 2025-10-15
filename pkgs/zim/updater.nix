@@ -1,6 +1,7 @@
 {
   writeShellApplication,
   nix-prefetch,
+  gcc,
   go,
   ...
 }:
@@ -10,10 +11,11 @@ in
 writeShellApplication {
   name = "update-zims";
   runtimeInputs = [
+    gcc
     go
     nix-prefetch
   ];
   text = ''
-    go run ${goscript}
+    go run ${goscript} -- pkgs/zim/blobs.json
   '';
 }
