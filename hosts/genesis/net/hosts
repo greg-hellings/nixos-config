@@ -17,6 +17,7 @@
 # 11 - old jude
 10.42.1.12 tv
 10.42.1.13 zeke zeke.thehellings.lan
+10.42.1.14 nas1 nas1.thehellings.lan
 
 # VMs
 10.42.4.1 matrix matrix.thehellings.lan
@@ -28,20 +29,22 @@
 
 # IPMI
 10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan
+10.42.100.14 nas1bmc nas1bmc.thehellings.lan
 
 # Tailscale hosts
 100.119.228.115 chronicles.home nas.home chronicles.shire-zebra.ts.net
 100.88.91.27 dns.home
 100.80.99.48 exodus.home
 100.88.91.27 genesis.home smart.home zwave.home nixcache.home gitcache.home dashy.home uptime.home speed.home
-100.91.131.66 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan
+100.117.28.111 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan
 100.68.203.1 hosea.home hosea.shire-zebra.ts.net
-100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net pgadmin.kubernetes postgres.kubernetes longhorn.kubernetes
-100.102.186.39 jeremiah.home jeremiah.shire-zebra.ts.net matrix.kubernetes immich.kubernetes
+100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net pgadmin.kubernetes longhorn.kubernetes
+100.102.186.39 jeremiah.home jeremiah.shire-zebra.ts.net matrix.kubernetes immich.kubernetes postgres.kubernetes
 100.90.74.19 zeke.home
 100.115.57.8 linode.home
 100.65.5.38 matrix.home matrix.shire-zebra.ts.net
 100.127.55.22 jellyfin.home
+100.114.187.61 nas1.home nas1.shire-zebra.ts.net
 
 # Dev hosts
 10.42.101.1 icdm.lan wiki.icdm.lan *.icdm.lan

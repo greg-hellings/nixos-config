@@ -33,6 +33,5 @@
   greg.backup.jobs.nextcloud-bkup = {
     src = "/var/lib/nextcloud";
     dest = "nextcloud-backup";
-    id = "nextcloud-backup";
   };
 }

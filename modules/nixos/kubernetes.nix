@@ -6,6 +6,14 @@
 }:
 let
   cfg = config.greg.kubernetes;
+  cert-manager = pkgs.fetchurl {
+    url = "https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.yaml";
+    sha256 = "0vx1nfyhl0rzb6psfxplq8pfp18mrrdk83n8rj2ph8q6r15vcih5";
+  };
+  flux = pkgs.fetchurl {
+    url = "https://github.com/fluxcd/flux2/releases/download/v2.5.1/install.yaml";
+    sha256 = "1cjpxfgnzycwnac58gd3naxgmwsj5bdrx0vzh56aiq1m5c0h3dhs";
+  };
 in
 {
   options.greg = {
@@ -70,19 +78,57 @@ in
     services = {
       k3s = {
         enable = true;
-        role = if cfg.agentOnly then "agent" else "server";
-        tokenFile = config.age.secrets.kubernetesToken.path;
+        autoDeployCharts = {
+          external-secrets = {
+            enable = true;
+            createNamespace = true;
+            package = pkgs.chartsDerivations.external-secrets.external-secrets;
+            targetNamespace = "external-secrets";
+            values = {
+              crds.create = true;
+              includeCRDs = true;
+            };
+          };
+          kyverno = {
+            enable = true;
+            createNamespace = true;
+            package = pkgs.chartsDerivations.kyverno.kyverno;
+            targetNamespace = "kyverno-system";
+            values = {
+              admissionController.replicas = 3;
+              backgroundController.replicas = 3;
+              cleanupController.replicas = 2;
+              reportsController.replicas = 2;
+              crds.install = true;
+            };
+          };
+          tailscale = {
+            enable = true;
+            createNamespace = true;
+            package = pkgs.chartsDerivations.tailscale.tailscale-operator;
+            targetNamespace = "tailscale";
+          };
+        };
         extraFlags = [
           "--cluster-cidr=10.211.0.0/16"
           "--service-cidr=10.221.0.0/16"
           "--write-kubeconfig-mode 0640"
           "--write-kubeconfig-group kubeconfig"
           "--resolv-conf=/etc/resolv.conf"
+          "--node-label node.longhorn.io/create-default-disk=config"
           "--tls-san ${config.networking.hostName}.home"
           "--tls-san ${config.networking.hostName}.thehellings.lan"
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
         ];
+        manifests = {
+          cert-manager.source = cert-manager;
+          flux.source = flux;
+          node-annotations.source = ../../manifests/auto/nodes.yaml;
+          operator-oauth.source = ../../manifests/auto/operator-oauth.yaml;
+        };
+        role = if cfg.agentOnly then "agent" else "server";
         serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
+        tokenFile = config.age.secrets.kubernetesToken.path;
       };
       keepalived =
         let

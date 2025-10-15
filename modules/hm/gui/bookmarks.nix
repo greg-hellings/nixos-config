@@ -4,6 +4,20 @@
     toolbar = true;
     bookmarks = [
       {
+        name = "Allow Paste";
+        url = ''
+          javascript: (function () {
+            allowCopyAndPaste = function (e) {
+              e.stopImmediatePropagation();
+              return true;
+            };
+            document.addEventListener("copy", allowCopyAndPaste, true);
+            document.addEventListener("paste", allowCopyAndPaste, true);
+            document.addEventListener("onpaste", allowCopyAndPaste, true);
+          })();
+        '';
+      }
+      {
         name = "Ansible";
         bookmarks = [
           {
@@ -231,6 +245,18 @@
           {
             name = "Syncthing - nas";
             url = "http://nas.home:8384/#";
+          }
+          {
+            name = "Pinchflat";
+            url = "http://nas1.shire-zebra.ts.net:8945";
+          }
+          {
+            name = "Portainer";
+            url = "http://nas1.shire-zebra.ts.net:31015";
+          }
+          {
+            name = "Restic";
+            url = "http://nas1.shire-zebra.ts.net:30248";
           }
         ];
       }

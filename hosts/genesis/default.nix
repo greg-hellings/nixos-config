@@ -2,10 +2,9 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ pkgs, ... }:
 
 let
-  dashy_port = "8080";
   speedtest_port = "19472";
 in
 {
@@ -22,7 +21,6 @@ in
     proxies = {
       "speed.home".target = "http://localhost:${speedtest_port}";
       "speedtest.thehellings.lan".target = "http://localhost:${speedtest_port}";
-      "dashy.home".target = "http://localhost:${dashy_port}";
     };
   };
 
@@ -41,102 +39,7 @@ in
 
   networking.hostName = "genesis"; # Define your hostname.
 
-  services = {
-    dashy = {
-      enable = true;
-      settings = {
-        appConfig = {
-          enableFontAwesome = true;
-          statusCheck = true;
-          statusCheckInterval = 20;
-          theme = "callisto";
-        };
-        pageInfo = {
-          description = "Hellings Lab";
-          navLinks = [
-            {
-              path = "/";
-              title = "Home";
-            }
-            {
-              path = "http://speed.home";
-              title = "Local Speedtest";
-            }
-          ];
-        };
-        sections = [
-          {
-            name = "Hosting";
-            displayData = {
-              sortBy = "alphabetical";
-              rows = 1;
-              cols = 1;
-              collapsed = false;
-              hideForGusts = false;
-            };
-            items = [
-              {
-                title = "Romans";
-                description = "Core Proxmox";
-                icon = "favicon";
-                url = "https://10.42.1.1:8006";
-                target = "newtab";
-                statusCheckAllowInsecure = true;
-              }
-              {
-                title = "Isaiah";
-                description = "Isaiah Proxmox";
-                icon = "favicon";
-                url = "https://isaiah.thehellings.lan:8006";
-                target = "newtab";
-                statusCheckAllowInsecure = true;
-              }
-              {
-                title = "Linode";
-                icon = "favicon";
-                url = "https://login.linode.com/login";
-                target = "newtab";
-              }
-            ];
-          }
-          {
-            name = "Services";
-            displayData = {
-              sortBy = "alphabetical";
-              rows = 1;
-              cols = 1;
-              collapsed = false;
-              hideForGusts = false;
-            };
-            items = [
-              {
-                title = "Jellyfin";
-                description = "Home Jellyfin Server";
-                icon = "favicon";
-                url = "http://jellyfin.home";
-                target = "newtab";
-              }
-              {
-                title = "Speedtest";
-                description = "Local Speedtest";
-                icon = "favicon";
-                url = "http://speed.home";
-                target = "newtab";
-              }
-            ];
-          }
-        ];
-      };
-    };
-  };
-
   virtualisation.oci-containers.containers = {
-    dashy = {
-      image = "lissy93/dashy:latest";
-      hostname = "dashy";
-      ports = [ "${dashy_port}:${dashy_port}" ];
-      volumes = [ "${config.services.dashy.finalDrv}/conf.yml:/app/user-data/conf.yml" ];
-    };
     speedtest = {
       image = "ghcr.io/librespeed/speedtest";
       hostname = "speedtest";

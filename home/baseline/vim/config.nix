@@ -115,11 +115,11 @@
     lsp = {
       enable = true;
       servers = {
-        ansiblels.enable = true;
         cmake.enable = true;
         gopls.enable = true;
         html.enable = true;
         nixd.enable = true;
+        nushell.enable = true;
         pylsp.enable = true;
         pyright.enable = true;
         rust_analyzer = {
@@ -149,7 +149,6 @@
   extraConfigVim = builtins.readFile ./extra.vimrc;
   extraPlugins = with pkgs.vimPlugins; [
     bufexplorer
-
     context-vim
     vim-indent-guides
   ];

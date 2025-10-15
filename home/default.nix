@@ -33,7 +33,7 @@ in
 {
   "MacBook-Pro.local" = user "aarch64-darwin" "ivr" "gregory.hellings";
   "MacBook-Prolocal.local" = user "aarch64-darwin" "ivr" "gregory.hellings";
-  "jude.thehellings.lan" = user "aarch64-darwin" "ivr" "gregory.hellings"; # This is annoying, but DNS is a pain for the shared docking station
+  genesis = greg "genesis";
   exodus = greg "exodus";
   zeke = greg "zeke";
   isaiah = greg "isaiah";
@@ -41,4 +41,5 @@ in
   linode = greg "linode";
   hosea = greg "hosea";
   vm-gitlab = greg "vm-gitlab";
+  vm-jellyfin = greg "vm-jellyfin";
 }

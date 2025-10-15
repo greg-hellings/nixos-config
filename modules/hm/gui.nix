@@ -49,7 +49,8 @@ in
             [
               bitwarden
               endeavour
-              jellyfin-media-player
+              # Is removed because it depends on qt5-qtwebengine
+              # jellyfin-media-player
               nextcloud-client
               slack
               (pkgs.zoom-us.overrideAttrs {

@@ -21,6 +21,9 @@
     btc = {
       url = "github:fort-nix/nix-bitcoin/release";
     };
+    charts = {
+      url = "github:nix-community/nixhelm";
+    };
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixunstable";
@@ -63,12 +66,20 @@
           pkgs = prev;
         })
       );
+      charts_overlay = (
+        _f: _p: {
+          chartsDerivations = top.charts.chartsDerivations."${_p.stdenv.hostPlatform.system}";
+          kubelib = top.nix-kube-generators.lib;
+        }
+      );
       overlays = [
         top.agenix.overlays.default
+        charts_overlay
         local_overlay
         packages_overlay
         top.nurpkgs.overlays.default
         top.vsext.overlays.default
+        top.nixvimunstable.overlays.default
       ];
 
     in

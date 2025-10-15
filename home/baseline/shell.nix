@@ -25,13 +25,13 @@
       nixup = "nix flake lock update";
       nixcopy = "nix copy --to \"s3://binary-cache/?profile=default&endpoint=nas.home%3A9000&scheme=http\"";
       r = "run0";
-      s = "nix run \".#runserver\"";
       updateScript = "nix-shell maintainers/scripts/update.nix --argstr package";
 
       # General
       k = "kubectl";
       kn = "kubectl get nodes -o wide";
       kp = "kubectl get pods -o wide";
+      s = "lazyssh";
       win = "sudo virsh start win10";
       yaml2js = "python -c 'import sys, yaml, json; json.dump(yaml.load(sys.stdin), sys.stdout, indent=4)'";
       z = "zeditor .";
