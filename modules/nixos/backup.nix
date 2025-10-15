@@ -9,7 +9,14 @@ let
 
   makeSyncFolders = _: job: {
     inherit (job) user;
+    backupCleanupCommand = lib.optionalString (job.post != "") job.post;
+    backupPrepareCommand = lib.optionalString (job.pre != "") job.pre;
+    extraOptions = [
+      "--insecure-tls"
+      "--insecure-no-password"
+    ];
     initialize = true;
+    environmentFile = config.age.secrets.restic-env.path;
     passwordFile = config.age.secrets.restic-pw.path;
     paths = [ job.src ];
     pruneOpts = [
@@ -17,7 +24,7 @@ let
       "--keep-weekly 5"
       "--keep-monthly 12"
     ];
-    repository = "rest:nas1.shire-zebra.ts.net:30248/${job.dest}";
+    repository = "rest:https://nas1.shire-zebra.ts.net:30248/${job.dest}";
   };
 in
 with lib;
@@ -45,6 +52,16 @@ with lib;
                     type = types.str;
                     default = "root";
                     description = "User to run backup as - defaults to root";
+                  };
+
+                  pre = mkOption {
+                    type = types.str;
+                    default = "";
+                  };
+
+                  post = mkOption {
+                    type = types.str;
+                    default = "";
                   };
                 };
               }

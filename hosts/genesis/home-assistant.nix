@@ -137,12 +137,10 @@
   greg.backup.jobs.zwave = {
     src = "/var/lib/zwave";
     dest = "zwave";
-    id = "zwave-rsnap";
   };
 
   greg.backup.jobs.hass-backup = {
     src = "/var/lib/hass";
     dest = "hass";
-    id = "hass-rsnap";
   };
 }
