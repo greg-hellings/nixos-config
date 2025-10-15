@@ -33,19 +33,19 @@
         enable = true;
         configurationLimit = 20;
         extraEntries = {
-          "Win2.conf" = (
-            lib.strings.concatStringsSep "\n" [
-              "title Windows 11"
-              "efi /shellx64.efi"
-              "options -nointerrupt -noconsolein -noconsoleout windows11.nsh"
-            ]
-          );
-          "Shell.conf" = (
-            lib.strings.concatStringsSep "\n" [
-              "title EFI Shell"
-              "efi /shell.efi"
-            ]
-          );
+          "Win.conf" = ''
+            title Windows
+            efi /EFI/Microsoft/Boot/bootmgfw.efi
+          '';
+          "Bootx64.conf" = ''
+            title BOOTX64.efi
+            efi /EFI/BOOT/BOOTX64.efi
+            options -nointerrupt -noconsolein -nosonsoleout windows11.nsh
+          '';
+          "Shell.conf" = ''
+            title EFI Shell
+            efi /shell.efi
+          '';
         };
         extraFiles = {
           "windows11.nsh" = (pkgs.writeText "windows11.nsh" (lib.strings.concatStringsSep "\n" [ ]));
