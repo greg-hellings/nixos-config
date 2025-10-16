@@ -18,6 +18,10 @@ builds:
     - packages.aarch64-darwin.qemu-hook
     - packages.aarch64-darwin.vfio_shutdown
     - packages.aarch64-darwin.vfio_startup
+    # I only need the x86_64
+    - packages.aarch64-darwin.img-bitwarden
+    - packages.x86_64-darwin.img-bitwarden
+    - packages.aarch64-linux.img-bitwarden
     # These are just images which I will build when
     # I feel like it
     - nixosConfigurations.iso
