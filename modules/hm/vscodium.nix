@@ -36,6 +36,7 @@ in
             ms-python.python
             ms-vscode.cpptools-extension-pack
             ms-vscode.makefile-tools
+            ms-vscode-remote.remote-containers
             ms-vscode-remote.remote-ssh
             njpwerner.autodocstring
             rust-lang.rust-analyzer
@@ -51,6 +52,7 @@ in
             github.copilot-chat
           ]);
         userSettings = {
+          "dev.containers.dockerPath" = "podman";
           "direnv.restart.automatic" = true;
           "direnv.path.executable" = (lib.getExe pkgs.direnv);
           "extensions.autoUpdate" = false;
