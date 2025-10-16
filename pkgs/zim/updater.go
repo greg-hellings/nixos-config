@@ -87,6 +87,7 @@ func getHash(ch chan result, file, category, language string) {
 		"--option",
 		"extra-experimental-features",
 		"flakes",
+		"--check-store",
 		fmt.Sprintf(`fetchtorrent {
             url="%s/%s/%s.torrent";
             hash="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
@@ -146,6 +147,8 @@ func main() {
 			outputPath = filepath.Join(dir, "blobs.json")
 		}
 	}
+
+	fmt.Println("Writing file to ", outputPath)
 
 	// Read existing cache if it exists
 	cached := make(map[string]map[string]Zim)
@@ -221,4 +224,5 @@ func main() {
 	}
 
 	fmt.Printf("Successfully wrote output to %s\n", outputPath)
+	fmt.Println(string(ret))
 }

@@ -16,6 +16,7 @@ writeShellApplication {
     nix-prefetch
   ];
   text = ''
-    go run ${goscript} -- pkgs/zim/blobs.json
+    go build -o updater ${goscript}
+    ./updater "$@"
   '';
 }

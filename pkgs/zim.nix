@@ -16,7 +16,7 @@ let
         fetchtorrent {
           inherit (val) hash;
           url = "https://download.kiwix.org/zim/${type}/${val.name}.torrent";
-          backend = "rqbit";
+          backend = "transmission";
           postUnpack = "ls -lR";
         }
       );
@@ -40,7 +40,7 @@ let
 in
 stdenvNoCC.mkDerivation {
   name = "zims";
-  version = "2024-10";
+  version = "2025-10";
 
   passthru = {
     inherit zims rawZims;
