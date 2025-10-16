@@ -1,4 +1,9 @@
-{ pkgs, config, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
 {
   # Programs that are used in the settings file
@@ -43,6 +48,8 @@
 
         GOPATH = "${config.home.homeDirectory}/src/go";
         GOBIN = "${config.home.homeDirectory}/src/bin";
+
+        EDITOR = lib.getExe config.programs.neovim.package;
       };
 
       aliases = {
