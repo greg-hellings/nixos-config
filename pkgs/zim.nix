@@ -17,11 +17,12 @@ let
           inherit (val) hash;
           url = "https://download.kiwix.org/zim/${type}/${val.name}.torrent";
           backend = "transmission";
-          postUnpack = "ls -lR";
+          postUnpack = "mkdir -p $downloadedDirectory/tmp; mv $downloadedDirectory/*.zim $downloadedDirectory/tmp";
         }
       );
       phases = [ "installPhase" ];
       installPhase = ''
+        set -x
         ls -lR ${finalAttrs.src}
         cp ${finalAttrs.src} $out
       '';

@@ -20,11 +20,11 @@ const BASE = "https://download.kiwix.org/zim"
 func getTypes() []string {
 	return []string{
 		"phet",
-		"wikipedia",
-		"wiktionary",
-		"wikiversity",
-		"wikisource",
-		"wikibooks",
+		// "wikipedia",
+		// "wiktionary",
+		// "wikiversity",
+		// "wikisource",
+		// "wikibooks",
 		"gutenberg",
 		"ted",
 	}
@@ -92,6 +92,7 @@ func getHash(ch chan result, file, category, language string) {
             url="%s/%s/%s.torrent";
             hash="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
             backend="transmission";
+            postUnpack="mkdir -p $downloadedDirectory/tmp; mv $downloadedDirectory/*.zim $downloadedDirectory/tmp";
         }`, BASE, category, file),
 	)
 	out, err := cmd.Output()
