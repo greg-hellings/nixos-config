@@ -9,29 +9,29 @@
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikibooks": {
-      "name": "wikibooks_en_all_maxi_2021-03.zim",
+      "name": "wikibooks_en_all_maxi_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikipedia": {
-      "name": "wikipedia_en_all_maxi_2024-01.zim",
+      "name": "wikipedia_en_all_maxi_2025-08.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikisource": {
-      "name": "wikisource_en_all_maxi_2022-09.zim",
+      "name": "wikisource_en_all_maxi_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikiversity": {
-      "name": "wikiversity_en_all_maxi_2025-05.zim",
+      "name": "wikiversity_en_all_maxi_2025-10.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wiktionary": {
-      "name": "wiktionary_en_all_nopic_2024-05.zim",
+      "name": "wiktionary_en_all_nopic_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     }
   },
   "fr": {
     "gutenberg": {
-      "name": "gutenberg_fr_all_2023-08.zim",
+      "name": "gutenberg_fr_all_2025-10.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "phet": {
@@ -39,23 +39,23 @@
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikibooks": {
-      "name": "wikibooks_fr_all_maxi_2025-06.zim",
+      "name": "wikibooks_fr_all_maxi_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikipedia": {
-      "name": "wikipedia_fr_all_maxi_2024-05.zim",
+      "name": "wikipedia_fr_all_maxi_2025-06.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikisource": {
-      "name": "wikisource_fr_all_maxi_2025-06.zim",
+      "name": "wikisource_fr_all_maxi_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikiversity": {
-      "name": "wikiversity_fr_all_maxi_2021-02.zim",
+      "name": "wikiversity_fr_all_maxi_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wiktionary": {
-      "name": "wiktionary_fr_all_nopic_2025-03.zim",
+      "name": "wiktionary_fr_all_nopic_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     }
   },
@@ -65,11 +65,7 @@
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     },
     "wikipedia": {
-      "name": "wikipedia_ht_all_maxi_2025-05.zim",
-      "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
-    },
-    "wikisource": {
-      "name": "wikisource_ht_all_maxi_2019-03.zim",
+      "name": "wikipedia_ht_all_maxi_2025-09.zim",
       "hash": "sha256-pQpattmS9VmO3ZIQUFn66az8GSmB4IvYhTTCFn6SUmo="
     }
   }
