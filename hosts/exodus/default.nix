@@ -11,6 +11,10 @@
     top.nix-hardware.nixosModules.framework-11th-gen-intel
   ];
 
+  age.secrets = {
+    compose-attic.file = ../../secrets/compose/attic.env.age;
+  };
+
   boot = {
     loader = {
       systemd-boot.enable = true;

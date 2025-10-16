@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -40,35 +39,9 @@ with lib;
     greg.tailscale.enable = true;
 
     # The builder user needs to be trusted to submit builds
-    nix.settings =
-      let
-        upload = getExe (
-          pkgs.writeShellScriptBin "upload-to-cache.sh" ''
-            set -eu
-            set -f
-            export AWS_SHARED_CREDENTIALS_FILE=${config.age.secrets.cache-credentials.path}
-            export IFS=' '
-            ${getExe config.nix.package} store sign --recursive --key-file "${config.age.secrets.private-cache.path}" "$@"
-            ${getExe config.nix.package} copy --to "s3://binary-cache/?scheme=http&endpoint=nas.home%3A9000&profile=default" "$@"
-          ''
-        );
-        uploadRunner = getExe (
-          pkgs.writeShellScriptBin "uploade-to-cache-runner.sh" ''
-            sum=$(printf "$OUT_PATHS" | ${lib.getExe' pkgs.coreutils-full "sha256sum"} | cut -d " " -f1)
-            ${lib.getExe' config.systemd.package "systemd-run"} \
-                --unit "upload-$(${lib.getExe' pkgs.coreutils "date"} +%s%3N)-$sum" \
-                --property Type=exec \
-                --property CollectMode=inactive \
-                --property Group=nixbld \
-                ${upload} $OUT_PATHS
-          ''
-        );
-      in
-      {
-        post-build-hook = uploadRunner;
-        secret-key-files = config.age.secrets.private-cache.path;
-        trusted-users = [ config.users.users.remote-builder-user.name ];
-      };
+    nix.settings = {
+      trusted-users = [ config.users.users.remote-builder-user.name ];
+    };
 
     users.users.remote-builder-user = {
       openssh.authorizedKeys.keys = [

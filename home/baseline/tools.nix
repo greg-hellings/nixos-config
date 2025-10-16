@@ -3,6 +3,7 @@
   home.packages =
     with pkgs;
     [
+      attic-client
       dig
       jqp
       kubernetes-helm

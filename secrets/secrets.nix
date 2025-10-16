@@ -60,6 +60,7 @@ in
   "jude-forgejo-runner.age".publicKeys = everyone;
   "minio.age".publicKeys = everyone;
 
+  "attic.age".publicKeys = everyone;
   "cache-private-key.age".publicKeys = [
     jeremiah
     isaiah
@@ -119,4 +120,6 @@ in
     user_jeremiah
     user_jude
   ];
+
+  "compose/attic.env.age".publicKeys = everyone;
 }

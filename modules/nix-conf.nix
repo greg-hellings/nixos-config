@@ -42,7 +42,7 @@ in
         substituters =
           (lib.optionals cfg.cache [
             "http://chronicles.shire-zebra.ts.net:9000/binary-cache/"
-            "http://nas1.shire-zebra.ts.net:8080/nixos"
+            "http://nas1.shire-zebra.ts.net:8080/default"
           ])
           ++ [
             "https://ai.cachix.org"
