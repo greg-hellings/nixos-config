@@ -20,11 +20,11 @@ const BASE = "https://download.kiwix.org/zim"
 func getTypes() []string {
 	return []string{
 		"phet",
-		// "wikipedia",
-		// "wiktionary",
-		// "wikiversity",
-		// "wikisource",
-		// "wikibooks",
+		"wikipedia",
+		"wiktionary",
+		"wikiversity",
+		"wikisource",
+		"wikibooks",
 		"gutenberg",
 		"ted",
 	}

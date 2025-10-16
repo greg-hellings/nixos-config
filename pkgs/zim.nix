@@ -24,7 +24,7 @@ let
       installPhase = ''
         set -x
         ls -lR ${finalAttrs.src}
-        cp ${finalAttrs.src} $out
+        ln -s ${finalAttrs.src}/${finalAttrs.name} $out
       '';
     });
   rawZims = builtins.fromJSON (builtins.readFile ./zim/blobs.json);
