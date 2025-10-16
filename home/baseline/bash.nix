@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, lib, ... }:
 
 {
   programs.bash = {
@@ -14,7 +14,7 @@
     sessionVariables = {
       ANSIBLE_COLLECTIONS_PATH = "\${HOME}/src/";
       CLICOLOR = "1";
-      EDITOR = "${pkgs.vim}/bin/vim";
+      EDITOR = lib.getExe config.programs.nixvim.build.package;
       GIT_SSL_NO_VERIFY = "True";
       LSCOLORS = "ExGxBxDxCxEgEdxbxgxcxd";
       MAVEN_OPTS = " -Dmaven.wagon.http.ssl.insecure=true ";

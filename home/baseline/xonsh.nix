@@ -49,7 +49,7 @@
         GOPATH = "${config.home.homeDirectory}/src/go";
         GOBIN = "${config.home.homeDirectory}/src/bin";
 
-        EDITOR = lib.getExe config.programs.neovim.package;
+        EDITOR = lib.getExe config.programs.nixvim.build.package;
       };
 
       aliases = {

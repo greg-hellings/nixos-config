@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   colorschemes.gruvbox.enable = true;
+  defaultEditor = true;
   globals = {
     indent_guides_enable_on_vim_startup = 1;
     nix_recommended_style = 0;

@@ -9,7 +9,7 @@
     sessionVariables = {
       AWS_SHARED_CREDENTIALS_FILE = "/run/agenix/cache-credentials";
       CARAPACE_BRIDGES = "zsh,bash";
-      EDITOR = lib.getExe config.programs.neovim.package;
+      EDITOR = lib.mkForce (lib.getExe config.programs.nixvim.build.package);
       GOPATH = "${config.home.homeDirectory}/src/go";
       GOBIN = "${config.home.homeDirectory}/src/bin";
       LIBMYSQL_ENABLE_CLEARTEXT_PLUGIN = "1";
