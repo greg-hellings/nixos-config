@@ -54,7 +54,7 @@ in
           ];
         trusted-public-keys = [
           "chronicles.shire-zebra.ts.net:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
-          "nixos:1018vqYZeLLOFt+XPiB8k49w2yX8/MT7UbPLCXB92F0="
+          "default:DTGxNijw2D8FrZJPT1pFTWcLqbt60tovL+9Z+VW0HRY="
           "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
           "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
           "greg-hellings.cachix.org-1:y01Jl/L5evlhxdnUW6n56AiI1k8g1wxWhTxJCe7XSco="
