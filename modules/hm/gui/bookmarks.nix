@@ -208,18 +208,18 @@
                 url = "https://10.42.1.1:8006/";
               }
               {
-                name = "Isaiah";
-                url = "https://isaiah.home:8006/";
-              }
-              {
                 name = "Jeremiah";
-                url = "https://jeremiah.home:8006/";
+                url = "https://jeremiah.shire-zebra.ts.net:8006/";
               }
             ];
           }
           {
             name = "Kubernetes";
             bookmarks = [
+              {
+                name = "CloudNative PG";
+                url = "https://cloudnative-pg.io/documentation/1.26/";
+              }
               {
                 name = "Longhorn";
                 url = "http://longhorn.shire-zebra.ts.net";
@@ -231,16 +231,25 @@
             ];
           }
           {
+            name = "Bitcoin";
+            bookmarks = [
+              {
+                name = "Bitcoin dashboard";
+                url = "http://hosea.shire-zebra.ts.net:60845/";
+              }
+              {
+                name = "Ride the Lightning";
+                url = "http://hosea.shire-zebra.ts.net:3000/";
+              }
+            ];
+          }
+          {
             name = "Password Hash";
             url = "https://unix4lyfe.org/crypt/";
           }
           {
             name = "Keymap editor";
             url = "https://nickcoutsos.github.io/keymap-editor/";
-          }
-          {
-            name = "Bitcoin dashboard";
-            url = "http://hosea.home:60845";
           }
           {
             name = "Syncthing - nas";
@@ -295,15 +304,6 @@
           {
             name = "HELOC payoff calculator";
             url = "https://acceleratedstrategies.com/free-calculator/";
-          }
-        ];
-      }
-      {
-        name = "Docs";
-        bookmarks = [
-          {
-            name = "CloudNative PG";
-            url = "https://cloudnative-pg.io/documentation/1.26/";
           }
         ];
       }
