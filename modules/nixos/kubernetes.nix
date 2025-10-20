@@ -11,8 +11,8 @@ let
     sha256 = "0vx1nfyhl0rzb6psfxplq8pfp18mrrdk83n8rj2ph8q6r15vcih5";
   };
   flux = pkgs.fetchurl {
-    url = "https://github.com/fluxcd/flux2/releases/download/v2.5.1/install.yaml";
-    sha256 = "1cjpxfgnzycwnac58gd3naxgmwsj5bdrx0vzh56aiq1m5c0h3dhs";
+    url = "https://github.com/fluxcd/flux2/releases/download/v2.7.2/install.yaml";
+    sha256 = "sha256-Qs1qJmgZm8q9xZsORjT/N/wzpbWVVODXtzDpjnAYMuQ=";
   };
 in
 {
