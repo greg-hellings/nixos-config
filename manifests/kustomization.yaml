@@ -2,6 +2,7 @@ resources:
   - helm
   - bitwarden
   - secrets
+  - cnpg-system
   - databases
   - matrix
   - gitlab-runner

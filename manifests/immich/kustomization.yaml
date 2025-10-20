@@ -1,6 +1,8 @@
+namespace: immich
+
 resources:
   - namespace.yaml
+  - chart.yaml
   - postgres-user-secret.yaml
-  - database.yaml
   - pvc.yaml
   - ingress.yaml

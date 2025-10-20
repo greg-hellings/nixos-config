@@ -1,0 +1,89 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich
+spec:
+  imageName: "ghcr.io/corentingiraud/cnpg-pgvector-vectorchord:16-migration"
+  #imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:16-v0.3.0"
+  #postgresUID: 1
+  instances: 1
+  storage:
+    size: 60Gi
+  primaryUpdateStrategy: unsupervised
+  postgresql:
+    shared_preload_libraries:
+      - vectors.so
+      - vchord.so
+
+  bootstrap:
+    recovery:
+      source: origin
+    # initdb:
+    #   database: immich
+    #   owner: immich
+    #   secret:
+    #     name: postgres-user-immich
+    #   dataChecksums: true
+    #   postInitApplicationSQL:
+    #     - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+    #     - SET search_path TO "$user", public, vectors;
+    #     - CREATE EXTENSION IF NOT EXISTS "cube";
+    #     - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+    #     - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
+
+  externalClusters:
+    - name: origin
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: k3sbackup-objectstore
+          serverName: pgvector
+
+  managed:
+    roles:
+      - name: immich
+        ensure: present
+        comment: Immich DB user
+        login: true
+        superuser: true
+        passwordSecret:
+          name: postgres-user-immich
+
+  # plugins:
+  #   - name: barman-cloud.cloudnative-pg.io
+  #     isWALArchiver: true
+  #     parameters:
+  #       barmanObjectName: k3sbackup-objectstore
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: database-immich
+spec:
+  name: immich
+  owner: immich
+  cluster:
+    name: immich
+  extensions:
+    - name: vectors
+      ensure: present
+    - name: vectorchord
+      ensure: present
+    - name: cube
+      ensure: present
+    - name: earthdistance
+      ensure: present
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: immich-backup
+spec:
+  immediate: true # Create one when this is added to the cluster
+  schedule: "0 2 0 * * *" # 1AM, nightly
+  backupOwnerReference: self
+  cluster:
+    name: immich
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

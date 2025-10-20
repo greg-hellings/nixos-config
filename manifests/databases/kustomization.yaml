@@ -7,4 +7,5 @@ resources:
   - postgres-gitlab.yaml
   - postgres-pgadmin.yaml
   - postgres-matrix.yaml
+  - immich.yaml
   - ingress.yaml

@@ -1,0 +1,77 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: OCIRepository
+metadata:
+  name: immich
+spec:
+  interval: "24h"
+  url: oci://ghcr.io/immich-app/immich-charts/immich
+  ref:
+    # Version 0.10.0
+    # For some reason, I can't get it to pull by tag or by auto-discovery
+    digest: "sha256:bcffd3d504664710baa7c0bcd66dc246437c51a9a76f9b8ed1a10c7aecd80766"
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: immich
+spec:
+  interval: "1h"
+  chartRef:
+    kind: OCIRepository
+    name: immich
+    namespace: immich
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
+  values:
+    controllers:
+      main:
+        containers:
+          main:
+            image:
+              tag: v2.1.0
+            env:
+              DB_HOSTNAME: immich-rw.db.svc.cluster.local
+              DB_DATABASE_NAME: immich
+              DB_USERNAME:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-user-immich
+                    key: username
+              DB_PASSWORD:
+                valueFrom:
+                  secretKeyRef:
+                    name: postgres-user-immich
+                    key: password
+    immich:
+      persistence:
+        library:
+          existingClaim: immich-storage
+    server:
+      ingress:
+        main:
+          enabled: true
+          annogations:
+            ingressClassName: traefik
+            # Set body size to 10G to allow uploading large things
+            traefik.ingress.kubernetes.io/buffering: |
+              maxrequestbodybytes: 10000000000
+              memrequestbodybytes: 20000000000
+          hosts:
+            - host: immich.cluster
+              paths:
+                - path: "/"
+    machine-learning:
+      persistence:
+        cache:
+          type: persistentVolumeClaim
+          storageClass: longhorn-default
+          size: 25Gi
+    valkey:
+      enabled: true
+      persistence:
+        data:
+          enabled: true
+          size: 2Gi
+          type: persistentVolumeClaim
+          storageClass: longhorn-default

@@ -1,0 +1,89 @@
+# This one needs to have a different name than the cluster it is being
+# restored from, so we create a restore cluster here and do not configure
+# it with any backup settings
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  namespace: db
+  name: pgvector-restore
+spec:
+  imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:16-v0.3.0"
+  instances: 1
+  storage:
+    size: 60Gi
+  primaryUpdateStrategy: unsupervised
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+
+  bootstrap:
+    recovery:
+      source: origin
+  externalClusters:
+    - name: origin
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: k3sbackup-objectstore
+          serverName: pgvector
+  managed:
+    roles:
+      - name: immich
+        ensure: present
+        comment: Immich DB user
+        login: true
+        superuser: true
+        passwordSecret:
+          name: postgres-user-immich
+---
+# This cluster will stream from the above one, since we cannot rename
+# objects in Kubernetes
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  namespace: db
+  name: pgvector
+spec:
+  imageName: "ghcr.io/immich-app/postgres:16-vectorchord0.5.3"
+  #imageName: "ghcr.io/tensorchord/cloudnative-pgvecto.rs:16-v0.3.0"
+  instances: 1
+  storage:
+    size: 60Gi
+  primaryUpdateStrategy: unsupervised
+  postgresUID: 26
+  postgresql:
+    shared_preload_libraries:
+      - "vectors.so"
+
+  bootstrap:
+    pg_basebackup:
+      source: pgvector-restore
+  externalClusters:
+    - name: pgvector-restore
+      connectionParameters:
+        host: pgvector-restore-rw
+        user: streaming_replica
+        sslmode: verify-full
+      sslKey:
+        name: pgvector-restore-replication
+        key: tls.key
+      sslCert:
+        name: pgvector-restore-replication
+        key: tls.crt
+      sslRootCert:
+        name: pgvector-restore-ca
+        key: ca.crt
+  managed:
+    roles:
+      - name: immich
+        ensure: present
+        comment: Immich DB user
+        login: true
+        superuser: true
+        passwordSecret:
+          name: postgres-user-immich
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: k3sbackup-objectstore

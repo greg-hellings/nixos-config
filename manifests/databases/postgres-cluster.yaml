@@ -35,7 +35,7 @@ spec:
 
   plugins:
     - name: barman-cloud.cloudnative-pg.io
-      isWALArchiver: false
+      isWALArchiver: true
       parameters:
         barmanObjectName: k3sbackup-objectstore
 
@@ -85,3 +85,6 @@ spec:
   backupOwnerReference: self
   cluster:
     name: postgres
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
