@@ -8,11 +8,11 @@ spec:
     name: operator-oauth
     deletionPolicy: Delete
     template:
-      type: kubernetes.io/basic-auth
+      type: Opaque
       data:
-        username: |-
+        client_id: |-
           {{ .username }}
-        password: |-
+        client_secret: |-
           {{ .password }}
   data:
     - secretKey: username
