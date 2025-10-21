@@ -34,6 +34,8 @@ in
       direnv
       home-manager
       just
+      go
+      gopls
       k9s
       kubectl
       mariadb
