@@ -5,7 +5,15 @@ let
 in
 {
   options = {
-    greg.tailscale.enable = lib.mkEnableOption "Enable Tailscale";
+    greg.tailscale = {
+      enable = lib.mkEnableOption "Enable Tailscale";
+
+      hostname = lib.mkOption {
+        description = "Name on the tailnet to use";
+        default = config.networking.hostName;
+        type = lib.types.str;
+      };
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -20,6 +28,10 @@ in
       enable = true;
       authKeyFile = config.age.secrets.tailscale-key.path;
       authKeyParameters.preauthorized = true;
+      extraUpFlags = [
+        "--hostname"
+        cfg.hostname
+      ];
       useRoutingFeatures = "both";
     };
     systemd.services.tailscaled.partOf = [ "network-online.target" ];
