@@ -267,6 +267,10 @@
             name = "Restic";
             url = "http://nas1.shire-zebra.ts.net:30248";
           }
+          {
+            name = "Kubernetes Dashboard";
+            url = "https://dashboard.shire-zebra.ts.net/";
+          }
         ];
       }
       {

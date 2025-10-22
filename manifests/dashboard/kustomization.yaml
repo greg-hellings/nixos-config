@@ -1,0 +1,6 @@
+namespace: dashboard
+
+resources:
+  - namespace.yaml
+  - chart.yaml
+  - user.yaml
