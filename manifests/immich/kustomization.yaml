@@ -6,3 +6,4 @@ resources:
   - postgres-user-secret.yaml
   - pvc.yaml
   - ingress.yaml
+  - backup.yaml

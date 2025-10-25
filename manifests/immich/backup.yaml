@@ -1,0 +1,61 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: immich-login
+spec:
+  target:
+    name: immich-login
+    deletionPolicy: Delete
+    template:
+      type: Opaque
+      data:
+        apikey: "{{ .apikey }}"
+  secretStoreRef:
+    name: bitwarden-fields
+    kind: ClusterSecretStore
+  data:
+    - secretKey: apikey
+      remoteRef:
+        key: "dd0de40c-9ad6-4034-9d5c-b311016ebf19"
+        property: apikey
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: backup
+spec:
+  schedule: "0 4 * * *" # At 4am each day
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          volumes:
+            - name: nas1
+              nfs:
+                path: /mnt/all/backups/immich
+                server: nas1.shire-zebra.ts.net
+          containers:
+            - name: immich-go
+              image: "nixos/nix:latest"
+              imagePullPolicy: "Always"
+              command:
+                - nix-shell
+                - "-p"
+                - immich-go
+                - "--run"
+                - >-
+                  immich-go archive
+                  --write-to-folder /nas1
+                  from-immich
+                  --from-api-key "$IMMICH_API_KEY"
+                  --from-server http://immich-server:2283
+              volumeMounts:
+                - name: nas1
+                  mountPath: /nas1
+              env:
+                - name: IMMICH_API_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: immich-login
+                      key: apikey
