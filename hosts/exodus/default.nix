@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   top,
   ...
 }:
@@ -39,6 +40,17 @@
     };
   };
 
+  hardware = {
+    graphics = {
+      enable = true;
+      extraPackages = with pkgs; [
+        intel-media-driver
+        vaapiIntel
+        vpl-gpu-rt
+      ];
+    };
+  };
+
   nix.settings = {
     extra-platforms = config.boot.binfmt.emulatedSystems;
     system-features = [ "gccarch-x86-64-v3" ];
@@ -49,7 +61,13 @@
     networkmanager.enable = lib.mkForce true;
   };
 
-  programs.adb.enable = true;
+  programs = {
+    adb.enable = true;
+    steam = {
+      enable = true;
+      protontricks.enable = true;
+    };
+  };
 
   services = {
     fprintd.enable = true;
