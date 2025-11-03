@@ -9,7 +9,7 @@
   imports = [
     ./boot.nix
     ./hardware-configuration.nix
-    ./virt.nix
+    # ./virt.nix
     top.nix-hardware.nixosModules.system76
   ];
 
@@ -86,7 +86,6 @@
   };
 
   users.users.greg.extraGroups = [
-    "kvm"
     "podman"
   ];
 

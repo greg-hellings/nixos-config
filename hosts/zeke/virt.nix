@@ -13,7 +13,6 @@ let
   ];
 in
 {
-  greg.runner.enable = true;
   # These options enable sharing of the GPU with the VM
   boot = {
     # Order matters here, to prevent the AMD driver from getting to the driver before
