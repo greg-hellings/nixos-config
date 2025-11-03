@@ -10,13 +10,12 @@ let
     enableACME = dest.ssl;
     locations."${dest.path}" = {
       proxyPass = dest.target;
-      extraConfig =
-        ''
-          proxy_http_version 1.1;
-          proxy_set_header Upgrade $http_upgrade;
-          proxy_set_header Connection $connection_upgrade;
-        ''
-        + dest.extraConfig;
+      extraConfig = ''
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection $connection_upgrade;
+      ''
+      + dest.extraConfig;
     };
     serverAliases = lib.mkIf dest.genAliases [ "${alias name}" ];
   };
