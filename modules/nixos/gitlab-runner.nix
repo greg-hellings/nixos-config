@@ -10,7 +10,14 @@ let
     EFI_DIR = "${pkgs.OVMF.fd}/FV/";
     STORAGE_URL = "s3.thehellings.lan:9000";
   };
+  runnerCfg = file: {
+    inherit environmentVariables;
+    authenticationTokenConfigFile = file;
+    executor = "shell";
+    limit = cfg.threads;
+  };
 in
+# We want exactly one of these to be true, but not both. Neither can both be false
 {
   options.greg.runner = {
     enable = lib.mkEnableOption "Enable as a gitlab-runner with both libvirt and virtualbox";
@@ -20,24 +27,30 @@ in
       type = lib.types.int;
       description = "The maximum number of concurrent jobs";
     };
+
+    qemu = lib.mkEnableOption "Enable the qemu host (mutually exclusive with vbox)";
+    vbox = lib.mkEnableOption "Enable the vbox host (mutually exclusive with qemu)";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable ({
+    # assertions = [
+    #   {
+    #     assertion = cfg.qemu || cfg.vbox && (cfg.qemu != cfg.vbox);
+    #     message = "You must enable exactly one of qemu or vbox";
+    #   }
+    # ];
     # Shared configurations
     age.secrets = {
       qemu.file = ../../secrets/gitlab/nixos-qemu-shell.age;
       vbox.file = ../../secrets/gitlab/nixos-vbox-shell.age;
     };
 
-    # Defaults to running libvirt support
     services.gitlab-runner = {
       enable = true;
       settings.concurrent = cfg.threads;
-      services.qemu = {
-        inherit environmentVariables;
-        executor = "shell";
-        limit = cfg.threads;
-        authenticationTokenConfigFile = config.age.secrets.qemu.path;
+      services = {
+        qemu = lib.mkIf cfg.qemu (runnerCfg config.age.secrets.qemu.path);
+        vbox = lib.mkIf cfg.vbox (runnerCfg config.age.secrets.vbox.path);
       };
     };
 
@@ -49,9 +62,11 @@ in
       };
     };
 
+    users.extraGroups.vboxusers.members = lib.optional cfg.vbox "greg";
+
     virtualisation = {
-      libvirtd = {
-        enable = lib.mkDefault true;
+      libvirtd = lib.mkIf cfg.qemu {
+        enable = true;
         allowedBridges = [
           "br0"
           "virbr0"
@@ -59,39 +74,10 @@ in
         onBoot = "ignore"; # only restart VMs labeled 'autostart'
         qemu.ovmf.enable = true;
       };
-    };
-    # Boot into this specialisation if you want to build vbox hosts
-    # with this box at that time
-    specialisation = {
-      vbox.configuration = {
-        users.extraGroups.vboxusers.members = [ "greg" ];
-
-        virtualisation = {
-          libvirtd.enable = false;
-          virtualbox.host = {
-            enable = true;
-            enableExtensionPack = true;
-          };
-        };
-
-        services.gitlab-runner.services = lib.mkForce {
-          vbox = {
-            inherit environmentVariables;
-            authenticationTokenConfigFile = config.age.secrets.vbox.path;
-            executor = "shell";
-            limit = 5;
-          };
-        };
-
-        systemd.services.gitlab-runner = {
-          serviceConfig = {
-            DevicePolicy = lib.mkForce "auto";
-            User = "root";
-            DynamicUser = lib.mkForce false;
-          };
-        };
+      virtualbox.host = lib.mkIf cfg.vbox {
+        enable = true;
+        enableExtensionPack = true;
       };
     };
-
-  };
+  });
 }

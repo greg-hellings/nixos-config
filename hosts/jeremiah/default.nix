@@ -85,6 +85,7 @@ in
     runner = {
       enable = true;
       threads = 3;
+      qemu = true;
     };
   };
 

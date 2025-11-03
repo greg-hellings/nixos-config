@@ -33,10 +33,9 @@
     podman.enable = true;
     print.enable = true;
     tailscale.enable = true;
-    runner.enable = true;
-    vmdev = {
-      enable = false;
-      system = "intel";
+    runner = {
+      enable = true;
+      qemu = true;
     };
   };
 

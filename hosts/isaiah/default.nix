@@ -41,7 +41,10 @@
     };
     tailscale.enable = true;
     remote-builder.enable = true;
-    runner.enable = true;
+    runner = {
+      enable = true;
+      qemu = true;
+    };
   };
 
   fileSystems = {

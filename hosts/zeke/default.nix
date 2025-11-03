@@ -22,7 +22,10 @@
       priority = 253;
     };
     remote-builder.enable = true;
-    runner.enable = true;
+    runner = {
+      enable = true;
+      vbox = true;
+    };
     tailscale.enable = true;
   };
 
@@ -86,4 +89,10 @@
     "kvm"
     "podman"
   ];
+
+  virtualisation.virtualbox.host = {
+    enableExtensionPack = true;
+    headless = true;
+    enableWebService = true;
+  };
 }
