@@ -65,9 +65,12 @@ in
         ++
 
           # Items that are not supported on ARM/Linux
-          (excludes [ "aarch64-linux" ] [
-            synology-drive-client
-          ]);
+          (excludes
+            [ "aarch64-linux" ]
+            [
+              synology-drive-client
+            ]
+          );
 
       programs.firefox = {
         enable = true; # (!pkgs.stdenv.hostPlatform.isDarwin);

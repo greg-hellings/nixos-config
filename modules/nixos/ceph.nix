@@ -432,66 +432,64 @@ in
           # TODO Use `udevadm trigger --settle` instead of the separate `udevadm settle`
           #      once that feature is available to us with systemd >= 238;
           #      see https://github.com/systemd/systemd/commit/792cc203a67edb201073351f5c766fce3d5eab45
-          preStart =
-            ''
-              set -x
-              ${ensureCephDirs}
-              install -m 755 -o ${config.users.users.ceph.name} -g ${config.users.groups.ceph.name} -d /var/lib/ceph/bootstrap-osd
-              # `install` is not atomic, see
-              # https://lists.gnu.org/archive/html/bug-coreutils/2010-02/msg00243.html
-              # so use `mktemp` + `mv` to make it atomic.
-              TMPFILE=$(mktemp --tmpdir=/var/lib/ceph/bootstrap-osd/)
-              install -o ${config.users.users.ceph.name} -g ${config.users.groups.ceph.name} ${osdConfig.bootstrapKeyring} "$TMPFILE"
-              mv "$TMPFILE" /var/lib/ceph/bootstrap-osd/ceph.keyring
+          preStart = ''
+            set -x
+            ${ensureCephDirs}
+            install -m 755 -o ${config.users.users.ceph.name} -g ${config.users.groups.ceph.name} -d /var/lib/ceph/bootstrap-osd
+            # `install` is not atomic, see
+            # https://lists.gnu.org/archive/html/bug-coreutils/2010-02/msg00243.html
+            # so use `mktemp` + `mv` to make it atomic.
+            TMPFILE=$(mktemp --tmpdir=/var/lib/ceph/bootstrap-osd/)
+            install -o ${config.users.users.ceph.name} -g ${config.users.groups.ceph.name} ${osdConfig.bootstrapKeyring} "$TMPFILE"
+            mv "$TMPFILE" /var/lib/ceph/bootstrap-osd/ceph.keyring
 
-              # Trigger udev rules for permissions of block devices and wait for them to settle.
-              udevadm trigger --name-match=${osdConfig.blockDevice}
+            # Trigger udev rules for permissions of block devices and wait for them to settle.
+            udevadm trigger --name-match=${osdConfig.blockDevice}
+          ''
+          + lib.optionalString (osdConfig.dbBlockDevice != null) ''
+            udevadm trigger --name-match=${osdConfig.dbBlockDevice}
+          ''
+          + ''
+            udevadm settle
+          ''
+          + (optionalString (!osdConfig.skipZap) (
+            ''
+              # Zap OSD block devices, otherwise `ceph-osd` below will try to fsck if there's some old
+              # ceph data on the block device (see https://tracker.ceph.com/issues/24099).
+              ${cfg.package}/bin/ceph-volume lvm zap ${osdConfig.blockDevice}
             ''
             + lib.optionalString (osdConfig.dbBlockDevice != null) ''
-              udevadm trigger --name-match=${osdConfig.dbBlockDevice}
+              ${cfg.package}/bin/ceph-volume lvm zap ${osdConfig.dbBlockDevice}
             ''
-            + ''
-              udevadm settle
-            ''
-            + (optionalString (!osdConfig.skipZap) (
-              ''
-                # Zap OSD block devices, otherwise `ceph-osd` below will try to fsck if there's some old
-                # ceph data on the block device (see https://tracker.ceph.com/issues/24099).
-                ${cfg.package}/bin/ceph-volume lvm zap ${osdConfig.blockDevice}
-              ''
-              + lib.optionalString (osdConfig.dbBlockDevice != null) ''
-                ${cfg.package}/bin/ceph-volume lvm zap ${osdConfig.dbBlockDevice}
-              ''
-            ));
+          ));
 
-          script =
-            ''
-              set -euo pipefail
-              set -x
-              until [ -f /etc/ceph/${cfg.clusterName}.client.admin.keyring ]
-              do
-                sleep 1
-              done
+          script = ''
+            set -euo pipefail
+            set -x
+            until [ -f /etc/ceph/${cfg.clusterName}.client.admin.keyring ]
+            do
+              sleep 1
+            done
 
-              OSD_SECRET=$(${cfg.package}/bin/ceph-authtool --gen-print-key)
-              echo "{\"cephx_secret\": \"$OSD_SECRET\"}" | \
-                ${cfg.package}/bin/ceph --cluster ${cfg.clusterName} osd new ${osdConfig.uuid} ${toString osdConfig.id} -i - \
-                -n client.bootstrap-osd -k ${osdConfig.bootstrapKeyring}
-              mkdir -p /var/lib/ceph/osd/${cfg.clusterName}-${toString osdConfig.id}
+            OSD_SECRET=$(${cfg.package}/bin/ceph-authtool --gen-print-key)
+            echo "{\"cephx_secret\": \"$OSD_SECRET\"}" | \
+              ${cfg.package}/bin/ceph --cluster ${cfg.clusterName} osd new ${osdConfig.uuid} ${toString osdConfig.id} -i - \
+              -n client.bootstrap-osd -k ${osdConfig.bootstrapKeyring}
+            mkdir -p /var/lib/ceph/osd/${cfg.clusterName}-${toString osdConfig.id}
 
-              ln -s ${osdConfig.blockDevice} /var/lib/ceph/osd/${cfg.clusterName}-${toString osdConfig.id}/block
-            ''
-            + lib.optionalString (osdConfig.dbBlockDevice != null) ''
-              ln -s ${osdConfig.dbBlockDevice} /var/lib/ceph/osd/${cfg.clusterName}-${toString osdConfig.id}/block.db
-            ''
-            + ''
+            ln -s ${osdConfig.blockDevice} /var/lib/ceph/osd/${cfg.clusterName}-${toString osdConfig.id}/block
+          ''
+          + lib.optionalString (osdConfig.dbBlockDevice != null) ''
+            ln -s ${osdConfig.dbBlockDevice} /var/lib/ceph/osd/${cfg.clusterName}-${toString osdConfig.id}/block.db
+          ''
+          + ''
 
-              ${cfg.package}/bin/ceph-authtool --create-keyring /var/lib/ceph/osd/ceph-${toString osdConfig.id}/keyring \
-                --name osd.${toString osdConfig.id} --add-key $OSD_SECRET
+            ${cfg.package}/bin/ceph-authtool --create-keyring /var/lib/ceph/osd/ceph-${toString osdConfig.id}/keyring \
+              --name osd.${toString osdConfig.id} --add-key $OSD_SECRET
 
-              ${cfg.package}/bin/ceph-osd -i ${toString osdConfig.id} --mkfs --osd-uuid ${osdConfig.uuid} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name} --osd-objectstore bluestore
-              touch ${osdExistenceFile}
-            '';
+            ${cfg.package}/bin/ceph-osd -i ${toString osdConfig.id} --mkfs --osd-uuid ${osdConfig.uuid} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name} --osd-objectstore bluestore
+            touch ${osdExistenceFile}
+          '';
 
           serviceConfig = {
             Type = "oneshot";
@@ -529,7 +527,8 @@ in
           path = [
             # TODO: use wrapProgram in the ceph package for this in the future
             pkgs.getopt
-          ] ++ cephDeviceHealthMonitoringPathsOrPackages;
+          ]
+          ++ cephDeviceHealthMonitoringPathsOrPackages;
 
           restartTriggers = [ config.environment.etc."ceph/${cfg.clusterName}.conf".source ];
 
@@ -692,238 +691,237 @@ in
         ) cfg.osds
       );
 
-      systemd.services =
-        {
+      systemd.services = {
 
-          ceph-mon-setup = mkIf cfg.monitor.enable {
-            description = "Initialize ceph monitor";
+        ceph-mon-setup = mkIf cfg.monitor.enable {
+          description = "Initialize ceph monitor";
 
-            preStart = ensureCephDirs;
+          preStart = ensureCephDirs;
 
-            script =
-              let
-                # `--addv` seems currently required to get msgr-v2 working, see:
-                #     https://tracker.ceph.com/issues/53751#note-11
-                monmapNodes = builtins.concatStringsSep " " (
-                  lib.concatMap (mon: [
-                    "--addv"
-                    mon.hostname
-                    "[v2:${mon.ipAddress}:3300,v1:${mon.ipAddress}:6789]"
-                  ]) cfg.initialMonitors
-                );
-              in
-              # Monitors cannot simply be changed in config, one has to update the monmap, see note [replacing-ceph-monmap-ips-for-existing-cluster]
-              ''
-                set -euo pipefail
-                rm -rf "${monDir}" # Start from scratch.
-                echo "Initializing monitor."
-                MONMAP_DIR=`mktemp -d`
-                ${cfg.package}/bin/monmaptool --create ${monmapNodes} --fsid ${cfg.fsid} "$MONMAP_DIR/monmap"
-                ${cfg.package}/bin/ceph-mon --cluster ${cfg.clusterName} --mkfs -i ${cfg.monitor.nodeName} --monmap "$MONMAP_DIR/monmap" --keyring ${cfg.monitor.initialKeyring}
-                rm -r "$MONMAP_DIR"
-                touch ${monDir}/done
-              '';
-
-            serviceConfig = {
-              Type = "oneshot";
-              RemainAfterExit = true;
-              PermissionsStartOnly = true; # only run the script as ceph
-              User = config.users.users.ceph.name;
-              Group = config.users.groups.ceph.name;
-            };
-            unitConfig = {
-              ConditionPathExists = "!${monDir}/done";
-            };
-          };
-
-          ceph-mon = mkIf cfg.monitor.enable {
-            description = "Ceph monitor";
-
-            requires = [ (ensureUnitExists config "ceph-mon-setup.service") ];
-            requiredBy = [ "multi-user.target" ];
-            after = [
-              "network.target"
-              "local-fs.target"
-              "time-sync.target"
-              (ensureUnitExists config "ceph-mon-setup.service")
-            ];
-            wants = [
-              "network.target"
-              "local-fs.target"
-              "time-sync.target"
-            ];
-
-            restartTriggers = [ config.environment.etc."ceph/${cfg.clusterName}.conf".source ];
-
-            path = cephDeviceHealthMonitoringPathsOrPackages;
-
-            preStart = ensureTransientCephDirs;
-
-            serviceConfig = {
-              LimitNOFILE = "1048576";
-              LimitNPROC = "1048576";
-              ExecStart = ''
-                ${cfg.package}/bin/ceph-mon -f --cluster ${cfg.clusterName} --id ${cfg.monitor.nodeName} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name} "--public_bind_addr=${cfg.monitor.bindAddr}" "--public_addr=${cfg.monitor.advertisedPublicAddr}"
-              '';
-              ExecReload = ''
-                ${pkgs.coreutils}/bin/kill -HUP $MAINPID
-              '';
-              PrivateDevices = "yes";
-              ProtectHome = "true";
-              ProtectSystem = "full";
-              PrivateTmp = "true";
-              TasksMax = "infinity";
-              Restart = "on-failure";
-              # StartLimitBurst="5";
-              RestartSec = "10";
-            };
-            # startLimitIntervalSec = 30 * 60;
-          };
-
-          ceph-mgr-setup = mkIf cfg.manager.enable {
-            description = "Initialize Ceph manager";
-
-            preStart = ensureCephDirs;
-
-            script = ''
+          script =
+            let
+              # `--addv` seems currently required to get msgr-v2 working, see:
+              #     https://tracker.ceph.com/issues/53751#note-11
+              monmapNodes = builtins.concatStringsSep " " (
+                lib.concatMap (mon: [
+                  "--addv"
+                  mon.hostname
+                  "[v2:${mon.ipAddress}:3300,v1:${mon.ipAddress}:6789]"
+                ]) cfg.initialMonitors
+              );
+            in
+            # Monitors cannot simply be changed in config, one has to update the monmap, see note [replacing-ceph-monmap-ips-for-existing-cluster]
+            ''
               set -euo pipefail
-              mkdir -p ${mgrDir}
-              until [ -f /etc/ceph/${cfg.clusterName}.client.admin.keyring ]
-              do
-                sleep 1
-              done
-              ${cfg.package}/bin/ceph auth get-or-create mgr.${cfg.manager.nodeName} mon 'allow profile mgr' mds 'allow *' osd 'allow *' -o ${mgrDir}/keyring
-              touch "${mgrDir}/.nix_done"
+              rm -rf "${monDir}" # Start from scratch.
+              echo "Initializing monitor."
+              MONMAP_DIR=`mktemp -d`
+              ${cfg.package}/bin/monmaptool --create ${monmapNodes} --fsid ${cfg.fsid} "$MONMAP_DIR/monmap"
+              ${cfg.package}/bin/ceph-mon --cluster ${cfg.clusterName} --mkfs -i ${cfg.monitor.nodeName} --monmap "$MONMAP_DIR/monmap" --keyring ${cfg.monitor.initialKeyring}
+              rm -r "$MONMAP_DIR"
+              touch ${monDir}/done
             '';
 
-            serviceConfig = {
-              Type = "oneshot";
-              RemainAfterExit = true;
-              PermissionsStartOnly = true; # only run the script as ceph
-              User = config.users.users.ceph.name;
-              Group = config.users.groups.ceph.name;
-            };
-            unitConfig = {
-              ConditionPathExists = "!${mgrDir}/.nix_done";
-            };
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            PermissionsStartOnly = true; # only run the script as ceph
+            User = config.users.users.ceph.name;
+            Group = config.users.groups.ceph.name;
           };
-
-          ceph-mgr = mkIf cfg.manager.enable {
-            description = "Ceph manager";
-
-            requires = [ (ensureUnitExists config "ceph-mgr-setup.service") ];
-            requiredBy = [ "multi-user.target" ];
-            after = [
-              "network.target"
-              "local-fs.target"
-              "time-sync.target"
-              (ensureUnitExists config "ceph-mgr-setup.service")
-            ];
-            wants = [
-              "network.target"
-              "local-fs.target"
-              "time-sync.target"
-            ];
-
-            restartTriggers = [ config.environment.etc."ceph/${cfg.clusterName}.conf".source ];
-
-            preStart = ensureTransientCephDirs;
-
-            serviceConfig = {
-              LimitNOFILE = "1048576";
-              LimitNPROC = "1048576";
-
-              ExecStart = ''
-                ${cfg.package}/bin/ceph-mgr -f --cluster ${cfg.clusterName} --id ${cfg.manager.nodeName} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name}
-              '';
-              ExecReload = ''
-                ${pkgs.coreutils}/bin/kill -HUP $MAINPID
-              '';
-              Restart = "on-failure";
-              RestartSec = 10;
-              # StartLimitBurst="3";
-            };
-            # startLimitIntervalSec = 30 * 60;
+          unitConfig = {
+            ConditionPathExists = "!${monDir}/done";
           };
+        };
 
-          ceph-mds-setup = mkIf cfg.mds.enable {
-            description = "Initialize Ceph MDS";
+        ceph-mon = mkIf cfg.monitor.enable {
+          description = "Ceph monitor";
 
-            preStart = ensureCephDirs;
+          requires = [ (ensureUnitExists config "ceph-mon-setup.service") ];
+          requiredBy = [ "multi-user.target" ];
+          after = [
+            "network.target"
+            "local-fs.target"
+            "time-sync.target"
+            (ensureUnitExists config "ceph-mon-setup.service")
+          ];
+          wants = [
+            "network.target"
+            "local-fs.target"
+            "time-sync.target"
+          ];
 
-            script = ''
-              set -euo pipefail
-              mkdir -p ${mdsDir}
-              until [ -f /etc/ceph/${cfg.clusterName}.client.admin.keyring ]
-              do
-                sleep 1
-              done
-              ${cfg.package}/bin/ceph auth get-or-create mds.${cfg.mds.nodeName} osd 'allow rwx' mds 'allow' mon 'allow profile mds' -o ${mdsDir}/keyring
-              touch "${mdsDir}/.nix_done"
+          restartTriggers = [ config.environment.etc."ceph/${cfg.clusterName}.conf".source ];
+
+          path = cephDeviceHealthMonitoringPathsOrPackages;
+
+          preStart = ensureTransientCephDirs;
+
+          serviceConfig = {
+            LimitNOFILE = "1048576";
+            LimitNPROC = "1048576";
+            ExecStart = ''
+              ${cfg.package}/bin/ceph-mon -f --cluster ${cfg.clusterName} --id ${cfg.monitor.nodeName} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name} "--public_bind_addr=${cfg.monitor.bindAddr}" "--public_addr=${cfg.monitor.advertisedPublicAddr}"
             '';
-
-            serviceConfig = {
-              Type = "oneshot";
-              RemainAfterExit = true;
-              PermissionsStartOnly = true; # only run the script as ceph
-              User = config.users.users.ceph.name;
-              Group = config.users.groups.ceph.name;
-            };
-            unitConfig = {
-              ConditionPathExists = "!${mdsDir}/.nix_done";
-            };
+            ExecReload = ''
+              ${pkgs.coreutils}/bin/kill -HUP $MAINPID
+            '';
+            PrivateDevices = "yes";
+            ProtectHome = "true";
+            ProtectSystem = "full";
+            PrivateTmp = "true";
+            TasksMax = "infinity";
+            Restart = "on-failure";
+            # StartLimitBurst="5";
+            RestartSec = "10";
           };
+          # startLimitIntervalSec = 30 * 60;
+        };
 
-          ceph-mds = mkIf cfg.mds.enable {
-            description = "Ceph MDS";
+        ceph-mgr-setup = mkIf cfg.manager.enable {
+          description = "Initialize Ceph manager";
 
-            requires = [ (ensureUnitExists config "ceph-mds-setup.service") ];
-            requiredBy = [ "multi-user.target" ];
-            after = [
-              "network.target"
-              "local-fs.target"
-              "time-sync.target"
-              (ensureUnitExists config "ceph-mds-setup.service")
-            ];
-            wants = [
-              "network.target"
-              "local-fs.target"
-              "time-sync.target"
-            ];
+          preStart = ensureCephDirs;
 
-            restartTriggers = [ config.environment.etc."ceph/${cfg.clusterName}.conf".source ];
+          script = ''
+            set -euo pipefail
+            mkdir -p ${mgrDir}
+            until [ -f /etc/ceph/${cfg.clusterName}.client.admin.keyring ]
+            do
+              sleep 1
+            done
+            ${cfg.package}/bin/ceph auth get-or-create mgr.${cfg.manager.nodeName} mon 'allow profile mgr' mds 'allow *' osd 'allow *' -o ${mgrDir}/keyring
+            touch "${mgrDir}/.nix_done"
+          '';
 
-            preStart = ensureTransientCephDirs;
-
-            serviceConfig = {
-              LimitNOFILE = "1048576";
-              LimitNPROC = "1048576";
-
-              ExecStart = ''
-                ${cfg.package}/bin/ceph-mds -f --cluster ${cfg.clusterName} --id ${cfg.mds.nodeName} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name} "--public_addr=${cfg.mds.listenAddr}"
-              '';
-              ExecReload = ''
-                ${pkgs.coreutils}/bin/kill -HUP $MAINPID
-              '';
-              Restart = "on-failure";
-              # StartLimitBurst="3";
-            };
-            # startLimitIntervalSec = 30 * 60;
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            PermissionsStartOnly = true; # only run the script as ceph
+            User = config.users.users.ceph.name;
+            Group = config.users.groups.ceph.name;
           };
+          unitConfig = {
+            ConditionPathExists = "!${mgrDir}/.nix_done";
+          };
+        };
 
-        }
-        # Make one OSD service for each configured OSD.
-        // lib.mapAttrs' (
-          localOsdServiceName: osdConfig:
-          nameValuePair "ceph-osd-setup-${localOsdServiceName}" (
-            makeCephOsdSetupSystemdService localOsdServiceName osdConfig
-          )
-        ) cfg.osds
-        // lib.mapAttrs' (
-          localOsdServiceName: osdConfig:
-          nameValuePair "ceph-osd-${localOsdServiceName}" (
-            makeCephOsdSystemdService localOsdServiceName osdConfig
-          )
-        ) cfg.osds;
+        ceph-mgr = mkIf cfg.manager.enable {
+          description = "Ceph manager";
+
+          requires = [ (ensureUnitExists config "ceph-mgr-setup.service") ];
+          requiredBy = [ "multi-user.target" ];
+          after = [
+            "network.target"
+            "local-fs.target"
+            "time-sync.target"
+            (ensureUnitExists config "ceph-mgr-setup.service")
+          ];
+          wants = [
+            "network.target"
+            "local-fs.target"
+            "time-sync.target"
+          ];
+
+          restartTriggers = [ config.environment.etc."ceph/${cfg.clusterName}.conf".source ];
+
+          preStart = ensureTransientCephDirs;
+
+          serviceConfig = {
+            LimitNOFILE = "1048576";
+            LimitNPROC = "1048576";
+
+            ExecStart = ''
+              ${cfg.package}/bin/ceph-mgr -f --cluster ${cfg.clusterName} --id ${cfg.manager.nodeName} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name}
+            '';
+            ExecReload = ''
+              ${pkgs.coreutils}/bin/kill -HUP $MAINPID
+            '';
+            Restart = "on-failure";
+            RestartSec = 10;
+            # StartLimitBurst="3";
+          };
+          # startLimitIntervalSec = 30 * 60;
+        };
+
+        ceph-mds-setup = mkIf cfg.mds.enable {
+          description = "Initialize Ceph MDS";
+
+          preStart = ensureCephDirs;
+
+          script = ''
+            set -euo pipefail
+            mkdir -p ${mdsDir}
+            until [ -f /etc/ceph/${cfg.clusterName}.client.admin.keyring ]
+            do
+              sleep 1
+            done
+            ${cfg.package}/bin/ceph auth get-or-create mds.${cfg.mds.nodeName} osd 'allow rwx' mds 'allow' mon 'allow profile mds' -o ${mdsDir}/keyring
+            touch "${mdsDir}/.nix_done"
+          '';
+
+          serviceConfig = {
+            Type = "oneshot";
+            RemainAfterExit = true;
+            PermissionsStartOnly = true; # only run the script as ceph
+            User = config.users.users.ceph.name;
+            Group = config.users.groups.ceph.name;
+          };
+          unitConfig = {
+            ConditionPathExists = "!${mdsDir}/.nix_done";
+          };
+        };
+
+        ceph-mds = mkIf cfg.mds.enable {
+          description = "Ceph MDS";
+
+          requires = [ (ensureUnitExists config "ceph-mds-setup.service") ];
+          requiredBy = [ "multi-user.target" ];
+          after = [
+            "network.target"
+            "local-fs.target"
+            "time-sync.target"
+            (ensureUnitExists config "ceph-mds-setup.service")
+          ];
+          wants = [
+            "network.target"
+            "local-fs.target"
+            "time-sync.target"
+          ];
+
+          restartTriggers = [ config.environment.etc."ceph/${cfg.clusterName}.conf".source ];
+
+          preStart = ensureTransientCephDirs;
+
+          serviceConfig = {
+            LimitNOFILE = "1048576";
+            LimitNPROC = "1048576";
+
+            ExecStart = ''
+              ${cfg.package}/bin/ceph-mds -f --cluster ${cfg.clusterName} --id ${cfg.mds.nodeName} --setuser ${config.users.users.ceph.name} --setgroup ${config.users.groups.ceph.name} "--public_addr=${cfg.mds.listenAddr}"
+            '';
+            ExecReload = ''
+              ${pkgs.coreutils}/bin/kill -HUP $MAINPID
+            '';
+            Restart = "on-failure";
+            # StartLimitBurst="3";
+          };
+          # startLimitIntervalSec = 30 * 60;
+        };
+
+      }
+      # Make one OSD service for each configured OSD.
+      // lib.mapAttrs' (
+        localOsdServiceName: osdConfig:
+        nameValuePair "ceph-osd-setup-${localOsdServiceName}" (
+          makeCephOsdSetupSystemdService localOsdServiceName osdConfig
+        )
+      ) cfg.osds
+      // lib.mapAttrs' (
+        localOsdServiceName: osdConfig:
+        nameValuePair "ceph-osd-${localOsdServiceName}" (
+          makeCephOsdSystemdService localOsdServiceName osdConfig
+        )
+      ) cfg.osds;
     };
 }

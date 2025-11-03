@@ -31,7 +31,8 @@ let
         # Local changes
         ../modules/nix-conf.nix
         ./baseline.nix
-      ] ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
+      ]
+      ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
     };
 in
 rec {

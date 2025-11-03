@@ -22,25 +22,24 @@ with lib;
     };
     # Sets up a basic KDE installation
     systemd.services.bluetooth.requiredBy = [ "multi-user.target" ];
-    services =
-      {
-        libinput.enable = true;
-        blueman.enable = true;
+    services = {
+      libinput.enable = true;
+      blueman.enable = true;
 
-        pipewire = {
-          enable = true;
-          alsa.enable = true;
-          alsa.support32Bit = true;
-          pulse.enable = true;
-        };
-      }
-      // (optionalAttrs (builtins.hasAttr "plasma6" options.services.xserver.desktopManager) {
-        desktopManager.plasma6.enable = true;
-        displayManager = {
-          defaultSession = "plasma";
-          sddm.enable = true;
-        };
-      });
+      pipewire = {
+        enable = true;
+        alsa.enable = true;
+        alsa.support32Bit = true;
+        pulse.enable = true;
+      };
+    }
+    // (optionalAttrs (builtins.hasAttr "plasma6" options.services.xserver.desktopManager) {
+      desktopManager.plasma6.enable = true;
+      displayManager = {
+        defaultSession = "plasma";
+        sddm.enable = true;
+      };
+    });
 
     programs.dconf.enable = true;
 

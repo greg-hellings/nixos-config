@@ -38,7 +38,8 @@ let
         ./baseline.nix
         top.self.modules.nixosModule
         ./${name}
-      ] ++ extraMods;
+      ]
+      ++ extraMods;
     };
 in
 {

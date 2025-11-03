@@ -20,7 +20,8 @@ in
     top.nixvimunstable.homeModules.nixvim
     top.self.modules.homeManagerModule
     ./baseline
-  ] ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
+  ]
+  ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
 
   home = {
     inherit homeDirectory username;
