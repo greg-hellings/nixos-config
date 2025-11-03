@@ -7,7 +7,8 @@ builds:
     - "packages.aarch64-darwin.img-bitwarden"
     # kmod-31 is not a thing on Darwin
     - "packages.aarch64-darwin.qemu-hook"
-    - "packages.aarch64-darwin.vfio_*"
+    - "packages.aarch64-darwin.vfio_shutdown"
+    - "packages.aarch64-darwin.vfio_startup"
     # This one is a bit of a beast and shouldn't take up Garnix time
     - "packages.aarch64-darwin.zim"
     # These are just images which I will build when
