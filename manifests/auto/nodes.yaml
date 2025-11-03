@@ -5,7 +5,11 @@ metadata:
   annotations:
     "node.longhorn.io/default-disks-config": |-
       [
-        { "path": "/var/lib/longhorn", "allowScheduling" : true, "tags": ["hdd", "large"]}
+        {
+          "path": "/var/lib/longhorn",
+          "allowScheduling" : true,
+          "tags": ["hdd", "large"]
+        }
       ]
 ---
 apiVersion: v1
@@ -15,7 +19,11 @@ metadata:
   annotations:
     "node.longhorn.io/default-disks-config": |-
       [
-        { "path": "/var/lib/longhorn", "allowScheduling" : true, "tags": ["hdd", "large"]}
+        {
+          "path": "/var/lib/longhorn",
+          "allowScheduling" : true,
+          "tags": ["hdd", "large"]
+        }
       ]
 ---
 apiVersion: v1
@@ -25,5 +33,9 @@ metadata:
   annotations:
     "node.longhorn.io/default-disks-config": |-
       [
-        { "path": "/var/lib/longhorn", "allowScheduling" : trues, "tags": ["ssd", "fast"]}
+        {
+          "path": "/var/lib/longhorn",
+          "allowScheduling" : trues,
+          "tags": ["ssd", "fast"]
+        }
       ]

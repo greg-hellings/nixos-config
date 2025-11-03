@@ -21,11 +21,12 @@ spec:
     spec:
       containers:
         - name: bitwarden-cli
-          # Since my gitlab instance depends on the database hosted in k3s, and the
-          # database depends on this image, I need a way to bootstrap the system if
-          # I am doing disaster recovery. And this is it.
-          image: "ghcr.io/greg-hellings/nixos-config/img-bitwarden:latest"
-          #image: "registry.thehellings.com/greg/nixos-config/img-bitwarden:latest"
+          # Since my gitlab instance depends on the database hosted in k3s, and
+          # the database depends on this image, I need a way to bootstrap the
+          # system if # I am doing disaster recovery. And this is it.
+          #image: "ghcr.io/greg-hellings/nixos-config/img-bitwarden:latest"
+          image: >-
+            registry.thehellings.com/greg/nixos-config/img-bitwarden:latest
           imagePullPolicy: Always
           env:
             - name: BW_CLIENTID

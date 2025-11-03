@@ -47,7 +47,14 @@ default:
   tags:
     - kubernetes
   script:
-    - podman login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" "$CI_REGISTRY"
+    - >-
+      podman login
+      -u "$CI_REGISTRY_USER"
+      -p "$CI_REGISTRY_PASSWORD"
+      "$CI_REGISTRY"
     - podman load -i "${IMG}.tar.gz"
-    - podman tag "localhost/${IMG}:latest" "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"
+    - >-
+      podman tag
+      "localhost/${IMG}:latest"
+      "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"
     - podman push "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"

@@ -8,7 +8,8 @@ spec:
   ref:
     # Version 0.10.0
     # For some reason, I can't get it to pull by tag or by auto-discovery
-    digest: "sha256:bcffd3d504664710baa7c0bcd66dc246437c51a9a76f9b8ed1a10c7aecd80766"
+    digest: >-
+      sha256:bcffd3d504664710baa7c0bcd66dc246437c51a9a76f9b8ed1a10c7aecd80766
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease

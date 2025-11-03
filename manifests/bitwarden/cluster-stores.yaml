@@ -6,6 +6,7 @@ metadata:
 spec:
   provider:
     webhook:
+      # yamllint disable-line rule:line-length
       url: "http://bitwarden-cli.bitwarden.svc.cluster.local:8087/object/item/{{ .remoteRef.key }}"
       headers:
         Content-Type: application/json
@@ -19,6 +20,7 @@ metadata:
 spec:
   provider:
     webhook:
+      # yamllint disable-line rule:line-length
       url: "http://bitwarden-cli.bitwarden.svc.cluster.local:8087/object/item/{{ .remoteRef.key }}"
       result:
         jsonPath: '$.data.fields[?@.name=="{{ .remoteRef.property }}"].value'
@@ -30,6 +32,7 @@ metadata:
 spec:
   provider:
     webhook:
+      # yamllint disable-line rule:line-length
       url: "http://bitwarden-cli.bitwarden.svc.cluster.local:8087/object/item/{{ .remoteRef.key }}"
       result:
         jsonPath: "$.data.notes"
@@ -41,5 +44,6 @@ metadata:
 spec:
   provider:
     webhook:
+      # yamllint disable-line rule:line-length
       url: "http://bitwarden-cli.bitwarden.svc.cluster.local:8087/object/attachment/{{ .remoteRef.property }}?itemid={{ .remoteRef.key }}"
       result: {}

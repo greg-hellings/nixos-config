@@ -122,6 +122,7 @@
           checks = import ./checks.nix {
             inherit system;
             inherit (top) hooks;
+            inherit (pkgs) lib;
           };
 
           devShells = import ./shells.nix {

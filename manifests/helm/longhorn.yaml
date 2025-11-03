@@ -42,6 +42,7 @@ metadata:
   name: longhorn-custom-path
   namespace: longhorn-system
 data:
+  # yamllint disable-line rule:line-length
   PATH: /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/run/wrappers/bin:/nix/var/nix/profiles/default/bin:/run/current-system/sw/bin
 ---
 apiVersion: kyverno.io/v1
@@ -113,6 +114,7 @@ metadata:
   namespace: longhorn-system
   annotations:
     ingressClassName: traefik
+    # yamllint disable-line rule:line-length
     traefik.ingress.kubernetes.io/router.middlewares: longhorn-system-basic-auth@kubernetescrd
     # Set body size to 10G to allow uploading large things
     traefik.ingress.kubernetes.io/buffering: |
@@ -121,19 +123,19 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-  - &host
-    host: longhorn.cluster
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: longhorn-frontend
-            port:
-              number: 80
-  - <<: *host
-    host: longhorn.kubernetes
+    - &host
+      host: longhorn.cluster
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: longhorn-frontend
+                port:
+                  number: 80
+    - <<: *host
+      host: longhorn.kubernetes
 ---
 apiVersion: storage.k8s.io/v1
 kind: StorageClass

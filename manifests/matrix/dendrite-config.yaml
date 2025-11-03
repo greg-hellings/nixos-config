@@ -32,6 +32,7 @@ spec:
       engineVersion: v2
       data:
         matrix.pem: "{{ .matrix_pem }}"
+        # yamllint disable rule:line-length
         dendrite.yaml: |
           version: 2
           global:
@@ -187,3 +188,4 @@ spec:
               headers: null
               baggage_restrictions: null
               throttler: null
+        # yamllint enable rule:line-length

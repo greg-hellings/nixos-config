@@ -37,7 +37,6 @@ services:
     image: postgres:17.6-alpine
     restart: unless-stopped
     ports: []
-      #- 5432:5432
     networks:
       pgattic:
     volumes:

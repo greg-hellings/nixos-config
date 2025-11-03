@@ -39,11 +39,11 @@ spec:
       parameters:
         barmanObjectName: k3sbackup-objectstore
 
-  # Use this as the target of the bootstrap recovery process
-  # It is important that the `externalClusters` serverName matches
-  # the old name of the original cluster that you are upgrading.
-  # When restoring, set the targetTime to the latest backup that you
-  # want to restore to
+# Use this as the target of the bootstrap recovery process
+# It is important that the `externalClusters` serverName matches
+# the old name of the original cluster that you are upgrading.
+# When restoring, set the targetTime to the latest backup that you
+# want to restore to
 # bootstrap:
 #   recovery:
 #     source: origin
