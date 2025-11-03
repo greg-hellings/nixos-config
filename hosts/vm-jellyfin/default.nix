@@ -32,22 +32,24 @@
     vulkan-tools
   ];
 
-  systemd.mounts = let
-    nfs = name: {
-      what = "nas1.shire-zebra.ts.net:/mnt/all/${name}";
-      type = "nfs";
-      name = "${name}.mount";
-      where = "/${name}";
-      requires = [ "tailscaled-autoconnect.service" ];
-      after = [ "tailscaled-autoconnect.service" ];
-      wantedBy = [ "multi-user.target" ];
-      mountConfig.Options = "_netdev,noexec,ro,timeo=50,retrans=5,soft";
-    };
-  in [
-    (nfs "music")
-    (nfs "photos")
-    (nfs "video")
-  ];
+  systemd.mounts =
+    let
+      nfs = name: {
+        what = "nas1.shire-zebra.ts.net:/mnt/all/${name}";
+        type = "nfs";
+        name = "${name}.mount";
+        where = "/${name}";
+        requires = [ "tailscaled-autoconnect.service" ];
+        after = [ "tailscaled-autoconnect.service" ];
+        wantedBy = [ "multi-user.target" ];
+        mountConfig.Options = "_netdev,noexec,ro,timeo=50,retrans=5,soft";
+      };
+    in
+    [
+      (nfs "music")
+      (nfs "photos")
+      (nfs "video")
+    ];
 
   hardware = {
     enableAllFirmware = true;

@@ -88,18 +88,25 @@ in
         };
       };
     };
-    ssh.matchBlocks = lib.listToAttrs (lib.map (key: { name = "${key}.ivrtechnology.com"; value = {}; }) [
-      "apidev1"
-      "asdev1"
-      "agidev1"
-      "kdev1"
-      "kdev2"
-      "kdev3"
-      "webdev4"
-      "webdev5"
+    ssh.matchBlocks = lib.listToAttrs (
+      lib.map
+        (key: {
+          name = "${key}.ivrtechnology.com";
+          value = { };
+        })
+        [
+          "apidev1"
+          "asdev1"
+          "agidev1"
+          "kdev1"
+          "kdev2"
+          "kdev3"
+          "webdev4"
+          "webdev5"
 
-      "web4"
-    ]);
+          "web4"
+        ]
+    );
     tmux.shell = (lib.getExe x);
   };
 }
