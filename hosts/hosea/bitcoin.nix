@@ -19,6 +19,7 @@ in
     lnd.restPort
     lnd.port
     mempool.frontend.port
+    rtl.port
   ];
 
   greg.backup.jobs = {
@@ -67,6 +68,16 @@ in
       frontend = {
         enable = true;
         address = ip;
+      };
+    };
+    rtl = {
+      enable = true;
+      address = ip;
+      dataDir = "/chain/rtl";
+      extraCurrency = "USD";
+      nodes = {
+        clightning.enable = true;
+        lnd.enable = true;
       };
     };
   };
