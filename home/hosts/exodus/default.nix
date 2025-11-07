@@ -19,6 +19,7 @@
     kubernetes-helm
     kubectl
     kubectl-cnpg
+    moonlight-qt
     mumble
     pre-commit
     wineWowPackages.stable
