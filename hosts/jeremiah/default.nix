@@ -23,14 +23,9 @@ in
   # Bootloader.
   boot = {
     initrd.kernelModules = [
-      "vfio_pci"
-      "vfio"
-      "vfio_iommu_type1"
+      "amdgpu"
     ];
     kernelParams = [
-      "amd_iommu=on"
-      "iommu=pt"
-      ("vfio-pci.ids=" + (lib.concatStringsSep "," passthru))
     ];
     loader = {
       systemd-boot.enable = true;
@@ -39,9 +34,12 @@ in
   };
 
   environment.systemPackages = with pkgs; [
+    amdgpu_top
+    clinfo
     curl
     gawk
     git
+    glxinfo
     unzip
     wget
   ];
@@ -89,6 +87,11 @@ in
     };
   };
 
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
+
   networking = {
     hostName = "jeremiah"; # Define your hostname.
     useDHCP = false;
@@ -99,6 +102,7 @@ in
       address = " 10.42.1.2";
       interface = "br0";
     };
+    firewall.allowedTCPPorts = [ 3389 ];
     interfaces = {
       br0 = {
         ipv4.addresses = [
@@ -112,32 +116,68 @@ in
     nameservers = [ "10.42.1.5" ];
   };
 
+  programs.steam = {
+    enable = true;
+    protontricks.enable = true;
+  };
   #####################################################################################
   #################### Virtualbox Runner ##############################################
   #####################################################################################
   age.secrets.runner-reg.file = ../../secrets/gitlab/nixos-qemu-shell.age;
 
   services = {
+    displayManager = {
+      defaultSession = "xfce";
+      autoLogin = {
+        enable = true;
+        user = "greg";
+      };
+    };
     proxmox-ve = {
       enable = true;
       ipAddress = (builtins.elemAt config.networking.interfaces.br0.ipv4.addresses 0).address;
     };
-  };
-
-  systemd.services."gitlab-runner" = {
-    after = [
-      "network.target"
-      "network-online.target"
-      "tailscaled.service"
-    ];
-    requires = [
-      "network-online.target"
-      "tailscaled.service"
-    ];
-    serviceConfig = {
-      DevicePolicy = lib.mkForce "auto";
-      User = "root";
-      DynamicUser = lib.mkForce false;
+    sunshine = {
+      enable = true;
+      autoStart = true;
+      #capSysAdmin = true;
+      openFirewall = true;
+    };
+    xserver = {
+      enable = true;
+      desktopManager = {
+        xterm.enable = true;
+        xfce.enable = true;
+      };
     };
   };
+
+  systemd = {
+    services = {
+      "gitlab-runner" = {
+        after = [
+          "network.target"
+          "network-online.target"
+          "tailscaled.service"
+        ];
+        requires = [
+          "network-online.target"
+          "tailscaled.service"
+        ];
+        serviceConfig = {
+          DevicePolicy = lib.mkForce "auto";
+          User = "root";
+          DynamicUser = lib.mkForce false;
+        };
+      };
+    };
+    targets = {
+      sleep.enable = false;
+      suspend.enable = false;
+      hibernate.enable = false;
+      hybrid-sleep.enable = false;
+    };
+  };
+
+  users.extraGroups.video.members = [ "greg" ];
 }
