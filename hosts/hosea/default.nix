@@ -31,9 +31,9 @@ in
 
   environment.systemPackages = with pkgs; [
     clinfo
-    glxinfo
     jellyfin-ffmpeg
     libva-utils
+    mesa-demos
     nfs-utils
     radeontop
     vulkan-tools

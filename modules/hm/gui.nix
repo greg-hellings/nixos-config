@@ -31,7 +31,7 @@ in
             cdrtools
             element-desktop
             freetube
-            onlyoffice-bin
+            onlyoffice-desktopeditors
             qpwgraph
             vlc
             x265

@@ -5,10 +5,10 @@ let
     pypackages: with pypackages; [
       black
       build
-      dateutil
       ipython
       mypy
       pylint
+      python-dateutil
       pyyaml
       responses
       ruamel-yaml

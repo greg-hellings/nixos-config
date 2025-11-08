@@ -10,9 +10,6 @@
   ...
 }:
 
-let
-  passthru = [ ];
-in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -39,7 +36,7 @@ in
     curl
     gawk
     git
-    glxinfo
+    mesa-demos
     unzip
     wget
   ];
