@@ -25,7 +25,7 @@ in
         options = "--delete-older-than 30d";
       };
 
-      package = pkgs.nixStable;
+      package = pkgs.nixVersions.stable;
 
       settings = {
         cores = 0; # Use all cores for builds

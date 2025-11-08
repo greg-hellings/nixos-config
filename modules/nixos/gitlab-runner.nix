@@ -72,7 +72,6 @@ in
           "virbr0"
         ];
         onBoot = "ignore"; # only restart VMs labeled 'autostart'
-        qemu.ovmf.enable = true;
       };
       virtualbox.host = lib.mkIf cfg.vbox {
         enable = true;

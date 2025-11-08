@@ -58,8 +58,8 @@ in
       enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
-        vaapiIntel
-        vaapiVdpau
+        intel-vaapi-driver
+        libva-vdpau-driver
         #intel-media-sdk
         intel-compute-runtime
       ];

@@ -42,7 +42,7 @@ in
       minikube
       mise
       nil
-      nixStable
+      nixVersions.stable
       pipenv-ivr
       pre-commit
       python311
