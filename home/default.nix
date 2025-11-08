@@ -41,5 +41,4 @@ in
   linode = greg "linode";
   hosea = greg "hosea";
   vm-gitlab = greg "vm-gitlab";
-  vm-jellyfin = greg "vm-jellyfin";
 }

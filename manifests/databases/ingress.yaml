@@ -21,7 +21,7 @@ spec:
       - 100.90.74.19 # zeke
       - 100.115.57.8 # linode
       - 100.65.5.38 # matrix
-      - 100.127.55.22 # jellyfin
+      #- 100.127.55.22 # jellyfin
 ---
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteTCP

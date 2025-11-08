@@ -1,5 +1,5 @@
 # vim: set filetype=nushell :
-let servers = [isaiah jeremiah zeke genesis vm-gitlab vm-jellyfin]
+let servers = [isaiah jeremiah zeke genesis vm-gitlab]
 
 def par-map [ items: list, c: closure ] {
   let results = $items | par-each -k $c

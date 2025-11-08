@@ -53,7 +53,6 @@ in
   isaiah = unstable { name = "isaiah"; };
 
   vm-gitlab = vm { name = "vm-gitlab"; };
-  vm-jellyfin = vm { name = "vm-jellyfin"; };
   proxmoxtemplate = unstable { name = "proxmoxtemplate"; };
 
   iso = unstable { name = "iso"; };
