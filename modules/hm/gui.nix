@@ -47,7 +47,7 @@ in
               "aarch64-linux"
             ]
             [
-              bitwarden
+              bitwarden-desktop
               endeavour
               # Is removed because it depends on qt5-qtwebengine
               # jellyfin-media-player

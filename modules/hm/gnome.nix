@@ -76,6 +76,7 @@ in
           favorite-apps = [
             "org.gnome.Calendar.desktop"
             "org.gnome.Nautilus.desktop"
+            "com.mitchellh.ghostty.desktop"
             "org.gnome.Terminal.desktop"
             "firefox.desktop"
             "vlc.desktop"

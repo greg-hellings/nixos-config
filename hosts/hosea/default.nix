@@ -53,9 +53,6 @@ in
     enableRedistributableFirmware = true;
     graphics = {
       enable = true;
-    };
-    opengl = {
-      enable = true;
       extraPackages = with pkgs; [
         intel-media-driver
         intel-vaapi-driver
