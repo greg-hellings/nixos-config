@@ -60,7 +60,6 @@ in
             model = "claude-4";
           };
           single_file_review = true;
-          version = "2";
         };
         baseKeymap = "VSCode";
         buffer_font_size = 16;
