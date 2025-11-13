@@ -9,20 +9,20 @@
       "hash": "sha256-HT/gVNydkOitny6oUl2A+JvbFDGAIeb0h+xbMeQ2Rqs="
     },
     "wikibooks": {
-      "name": "wikibooks_en_all_maxi_2025-09.zim",
-      "hash": "sha256-FLhu+kdf/qV1ruc56Xctd33vaA0UIGSLjuKWABndKPo="
+      "name": "wikibooks_en_all_maxi_2025-10.zim",
+      "hash": "sha256-zmcvrvGO+LEHt7x8/SoguBDODUyRXy9x5LUGAkS+fF8="
     },
     "wikipedia": {
       "name": "wikipedia_en_all_maxi_2025-08.zim",
       "hash": "sha256-r7Cd0vjEb84Ftw+EwZSlqb8qhqm8WA3LAPdHAav7wrg="
     },
     "wikisource": {
-      "name": "wikisource_en_all_maxi_2025-09.zim",
-      "hash": "sha256-I/RLSOraebPiWYjeNTeM4qQO981HBjXYKntauZc0sdk="
+      "name": "wikisource_en_all_maxi_2025-11.zim",
+      "hash": "sha256-jPHh/C20PARN6K7aPNw3k9fFHhpwzsREi/1o1DIISS4="
     },
     "wikiversity": {
-      "name": "wikiversity_en_all_maxi_2025-10.zim",
-      "hash": "sha256-JRqtZDdR9pm5WivM4D98qs6TYvW3AEEbC4iGLCavEMY="
+      "name": "wikiversity_en_all_maxi_2025-11.zim",
+      "hash": "sha256-0DaE2EUdHvaX3XqD3f0lwurSAaDZ4hEKtrMEutL5xt0="
     },
     "wiktionary": {
       "name": "wiktionary_en_all_nopic_2025-09.zim",
@@ -55,8 +55,8 @@
       "hash": "sha256-4vOxYiX3TYht7ARY+PeCJ0ArVZZn9TeGtwCieqn3xUw="
     },
     "wiktionary": {
-      "name": "wiktionary_fr_all_nopic_2025-09.zim",
-      "hash": "sha256-7uH99b3TwyTgXspazsabqdNd9LEJrxuN+taRjmdXIYs="
+      "name": "wiktionary_fr_all_nopic_2025-11.zim",
+      "hash": "sha256-oQS8DzKioceCER1p1oAvaS1gRooMLJLYnCqy1aLARi4="
     }
   },
   "ht": {
