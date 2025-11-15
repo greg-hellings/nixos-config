@@ -1,7 +1,23 @@
-{ lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 
 let
   cfg = config.greg.tailscale;
+  tags = lib.concatMapStringsSep "," (s: "tag:${s}") cfg.tags;
+  setScript = pkgs.writeShellApplication {
+    name = "tailscale-set";
+    runtimeInputs = [
+      config.services.tailscale.package
+    ];
+    text = ''
+      tailscale set --accept-routes
+      tailscale set --hostname ${cfg.hostname}
+    '';
+  };
 in
 {
   options = {
@@ -12,6 +28,12 @@ in
         description = "Name on the tailnet to use";
         default = config.networking.hostName;
         type = lib.types.str;
+      };
+
+      tags = lib.mkOption {
+        type = lib.types.listOf lib.types.singleLineStr;
+        default = [ ];
+        description = "The tags to request for this node";
       };
     };
   };
@@ -31,9 +53,25 @@ in
       extraUpFlags = [
         "--hostname"
         cfg.hostname
+        "--accept-routes"
+      ]
+      ++ lib.optionals ((builtins.length cfg.tags) > 0) [
+        "--advertise-tags"
+        tags
       ];
       useRoutingFeatures = "both";
     };
-    systemd.services.tailscaled.partOf = [ "network-online.target" ];
+    systemd.services = {
+      tailscale-set = {
+        enable = true;
+        after = [
+          "tailscaled.service"
+          "tailscale-autoconnect.service"
+        ];
+        partOf = [ "network-online.target" ];
+        script = lib.getExe setScript;
+      };
+      tailscaled.partOf = [ "network-online.target" ];
+    };
   };
 }

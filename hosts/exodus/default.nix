@@ -32,7 +32,10 @@
     gnome.enable = true;
     podman.enable = true;
     print.enable = true;
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      tags = [ "mobile" ];
+    };
     runner = {
       enable = true;
       qemu = true;

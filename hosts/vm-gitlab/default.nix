@@ -59,7 +59,10 @@ in
       dest = "gitlab";
     };
     home = true;
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      tags = [ "home" ];
+    };
   };
 
   networking = {

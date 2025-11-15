@@ -75,7 +75,10 @@
       vipInterface = "br0";
       priority = 254;
     };
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      tags = [ "home" ];
+    };
     remote-builder.enable = true;
     runner = {
       enable = true;

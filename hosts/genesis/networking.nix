@@ -19,7 +19,10 @@ let
   ];
 in
 {
-  greg.tailscale.enable = true;
+  greg.tailscale = {
+    enable = true;
+    tags = [ "home" ];
+  };
 
   # Really, why do I still have to force-disable this crap?
   boot.kernel.sysctl = {

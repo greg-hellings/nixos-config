@@ -39,7 +39,10 @@
       vipInterface = "enp38s0";
       priority = 255;
     };
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      tags = [ "home" ];
+    };
     remote-builder.enable = true;
     runner = {
       enable = true;

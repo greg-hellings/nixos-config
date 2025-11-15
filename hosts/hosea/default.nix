@@ -45,7 +45,10 @@ in
       "jellyfin.home".target = "http://localhost:8096/";
       "jellyfin.thehellings.lan".target = "http://localhost:8096/";
     };
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      tags = [ "home" ];
+    };
   };
 
   hardware = {

@@ -26,7 +26,10 @@
       enable = true;
       vbox = true;
     };
-    tailscale.enable = true;
+    tailscale = {
+      enable = true;
+      tags = [ "home" ];
+    };
   };
 
   hardware = {
