@@ -38,11 +38,11 @@ rec {
     )
   ];
 
-  # My own packages
-  enwiki-dump = prev.callPackage ./enwiki-dump.nix { };
-
   qemu = prev.qemu.override { sdlSupport = true; };
   # Overrides of packages
+  attic-client = prev.attic-client.overrideAttrs {
+    patches = prev.attic-client.patches ++ [ ./attic-client.patch ];
+  };
   libbluray-custom = prev.libbluray.override {
     withAACS = true;
     withBDplus = true;
