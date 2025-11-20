@@ -175,6 +175,10 @@ in
       enable = true;
       settings.X11Forwarding = true;
     };
+    prometheus.exporters.node = {
+      enable = true;
+      enabledCollectors = [ "ethtool" "logind" "mountstats" "systemd" "tcpstat" ];
+    };
   };
 
   security.sudo.extraRules = [
