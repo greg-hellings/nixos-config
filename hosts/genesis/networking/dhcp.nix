@@ -109,6 +109,10 @@
             hw-address = "04:7c:16:d5:60:6f";
             ip-address = "10.42.1.13"; # Zeke - but straight in the motherboard
           }
+          {
+            hw-address = "24:8a:07:8c:8c:b6";
+            ip-address = "10.42.1.14"; # nas1 25G port
+          }
 
           ########################################
           #             VM servers               #
