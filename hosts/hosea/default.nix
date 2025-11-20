@@ -2,7 +2,7 @@
 # your system.	Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, top, ... }:
+{ config, pkgs, top, ... }:
 let
   wanInterface = "enp2s0";
   lanInterface = "enp1s0";
@@ -88,6 +88,47 @@ in
     jellyfin = {
       enable = true;
       openFirewall = true;
+    };
+    grafana = {
+      enable = true;
+      provision = {
+        enable = true;
+        dashboards.settings.providers = [{
+          name = "Dashboards";
+          disableDeletion = true;
+          options = {
+            path = "/etc/grafana-dashboards";
+            foldersFromFilesStructure = true;
+          };
+        }];
+        datasources.settings.datasources = [{
+          name = "Prometheus";
+          type = "prometheus";
+          url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+          isDefault = true;
+          editable = false;
+        }];
+      };
+      settings = {
+        server = {
+          domain = "${config.networking.hostName}.shire-zebra.ts.net";
+          enforce_domain = true;
+          http_addr = "0.0.0.0";
+          enable_gzip = true;
+          http_port = 3001;
+        };
+        analytics.reporting_enabled = false;
+      };
+    };
+    prometheus = {
+      enable = true;
+      globalConfig.scrape_interval = "10s";
+      scrapeConfigs = [ {
+        job_name = "node stats";
+        static_configs = [{
+          targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ];
+        }];
+      } ];
     };
     # Configure keymap
     xserver.xkb = {
