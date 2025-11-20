@@ -76,28 +76,6 @@ in
   environment.etc."hosts.d/local".text = extraHosts;
 
   services = {
-    #########
-    # Blind service proxy behind the walls of the VPN
-    ########
-    _3proxy = {
-      enable = true;
-      services = [
-        {
-          type = "socks";
-          auth = [ "strong" ];
-          bindPort = proxyPort;
-          acl = [
-            {
-              rule = "allow";
-              users = [ "greg" ];
-            }
-          ];
-        }
-      ];
-      #usersFile = "/run/agenix/3proxy";
-      denyPrivate = false;
-    };
-
     kea.dhcp4 = (
       import ./networking/dhcp.nix {
         inherit

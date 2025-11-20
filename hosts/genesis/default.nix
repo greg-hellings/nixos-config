@@ -11,7 +11,6 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./home-assistant.nix
     ./networking.nix
   ];
 
@@ -19,8 +18,6 @@ in
     home = true;
     gnome.enable = false;
     proxies = {
-      "speed.home".target = "http://localhost:${speedtest_port}";
-      "speedtest.thehellings.lan".target = "http://localhost:${speedtest_port}";
     };
   };
 
@@ -32,7 +29,6 @@ in
   };
 
   environment.systemPackages = with pkgs; [
-    awscli2
     create_ssl
     step-ca
   ];
@@ -40,10 +36,5 @@ in
   networking.hostName = "genesis"; # Define your hostname.
 
   virtualisation.oci-containers.containers = {
-    speedtest = {
-      image = "ghcr.io/librespeed/speedtest";
-      hostname = "speedtest";
-      ports = [ "${speedtest_port}:80" ];
-    };
   };
 }
