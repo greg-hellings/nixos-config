@@ -126,7 +126,16 @@ in
       scrapeConfigs = [ {
         job_name = "node stats";
         static_configs = [{
-          targets = [ "localhost:${toString config.services.prometheus.exporters.node.port}" ];
+          targets = [
+            "localhost:${toString config.services.prometheus.exporters.node.port}"
+            "isaiah.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+            "jeremiah.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+            "zeke.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+            "genesis.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+            "exodus.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+            "linode.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+            "vm-gitlab.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+          ];
         }];
       } ];
     };
