@@ -2,7 +2,13 @@
 # your system.	Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, top, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  top,
+  ...
+}:
 let
   wanInterface = "enp2s0";
   lanInterface = "enp1s0";
@@ -93,21 +99,25 @@ in
       enable = true;
       provision = {
         enable = true;
-        dashboards.settings.providers = [{
-          name = "Dashboards";
-          disableDeletion = true;
-          options = {
-            path = "/etc/grafana-dashboards";
-            foldersFromFilesStructure = true;
-          };
-        }];
-        datasources.settings.datasources = [{
-          name = "Prometheus";
-          type = "prometheus";
-          url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
-          isDefault = true;
-          editable = false;
-        }];
+        dashboards.settings.providers = [
+          {
+            name = "Dashboards";
+            disableDeletion = true;
+            options = {
+              path = "/etc/grafana-dashboards";
+              foldersFromFilesStructure = true;
+            };
+          }
+        ];
+        datasources.settings.datasources = [
+          {
+            name = "Prometheus";
+            type = "prometheus";
+            url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+            isDefault = true;
+            editable = false;
+          }
+        ];
       };
       settings = {
         server = {
@@ -122,22 +132,39 @@ in
     };
     prometheus = {
       enable = true;
+      exporters.graphite.enable = true;
       globalConfig.scrape_interval = "10s";
-      scrapeConfigs = [ {
-        job_name = "node stats";
-        static_configs = [{
-          targets = [
-            "localhost:${toString config.services.prometheus.exporters.node.port}"
-            "isaiah.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
-            "jeremiah.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
-            "zeke.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
-            "genesis.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
-            "exodus.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
-            "linode.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
-            "vm-gitlab.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+      scrapeConfigs = [
+        {
+          job_name = "node stats";
+          static_configs = [
+            {
+              targets = lib.flatten (
+                lib.map
+                  (n: [
+                    "${n}.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
+                    "${n}.shire-zebra.ts.net:${toString config.services.prometheus.exporters.systemd.port}"
+                    "${n}.shire-zebra.ts.net:${toString config.services.prometheus.exporters.ping.port}"
+                  ])
+                  [
+                    "hosea"
+                    "isaiah"
+                    "jeremiah"
+                    "zeke"
+                    "genesis"
+                    "exodus"
+                    "linode"
+                    "vm-gitlab"
+                  ]
+              ) ++ [
+                "hosea.shire-zebra.ts.net:${toString config.services.prometheus.exporters.graphite.port}"
+                "genesis.shire-zebra.ts.net:${toString config.services.prometheus.exporters.kea.port}"
+                "genesis.shire-zebra.ts.net:${toString config.services.prometheus.exporters.dnsmasq.port}"
+              ];
+            }
           ];
-        }];
-      } ];
+        }
+      ];
     };
     # Configure keymap
     xserver.xkb = {

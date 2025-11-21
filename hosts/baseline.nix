@@ -175,9 +175,22 @@ in
       enable = true;
       settings.X11Forwarding = true;
     };
-    prometheus.exporters.node = {
-      enable = true;
-      enabledCollectors = [ "ethtool" "logind" "mountstats" "systemd" "tcpstat" ];
+    prometheus.exporters = {
+      node = {
+        enable = true;
+        enabledCollectors = [ "ethtool" "logind" "mountstats" "systemd" "tcpstat" ];
+      };
+      ping = {
+        enable = true;
+        settings = {
+          ping = {
+            interval = "10s";
+            timeout = "5s";
+          };
+          targets = [ "thehellings.com" "genesis.shire-zebra.ts.net" "www.google.com" ];
+        };
+      };
+      systemd.enable = true;
     };
   };
 
