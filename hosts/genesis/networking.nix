@@ -108,6 +108,14 @@ in
       enable = true;
       systemCronJobs = [ "* * * * * root ${adblockUpdate} 2>&1 > /var/log/adblock.log" ];
     };
+
+    prometheus.exporters = {
+      dnsmasq.enable = true;
+      kea = {
+        enable = true;
+        targets = [ "http://127.0.0.1:8547" ];
+      };
+    };
   }; # End of services configuration
 
   environment.systemPackages = with pkgs; [
