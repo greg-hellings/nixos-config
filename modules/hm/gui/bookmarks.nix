@@ -271,6 +271,14 @@
             name = "Kubernetes Dashboard";
             url = "https://dashboard.shire-zebra.ts.net/";
           }
+          {
+            name = "Prometheus";
+            url = "http://hosea.shire-zebra.ts.net:9090/";
+          }
+          {
+            name = "Grafana";
+            url = "http://hosea.shire-zebra.ts.net:3000/";
+          }
         ];
       }
       {
