@@ -11,6 +11,7 @@
   home.packages = with pkgs; [
     bitwarden-cli
     cargo
+    devcontainer
     freeciv
     gimp
     gnucash
