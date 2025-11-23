@@ -61,6 +61,7 @@ in
         443
         5432
         6443
+        10250
       ]
       ++ (
         if cfg.agentOnly then
@@ -115,6 +116,7 @@ in
           "--write-kubeconfig-group kubeconfig"
           "--resolv-conf=/etc/resolv.conf"
           "--node-label node.longhorn.io/create-default-disk=config"
+          "--supervisor-metrics=true"
           "--tls-san ${config.networking.hostName}.home"
           "--tls-san ${config.networking.hostName}.thehellings.lan"
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"

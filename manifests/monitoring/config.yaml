@@ -73,12 +73,13 @@ data:
         tls_config:
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         metrics_path: /metrics/cadvisor
-        authorization:
-          credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
+        #authorization:
+        #  credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       # This scrapes Service endpoints in Kubernetes
       - job_name: 'k8sservices'
         kubernetes_sd_configs:
-          - role: endpoints
+          - role: endpointslice
         relabel_configs:
           - source_labels:
               - __meta_kubernetes_namespace
