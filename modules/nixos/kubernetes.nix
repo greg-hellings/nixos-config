@@ -80,9 +80,11 @@ in
         enable = true;
         autoDeployCharts = {
           external-secrets = {
+            inherit (pkgs.chartsMetadata.external-secrets.external-secrets) repo version;
             enable = true;
+            name = pkgs.chartsMetadata.external-secrets.external-secrets.chart;
+            hash = "sha256-w0wlFtECXg4/F8Ke26wQexGcbDIfjqvsZwZYeJyVmLU=";
             createNamespace = true;
-            package = pkgs.chartsDerivations.external-secrets.external-secrets;
             targetNamespace = "external-secrets";
             values = {
               crds.create = true;
@@ -90,9 +92,11 @@ in
             };
           };
           kyverno = {
+            inherit (pkgs.chartsMetadata.kyverno.kyverno) repo version;
             enable = true;
+            name = pkgs.chartsMetadata.kyverno.kyverno.chart;
+            hash = "sha256-QFdrhgziOIe194ltl00JkH3BAQHHury9qSgAX/YZzOg=";
             createNamespace = true;
-            package = pkgs.chartsDerivations.kyverno.kyverno;
             targetNamespace = "kyverno-system";
             values = {
               admissionController.replicas = 3;
@@ -103,9 +107,11 @@ in
             };
           };
           tailscale = {
+            inherit (pkgs.chartsMetadata.tailscale.tailscale-operator) repo version;
             enable = true;
+            name = pkgs.chartsMetadata.tailscale.tailscale-operator.chart;
+            hash = "sha256-89MSeInAckiBsCK0ag2hrflVBWGgVvl22uy8xk9HU2g=";
             createNamespace = true;
-            package = pkgs.chartsDerivations.tailscale.tailscale-operator;
             targetNamespace = "tailscale";
           };
         };

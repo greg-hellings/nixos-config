@@ -68,8 +68,7 @@
       );
       charts_overlay = (
         _f: _p: {
-          chartsDerivations = top.charts.chartsDerivations."${_p.stdenv.hostPlatform.system}";
-          kubelib = top.nix-kube-generators.lib;
+          chartsMetadata = top.charts.chartsMetadata;
         }
       );
       overlays = [
@@ -113,7 +112,7 @@
           ...
         }:
         {
-          _module.args = {
+          _module.args = rec {
             pkgs = import top.nixunstable { inherit system overlays; };
           };
 
