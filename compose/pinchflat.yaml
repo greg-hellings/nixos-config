@@ -6,3 +6,4 @@ services:
     volumes:
       - "/mnt/all/configs/pinchflat:/config"
       - "/mnt/all/video/yt:/downloads"
+    restart: unless-stopped
