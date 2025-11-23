@@ -4,7 +4,6 @@
 
 {
   config,
-  lib,
   pkgs,
   top,
   ...
@@ -113,7 +112,7 @@ in
           {
             name = "Prometheus";
             type = "prometheus";
-            url = "http://${config.services.prometheus.listenAddress}:${toString config.services.prometheus.port}";
+            url = "https://prometheus.shire-zebra.ts.net";
             isDefault = true;
             editable = false;
           }
@@ -130,42 +129,7 @@ in
         analytics.reporting_enabled = false;
       };
     };
-    prometheus = {
-      enable = true;
-      exporters.graphite.enable = true;
-      globalConfig.scrape_interval = "10s";
-      scrapeConfigs = [
-        {
-          job_name = "node stats";
-          static_configs = [
-            {
-              targets = lib.flatten (
-                lib.map
-                  (n: [
-                    "${n}.shire-zebra.ts.net:${toString config.services.prometheus.exporters.node.port}"
-                    "${n}.shire-zebra.ts.net:${toString config.services.prometheus.exporters.systemd.port}"
-                    "${n}.shire-zebra.ts.net:${toString config.services.prometheus.exporters.ping.port}"
-                  ])
-                  [
-                    "hosea"
-                    "isaiah"
-                    "jeremiah"
-                    "zeke"
-                    "genesis"
-                    "exodus"
-                    "linode"
-                    "vm-gitlab"
-                  ]
-              ) ++ [
-                "hosea.shire-zebra.ts.net:${toString config.services.prometheus.exporters.graphite.port}"
-                "genesis.shire-zebra.ts.net:${toString config.services.prometheus.exporters.kea.port}"
-                "genesis.shire-zebra.ts.net:${toString config.services.prometheus.exporters.dnsmasq.port}"
-              ];
-            }
-          ];
-        }
-      ];
-    };
+    prometheus.exporters.graphite.enable = true;
     # Configure keymap
     xserver.xkb = {
       layout = "us";
