@@ -9,3 +9,4 @@ resources:
   - gitlab-runner
   - immich
   - monitoring
+  - pinchflat
