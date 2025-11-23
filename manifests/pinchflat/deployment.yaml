@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pinchflat
+  labels:
+    app: pinchflat
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: pinchflat
+  template:
+    metadata:
+      labels:
+        app: pinchflat
+    spec:
+      containers:
+        - name: pinchflat
+          image: ghcr.io/kieraneglin/pinchflat:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 8945
+              protocol: TCP
+          volumeMounts:
+            - name: downloads
+              mountPath: /downloads
+            - name: config
+              mountPath: /config
+          env:
+            - name: TZ
+              value: "America/New_York"
+      restartPolicy: Always
+      volumes:
+        - name: downloads
+          nfs:
+            path: /mnt/all/video/yt
+            server: nas1.shire-zebra.ts.net
+        - name: config
+          persistentVolumeClaim:
+            claimName: pinchflat-config

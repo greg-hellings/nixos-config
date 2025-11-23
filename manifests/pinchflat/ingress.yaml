@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: pinchflat-tailscale
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: pinchflat
+      port:
+        name: http
+  tls:
+    - hosts:
+        - pinchflat
