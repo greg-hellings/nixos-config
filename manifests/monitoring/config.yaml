@@ -1,0 +1,95 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-config
+data:
+  prometheus.yml: |
+    global:
+      scrape_interval: 10s
+      evaluation_interval: 10s
+    alerting:
+    scrape_configs:
+      # This scrapes endpoints on my servers
+      - job_name: prometheus
+        static_configs:
+          - targets:
+              # Node exporters
+              - "genesis.shire-zebra.ts.net:9100"
+              - "isaiah.shire-zebra.ts.net:9100"
+              - "jeremiah.shire-zebra.ts.net:9100"
+              - "zeke.shire-zebra.ts.net:9100"
+              - "hosea.shire-zebra.ts.net:9100"
+              - "exodus.shire-zebra.ts.net:9100"
+              - "linode.shire-zebra.ts.net:9100"
+              - "vm-gitlab.shire-zebra.ts.net:9100"
+              # Systemd exporters
+              - "genesis.shire-zebra.ts.net:9558"
+              - "isaiah.shire-zebra.ts.net:9558"
+              - "jeremiah.shire-zebra.ts.net:9558"
+              - "zeke.shire-zebra.ts.net:9558"
+              - "hosea.shire-zebra.ts.net:9558"
+              - "exodus.shire-zebra.ts.net:9558"
+              - "linode.shire-zebra.ts.net:9558"
+              - "vm-gitlab.shire-zebra.ts.net:9558"
+              # Ping port
+              - "genesis.shire-zebra.ts.net:9427"
+              - "isaiah.shire-zebra.ts.net:9427"
+              - "jeremiah.shire-zebra.ts.net:9427"
+              - "zeke.shire-zebra.ts.net:9427"
+              - "hosea.shire-zebra.ts.net:9427"
+              - "exodus.shire-zebra.ts.net:9427"
+              - "linode.shire-zebra.ts.net:9427"
+              - "vm-gitlab.shire-zebra.ts.net:9427"
+              # Key port
+              - "genesis.shire-zebra.ts.net:9547"
+              # Dnsmasq port
+              - "genesis.shire-zebra.ts.net:9153"
+              # Graphite exporter
+              - "hosea.shire-zebra.ts.net:9108"
+      # This scrapes metrics from the Kubernetes kubelets
+      #- job_name: kubelet
+        #kubernetes_sd_configs:
+          #- role: node
+        #scheme: https
+        #tls_config:
+          #ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          #insecure_skip_verify: true
+      ## This scrapes metrics about the containers themselves
+      #- job_name: cadvisor
+        #kubernetes_sd_configs:
+          #- role: node
+        #scheme: https
+        #tls_config:
+          #ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+          #insecure_skip_verify: true
+        #metrics_path: /metrics/cadvisor
+      ## This scrapes Service endpoints in Kubernetes
+      #- job_name: 'k8sservices'
+        #kubernetes_sd_configs:
+          #- role: endpoints
+        #relabel_configs:
+          #- source_labels:
+              #- __meta_kubernetes_namespace
+              #- __meta_kubernetes_service_name
+            #action: drop
+            #regex: "default;kubernetes"
+          #- source_labels:
+              #- __meta_kubernetes_namespace
+            #regex: default
+            #action: keep
+          #- source_labels:
+              #- __meta_kubernetes_service_name
+            #target_label: job
+      ## This scrapes any exposed pod port named "metrics", assuming that it is
+      ## a prometheus source
+      #- job_name: k8spods
+        #kubernetes_sd_configs:
+          #- role: pod
+        #relabel_configs:
+          #- source_labels:
+              #- __meta_kubernetes_pod_container_port_name
+            #regex: metrics
+            #action: keep
+          #- source_labels:
+              #- __meta_kubernetes_pod_container_name
+            #target_label: job

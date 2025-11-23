@@ -1,0 +1,10 @@
+namespace: monitoring
+
+resources:
+  - namespace.yaml
+  - pvc.yaml
+  - cluster-role.yaml
+  - config.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml

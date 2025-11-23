@@ -273,7 +273,7 @@
           }
           {
             name = "Prometheus";
-            url = "http://hosea.shire-zebra.ts.net:9090/";
+            url = "http://prometheus.shire-zebra.ts.net/";
           }
           {
             name = "Grafana";
