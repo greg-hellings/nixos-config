@@ -17,5 +17,3 @@ helm upgrade --install cnpg \
     --wait
 sleep 5
 kubectl apply -k .
-
-./tailscale/apply.sh
