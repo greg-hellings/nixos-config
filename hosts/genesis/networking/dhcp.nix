@@ -7,6 +7,12 @@
 {
   enable = true;
   settings = {
+    control-sockets = [
+      {
+        socket-type = "unix";
+        socket-name = "/run/kea/dhcp4-control.sock";
+      }
+    ];
     valid-lifetime = 43200; # 12 hours, in seconds
     renew-timer = 1000;
     rebind-timer = 2000;

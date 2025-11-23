@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   lan = "ens18";
   lanIP = "10.42.1.5";
@@ -76,16 +76,18 @@ in
   environment.etc."hosts.d/local".text = extraHosts;
 
   services = {
-    kea.dhcp4 = (
-      import ./networking/dhcp.nix {
-        inherit
-          iot
-          lan
-          lanIP
-          routerIP
-          ;
-      }
-    );
+    kea = {
+      dhcp4 = (
+        import ./networking/dhcp.nix {
+          inherit
+            iot
+            lan
+            lanIP
+            routerIP
+            ;
+        }
+      );
+    };
 
     #########
     # dnsmasq config
@@ -113,7 +115,8 @@ in
       dnsmasq.enable = true;
       kea = {
         enable = true;
-        targets = [ "http://127.0.0.1:8547" ];
+        openFirewall = true;
+        targets = [ (builtins.head config.services.kea.dhcp4.settings.control-sockets).socket-name ];
       };
     };
   }; # End of services configuration
