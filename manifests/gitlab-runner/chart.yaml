@@ -33,6 +33,8 @@ spec:
       create: true
     serviceAccount:
       create: true
+    metrics:
+      enabled: true
     extraEnv:
       CACHE_TYPE: s3
       CACHE_SHARED: "true"
