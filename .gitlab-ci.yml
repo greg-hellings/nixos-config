@@ -46,6 +46,12 @@ default:
       -u "$CI_REGISTRY_USER"
       -p "$CI_REGISTRY_PASSWORD"
       "$CI_REGISTRY"
+    - |-
+      cat << EOF > /etc/containers/policy.json
+      {
+        "default": [{"type": "insecureAcceptAnything"}]
+      }
+      EOF
     - ./podman/bin/podman load -i "${IMG}.tar.gz"
     - >-
       ./podman/bin/podman tag
