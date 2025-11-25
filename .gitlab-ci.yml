@@ -29,6 +29,7 @@ default:
     matrix:
       - IMG:
           - img-bitwarden
+          - img-immich
   artifacts:
     paths:
       - "*.tar.gz"
