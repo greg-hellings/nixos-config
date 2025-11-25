@@ -37,7 +37,7 @@ default:
     NIX_OPTIONS: >-
       --option
       extra-experimental-features
-      "flake nix-command"
+      "flakes nix-command"
   script:
     - nix $NIX_OPTIONS build ".#${IMG}"
     - cp -L result "${IMG}.tar.gz"
