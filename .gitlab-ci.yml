@@ -25,37 +25,26 @@ default:
 
 "Build image":
   stage: build
+  tags:
+    - kubernetes
+  image: "nixos/nix:latest"
   parallel: &parallel
     matrix:
       - IMG:
           - img-bitwarden
           - img-immich
-  artifacts:
-    paths:
-      - "*.tar.gz"
   script:
     - nix build ".#${IMG}"
     - cp -L result "${IMG}.tar.gz"
-
-"Push Image":
-  stage: push
-  parallel: *parallel
-  dependencies:
-    - "Build image"
-  image: "quay.io/podman/stable"
-  services:
-    - "docker:28-dind"
-  tags:
-    - kubernetes
-  script:
+    - nix build "nixpkgs#podman" --out-link podman
     - >-
-      podman login
+      ./podman/bin/podman login
       -u "$CI_REGISTRY_USER"
       -p "$CI_REGISTRY_PASSWORD"
       "$CI_REGISTRY"
-    - podman load -i "${IMG}.tar.gz"
+    - ./podman/bin/podman load -i "${IMG}.tar.gz"
     - >-
-      podman tag
+      ./podman/bin/podman tag
       "localhost/${IMG}:latest"
       "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"
-    - podman push "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"
+    - ./podman/bin/podman push "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"
