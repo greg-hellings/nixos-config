@@ -35,9 +35,8 @@ default:
           - img-immich
   variables:
     NIX_OPTIONS: >-
-      --option
-      extra-experimental-features
-      "flakes nix-command"
+      --extra-experimental-features
+      "nix-command flakes"
   script:
     - nix $NIX_OPTIONS build ".#${IMG}"
     - cp -L result "${IMG}.tar.gz"
