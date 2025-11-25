@@ -46,6 +46,7 @@ default:
       -u "$CI_REGISTRY_USER"
       -p "$CI_REGISTRY_PASSWORD"
       "$CI_REGISTRY"
+    - mkdir -p /etc/containers/
     - |-
       cat << EOF > /etc/containers/policy.json
       {
