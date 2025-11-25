@@ -33,10 +33,15 @@ default:
       - IMG:
           - img-bitwarden
           - img-immich
+  variables:
+    NIX_OPTIONS: >-
+      --option
+      extra-experimental-features
+      "flake nix-command"
   script:
-    - nix build ".#${IMG}"
+    - nix $NIX_OPTIONS build ".#${IMG}"
     - cp -L result "${IMG}.tar.gz"
-    - nix build "nixpkgs#podman" --out-link podman
+    - nix $NIX_OPTIONS build "nixpkgs#podman" --out-link podman
     - >-
       ./podman/bin/podman login
       -u "$CI_REGISTRY_USER"
