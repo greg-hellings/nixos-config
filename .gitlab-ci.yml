@@ -7,7 +7,7 @@ stages:
   stage: eval
   tags:
     - kubernetes
-  image: "$CI_REGISTRY/greg/ci-image/builder:latest"
+  image: "$CI_REGISTRY/greg/ci-images/builder:latest"
   artifacts:
     paths:
       - gitlab-ci-continue.yml
