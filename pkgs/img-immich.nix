@@ -6,7 +6,7 @@
   ...
 }:
 dockerTools.buildLayeredImage {
-  name = "img-bitwarden";
+  name = "img-immich";
   tag = "latest";
   contents = [
     dockerTools.binSh
