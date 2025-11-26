@@ -41,6 +41,7 @@ default:
       -u "$CI_REGISTRY_USER"
       -p "$CI_REGISTRY_PASSWORD"
       "$CI_REGISTRY"
+    - cp -r ~/.nix-profile/etc/containers /etc
     - podman load -i result
     - podman tag "localhost/${IMG}:latest" "$CI_CONTAINER_IMAGE/${IMG}:latest"
     - podman push "$CI_REGISTRY_IMAGE/${IMG}:latest"
