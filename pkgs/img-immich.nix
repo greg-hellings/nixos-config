@@ -6,7 +6,7 @@
   ...
 }:
 dockerTools.buildLayeredImage {
-  name = "img-immich";
+  name = "registry.thehellings.com/greg/nixos-config/img-immich";
   tag = "latest";
   contents = [
     dockerTools.binSh

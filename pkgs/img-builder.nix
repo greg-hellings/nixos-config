@@ -34,7 +34,7 @@ let
 in
 (import "${nix.src.outPath}/docker.nix" {
   inherit pkgs;
-  name = "img-builder";
+  name = "registry.thehellings.com/greg/nixos-config/img-builder";
   tag = "latest";
 
   bundleNixpkgs = false;
@@ -44,6 +44,7 @@ in
   extraPkgs = [
     dockerTools.caCertificates
     podman
+    policy
   ];
   flake-registry = (pkgs.formats.json { }).generate "flake-registry.json" ({
     version = 2;

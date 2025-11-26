@@ -8,7 +8,7 @@
   ...
 }:
 dockerTools.buildLayeredImage {
-  name = "img-bitwarden";
+  name = "registry.thehellings.com/greg/nixos-config/img-bitwarden";
   tag = "latest";
   contents = [
     dockerTools.binSh

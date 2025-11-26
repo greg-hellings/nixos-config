@@ -43,7 +43,6 @@ default:
       "$CI_REGISTRY"
     - cp -r ~/.nix-profile/etc/containers /etc
     - podman load -i result
-    - podman tag "localhost/${IMG}:latest" "$CI_CONTAINER_IMAGE/${IMG}:latest"
     - podman push "$CI_REGISTRY_IMAGE/${IMG}:latest"
 # "Build image":
 #   stage: build
@@ -77,8 +76,4 @@ default:
 #       }
 #       EOF
 #     - ./podman/bin/podman load -i "${IMG}.tar.gz"
-#     - >-
-#       ./podman/bin/podman tag
-#       "localhost/${IMG}:latest"
-#       "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"
 #     - ./podman/bin/podman push "$CI_REGISTRY/greg/nixos-config/${IMG}:latest"
