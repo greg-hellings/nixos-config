@@ -4,15 +4,6 @@
 {
   description = "Greg's machines!";
 
-  nixConfig = {
-    extra-substituters = [
-      "https://greg-hellings.cachix.org"
-    ];
-    extra-trusted-public-keys = [
-      "greg-hellings.cachix.org-1:y01Jl/L5evlhxdnUW6n56AiI1k8g1wxWhTxJCe7XSco="
-    ];
-  };
-
   inputs = {
     agenix = {
       url = "github:ryantm/agenix";

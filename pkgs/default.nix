@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, top, ... }:
 
 let
   c = pkgs.callPackage;
@@ -16,6 +16,7 @@ in
   inject-darwin = c ./inject-darwin.nix { };
   inject = c ./inject.nix { };
   img-bitwarden = c ./img-bitwarden.nix { };
+  img-builder = c ./img-builder.nix { inherit top; };
   img-immich = c ./img-immich.nix { };
   qemu-hook = c ./qemu-hook.nix { };
   setup-ssh = c ./setup-ssh { };

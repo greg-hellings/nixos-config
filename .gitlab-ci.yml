@@ -33,6 +33,7 @@ default:
       - IMG:
           - img-bitwarden
           - img-immich
+          - img-builder
   script:
     - nix --extra-experimental-features "nix-command flakes" build ".#${IMG}"
     - cp -L result "${IMG}.tar.gz"
