@@ -217,7 +217,7 @@ in
       enable = true;
     };
 
-    resolved.enable = true;
+    #resolved.enable = true;
   };
 
   # Do not start nginx until we have tailscaled up and running, so it can bind
