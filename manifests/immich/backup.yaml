@@ -37,19 +37,21 @@ spec:
                 server: nas1.shire-zebra.ts.net
           containers:
             - name: immich-go
-              image: "nixos/nix:latest"
+              image: "registry.thehellings.com/greg/ci-images/immich:latest"
               imagePullPolicy: "Always"
               command:
-                - nix-shell
-                - "-p"
-                - immich-go
-                - "--run"
+                - /bin/sh
+                - "-c"
                 - >-
-                  immich-go archive
-                  --write-to-folder /nas1
+                  immich-go
+                  archive
+                  "--write-to-folder"
+                  /nas1
                   from-immich
-                  --from-api-key "$IMMICH_API_KEY"
-                  --from-server http://immich-server:2283
+                  "--from-api-key"
+                  "$IMMICH_API_KEY"
+                  "--from-server"
+                  "http://immich-server:2283"
               volumeMounts:
                 - name: nas1
                   mountPath: /nas1
