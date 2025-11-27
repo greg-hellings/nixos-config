@@ -10,3 +10,4 @@ resources:
   - immich
   - monitoring
   - pinchflat
+  - smokeping

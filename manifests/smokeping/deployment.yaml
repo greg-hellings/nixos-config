@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smokeping
+  labels:
+    app: smokeping
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: smokeping
+  template:
+    metadata:
+      labels:
+        app: smokeping
+    spec:
+      containers:
+        - name: smokeping
+          image: docker.io/linuxserver/smokeping:2.9.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+          env:
+            - name: PUID
+              value: "1000"
+            - name: PGID
+              value: "1000"
+            - name: TZ
+              value: "America/Chicago"
+            #- name: MASTER_URL
+            #  value: "https://ping.shire-zebra.ts.net"
+            # SHARED_SECRET if you want to run a cluster
+            # CACHE_DIR if you need to explicitly state that
+      restartPolicy: Always
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: smokeping-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: smokeping-data

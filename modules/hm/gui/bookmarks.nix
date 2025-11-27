@@ -221,12 +221,37 @@
                 url = "https://cloudnative-pg.io/documentation/1.26/";
               }
               {
+                name = "Kubernetes Dashboard";
+                url = "https://dashboard.shire-zebra.ts.net/";
+              }
+              {
                 name = "Longhorn";
                 url = "http://longhorn.shire-zebra.ts.net";
               }
               {
                 name = "PGAdmin4";
                 url = "http://pgadmin.shire-zebra.ts.net/";
+              }
+            ];
+          }
+          {
+            name = "Status";
+            bookmarks = [
+              {
+                name = "Grafana";
+                url = "http://hosea.shire-zebra.ts.net:3000/";
+              }
+              {
+                name = "Pinchflat";
+                url = "http://nas1.shire-zebra.ts.net:8945";
+              }
+              {
+                name = "Prometheus";
+                url = "http://prometheus.shire-zebra.ts.net/";
+              }
+              {
+                name = "Smokeping";
+                url = "https://ping.shire-zebra.ts.net/smokeping/smokeping.cgi";
               }
             ];
           }
@@ -256,28 +281,12 @@
             url = "http://nas.home:8384/#";
           }
           {
-            name = "Pinchflat";
-            url = "http://nas1.shire-zebra.ts.net:8945";
-          }
-          {
             name = "Portainer";
             url = "https://nas1.shire-zebra.ts.net:31015";
           }
           {
             name = "Restic";
             url = "http://nas1.shire-zebra.ts.net:30248";
-          }
-          {
-            name = "Kubernetes Dashboard";
-            url = "https://dashboard.shire-zebra.ts.net/";
-          }
-          {
-            name = "Prometheus";
-            url = "http://prometheus.shire-zebra.ts.net/";
-          }
-          {
-            name = "Grafana";
-            url = "http://hosea.shire-zebra.ts.net:3000/";
           }
         ];
       }
