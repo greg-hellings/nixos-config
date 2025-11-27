@@ -150,7 +150,11 @@ in
               "app.update.auto" = false;
               "browser.ctrlTab.sortByRecentlyUsed" = true;
               "browser.startup.page" = 3;
-              "browser.startup.homepage" = "https://thehellings.com";
+              "browser.startup.homepage" =
+                if pkgs.stdenv.hostPlatform.isDarwin then
+                  "https://thehellings.com"
+                else
+                  "https://kuma.shire-zebra.ts.net/";
               "doh-rollout.doorhanger-decision" = "UIDisabled";
               "doh-rollout.doneFirstRun" = true;
               "signon.rememberSignons" = false;

@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: uptime-kuma-tailscale
+  namespace: uptime-kuma
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: uptime-kuma
+      port:
+        number: 3001
+  tls:
+    - hosts:
+        - kuma

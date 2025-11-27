@@ -1,0 +1,7 @@
+namespace: uptimekuma
+
+resources:
+  - namespace.yaml
+  - secrets.yaml
+  - chart.yaml
+  - ingress.yaml

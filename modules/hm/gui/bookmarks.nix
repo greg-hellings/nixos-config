@@ -253,6 +253,10 @@
                 name = "Smokeping";
                 url = "https://ping.shire-zebra.ts.net/smokeping/smokeping.cgi";
               }
+              {
+                name = "Uptime Kuma";
+                url = "https://kuma.shire-zebra.ts.net";
+              }
             ];
           }
           {
