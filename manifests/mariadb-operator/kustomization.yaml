@@ -1,0 +1,7 @@
+namespace: mariadb-operator
+
+resources:
+  - namespace.yaml
+  - secrets.yaml
+  - chart.yaml
+  - databases.yaml

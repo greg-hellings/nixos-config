@@ -4,6 +4,7 @@ resources:
   - secrets
   - dashboard
   - cnpg-system
+  - mariadb-operator
   - databases
   - matrix
   - gitlab-runner

@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mariadb-cluster
+spec:
+  interval: "24h"
+  chart:
+    spec:
+      chart: mariadb-cluster
+      sourceRef:
+        kind: HelmRepository
+        name: mariadb-operator
+      interval: "1h"
+  dependsOn:
+    - name: mariadb-operator-crds
+    - name: mariadb-operator
+  values:
+    mariadb:
+      rootPasswordSecretKeyRef:
+        name: mariadb-root
+        key: password
+      storage:
+        size: "30Gi"
+      replicas: 3
+    databases:
+      - name: uptimekuma
+        characterSet: utf8
+        collate: utf8_general_ci
+        cleanupPolicy: Delete
+        requeueInterval: "10h"
+        retryInterval: "30s"
+    users:
+      - name: uptimekuma
+        passwordSecretKeyRef:
+          name: uptimekuma-mariadb-password
+          key: password
+        host: "%"
+        cleanupPolicy: Delete
+        requeueInterval: "10h"
+        retryInterval: "30s"
+    grants:
+      - name: uptimekuma
+        privileges:
+          - "ALL PRIVILEGES"
+        database: "uptimekuma"
+        table: "*"
+        username: uptimekuma
+        grantOption: true
+        host: "%"
+        cleanupPolicy: Delete
+        requeueInterval: "10h"
+        retryInterval: "30s"
+    physicalBackups:
+      - name: physicalbackup
+        schedule:
+          cron: "0 0 * * *"
+          suspend: false
+          immediate: true
+        compression: gzip
+        maxRetention: "720h"
+        storage:
+          s3:
+            bucket: k3sbackup
+            prefix: mariadb
+            endpoint: "chronicles.shire-zebra.ts.net:9000"
+            region: us-east-1
+            accessKeyIdSecretKeyRef:
+              name: k3sbackup-secret
+              key: username
+            secretAccessKeySecretKeyRef:
+              name: k3sbackup-secret
+              key: password
+            tls:
+              enabled: false
