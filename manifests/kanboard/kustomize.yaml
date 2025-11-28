@@ -1,5 +1,0 @@
-namespace: kanboard
-
-resources:
-  - namespace.yaml
-  - helm.yaml

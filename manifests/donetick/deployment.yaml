@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: donetick
+  namespace: donetick
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: donetick
+  template:
+    metadata:
+      labels:
+        app: donetick
+    spec:
+      containers:
+        - name: donetick
+          image: donetick/donetick
+          ports:
+            - containerPort: 2021
+              name: http
+          env:
+            - name: DT_ENV
+              value: "selfhosted"
+            - name: DT_SQLITE_PATH
+              value: "/data/donetick.db"
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: data
+              mountPath: /data
+      volumes:
+        - name: config
+          configMap:
+            name: donetick-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: donetick-data

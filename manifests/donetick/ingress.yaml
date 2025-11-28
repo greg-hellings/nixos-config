@@ -1,0 +1,15 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: donetick-tailscale
+  namespace: donetick
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: donetick
+      port:
+        number: 2021
+  tls:
+    - hosts:
+        - todo
