@@ -35,7 +35,7 @@
         option-data = [
           {
             name = "domain-name-servers";
-            data = "${lanIP},1.1.1.1";
+            data = "${lanIP}";
           }
           {
             name = "routers";
