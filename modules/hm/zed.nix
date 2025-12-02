@@ -14,6 +14,7 @@ in
   config = lib.mkIf cfg {
     programs.zed-editor = {
       enable = true;
+      package = pkgs.zed-editor-fhs;
       extensions = [
         "ansible"
         "cargo-tom"

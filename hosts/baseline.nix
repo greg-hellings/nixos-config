@@ -72,6 +72,8 @@ in
   };
 
   programs = {
+    gnupg.agent.enable = true;
+
     xonsh = {
       enable = true;
       extraPackages = (
@@ -178,7 +180,13 @@ in
     prometheus.exporters = {
       node = {
         enable = true;
-        enabledCollectors = [ "ethtool" "logind" "mountstats" "systemd" "tcpstat" ];
+        enabledCollectors = [
+          "ethtool"
+          "logind"
+          "mountstats"
+          "systemd"
+          "tcpstat"
+        ];
       };
       ping = {
         enable = true;
@@ -187,7 +195,11 @@ in
             interval = "10s";
             timeout = "5s";
           };
-          targets = [ "thehellings.com" "genesis.shire-zebra.ts.net" "www.google.com" ];
+          targets = [
+            "thehellings.com"
+            "genesis.shire-zebra.ts.net"
+            "www.google.com"
+          ];
         };
       };
       systemd.enable = true;
