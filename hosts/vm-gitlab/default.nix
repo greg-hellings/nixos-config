@@ -86,6 +86,7 @@ in
       databasePasswordFile = config.age.secrets.gitlab-db-password.path;
       databaseCreateLocally = false;
       extraConfig = {
+        registry.port = null;
         gitlab = {
           trustedProxies = [
             "${vpnIp}/32" # The system itself
