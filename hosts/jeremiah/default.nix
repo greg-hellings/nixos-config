@@ -22,8 +22,9 @@
     initrd.kernelModules = [
       "amdgpu"
     ];
-    kernelParams = [
-    ];
+    kernelParams =
+      [
+      ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -73,6 +74,7 @@
     kubernetes = {
       enable = true;
       vipInterface = "br0";
+      vip = "10.42.1.8";
       priority = 254;
     };
     tailscale = {
@@ -103,17 +105,7 @@
       interface = "br0";
     };
     firewall.allowedTCPPorts = [ 3389 ];
-    interfaces = {
-      br0 = {
-        ipv4.addresses = [
-          {
-            address = "10.42.1.8";
-            prefixLength = 16;
-          }
-        ];
-      };
-    };
-    nameservers = [ "10.42.1.5" ];
+    interfaces.br0.useDHCP = true;
   };
 
   programs.steam = {

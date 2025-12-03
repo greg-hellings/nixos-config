@@ -37,6 +37,7 @@
     kubernetes = {
       enable = true;
       vipInterface = "enp38s0";
+      vip = "10.42.1.6";
       priority = 255;
     };
     tailscale = {
@@ -59,27 +60,13 @@
   };
 
   networking = {
-    defaultGateway = {
-      address = " 10.42.1.1";
-      interface = "enp38s0";
-    };
     firewall = {
       enable = true;
       allowedTCPPorts = [ 80 ];
       checkReversePath = lib.mkForce false;
     };
     hostName = "isaiah";
-    interfaces = {
-      enp38s0 = {
-        ipv4.addresses = [
-          {
-            address = "10.42.1.6";
-            prefixLength = 16;
-          }
-        ];
-      };
-    };
-    nameservers = [ "10.42.1.5" ];
+    interfaces.enp38s0.useDHCP = true;
     useDHCP = false;
   };
 

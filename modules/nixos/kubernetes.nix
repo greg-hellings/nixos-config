@@ -29,6 +29,11 @@ in
         default = 1;
         description = "VIP priority";
       };
+      vip = lib.mkOption {
+        type = lib.types.str;
+        default = null;
+        description = "The IP address of this host";
+      };
       vipInterface = lib.mkOption {
         type = lib.types.str;
         default = null;
@@ -56,22 +61,22 @@ in
     ];
 
     networking.firewall = {
-      allowedTCPPorts = [
-        80
-        443
-        5432
-        6443
-        10250
-      ]
-      ++ (
-        if cfg.agentOnly then
-          [ ]
-        else
-          [
-            2379
-            2380
-          ]
-      );
+      allowedTCPPorts =
+        [
+          80
+          443
+          5432
+          6443
+        ]
+        ++ (
+          if cfg.agentOnly then
+            [ ]
+          else
+            [
+              2379
+              2380
+            ]
+        );
       allowedUDPPorts = [ 8472 ];
     };
 
@@ -137,35 +142,25 @@ in
         serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
         tokenFile = config.age.secrets.kubernetesToken.path;
       };
-      keepalived =
-        let
-          ip = (builtins.head config.networking.interfaces."${cfg.vipInterface}".ipv4.addresses).address;
-        in
-        {
-          enable = true;
-          openFirewall = true;
-          vrrpInstances.kubernetes = {
-            interface = cfg.vipInterface;
-            priority = cfg.priority;
-            state = if (config.networking.hostName == "isaiah") then "MASTER" else "BACKUP";
-            virtualIps = [
-              {
-                addr = "10.42.5.1/16";
-                dev = cfg.vipInterface;
-              }
-            ];
-            virtualRouterId = 77;
-            unicastPeers = lib.filter (v: v != ip) [
-              "10.42.1.6"
-              "10.42.1.8"
-              "10.42.1.13"
-            ];
-            unicastSrcIp = ip;
-            extraConfig = ''
-              advert_int 1
-            '';
-          };
+      keepalived = {
+        enable = true;
+        openFirewall = true;
+        vrrpInstances.kubernetes = {
+          interface = cfg.vipInterface;
+          priority = cfg.priority;
+          state = if (config.networking.hostName == "isaiah") then "MASTER" else "BACKUP";
+          virtualIps = [
+            {
+              addr = "10.42.5.1/16";
+              dev = cfg.vipInterface;
+            }
+          ];
+          virtualRouterId = 77;
+          extraConfig = ''
+            advert_int 1
+          '';
         };
+      };
       openiscsi = {
         enable = true;
         name = "${config.networking.hostName}-initiatorhost";
