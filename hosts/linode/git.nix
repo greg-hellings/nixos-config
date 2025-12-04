@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 let
   srcDomain = "src.thehellings.com";
@@ -6,25 +6,27 @@ let
 in
 {
   greg.proxies."${srcDomain}" = {
-    target = "https://vm-gitlab.shire-zebra.ts.net";
+    target = "https://gitea.shire-zebra.ts.net";
     ssl = true;
     genAliases = false;
     extraConfig = ''
-      proxy_set_header X-Forwarded-Proto https;
+      proxy_ssl_verify off;
+      proxy_ssl_server_name on;
+      proxy_set_header X-Forwarded-Proto $scheme;
       proxy_set_header X-Forwarded-Ssl on;
       client_max_body_size 100000m;
     '';
   };
-  greg.proxies."registry.thehellings.com" = {
-    target = "https://vm-gitlab.shire-zebra.ts.net:5000";
-    ssl = true;
-    genAliases = false;
-    extraConfig = ''
-      proxy_set_header X-Forwarded-Proto https;
-      proxy_set_header X-Forwarded-Ssl on;
-      client_max_body_size 25000m;
-    '';
-  };
+  #greg.proxies."registry.thehellings.com" = {
+    #target = "https://gitea.shire-zebra.ts.net:5000";
+    #ssl = true;
+    #genAliases = false;
+    #extraConfig = ''
+      #proxy_set_header X-Forwarded-Proto https;
+      #proxy_set_header X-Forwarded-Ssl on;
+      #client_max_body_size 25000m;
+    #'';
+  #};
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
 
@@ -34,23 +36,23 @@ in
 
   services.haproxy = {
     enable = true;
-    config = builtins.concatStringsSep "\n" [
-      "global"
-      "	daemon"
-      "	maxconn 20"
+    config = ''
+      global
+        daemon
+        maxconn 20
 
-      "defaults"
-      "	timeout connect 500s"
-      "	timeout client 500s"
-      "	timeout server 1h"
+      defaults
+        timeout connect 500s
+        timeout client 500s
+        timeout server 1h
 
-      "listen gitsshd"
-      "	bind *:${toString sshPort}"
-      "	timeout client 1h"
-      "	mode tcp"
-      "	server git-isaiah isaiah.shire-zebra.ts.net:32222"
-      "	server git-jeremiah jeremiah.shire-zebra.ts.net:32222"
-      "	server git-zeke zeke.shire-zebra.ts.net:32222"
-    ];
+      listen gitsshd
+        bind *:${toString sshPort}
+        timeout client 1h
+        mode tcp
+        server git-isaiah isaiah.shire-zebra.ts.net:32222
+        server git-jeremiah jeremiah.shire-zebra.ts.net:32222
+        server git-zeke zeke.shire-zebra.ts.net:32222
+    '';
   };
 }
