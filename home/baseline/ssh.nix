@@ -45,11 +45,12 @@
           hostname = "github.com";
         };
         "src" = {
-          user = "gitlab";
-          hostname = "vm-gitlab.shire-zebra.ts.net";
+          user = "git";
+          hostname = "jeremiah.shire-zebra.ts.net";
+          port = 32222;
         };
         srcpub = {
-          user = "gitlab";
+          user = "git";
           hostname = "src.thehellings.com";
           port = 2222;
         };
