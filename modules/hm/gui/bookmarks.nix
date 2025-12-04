@@ -242,10 +242,6 @@
                 url = "http://hosea.shire-zebra.ts.net:3000/";
               }
               {
-                name = "Pinchflat";
-                url = "http://nas1.shire-zebra.ts.net:8945";
-              }
-              {
                 name = "Prometheus";
                 url = "http://prometheus.shire-zebra.ts.net/";
               }
@@ -269,6 +265,27 @@
               {
                 name = "Ride the Lightning";
                 url = "http://hosea.shire-zebra.ts.net:3000/";
+              }
+            ];
+          }
+          {
+            name = "Infra";
+            bookmarks = [
+              {
+                name = "NAS1 Minio Console";
+                url = "http://nas1.shire-zebra.ts.net:30212/";
+              }
+              {
+                name = "NAS1 Minio Direct";
+                url = "http://nas1.shire-zebra.ts.net:9002/";
+              }
+              {
+                name = "Chronicles Minio";
+                url = "http://chronicles.shire-zebra.ts.net:9001";
+              }
+              {
+                name = "Pinchflat";
+                url = "https://pinchflat.shire-zebra.ts.net/";
               }
             ];
           }

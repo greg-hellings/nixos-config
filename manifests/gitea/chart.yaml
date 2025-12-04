@@ -1,0 +1,103 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: gitea-repository
+spec:
+  interval: "24h"
+  url: https://dl.gitea.com/charts/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitea-release
+spec:
+  interval: "24h"
+  chart:
+    spec:
+      chart: gitea
+      sourceRef:
+        kind: HelmRepository
+        name: gitea-repository
+      interval: "1h"
+  values:
+    # Gitea Helm Chart Values
+    global:
+      storageClass: longhorn-default
+
+    replicaCount: 1
+
+    service:
+      http:
+        type: LoadBalancer
+        port: 3000
+      ssh:
+        type: LoadBalancer
+        port: 22
+        nodePort: 32222
+
+    gitea:
+      admin:
+        # If I ever need or want to reset the password, I can use this
+        # existingSecret: gitea-admin-secret
+        # passwordMode: keepUpdated
+        username: greg
+        password: changeMe1
+        passwordMode: initialOnlyRequireReset
+
+      # Reference: https://docs.gitea.com/administration/config-cheat-sheet
+      additionalConfigSources:
+        - secret:
+            secretName: gitea-config
+      config:
+        DEFAULT:
+          APP_NAME: "Gitea: Greg's Cup of Git"
+          RUN_MODE: dev
+        database:
+          DB_TYPE: postgres
+          HOST: "postgres-rw.db.svc.cluster.local:5432"
+          NAME: gitea
+          # USER: ""
+          # PASSWD: ""
+        session:
+          PROVIDER: db
+        queue:
+          TYPE: level
+        storage:
+          STORAGE_TYPE: minio
+          MINIO_ENDPOINT: "nas1.shire-zebra.ts.net:9000"
+          MINIO_BUCKET: gitea
+          MINIO_LOCATION: us-east-1
+          # MINIO_ACCESS_KEY_ID: ""
+          # MINIO_SECRET_ACCESS_KEY: ""
+          MINIO_USE_SSL: "false"
+          MINIO_INSECURE_SKIP_VERIFY: "true"
+
+      metrics:
+        enabled: false
+        serviceMonitor:
+          enabled: false
+
+    persistence:
+      enabled: true
+      storageClass: longhorn-default
+      size: "50Gi"
+
+    # I will manage my Postgres externally
+    postgresql:
+      enabled: false
+    postgresql-ha:
+      enabled: false
+
+    resources:
+      limits:
+        cpu: "1000m"
+        memory: "6Gi"
+      requests:
+        cpu: "100m"
+        memory: "2Gi"
+
+    strategy:
+      type: RollingUpdate
+      rollingUpdate:
+        maxSurge: 1
+        maxUnavailable: 0

@@ -9,3 +9,4 @@ resources:
   - postgres-matrix.yaml
   - immich.yaml
   - ingress.yaml
+  - postgres-gitea.yaml

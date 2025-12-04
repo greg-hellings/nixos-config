@@ -1,0 +1,14 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitea
+spec:
+  ingressClassName: tailscale
+  defaultBackend:
+    service:
+      name: gitea-release-http
+      port:
+        name: http
+  tls:
+    - hosts:
+        - gitea

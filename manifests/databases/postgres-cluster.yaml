@@ -32,6 +32,13 @@ spec:
         superuser: false
         passwordSecret:
           name: postgres-user-matrix
+      - name: gitea
+        ensure: present
+        comment: Gitea DB user
+        login: true
+        superuser: false
+        passwordSecret:
+          name: postgres-user-gitea
 
   plugins:
     - name: barman-cloud.cloudnative-pg.io

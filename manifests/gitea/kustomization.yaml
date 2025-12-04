@@ -1,0 +1,7 @@
+namespace: gitea
+
+resources:
+  - namespace.yaml
+  - chart.yaml
+  - ingress.yaml
+  - secrets.yaml
