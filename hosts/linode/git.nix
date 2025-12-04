@@ -48,7 +48,9 @@ in
       "	bind *:${toString sshPort}"
       "	timeout client 1h"
       "	mode tcp"
-      "	server git-thehellings-lan vm-gitlab.shire-zebra.ts.net:22"
+      "	server git-isaiah isaiah.shire-zebra.ts.net:32222"
+      "	server git-jeremiah jeremiah.shire-zebra.ts.net:32222"
+      "	server git-zeke zeke.shire-zebra.ts.net:32222"
     ];
   };
 }
