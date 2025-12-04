@@ -1,18 +1,15 @@
-# Edit this configuration file to define what should be installed on
-# your system.	Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 {
-  config,
   pkgs,
   lib,
   top,
   ...
 }:
 
+let
+  ip = "10.42.1.8";
+in
 {
   imports = [
-    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     top.proxmox.nixosModules.proxmox-ve
   ];
@@ -74,7 +71,7 @@
     kubernetes = {
       enable = true;
       vipInterface = "br0";
-      vip = "10.42.1.8";
+      vip = ip;
       priority = 254;
     };
     tailscale = {
@@ -105,7 +102,15 @@
       interface = "br0";
     };
     firewall.allowedTCPPorts = [ 3389 ];
-    interfaces.br0.useDHCP = true;
+    interfaces.br0.ipv4 = {
+      addresses = [
+        {
+          address = ip;
+          prefixLength = 16;
+        }
+      ];
+    };
+    nameservers = [ "10.42.1.5" ];
   };
 
   programs.steam = {
@@ -127,7 +132,7 @@
     };
     proxmox-ve = {
       enable = true;
-      ipAddress = "10.42.1.8";
+      ipAddress = ip;
     };
     sunshine = {
       enable = true;
