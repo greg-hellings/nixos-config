@@ -52,6 +52,10 @@ spec:
         DEFAULT:
           APP_NAME: "Gitea: Greg's Cup of Git"
           RUN_MODE: dev
+        server:
+          DOMAIN: "thehellings.com"
+          ROOT_URL: "https://src.thehellings.com"
+          SSH_PORT: "2222"
         database:
           DB_TYPE: postgres
           HOST: "postgres-rw.db.svc.cluster.local:5432"
