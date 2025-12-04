@@ -35,10 +35,11 @@
   };
   keymaps =
     let
-      winMove = key: {
+      winMove = key: dir: {
         mode = "n";
         key = "<C-${key}>";
-        action = "<C-w>${key}<C-w><CR>";
+        #action = "<C-w>${key}<C-w><CR>";
+        action = ":ZellijNavigate${dir}<CR>";
       };
     in
     [
@@ -58,10 +59,10 @@
         key = "<C-g>";
         action = "<Esc>:Git<CR>";
       }
-      (winMove "h")
-      (winMove "j")
-      (winMove "k")
-      (winMove "l")
+      (winMove "h" "Left")
+      (winMove "j" "Down")
+      (winMove "k" "Up")
+      (winMove "l" "Right")
     ];
   plugins = {
     airline.enable = true;
@@ -135,7 +136,7 @@
     notify.enable = true;
     remote-nvim.enable = true;
     web-devicons.enable = true;
-    zellij.enable = true;
+    zellij-nav.enable = true;
   };
   userCommands = {
     Ggr = {
