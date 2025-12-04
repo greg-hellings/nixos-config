@@ -127,7 +127,7 @@
     };
     proxmox-ve = {
       enable = true;
-      ipAddress = (builtins.elemAt config.networking.interfaces.br0.ipv4.addresses 0).address;
+      ipAddress = "10.42.1.8";
     };
     sunshine = {
       enable = true;
