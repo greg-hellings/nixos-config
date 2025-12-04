@@ -46,7 +46,7 @@ in
     };
 
     services.gitlab-runner = {
-      enable = true;
+      enable = false;
       settings.concurrent = cfg.threads;
       services = {
         qemu = lib.mkIf cfg.qemu (runnerCfg config.age.secrets.qemu.path);
