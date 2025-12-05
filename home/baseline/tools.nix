@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ config, lib, pkgs, ... }:
 {
   home.packages =
     with pkgs;
@@ -23,7 +23,8 @@
       enable = true;
       enableZshIntegration = pkgs.stdenv.hostPlatform.isDarwin;
       settings = {
-        default_shell = "xonsh";
+        #default_shell = "xonsh";
+        default_shell = lib.getExe config.programs.nushell.package;
         plugins = {
           autolock = {
             _props.location = "https://github.com/fresh2dev/zellij-autolock/releases/download/0.2.2/zellij-autolock.wasm";
@@ -60,27 +61,16 @@
                 ];
               };
             }
-            {
-              bind = {
-                _args = [ "Ctrl z" ];
-                _children = [
-                  {
-                    MessagePlugin = {
-                      _args = [ "autolock" ];
-                      _children = [
-                        {
-                          payload._args = [ "enable" ];
-                        }
-                      ];
-                    };
-                    SwitchToMode._args = [ "Locked" ];
-                  }
-                ];
-              };
-            }
           ]; # /normal
           locked._children = [
             {
+              unbind = {
+                _args = [ "Ctrl g" ];
+              };
+            }
+          ];
+          shared._children = [
+            {
               bind = {
                 _args = [ "Ctrl z" ];
                 _children = [
@@ -89,7 +79,7 @@
                       _args = [ "autolock" ];
                       _children = [
                         {
-                          payload._args = [ "disable" ];
+                          payload._args = [ "toggle" ];
                         }
                       ];
                     };

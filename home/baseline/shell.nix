@@ -69,7 +69,7 @@
         window-save-state = "always";
 
         keybind = [
-          "ctrl+n=new_window"
+          #"ctrl+n=new_window"
 
           "ctrl+shift+h=goto_split:left"
           "ctrl+shift+j=goto_split:down"
