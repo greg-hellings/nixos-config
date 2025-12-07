@@ -61,14 +61,8 @@
           pkgs = prev;
         })
       );
-      charts_overlay = (
-        _f: _p: {
-          chartsMetadata = top.charts.chartsMetadata;
-        }
-      );
       overlays = [
         top.agenix.overlays.default
-        charts_overlay
         local_overlay
         packages_overlay
         top.nixvimunstable.overlays.default
