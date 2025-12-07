@@ -1,6 +1,7 @@
 {
-  pkgs,
+  config,
   lib,
+  pkgs,
   top,
   ...
 }:
@@ -12,16 +13,25 @@ in
   imports = [
     ./hardware-configuration.nix
     top.proxmox.nixosModules.proxmox-ve
+    top.buildbot.nixosModules.buildbot-master
+    top.buildbot.nixosModules.buildbot-worker
   ];
+
+  age.secrets = {
+    gitea-buildbotWorkersFile.file = ../../secrets/gitea/buildbotWorkersFile.age;
+    gitea-oauthToken.file = ../../secrets/gitea/oauthToken.age;
+    gitea-oauthSecret.file = ../../secrets/gitea/oauthSecret.age;
+    gitea-webhookSecret.file = ../../secrets/gitea/webhookSecret.age;
+    gitea-workerPassword.file = ../../secrets/gitea/workerPassword.age;
+  };
 
   # Bootloader.
   boot = {
     initrd.kernelModules = [
       "amdgpu"
     ];
-    kernelParams =
-      [
-      ];
+    kernelParams = [
+    ];
     loader = {
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
@@ -123,6 +133,30 @@ in
   age.secrets.runner-reg.file = ../../secrets/gitlab/nixos-qemu-shell.age;
 
   services = {
+    buildbot-nix = {
+      master = {
+        enable = true;
+        admins = [ "greg" ];
+        authBackend = "gitea";
+        # Optional to build non-default branches at a time
+        # branches.releaseBranches.matchGlob = "release-*";
+        domain = "${config.networking.hostName}.shire-zebra.ts.net:8010";
+        gitea = {
+          enable = true;
+          instanceUrl = "https://src.thehellings.com";
+          oauthId = "97bcda21-49df-4876-87ac-36ae07f340ec";
+          oauthSecretFile = config.age.secrets.gitea-oauthSecret.path;
+          tokenFile = config.age.secrets.gitea-oauthToken.path;
+          #topic = "buildbot-greg";
+          webhookSecretFile = config.age.secrets.gitea-webhookSecret.path;
+        };
+        workersFile = config.age.secrets.gitea-buildbotWorkersFile.path;
+      };
+      worker = {
+        enable = true;
+        workerPasswordFile = config.age.secrets.gitea-workerPassword.path;
+      };
+    };
     displayManager = {
       defaultSession = "xfce";
       autoLogin = {

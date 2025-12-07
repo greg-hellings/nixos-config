@@ -86,6 +86,12 @@ in
   "dendrite.age".publicKeys = everyone;
   "dendrite_key.age".publicKeys = everyone;
 
+  "gitea/buildbotWorkersFile.age".publicKeys = everyone;
+  "gitea/oauthSecret.age".publicKeys = everyone;
+  "gitea/oauthToken.age".publicKeys = everyone;
+  "gitea/webhookSecret.age".publicKeys = everyone;
+  "gitea/workerPassword.age".publicKeys = everyone;
+
   "gitlab/secret.age".publicKeys = everyone;
   "gitlab/otp.age".publicKeys = everyone;
   "gitlab/db.age".publicKeys = everyone;

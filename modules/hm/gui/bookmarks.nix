@@ -287,6 +287,10 @@
                 name = "Pinchflat";
                 url = "https://pinchflat.shire-zebra.ts.net/";
               }
+              {
+                name = "Buildbot";
+                url = "http://jeremiah.shire-zebra.ts.net:8010/";
+              }
             ];
           }
           {

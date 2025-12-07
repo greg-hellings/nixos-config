@@ -12,6 +12,10 @@
     btc = {
       url = "github:fort-nix/nix-bitcoin/release";
     };
+    buildbot = {
+      url = "github:nix-community/buildbot-nix";
+      inputs.nixpkgs.follows = "nixunstable";
+    };
     charts = {
       url = "github:nix-community/nixhelm";
     };
