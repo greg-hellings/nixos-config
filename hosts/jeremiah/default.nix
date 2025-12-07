@@ -144,7 +144,13 @@ in
         admins = [ "greg" ];
         authBackend = "gitea";
         # Optional to build non-default branches at a time
-        # branches.releaseBranches.matchGlob = "release-*";
+        branches = {
+          default = {
+            matchGlob = "ma*";
+            registerGCRoots = false;
+            updateOutputs = false;
+          };
+        };
         domain = "${config.networking.hostName}.shire-zebra.ts.net:8010";
         gitea = {
           enable = true;
