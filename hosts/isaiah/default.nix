@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   top,
   ...
@@ -6,10 +7,11 @@
 {
   imports = [
     ./hardware-configuration.nix
-    top.proxmox.nixosModules.proxmox-ve
+    top.buildbot.nixosModules.buildbot-worker
   ];
 
   age.secrets = {
+    gitea-workerPassword.file = ../../secrets/gitea/workerPassword.age;
     runner-reg.file = ../../secrets/gitlab/kubernetes-k3s-local.age;
   };
 
@@ -71,6 +73,12 @@
   };
 
   services = {
+    buildbot-nix.worker = {
+      enable = true;
+      masterUrl = "tcp:host=jeremiah.shire-zebra.ts.net:port=9989";
+      name = "isaiah";
+      workerPasswordFile = config.age.secrets.gitea-workerPassword.path;
+    };
     k3s.clusterInit = true; # This is the first node in the cluster
     openssh = {
       enable = true;

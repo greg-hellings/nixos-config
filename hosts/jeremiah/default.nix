@@ -8,6 +8,11 @@
 
 let
   ip = "10.42.1.8";
+  mk = file: {
+    inherit file;
+    owner = "buildbot";
+    group = "buildbot";
+  };
 in
 {
   imports = [
@@ -18,11 +23,11 @@ in
   ];
 
   age.secrets = {
-    gitea-buildbotWorkersFile.file = ../../secrets/gitea/buildbotWorkersFile.age;
-    gitea-oauthToken.file = ../../secrets/gitea/oauthToken.age;
-    gitea-oauthSecret.file = ../../secrets/gitea/oauthSecret.age;
-    gitea-webhookSecret.file = ../../secrets/gitea/webhookSecret.age;
-    gitea-workerPassword.file = ../../secrets/gitea/workerPassword.age;
+    gitea-buildbotWorkersFile = mk ../../secrets/gitea/buildbotWorkersFile.age;
+    gitea-oauthToken = mk ../../secrets/gitea/oauthToken.age;
+    gitea-oauthSecret = mk ../../secrets/gitea/oauthSecret.age;
+    gitea-webhookSecret = mk ../../secrets/gitea/webhookSecret.age;
+    gitea-workerPassword = mk ../../secrets/gitea/workerPassword.age;
   };
 
   # Bootloader.
@@ -150,6 +155,8 @@ in
           #topic = "buildbot-greg";
           webhookSecretFile = config.age.secrets.gitea-webhookSecret.path;
         };
+        showTrace = true;
+        #webhookBaseUrl = "http://${config.networking.hostName}.shire-zebra.ts.net:8010";
         workersFile = config.age.secrets.gitea-buildbotWorkersFile.path;
       };
       worker = {
