@@ -15,13 +15,13 @@ in
   hms = c ./hms { };
   inject-darwin = c ./inject-darwin.nix { };
   inject = c ./inject.nix { };
-  qemu-hook = c ./qemu-hook.nix { };
   setup-ssh = c ./setup-ssh { };
   upgrade-pg-cluster = c ./upgrade-pg-cluster.nix { };
 }
 // (
   if pkgs.stdenv.hostPlatform.system == "x86_64-linux" then
     {
+      qemu-hook = c ./qemu-hook.nix { };
       vfio_startup = c ./vfio_startup.nix { };
       vfio_shutdown = c ./vfio_shutdown.nix { };
       zim = c ./zim.nix { };
