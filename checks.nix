@@ -38,5 +38,7 @@
     };
   };
 }
-// (builtins.mapAttrs (_n: v: v.config.system.build.toplevel) top.self.nixosConfigurations)
+// (builtins.mapAttrs (_n: v: v.config.system.build.toplevel) (
+  lib.filterAttrs (_n: v: v.pkgs.stdenv.hostPlatform.system == system) top.self.nixosConfigurations
+))
 // (top.self.packages.${system})
