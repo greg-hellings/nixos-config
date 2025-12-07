@@ -76,13 +76,6 @@ in
 
     xonsh = {
       enable = true;
-      extraPackages = (
-        ps: with ps; [
-          xonsh-apipenv
-          pkgs.nur.repos.xonsh-xontribs.xonsh-direnv
-          pkgs.nur.repos.xonsh-xontribs.xontrib-vox
-        ]
-      );
     };
 
     ssh = {

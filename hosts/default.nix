@@ -33,7 +33,6 @@ let
         # Imported ones
         top.agenix.nixosModules.default
         hm.nixosModules.home-manager
-        top.nurpkgs.modules.nixos.default
         # Local ones
         ./baseline.nix
         top.self.modules.nixosModule
@@ -62,8 +61,8 @@ in
     system = "aarch64-linux";
   };
   # nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
-  nixos-arm = wsl {
-    name = "wsl";
-    system = "aarch64-linux";
-  };
+  #nixos-arm = wsl {
+  #name = "wsl";
+  #system = "aarch64-linux";
+  #};
 }

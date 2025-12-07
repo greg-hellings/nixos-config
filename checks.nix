@@ -6,6 +6,9 @@
   ...
 }:
 
+let
+  meta = import ./hosts/metadata.nix;
+in
 {
   pre-commit-check = hooks.lib.${system}.run {
     src = ./.;
@@ -39,6 +42,6 @@
   };
 }
 // (builtins.mapAttrs (_n: v: v.config.system.build.toplevel) (
-  lib.filterAttrs (_n: v: v.pkgs.stdenv.hostPlatform.system == system) top.self.nixosConfigurations
+  lib.filterAttrs (n: _v: builtins.any (a: a == system) meta.${n}.arch) top.self.nixosConfigurations
 ))
 // (top.self.packages.${system})

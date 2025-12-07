@@ -71,8 +71,6 @@
         charts_overlay
         local_overlay
         packages_overlay
-        top.nurpkgs.overlays.default
-        top.vsext.overlays.default
         top.nixvimunstable.overlays.default
       ];
 

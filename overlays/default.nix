@@ -1,29 +1,6 @@
 _final: prev:
 
-let
-  myPackages =
-    pypackages: with pypackages; [
-      black
-      build
-      ipython
-      mypy
-      pylint
-      python-dateutil
-      pyyaml
-      responses
-      ruamel-yaml
-      setuptools
-      tox
-      typing-extensions
-      virtualenv
-    ];
-
-  myPython = prev.python312.withPackages myPackages;
-
-in
 rec {
-  gregpy = myPython;
-
   ## Testing adding python packages in the correct manner
   pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
     (

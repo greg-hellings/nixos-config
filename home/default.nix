@@ -7,11 +7,15 @@ let
   pkgs =
     system:
     (import top.nixunstable {
-      inherit system overlays;
+      inherit system;
       config = {
         allowUnfree = true;
         allowUnfreePredicate = _: true;
       };
+      overlays = overlays ++ [
+        top.nurpkgs.overlays.default
+        top.vsext.overlays.default
+      ];
     });
   user =
     system: host: username:
