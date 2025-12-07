@@ -4,9 +4,6 @@
 
 { pkgs, ... }:
 
-let
-  speedtest_port = "19472";
-in
 {
   imports = [
     # Include the results of the hardware scan.

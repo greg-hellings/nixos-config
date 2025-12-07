@@ -61,22 +61,21 @@ in
     ];
 
     networking.firewall = {
-      allowedTCPPorts =
-        [
-          80
-          443
-          5432
-          6443
-        ]
-        ++ (
-          if cfg.agentOnly then
-            [ ]
-          else
-            [
-              2379
-              2380
-            ]
-        );
+      allowedTCPPorts = [
+        80
+        443
+        5432
+        6443
+      ]
+      ++ (
+        if cfg.agentOnly then
+          [ ]
+        else
+          [
+            2379
+            2380
+          ]
+      );
       allowedUDPPorts = [ 8472 ];
     };
 

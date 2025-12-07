@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ ... }:
 
 let
   srcDomain = "src.thehellings.com";
@@ -18,14 +18,14 @@ in
     '';
   };
   #greg.proxies."registry.thehellings.com" = {
-    #target = "https://gitea.shire-zebra.ts.net:5000";
-    #ssl = true;
-    #genAliases = false;
-    #extraConfig = ''
-      #proxy_set_header X-Forwarded-Proto https;
-      #proxy_set_header X-Forwarded-Ssl on;
-      #client_max_body_size 25000m;
-    #'';
+  #target = "https://gitea.shire-zebra.ts.net:5000";
+  #ssl = true;
+  #genAliases = false;
+  #extraConfig = ''
+  #proxy_set_header X-Forwarded-Proto https;
+  #proxy_set_header X-Forwarded-Ssl on;
+  #client_max_body_size 25000m;
+  #'';
   #};
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
