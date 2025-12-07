@@ -114,7 +114,7 @@
           packages = (import ./pkgs { inherit pkgs top; }) // (import ./vms { inherit top; });
 
           checks = import ./checks.nix {
-            inherit system;
+            inherit system top;
             inherit (top) hooks;
             inherit (pkgs) lib;
           };

@@ -2,6 +2,7 @@
   hooks,
   lib,
   system,
+  top,
   ...
 }:
 
@@ -37,3 +38,5 @@
     };
   };
 }
+// (builtins.mapAttrs (_n: v: v.config.system.build.toplevel) top.self.nixosConfigurations)
+// (top.self.packages.${system})
