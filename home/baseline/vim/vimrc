@@ -217,4 +217,3 @@ let g:ctrlp_user_command = {
 \}
 " let g:ctrpl_match_func = { 'match': 'pymatcher#PyMatch' }
 " map <F6> <Esc>:CtrlP<Cr>
-

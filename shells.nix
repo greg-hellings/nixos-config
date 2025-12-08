@@ -1,5 +1,4 @@
 {
-  self',
   pkgs,
   nixvimunstable,
   ...
@@ -18,19 +17,19 @@ let
 in
 {
   default = pkgs.mkShell {
-    inherit (self'.checks.pre-commit-check) shellHook;
     buildInputs = with pkgs; [
       bashInteractive
+      stdenv.cc
       curl
       git
       gnutar
       gzip
       inject
       inject-darwin
+      nushell
       vim
-      self'.checks.pre-commit-check.enabledPackages
-      tmux
       xonsh
+      zellij
     ];
   };
 }

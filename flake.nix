@@ -24,7 +24,6 @@
       inputs.nixpkgs.follows = "nixunstable";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    hooks.url = "github:cachix/git-hooks.nix";
     hmunstable = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixunstable";

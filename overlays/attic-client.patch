@@ -3,9 +3,9 @@ index a16b52a..37faf08 100644
 --- c/attic/src/nix_store/bindings/mod.rs
 +++ i/attic/src/nix_store/bindings/mod.rs
 @@ -10,6 +10,8 @@ use tokio::io::{AsyncWrite, AsyncWriteExt};
- 
+
  use crate::{AtticError, AtticResult};
- 
+
 +use super::stream_config::NarStreamConfig;
 +
  // The C++ implementation takes care of concurrency
@@ -19,7 +19,7 @@ index a16b52a..37faf08 100644
 +        error::SendError, channel, Receiver, Sender,
      };
  }
- 
+
 +
 +
  /// Async write request.
@@ -32,7 +32,7 @@ index a16b52a..37faf08 100644
 -    sender: mpsc::UnboundedSender<AsyncWriteMessage>,
 +    sender: mpsc::Sender<AsyncWriteMessage>,
  }
- 
+
  impl AsyncWriteSender {
      fn send(&mut self, data: &[u8]) -> Result<(), mpsc::SendError<AsyncWriteMessage>> {
          let message = AsyncWriteMessage::Data(Vec::from(data));
@@ -41,13 +41,13 @@ index a16b52a..37faf08 100644
 +        // This provides backpressure when the channel is full
 +        self.sender.blocking_send(message).map_err(|e| mpsc::SendError(e.0))
      }
- 
+
      fn eof(&mut self) -> Result<(), mpsc::SendError<AsyncWriteMessage>> {
          let message = AsyncWriteMessage::Eof;
 -        self.sender.send(message)
 +        self.sender.blocking_send(message).map_err(|e| mpsc::SendError(e.0))
      }
- 
+
      pub(crate) fn rust_error(
 @@ -76,19 +82,25 @@ impl AsyncWriteSender {
          error: impl std::error::Error,
@@ -58,14 +58,14 @@ index a16b52a..37faf08 100644
 +        self.sender.try_send(message)
      }
  }
- 
+
  /// A wrapper of the `AsyncWrite` trait for the synchronous Nix C++ land.
  pub struct AsyncWriteAdapter {
 -    receiver: mpsc::UnboundedReceiver<AsyncWriteMessage>,
 +    receiver: mpsc::Receiver<AsyncWriteMessage>,
      eof: bool,
  }
- 
+
  impl AsyncWriteAdapter {
      pub fn new() -> (Self, Box<AsyncWriteSender>) {
 -        let (sender, receiver) = mpsc::unbounded_channel();
@@ -75,7 +75,7 @@ index a16b52a..37faf08 100644
 +    pub fn new_with_config(config: NarStreamConfig) -> (Self, Box<AsyncWriteSender>) {
 +        // Use bounded channel to provide backpressure and prevent OOM
 +        let (sender, receiver) = mpsc::channel(config.channel_capacity);
- 
+
          let r = Self {
              receiver,
 diff --git c/attic/src/nix_store/mod.rs i/attic/src/nix_store/mod.rs
@@ -85,7 +85,7 @@ index 4e08a67..04ef0f6 100644
 @@ -46,6 +46,9 @@ mod bindings;
  #[cfg(feature = "nix_store")]
  mod nix_store;
- 
+
 +#[cfg(feature = "nix_store")]
 +mod stream_config;
 +
@@ -95,34 +95,34 @@ index 4e08a67..04ef0f6 100644
 @@ -61,6 +64,9 @@ use crate::hash::Hash;
  #[cfg(feature = "nix_store")]
  pub use nix_store::NixStore;
- 
+
 +#[cfg(feature = "nix_store")]
 +pub use stream_config::NarStreamConfig;
 +
  #[cfg(test)]
  pub mod tests;
- 
+
 diff --git c/attic/src/nix_store/nix_store.rs i/attic/src/nix_store/nix_store.rs
 index 3b754f9..91eb489 100644
 --- c/attic/src/nix_store/nix_store.rs
 +++ i/attic/src/nix_store/nix_store.rs
 @@ -8,6 +8,7 @@ use std::sync::Arc;
  use tokio::task::spawn_blocking;
- 
+
  use super::bindings::{open_nix_store, AsyncWriteAdapter, FfiNixStore};
 +use super::stream_config::NarStreamConfig;
  use super::{to_base_name, StorePath, ValidPathInfo};
  use crate::error::AtticResult;
  use crate::hash::Hash;
 @@ -19,11 +20,18 @@ pub struct NixStore {
- 
+
      /// Path to the Nix store itself.
      store_dir: PathBuf,
 +
 +    /// Configuration for NAR streaming.
 +    stream_config: NarStreamConfig,
  }
- 
+
  #[cfg(feature = "nix_store")]
  impl NixStore {
      pub fn connect() -> AtticResult<Self> {
@@ -140,11 +140,11 @@ index 3b754f9..91eb489 100644
 +            stream_config,
          })
      }
- 
+
 @@ -84,12 +93,26 @@ impl NixStore {
          self.store_dir.join(&store_path.base_name)
      }
- 
+
 -    /// Creates a NAR archive from a path.
 +    /// Creates a NAR archive from a path with default configuration.
      ///
@@ -168,7 +168,7 @@ index 3b754f9..91eb489 100644
 -        let (adapter, mut sender) = AsyncWriteAdapter::new();
 +        let (adapter, mut sender) = AsyncWriteAdapter::new_with_config(stream_config);
          let base_name = Vec::from(store_path.as_base_name_bytes());
- 
+
          spawn_blocking(move || {
 diff --git c/attic/src/nix_store/stream_config.rs i/attic/src/nix_store/stream_config.rs
 new file mode 100644

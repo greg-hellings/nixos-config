@@ -1,5 +1,4 @@
 {
-  hooks,
   lib,
   system,
   top,
@@ -9,39 +8,9 @@
 let
   meta = import ./hosts/metadata.nix;
 in
-{
-  pre-commit-check = hooks.lib.${system}.run {
-    src = ./.;
-    hooks = {
-      deadnix.enable = true;
-      # Needs https://github.com/DeterminateSystems/flake-checker/pull/130
-      #flake-checker.enable = true;
-      nixfmt-rfc-style.enable = true;
-      check-merge-conflicts.enable = true;
-      check-yaml.enable = true;
-      yamllint = {
-        enable = true;
-        args = [
-          "--config-data"
-          (lib.generators.toYAML { } {
-            extends = "default";
-            ignore = [
-              "manifests/cnpg-system/barman-cloud.yaml"
-              ".pre-commit-config.yaml"
-            ];
-            rules = {
-              comments = false;
-              comments-indentation = false;
-              document-start = false;
-            };
-          })
-        ];
-        verbose = true;
-      };
-    };
-  };
-}
-// (builtins.mapAttrs (_n: v: v.config.system.build.toplevel) (
+# Pulls all hosts down to be a check
+(builtins.mapAttrs (_n: v: v.config.system.build.toplevel) (
   lib.filterAttrs (n: _v: builtins.any (a: a == system) meta.${n}.arch) top.self.nixosConfigurations
 ))
+# Adds all packages as a check
 // (top.self.packages.${system})
