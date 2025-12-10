@@ -59,10 +59,10 @@
         key = "<C-g>";
         action = "<Esc>:Git<CR>";
       }
-      (winMove "h" "Left")
+      (winMove "h" "LeftTab")
       (winMove "j" "Down")
       (winMove "k" "Up")
-      (winMove "l" "Right")
+      (winMove "l" "RightTab")
     ];
   plugins = {
     airline.enable = true;
