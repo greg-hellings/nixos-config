@@ -12,7 +12,7 @@ in
 # Pulls all hosts down to be a check
 (builtins.mapAttrs
   (
-    _n: v:
+    n: v:
     writeShellApplication {
       name = "build-${n}";
       runtimeInputs = [ ];
