@@ -105,9 +105,8 @@
           packages = (import ./pkgs { inherit pkgs top; }) // (import ./vms { inherit top; });
 
           checks = import ./checks.nix {
-            inherit system top;
-            inherit (top) hooks;
-            inherit (pkgs) lib writeShellApplication;
+            inherit system top self';
+            inherit (pkgs) lib;
           };
 
           devShells = import ./shells.nix {

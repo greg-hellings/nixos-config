@@ -1,27 +1,14 @@
 {
   lib,
+  self',
   system,
   top,
-  writeShellApplication,
   ...
 }:
 
 let
-  meta = import ./hosts/metadata.nix;
+  nixos = lib.mapAttrs' (n: v: lib.nameValuePair "nixos-${n}" v.config.system.build.toplevel) (
+    lib.filterAttrs (_: v: v.pkgs.stdenv.hostPlatform.system == system) top.self.nixosConfigurations
+  );
 in
-# Pulls all hosts down to be a check
-(builtins.mapAttrs
-  (
-    n: v:
-    writeShellApplication {
-      name = "build-${n}";
-      runtimeInputs = [ ];
-      text = ''
-        nix build ".#${v.config.system.build.toplevel}"
-      '';
-    }
-  )
-  (lib.filterAttrs (n: _v: builtins.any (a: a == system) meta.${n}.arch) top.self.nixosConfigurations)
-)
-# Adds all packages as a check
-// (top.self.packages.${system})
+nixos // self'.packages
