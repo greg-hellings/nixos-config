@@ -163,6 +163,7 @@ in
         };
         showTrace = true;
         #webhookBaseUrl = "http://${config.networking.hostName}.shire-zebra.ts.net:8010";
+        evalMaxMemorySize = 8192;
         workersFile = config.age.secrets.gitea-buildbotWorkersFile.path;
       };
       worker = {
