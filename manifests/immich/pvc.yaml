@@ -8,7 +8,7 @@ spec:
   volumeName: immich-storage
   resources:
     requests:
-      storage: 250Gi
+      storage: 500Gi
   accessModes:
     - ReadWriteOnce
 ---
