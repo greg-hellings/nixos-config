@@ -66,6 +66,7 @@
         local_overlay
         packages_overlay
         top.nixvimunstable.overlays.default
+        top.proxmox.overlays.x86_64-linux
       ];
       metadata = builtins.fromJSON (builtins.readFile ./network.json);
 
@@ -82,12 +83,16 @@
           {
             meta = {
               nixpkgs = import top.nixunstable {
+                inherit overlays;
                 system = "x86_64-linux";
-                overlays = overlays ++ [ top.proxmox.overlays.x86_64-linux ];
               };
               specialArgs = {
-                inherit metadata self top;
-                overlays = overlays ++ [ top.proxmox.overlays.x86_64-linux ];
+                inherit
+                  metadata
+                  self
+                  top
+                  overlays
+                  ;
               };
             };
           }
