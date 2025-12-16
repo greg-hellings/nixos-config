@@ -12,6 +12,7 @@ repos:
       - id: check-shebang-scripts-are-executable
       - id: check-symlinks
       - id: end-of-file-fixer
+        exclude: '^.*\.age'
       - id: fix-byte-order-marker
       - id: mixed-line-ending
       - id: trailing-whitespace

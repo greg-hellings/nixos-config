@@ -175,9 +175,6 @@ in
         workerPasswordFile = config.age.secrets.gitea-workerPassword.path;
       };
     };
-    buildbot-master.extraConfig = ''
-      c["protocols"] = {"pb": {"port": "tcp:9989:interface=\\:\\:"} }
-    '';
     displayManager = {
       defaultSession = "xfce";
       autoLogin = {
