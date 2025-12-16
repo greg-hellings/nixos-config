@@ -1,35 +1,28 @@
-{ top, ... }@all:
+{ top, overlays }:
 let
   vm = args: (unstable (args // { extraMods = [ top.nixos-generators.nixosModules.all-formats ]; }));
   wsl = args: (unstable (args // { extraMods = [ top.wsl.nixosModules.wsl ]; }));
   unstable =
-    args:
-    (machine (
-      args
-      // {
-        channel = top.nixunstable;
-        hm = top.hmunstable;
-      }
-    ));
-  machine =
     {
-      channel ? top.nixstable,
+      channel ? top.nixunstable,
       extraMods ? [ ],
       name,
       system ? "x86_64-linux",
-      hm ? top.hm,
+      hm ? top.hmunstable,
     }:
-    let
-      nixpkgs = import channel { inherit system; };
-      overlays = all.overlays;
-    in
     channel.lib.nixosSystem {
-      inherit system;
       specialArgs = {
-        inherit nixpkgs top overlays;
+        inherit top;
         inherit (top) self;
       };
       modules = [
+        {
+          nixpkgs = {
+            inherit system;
+            overlays =
+              overlays ++ (channel.lib.optional (system == "x86_64-linux") top.proxmox.overlays.${system});
+          };
+        }
         # Imported ones
         top.agenix.nixosModules.default
         hm.nixosModules.home-manager

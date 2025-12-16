@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  overlays,
   pkgs,
   self,
   ...
@@ -59,8 +58,6 @@ in
     gc.dates = "weekly";
     settings.auto-optimise-store = true;
   };
-
-  nixpkgs.overlays = overlays;
 
   # Network Manager pulls in too many deps
   networking = {

@@ -6,7 +6,6 @@
   imports = [
     ./backup.nix
     ./ceph.nix
-    ./container.nix
     ./db.nix
     ./gitlab-runner.nix
     ./gnome.nix

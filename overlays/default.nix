@@ -1,6 +1,6 @@
-_final: prev:
+final: prev:
 
-rec {
+{
   ## Testing adding python packages in the correct manner
   pythonPackagesExtensions = (prev.pythonPackagesExtensions or [ ]) ++ [
     (
@@ -24,7 +24,7 @@ rec {
     withAACS = true;
     withBDplus = true;
   };
-  handbrake = prev.handbrake.override { libbluray = libbluray-custom; };
+  handbrake = prev.handbrake.override { libbluray = final.libbluray-custom; };
   pipenv-ivr = prev.callPackage ./pipenv.nix { };
   OVMFFull = prev.OVMFFull.override {
     secureBoot = true;
@@ -32,3 +32,4 @@ rec {
     tpmSupport = true;
   };
 }
+// (import ../pkgs { pkgs = prev; })

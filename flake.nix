@@ -54,22 +54,12 @@
     { self, ... }@top:
     let
       local_overlay = import ./overlays;
-      packages_overlay = (
-        _: prev:
-        (import ./pkgs {
-          inherit self top;
-          pkgs = prev;
-        })
-      );
       overlays = [
         top.agenix.overlays.default
         local_overlay
-        packages_overlay
         top.nixvimunstable.overlays.default
-        top.proxmox.overlays.x86_64-linux
       ];
       metadata = builtins.fromJSON (builtins.readFile ./network.json);
-
     in
     top.flake-parts.lib.mkFlake { inputs = top; } {
       systems = [
@@ -107,10 +97,7 @@
 
         modules = import ./modules;
 
-        overlays = {
-          default = packages_overlay;
-          local = local_overlay;
-        };
+        overlays.default = local_overlay;
       };
 
       perSystem =
@@ -121,11 +108,11 @@
           ...
         }:
         {
-          _module.args = rec {
+          _module.args = {
             pkgs = import top.nixunstable { inherit system overlays; };
           };
 
-          packages = (import ./pkgs { inherit pkgs top; }) // (import ./vms { inherit top; });
+          packages = (import ./pkgs { inherit pkgs; });
 
           checks = import ./checks.nix {
             inherit system top self';
@@ -133,8 +120,8 @@
           };
 
           devShells = import ./shells.nix {
-            inherit self' pkgs;
-            inherit (top) nixvimunstable colmena;
+            inherit pkgs;
+            inherit (top) colmena;
           };
         };
     };

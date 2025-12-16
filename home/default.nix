@@ -1,7 +1,6 @@
 {
   overlays,
   top,
-  ...
 }:
 let
   pkgs =

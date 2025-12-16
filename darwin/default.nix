@@ -1,4 +1,4 @@
-{ top, overlays, ... }:
+{ top, overlays }:
 let
   inherit (top.nixunstable) lib;
   mac =
@@ -9,7 +9,9 @@ let
       hm ? top.hmunstable,
     }:
     let
-      nixpkgs = import channel { inherit system overlays; };
+      nixpkgs = import channel {
+        inherit system overlays;
+      };
     in
     top.darwin.lib.darwinSystem {
       inherit system;
@@ -35,7 +37,7 @@ let
       ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
     };
 in
-rec {
+{
   "MacBook-Pro" = mac { name = "ivr"; };
   "MacBook-Prolocal" = mac { name = "ivr"; };
 }
