@@ -19,6 +19,7 @@
     charts = {
       url = "github:nix-community/nixhelm";
     };
+    colmena.url = "github:zhaofengli/colmena";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixunstable";
@@ -66,6 +67,7 @@
         packages_overlay
         top.nixvimunstable.overlays.default
       ];
+      metadata = builtins.fromJSON (builtins.readFile ./network.json);
 
     in
     top.flake-parts.lib.mkFlake { inputs = top; } {
@@ -76,18 +78,34 @@
       ];
 
       flake = {
-        nixosConfigurations = (import ./hosts { inherit top overlays; });
+        colmenaHive = top.colmena.lib.makeHive (
+          {
+            meta = {
+              nixpkgs = import top.nixunstable {
+                system = "x86_64-linux";
+                overlays = overlays ++ [ top.proxmox.overlays.x86_64-linux ];
+              };
+              specialArgs = {
+                inherit metadata self top;
+                overlays = overlays ++ [ top.proxmox.overlays.x86_64-linux ];
+              };
+            };
+          }
+          // (builtins.mapAttrs (_k: v: { imports = v._module.args.modules; }) self.nixosConfigurations)
+        );
 
         darwinConfigurations = (import ./darwin { inherit top overlays; });
 
+        nixosConfigurations = (import ./hosts { inherit top overlays; });
+
         homeConfigurations = (import ./home { inherit top overlays; });
+
+        modules = import ./modules;
 
         overlays = {
           default = packages_overlay;
           local = local_overlay;
         };
-
-        modules = import ./modules;
       };
 
       perSystem =
@@ -111,7 +129,7 @@
 
           devShells = import ./shells.nix {
             inherit self' pkgs;
-            inherit (top) nixvimunstable;
+            inherit (top) nixvimunstable colmena;
           };
         };
     };

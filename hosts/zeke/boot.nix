@@ -5,7 +5,10 @@
   boot = {
     binfmt.emulatedSystems = [ "aarch64-linux" ];
     kernelPackages = pkgs.linuxPackages_latest;
-    supportedFilesystems = [ "ntfs" ];
+    supportedFilesystems = [
+      "ntfs"
+      "btrfs"
+    ];
     loader = {
       timeout = 15;
       systemd-boot = {

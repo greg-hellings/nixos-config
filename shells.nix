@@ -1,10 +1,11 @@
 {
   pkgs,
   nixvimunstable,
+  colmena,
   ...
 }:
 let
-  system = pkgs.system;
+  inherit (pkgs.stdenv.hostPlatform) system;
   vim = (
     nixvimunstable.legacyPackages.${system}.makeNixvim (
       import ./home/baseline/vim/config.nix {
@@ -19,6 +20,7 @@ in
   default = pkgs.mkShell {
     buildInputs = with pkgs; [
       bashInteractive
+      colmena.defaultPackage.${system}
       stdenv.cc
       curl
       git

@@ -35,6 +35,10 @@
       device = "/dev/nvme0n1p1";
       fsType = "auto";
     };
+    "/mnt/tmp" = {
+      device = "/dev/disk/by-uuid/f456aeb0-a11a-4b84-86ae-402eff6d98bb";
+      fsType = "btrfs";
+    };
   };
 
   swapDevices = [ ];

@@ -21,7 +21,7 @@ let
     }:
     let
       nixpkgs = import channel { inherit system; };
-      overlays = all.overlays ++ [ top.proxmox.overlays.${system} ];
+      overlays = all.overlays;
     in
     channel.lib.nixosSystem {
       inherit system;
