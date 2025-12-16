@@ -91,7 +91,7 @@
 
         darwinConfigurations = (import ./darwin { inherit top overlays; });
 
-        nixosConfigurations = (import ./hosts { inherit top overlays; });
+        nixosConfigurations = (import ./hosts { inherit top overlays metadata; });
 
         homeConfigurations = (import ./home { inherit top overlays; });
 

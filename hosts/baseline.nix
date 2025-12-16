@@ -2,18 +2,8 @@
   config,
   lib,
   pkgs,
-  self,
   ...
 }:
-let
-  builderHosts =
-    if self != null then
-      (lib.attrNames (
-        lib.filterAttrs (_: v: v.config.greg.remote-builder.enable) self.nixosConfigurations
-      ))
-    else
-      [ ];
-in
 {
   imports = [
     ../modules/nix-conf.nix
@@ -76,14 +66,6 @@ in
     };
 
     ssh = {
-      extraConfig = builtins.concatStringsSep "\n" (
-        lib.map (x: ''
-          Host ${x}-builder
-            Hostname ${x}.home
-            User remote-builder-user
-        '') builderHosts
-      );
-
       knownHosts = {
         chronicles = {
           extraHostNames = [

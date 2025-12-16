@@ -1,11 +1,13 @@
 {
   config,
   lib,
+  metadata,
   pkgs,
   ...
 }:
 
 let
+  builderHosts = lib.filterAttrs (_n: v: (builtins.hasAttr "builder" v) && v.builder) metadata.hosts;
   cfg = config.greg.nix;
 in
 {
@@ -17,7 +19,20 @@ in
   };
 
   config = {
+    programs.ssh.extraConfig = builtins.concatStringsSep "\n" (
+      lib.map (x: ''
+        Host ${x}-builder
+          Hostname ${x}.shire-zebra.ts.net
+          User remote-builder-user
+      '') (lib.attrNames builderHosts)
+    );
+
     nix = {
+      buildMachines = lib.mapAttrsToList (k: v: {
+        inherit (v) systems;
+        hostName = "${k}.shire-zebra.ts.net";
+      }) builderHosts;
+      distributedBuilds = true;
       gc = {
         automatic = true;
         # Scheduling of them is different in nixos vs nix-darwin, so check for

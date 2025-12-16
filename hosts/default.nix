@@ -1,4 +1,8 @@
-{ top, overlays }:
+{
+  top,
+  overlays,
+  metadata,
+}:
 let
   vm = args: (unstable (args // { extraMods = [ top.nixos-generators.nixosModules.all-formats ]; }));
   wsl = args: (unstable (args // { extraMods = [ top.wsl.nixosModules.wsl ]; }));
@@ -12,8 +16,7 @@ let
     }:
     channel.lib.nixosSystem {
       specialArgs = {
-        inherit top;
-        inherit (top) self;
+        inherit metadata top;
       };
       modules = [
         {
