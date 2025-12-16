@@ -116,7 +116,10 @@ in
       address = " 10.42.1.2";
       interface = "br0";
     };
-    firewall.allowedTCPPorts = [ 3389 ];
+    firewall.allowedTCPPorts = [
+      3389
+      9989 # buildbot communications port
+    ];
     interfaces.br0.ipv4 = {
       addresses = [
         {
@@ -172,6 +175,9 @@ in
         workerPasswordFile = config.age.secrets.gitea-workerPassword.path;
       };
     };
+    buildbot-master.extraConfig = ''
+      c["protocols"] = {"pb": {"port": "tcp:9989:interface=\\:\\:"} }
+    '';
     displayManager = {
       defaultSession = "xfce";
       autoLogin = {
