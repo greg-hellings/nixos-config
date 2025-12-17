@@ -13,7 +13,7 @@ in
 
   config = (
     lib.mkIf cfg {
-      programs.gnome-terminal = lib.mkIf (pkgs.system != "x86_64-darwin") {
+      programs.gnome-terminal = lib.mkIf (pkgs.stdenv.hostPlatform.system != "x86_64-darwin") {
         enable = true;
         showMenubar = true;
         themeVariant = "dark";

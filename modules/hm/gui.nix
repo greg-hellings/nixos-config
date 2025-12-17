@@ -8,7 +8,9 @@
 let
   cfg = config.greg.gui;
 
-  excludes = systems: opts: (if (builtins.all (x: pkgs.system != x) systems) then opts else [ ]);
+  excludes =
+    systems: opts:
+    (if (builtins.all (x: pkgs.stdenv.hostPlatform.system != x) systems) then opts else [ ]);
 
   vars = {
     XDG_CURRENT_DESKTOP = "GNOME";
