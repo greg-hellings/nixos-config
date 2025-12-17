@@ -5,7 +5,7 @@
     development = true;
     gnome = true;
     gui = true;
-    vscodium = true;
+    vscodium = false;
     zed = true;
   };
   home.packages = with pkgs; [

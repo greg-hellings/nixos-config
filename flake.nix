@@ -109,7 +109,7 @@
 
         nixosConfigurations = (import ./hosts { inherit top overlays metadata; });
 
-        homeConfigurations = (import ./home { inherit top overlays; });
+        homeConfigurations = (import ./home { inherit top overlays metadata; });
 
         modules = import ./modules;
 

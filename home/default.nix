@@ -1,4 +1,5 @@
 {
+  metadata,
   overlays,
   top,
 }:
@@ -25,7 +26,12 @@ let
         ./home.nix
       ];
       extraSpecialArgs = {
-        inherit top host username;
+        inherit
+          top
+          host
+          username
+          metadata
+          ;
         nixvim = top.nixvimunstable;
         gui = false;
         gnome = false;
