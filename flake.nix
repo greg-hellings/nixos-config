@@ -86,7 +86,23 @@
               };
             };
           }
-          // (builtins.mapAttrs (_k: v: { imports = v._module.args.modules; }) self.nixosConfigurations)
+          // (builtins.mapAttrs (
+            k: v:
+            {
+              imports = v._module.args.modules;
+            }
+            // (
+              if builtins.hasAttr "tags" metadata.hosts.${k} then
+                {
+                  deployment = {
+                    inherit (metadata.hosts.${k}) tags;
+                    targetUser = "greg";
+                  };
+                }
+              else
+                { }
+            )
+          ) self.nixosConfigurations)
         );
 
         darwinConfigurations = (import ./darwin { inherit top overlays; });

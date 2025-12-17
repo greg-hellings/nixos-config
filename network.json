@@ -18,26 +18,30 @@
     "genesis": {
       "ip": "10.42.1.5",
       "ts": "100.88.91.27",
-      "system": "x86_64-linux"
+      "system": "x86_64-linux",
+      "tags": [ "router", "server" ]
     },
     "hosea": {
       "ip": "10.42.1.7",
       "ts": "100.68.203.1",
-      "system": "x86_64-linux"
+      "system": "x86_64-linux",
+      "tags": [ "server" ]
     },
     "isaiah": {
       "builder": true,
       "ip": "10.42.1.6",
       "ts": "100.84.183.79",
       "system": "x86_64-linux",
-      "systems": [ "x86_64-linux", "aarch64-linux" ]
+      "systems": [ "x86_64-linux", "aarch64-linux" ],
+      "tags": [ "builder", "kube", "server" ]
     },
     "jeremiah": {
       "builder": true,
       "ip": "10.42.1.8",
       "ts": "100.102.186.39",
       "system": "x86_64-linux",
-      "systems": [ "x86_64-linux", "aarch64-linux" ]
+      "systems": [ "x86_64-linux", "aarch64-linux" ],
+      "tags": [ "builder", "kube", "server" ]
     },
     "joel": {
       "ip": "10.42.0.4",
@@ -47,7 +51,8 @@
     "linode": {
       "ip": null,
       "ts": "100.109.86.8",
-      "system": "x86_64-linux"
+      "system": "x86_64-linux",
+      "tags": [ "public", "server" ]
     },
     "nas1": {
       "ip": "10.42.1.14",
@@ -58,7 +63,8 @@
       "ip": "10.42.1.13",
       "ts": "100.90.74.19",
       "system": "x86_64-linux",
-      "systems": [ "x86_64-linux", "aarch64-linux" ]
+      "systems": [ "x86_64-linux", "aarch64-linux" ],
+      "tags": [ "builder", "kube", "server" ]
     }
   }
 }
