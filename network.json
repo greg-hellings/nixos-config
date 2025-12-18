@@ -27,6 +27,8 @@
       "system": "x86_64-linux",
       "tags": [ "server" ]
     },
+    "icdm-root": {
+    },
     "isaiah": {
       "builder": true,
       "ip": "10.42.1.6",
@@ -35,6 +37,7 @@
       "systems": [ "x86_64-linux", "aarch64-linux" ],
       "tags": [ "builder", "kube", "server" ]
     },
+    "iso": {},
     "jeremiah": {
       "builder": true,
       "ip": "10.42.1.8",
@@ -58,6 +61,9 @@
       "ip": "10.42.1.14",
       "ts": "100.114.187.61"
     },
+    "nixos": {},
+    "proxmoxtemplate": {},
+    "vm-gitlab": {},
     "zeke": {
       "builder": true,
       "ip": "10.42.1.13",
