@@ -1,22 +1,10 @@
 {
   metadata,
-  overlays,
+  nixpkgs,
   top,
 }:
 let
-  pkgs =
-    system:
-    (import top.nixunstable {
-      inherit system;
-      config = {
-        allowUnfree = true;
-        allowUnfreePredicate = _: true;
-      };
-      overlays = overlays ++ [
-        top.nurpkgs.overlays.default
-        top.vsext.overlays.default
-      ];
-    });
+  pkgs = system: nixpkgs.${system};
   user =
     system: host: username:
     top.hmunstable.lib.homeManagerConfiguration {

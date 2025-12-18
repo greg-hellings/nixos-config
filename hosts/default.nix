@@ -1,7 +1,7 @@
 {
   top,
-  overlays,
   metadata,
+  nixpkgs,
 }:
 let
   vm = args: (unstable (args // { extraMods = [ top.nixos-generators.nixosModules.all-formats ]; }));
@@ -22,8 +22,7 @@ let
         {
           nixpkgs = {
             inherit system;
-            overlays =
-              overlays ++ (channel.lib.optional (system == "x86_64-linux") top.proxmox.overlays.${system});
+            pkgs = nixpkgs.${system};
           };
         }
         # Imported ones

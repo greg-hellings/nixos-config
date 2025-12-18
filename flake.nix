@@ -54,34 +54,46 @@
     { self, ... }@top:
     let
       local_overlay = import ./overlays;
-      overlays = [
+      overlays = system: [
         top.agenix.overlays.default
         local_overlay
         top.nixvimunstable.overlays.default
+        top.proxmox.overlays.${system}
+        top.nurpkgs.overlays.default
+        top.vsext.overlays.default
       ];
       metadata = builtins.fromJSON (builtins.readFile ./network.json);
-    in
-    top.flake-parts.lib.mkFlake { inputs = top; } {
       systems = [
         "aarch64-linux"
         "x86_64-linux"
         "aarch64-darwin"
       ];
+      nixpkgs = top.nixunstable.lib.genAttrs systems (
+        system:
+        import top.nixunstable {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+            permittedInsecurePackages = [ "ventoy-1.1.05" ];
+          };
+          overlays = overlays system;
+        }
+      );
+    in
+    top.flake-parts.lib.mkFlake { inputs = top; } {
+      inherit systems;
 
       flake = {
         colmenaHive = top.colmena.lib.makeHive (
           {
             meta = {
-              nixpkgs = import top.nixunstable {
-                inherit overlays;
-                system = "x86_64-linux";
-              };
+              nixpkgs = nixpkgs.x86_64-linux;
               specialArgs = {
                 inherit
                   metadata
                   self
                   top
-                  overlays
                   ;
               };
             };
@@ -105,11 +117,11 @@
           ) self.nixosConfigurations)
         );
 
-        darwinConfigurations = (import ./darwin { inherit top overlays; });
+        darwinConfigurations = (import ./darwin { inherit top nixpkgs; });
 
-        nixosConfigurations = (import ./hosts { inherit top overlays metadata; });
+        nixosConfigurations = (import ./hosts { inherit top nixpkgs metadata; });
 
-        homeConfigurations = (import ./home { inherit top overlays metadata; });
+        homeConfigurations = (import ./home { inherit top nixpkgs metadata; });
 
         modules = import ./modules;
 
@@ -125,7 +137,7 @@
         }:
         {
           _module.args = {
-            pkgs = import top.nixunstable { inherit system overlays; };
+            pkgs = nixpkgs.${system};
           };
 
           packages = (import ./pkgs { inherit pkgs; });
