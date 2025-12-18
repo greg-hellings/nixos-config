@@ -18,8 +18,7 @@ in
       gzip
       inject
       inject-darwin
-      vim
-      zellij
+      nano
     ];
   };
 }
