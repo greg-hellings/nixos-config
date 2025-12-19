@@ -42,10 +42,9 @@ in
 
         def --env vpn [] {
           unlock
-          let username = ^bw get username f7351f9c-b25b-4317-8352-affc00da4644
-          let password = ^bw get password f7351f9c-b25b-4317-8352-affc00da4644
+          let login = ^bw get item f7351f9c-b25b-4317-8352-affc00da4644 | from json
           let otp = ^bw get totp 10371487-7f40-4b08-9a45-b33e00de318b
-          osascript ${vpn} $username $"($password)($otp)"
+          osascript ${vpn} $login.login.username $"($login.login.password)($otp)"
         }
       '';
       settings = {
