@@ -60,6 +60,12 @@
       "system": "x86_64-linux",
       "tags": ["public", "server"]
     },
+    "MacBook-Pro.local": {
+      "system": "aarc64-darwin"
+    },
+    "MacBook-Prolocal.local": {
+      "system": "aarc64-darwin"
+    },
     "nas1": {
       "ip": "10.42.1.14",
       "ts": "100.114.187.61"

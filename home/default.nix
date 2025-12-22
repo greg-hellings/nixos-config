@@ -4,11 +4,14 @@
   top,
 }:
 let
-  pkgs = system: nixpkgs.${system};
   user =
-    system: host: username:
+    host: username:
+    let
+      inherit (metadata.hosts.${host}) system;
+      pkgs = nixpkgs.${system};
+    in
     top.hmunstable.lib.homeManagerConfiguration {
-      pkgs = pkgs system;
+      inherit pkgs;
       modules = [
         ../modules/nix-conf.nix
         ./home.nix
@@ -25,11 +28,11 @@ let
         gnome = false;
       };
     };
-  greg = host: (user "x86_64-linux" host "greg");
+  greg = host: (user host "greg");
 in
 {
-  "MacBook-Pro.local" = user "aarch64-darwin" "ivr" "gregory.hellings";
-  "MacBook-Prolocal.local" = user "aarch64-darwin" "ivr" "gregory.hellings";
+  "MacBook-Pro.local" = user "ivr" "gregory.hellings";
+  "MacBook-Prolocal.local" = user "ivr" "gregory.hellings";
   genesis = greg "genesis";
   exodus = greg "exodus";
   zeke = greg "zeke";
