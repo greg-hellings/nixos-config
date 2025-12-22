@@ -30,7 +30,7 @@ spec:
         containers:
           main:
             image:
-              tag: v2.3.1
+              tag: v2.4.1
             env:
               DB_HOSTNAME: immich-rw.db.svc.cluster.local
               DB_DATABASE_NAME: immich
