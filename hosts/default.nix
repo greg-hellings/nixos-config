@@ -11,20 +11,17 @@ let
       channel ? top.nixunstable,
       extraMods ? [ ],
       name,
-      system ? "x86_64-linux",
       hm ? top.hmunstable,
     }:
+    let
+      inherit (metadata.hosts.${name}) system;
+    in
     channel.lib.nixosSystem {
+      pkgs = nixpkgs.${system};
       specialArgs = {
         inherit metadata top;
       };
       modules = [
-        {
-          nixpkgs = {
-            inherit system;
-            pkgs = nixpkgs.${system};
-          };
-        }
         # Imported ones
         top.agenix.nixosModules.default
         hm.nixosModules.home-manager
@@ -51,10 +48,7 @@ in
 
   iso = unstable { name = "iso"; };
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'
-  nixos = wsl {
-    name = "wsl";
-    system = "aarch64-linux";
-  };
+  nixos = wsl { name = "wsl"; };
   # nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
   #nixos-arm = wsl {
   #name = "wsl";

@@ -68,7 +68,7 @@
         "x86_64-linux"
         "aarch64-darwin"
       ];
-      nixpkgs = top.nixunstable.lib.genAttrs systems (
+      imported_packages = top.nixunstable.lib.genAttrs systems (
         system:
         import top.nixunstable {
           inherit system;
@@ -88,7 +88,7 @@
         colmenaHive = top.colmena.lib.makeHive (
           {
             meta = {
-              nixpkgs = nixpkgs.x86_64-linux;
+              nixpkgs = imported_packages.x86_64-linux;
               specialArgs = {
                 inherit
                   metadata
@@ -117,11 +117,26 @@
           ) self.nixosConfigurations)
         );
 
-        darwinConfigurations = (import ./darwin { inherit top nixpkgs; });
+        darwinConfigurations = (
+          import ./darwin {
+            inherit top;
+            nixpkgs = imported_packages;
+          }
+        );
 
-        nixosConfigurations = (import ./hosts { inherit top nixpkgs metadata; });
+        nixosConfigurations = (
+          import ./hosts {
+            inherit top metadata;
+            nixpkgs = imported_packages;
+          }
+        );
 
-        homeConfigurations = (import ./home { inherit top nixpkgs metadata; });
+        homeConfigurations = (
+          import ./home {
+            inherit top metadata;
+            nixpkgs = imported_packages;
+          }
+        );
 
         modules = import ./modules;
 
@@ -137,7 +152,7 @@
         }:
         {
           _module.args = {
-            pkgs = nixpkgs.${system};
+            pkgs = imported_packages.${system};
           };
 
           packages = (import ./pkgs { inherit pkgs; });

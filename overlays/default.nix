@@ -18,7 +18,7 @@ final: prev:
   qemu = prev.qemu.override { sdlSupport = true; };
   # Overrides of packages
   attic-client = prev.attic-client.overrideAttrs {
-    patches = prev.attic-client.patches ++ [ ./attic-client.patch ];
+    # patches = prev.attic-client.patches ++ [ ./attic-client.patch ];
   };
   libbluray-custom = prev.libbluray.override {
     withAACS = true;

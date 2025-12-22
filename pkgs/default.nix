@@ -1,4 +1,8 @@
-{ pkgs, ... }:
+{
+  pkgs,
+  system ? pkgs.stdenv.hostPlatform.system,
+  ...
+}:
 
 let
   c = pkgs.callPackage;
@@ -19,7 +23,7 @@ in
   upgrade-pg-cluster = c ./upgrade-pg-cluster.nix { };
 }
 // (
-  if pkgs.stdenv.hostPlatform.system == "x86_64-linux" then
+  if system == "x86_64-linux" then
     {
       qemu-hook = c ./qemu-hook.nix { };
       vfio_startup = c ./vfio_startup.nix { };
