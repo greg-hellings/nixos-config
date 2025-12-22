@@ -7,7 +7,7 @@ resources:
   - mariadb-operator
   - databases
   - matrix
-  - gitlab-runner
+  #- gitlab-runner
   - immich
   - monitoring
   - pinchflat
