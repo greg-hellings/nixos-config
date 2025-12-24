@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./albyhub.nix
     ./backup.nix
     ./ceph.nix
     ./db.nix

@@ -22,6 +22,9 @@ let
         inherit metadata top;
       };
       modules = [
+        {
+          nixpkgs.hostPlatform = system;
+        }
         # Imported ones
         top.agenix.nixosModules.default
         hm.nixosModules.home-manager

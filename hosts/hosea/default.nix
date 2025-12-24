@@ -5,7 +5,6 @@
 {
   config,
   pkgs,
-  top,
   ...
 }:
 let
@@ -18,8 +17,6 @@ in
   imports = [
     # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    top.btc.nixosModules.default
-    ./bitcoin.nix
   ];
 
   # Bootloader
@@ -90,6 +87,13 @@ in
   };
 
   services = {
+    albyhub = {
+      enable = true;
+      openFirewall = true;
+      settings = {
+        workDir = "/chain/alby";
+      };
+    };
     jellyfin = {
       enable = true;
       openFirewall = true;

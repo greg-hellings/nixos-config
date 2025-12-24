@@ -41,6 +41,9 @@
     "iso": {
       "system": "x86_64-linux"
     },
+    "ivr": {
+      "system": "aarc64-darwin"
+    },
     "jeremiah": {
       "builder": true,
       "ip": "10.42.1.8",

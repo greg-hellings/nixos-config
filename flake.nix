@@ -9,9 +9,6 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    btc = {
-      url = "github:fort-nix/nix-bitcoin/release";
-    };
     buildbot = {
       url = "github:nix-community/buildbot-nix";
       inputs.nixpkgs.follows = "nixunstable";
