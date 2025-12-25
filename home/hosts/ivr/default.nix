@@ -23,7 +23,7 @@ in
     development = true;
     gui = true;
     nix.cache = false;
-    vscodium = true;
+    vscodium = false;
   };
 
   home = {

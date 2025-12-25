@@ -47,6 +47,7 @@ with lib;
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4fNCnomQEsFKQZp16LXRqkfXHzzZbGAYJWPMvlGGQy root@exodus"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIC189EnvWjNUp3xSzPMAtw85oQEsvP1tQR1TK640nLx6 greg@exodus"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIG4fNCnomQEsFKQZp16LXRqkfXHzzZbGAYJWPMvlGGQy root@exodus"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMGJjyFVOsF74QKzRITc8z/5MJlIa47P1tMm9Z8HRJLm root@jude"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMMOdWSq6NtcP6sfe2uke4wSfgE16hfa970t+8ADdLwk root@nixos"
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINwbFyuS9zcwZ7hGSpAWtx9NJq/elSLN8jYpr+/1nXd8 root@linode"

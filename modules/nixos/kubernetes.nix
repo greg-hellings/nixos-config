@@ -88,7 +88,7 @@ in
             inherit (top.charts.chartsMetadata.external-secrets.external-secrets) repo version;
             enable = true;
             name = top.charts.chartsMetadata.external-secrets.external-secrets.chart;
-            hash = "sha256-aRlMiaKAOWlectqM0czjaVAaUWceGHm5t3Q2J1pXl28=";
+            hash = "sha256-S1EGl2QECb6t4ITiZepc7LLwcwNDi3ggUiW1YfSNCqQ=";
             createNamespace = true;
             targetNamespace = "external-secrets";
             values = {
@@ -115,7 +115,7 @@ in
             inherit (top.charts.chartsMetadata.tailscale.tailscale-operator) repo version;
             enable = true;
             name = top.charts.chartsMetadata.tailscale.tailscale-operator.chart;
-            hash = "sha256-8pZyWgBTDtnUXnYzDCtbXtTzvUe35BnqHckI/bBuk7o=";
+            hash = "sha256-pkgolk7ji3lEilTlL12BnaIpXtEIVt4MiUFKouH8fcM=";
             createNamespace = true;
             targetNamespace = "tailscale";
           };
