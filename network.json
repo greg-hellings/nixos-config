@@ -42,7 +42,7 @@
       "system": "x86_64-linux"
     },
     "ivr": {
-      "system": "aarc64-darwin"
+      "system": "aarch64-darwin"
     },
     "jeremiah": {
       "builder": true,
