@@ -30,7 +30,8 @@ in
     nix = {
       buildMachines = lib.mapAttrsToList (k: v: {
         inherit (v) systems;
-        hostName = "${k}.shire-zebra.ts.net";
+        hostName = "${k}-builder";
+        protocol = "ssh-ng";
       }) builderHosts;
       distributedBuilds = true;
       gc = {
