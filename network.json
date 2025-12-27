@@ -8,6 +8,7 @@
   "hosts": {
     "chronicles": {
       "ip": "10.42.1.4",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBecZUva9OnZuXLaBun6/1ITo5f9p0YMLPD+q0egLRS",
       "ts": "100.119.228.115"
     },
     "exodus": {
@@ -17,12 +18,14 @@
     },
     "genesis": {
       "ip": "10.42.1.5",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/CGE2rqlL2Qr0TJkwQMsHFSDkhGWlrUlvfcvcylO1n",
       "ts": "100.88.91.27",
       "system": "x86_64-linux",
       "tags": ["router", "server"]
     },
     "hosea": {
       "ip": "10.42.1.7",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz",
       "ts": "100.68.203.1",
       "system": "x86_64-linux",
       "tags": ["server"]
@@ -33,6 +36,7 @@
     "isaiah": {
       "builder": true,
       "ip": "10.42.1.6",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf",
       "ts": "100.84.183.79",
       "system": "x86_64-linux",
       "systems": ["x86_64-linux", "aarch64-linux"],
@@ -47,6 +51,7 @@
     "jeremiah": {
       "builder": true,
       "ip": "10.42.1.8",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0",
       "ts": "100.102.186.39",
       "system": "x86_64-linux",
       "systems": ["x86_64-linux", "aarch64-linux"],
@@ -59,6 +64,7 @@
     },
     "linode": {
       "ip": null,
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMv9Zud3kZOl86gtmkn+uj3D4kiXWDPtyUL02VVLNR4Q",
       "ts": "100.109.86.8",
       "system": "x86_64-linux",
       "tags": ["public", "server"]
@@ -88,6 +94,7 @@
     "zeke": {
       "builder": true,
       "ip": "10.42.1.13",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOos0zQePsa+T6Z2dsKbPOvEdrBQ8a6mx3s7pN6ysCI0",
       "ts": "100.90.74.19",
       "system": "x86_64-linux",
       "systems": ["x86_64-linux", "aarch64-linux"],
