@@ -32,7 +32,7 @@
 10.42.100.14 nas1bmc nas1bmc.thehellings.lan
 
 # Tailscale hosts
-100.119.228.115 chronicles.home nas.home chronicles.shire-zebra.ts.net
+100.119.228.115 nas.home chronicles.shire-zebra.ts.net
 100.88.91.27 dns.home
 100.80.99.48 exodus.home
 100.88.91.27 genesis.home smart.home zwave.home nixcache.home gitcache.home dashy.home uptime.home speed.home

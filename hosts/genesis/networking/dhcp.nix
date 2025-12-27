@@ -73,7 +73,8 @@
           }
           {
             hw-address = "01:a8:a1:59:c7:8a:12"; # BMC management interface for isaiah
-            ip-address = "10.42.2.253";
+            #ip-address = "10.42.2.253";
+            ip-address = "10.42.100.6";
           }
           {
             hw-address = "7c:83:34:b9:ee:ec"; # PVE1
