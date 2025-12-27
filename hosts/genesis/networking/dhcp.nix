@@ -5,7 +5,7 @@
   routerIP,
 }:
 {
-  enable = true;
+  enable = false;
   settings = {
     control-sockets = [
       {

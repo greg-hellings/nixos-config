@@ -19,10 +19,15 @@
   };
 
   # Bootloader.
-  boot.loader.grub = {
-    enable = true;
-    device = "/dev/vda";
-    useOSProber = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+    };
+    systemd-boot = {
+      enable = true;
+      configurationLimit = 10;
+      edk2-uefi-shell.enable = true;
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -31,7 +36,4 @@
   ];
 
   networking.hostName = "genesis"; # Define your hostname.
-
-  virtualisation.oci-containers.containers = {
-  };
 }
