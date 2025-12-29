@@ -106,7 +106,7 @@
                 {
                   deployment = {
                     inherit (metadata.hosts.${k}) tags;
-                    targetHost = metadata.hosts.${k}.ip;
+                    targetHost = metadata.hosts.${k}.ts;
                     targetUser = "greg";
                   };
                 }
