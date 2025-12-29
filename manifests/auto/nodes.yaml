@@ -35,7 +35,12 @@ metadata:
       [
         {
           "path": "/var/lib/longhorn",
-          "allowScheduling" : trues,
+          "allowScheduling" : true,
           "tags": ["ssd", "fast"]
+        },
+        {
+          "path": "/mnt/disk1",
+          "allowScheduling": true,
+          "tags": ["hdd", "large"]
         }
       ]

@@ -35,8 +35,8 @@
       device = "/dev/nvme0n1p1";
       fsType = "auto";
     };
-    "/mnt/tmp" = {
-      device = "/dev/disk/by-uuid/f456aeb0-a11a-4b84-86ae-402eff6d98bb";
+    "/mnt/disk1" = {
+      device = "/dev/disk/by-uuid/0bb64e76-8811-499a-b60e-cc97808f2b0e";
       fsType = "btrfs";
     };
   };
