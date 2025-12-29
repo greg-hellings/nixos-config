@@ -16,7 +16,8 @@ let
     text = ''
       tailscale set --accept-routes
       tailscale set --hostname ${cfg.hostname}
-    '';
+    ''
+    + lib.optionalString ((builtins.length cfg.tags) > 0) "tailscale set --advertise-tags ${tags}";
   };
 in
 {
@@ -50,12 +51,7 @@ in
       enable = true;
       authKeyFile = config.age.secrets.tailscale-key.path;
       authKeyParameters.preauthorized = true;
-      extraUpFlags = [
-        "--hostname"
-        cfg.hostname
-        "--accept-routes"
-      ]
-      ++ lib.optionals ((builtins.length cfg.tags) > 0) [
+      extraUpFlags = lib.optionals ((builtins.length cfg.tags) > 0) [
         "--advertise-tags"
         tags
       ];
