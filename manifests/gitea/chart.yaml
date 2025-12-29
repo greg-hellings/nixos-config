@@ -26,7 +26,6 @@ spec:
   values:
     # Gitea Helm Chart Values https://gitea.com/gitea/helm-gitea
     global:
-      appVersion: "1.25.3"
       storageClass: longhorn-default
 
     replicaCount: 1
@@ -71,6 +70,8 @@ spec:
           PROVIDER: db
         queue:
           TYPE: level
+        repository:
+          ENABLE_PUSH_CREATE_USER: "true"
         storage:
           STORAGE_TYPE: minio
           MINIO_ENDPOINT: "nas1.shire-zebra.ts.net:9000"
