@@ -2,6 +2,7 @@ namespace: gitea
 
 resources:
   - namespace.yaml
+  - postgres.yaml
   - chart.yaml
   - ingress.yaml
   - secrets.yaml

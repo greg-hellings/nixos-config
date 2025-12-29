@@ -15,13 +15,18 @@ spec:
   chart:
     spec:
       chart: gitea
+      version: "12.4.0"
       sourceRef:
         kind: HelmRepository
         name: gitea-repository
       interval: "1h"
+  dependsOn:
+    - name: cnpg
+      namespace: cnpg-system
   values:
-    # Gitea Helm Chart Values
+    # Gitea Helm Chart Values https://gitea.com/gitea/helm-gitea
     global:
+      appVersion: "1.25.3"
       storageClass: longhorn-default
 
     replicaCount: 1
@@ -58,7 +63,7 @@ spec:
           SSH_PORT: "2222"
         database:
           DB_TYPE: postgres
-          HOST: "postgres-rw.db.svc.cluster.local:5432"
+          HOST: "postgres-rw:5432"
           NAME: gitea
           # USER: ""
           # PASSWD: ""

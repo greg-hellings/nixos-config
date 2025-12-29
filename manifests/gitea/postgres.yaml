@@ -1,0 +1,129 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: postgres-user-gitea
+spec:
+  target:
+    name: postgres-user-gitea
+    deletionPolicy: Delete
+    template:
+      type: kukbernetes.io/basic-auth
+      data:
+        username: |-
+          {{ .dbuser }}
+        password: |-
+          {{ .dbpass }}
+  secretStoreRef:
+    name: bitwarden-login
+    kind: ClusterSecretStore
+  data:
+    - secretKey: dbuser
+      remoteRef:
+        key: df47ed61-61d7-4273-b81c-b3a9000de00e
+        property: username
+    - secretKey: dbpass
+      remoteRef:
+        key: df47ed61-61d7-4273-b81c-b3a9000de00e
+        property: password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: postgres
+spec:
+  instances: 3
+  enablePDB: false
+  storage:
+    size: 20Gi
+  primaryUpdateStrategy: unsupervised
+
+  managed:
+    roles:
+      - name: gitea
+        ensure: present
+        comment: Gitea DB user
+        login: true
+        superuser: false
+        passwordSecret:
+          name: postgres-user-gitea
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: k3sbackup-objectstore
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: k3sbackup-objectstore
+spec:
+  configuration:
+    destinationPath: "s3://k3sbackup/postgres-gitea"
+    endpointURL: "http://s3.thehellings.lan:9000/"
+    s3Credentials:
+      accessKeyId:
+        name: k3sbackup-secret
+        key: username
+      secretAccessKey:
+        name: k3sbackup-secret
+        key: password
+    wal:
+      compression: gzip
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: postgres-backup
+spec:
+  immediate: true # Create one when this is added to the cluster
+  schedule: "0 1 0 * * *" # 1AM, nightly
+  backupOwnerReference: self
+  cluster:
+    name: postgres
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: k3sbackup-externalsecret
+spec:
+  target:
+    name: k3sbackup-secret
+    deletionPolicy: Delete
+    template:
+      type: Opaque
+      data:
+        username: |-
+          {{ .username }}
+        password: |-
+          {{ .password }}
+  data:
+    - secretKey: username
+      sourceRef:
+        storeRef:
+          name: bitwarden-login
+          kind: ClusterSecretStore
+      remoteRef:
+        key: 685b29c6-9264-4e60-ba4a-b2ea005a5d7b
+        property: username
+    - secretKey: password
+      sourceRef:
+        storeRef:
+          name: bitwarden-login
+          kind: ClusterSecretStore
+      remoteRef:
+        key: 685b29c6-9264-4e60-ba4a-b2ea005a5d7b
+        property: password
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: database-gitea
+spec:
+  name: gitea
+  owner: gitea
+  cluster:
+    name: postgres
