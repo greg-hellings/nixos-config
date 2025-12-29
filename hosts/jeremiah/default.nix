@@ -1,6 +1,5 @@
 {
   config,
-  lib,
   metadata,
   pkgs,
   top,
@@ -24,6 +23,8 @@ in
   ];
 
   age.secrets = {
+    runner-reg.file = ../../secrets/gitlab/nixos-qemu-shell.age;
+
     gitea-buildbotWorkersFile = mk ../../secrets/gitea/buildbotWorkersFile.age;
     gitea-oauthToken = mk ../../secrets/gitea/oauthToken.age;
     gitea-oauthSecret = mk ../../secrets/gitea/oauthSecret.age;
@@ -138,10 +139,6 @@ in
     enable = true;
     protontricks.enable = true;
   };
-  #####################################################################################
-  #################### Virtualbox Runner ##############################################
-  #####################################################################################
-  age.secrets.runner-reg.file = ../../secrets/gitlab/nixos-qemu-shell.age;
 
   services = {
     buildbot-nix = {
@@ -163,10 +160,10 @@ in
         gitea = {
           enable = true;
           instanceUrl = "https://src.thehellings.com";
-          oauthId = "97bcda21-49df-4876-87ac-36ae07f340ec";
+          oauthId = "7ec9107d-379b-47c8-870f-1191956d0500";
           oauthSecretFile = config.age.secrets.gitea-oauthSecret.path;
           tokenFile = config.age.secrets.gitea-oauthToken.path;
-          #topic = "buildbot-greg";
+          topic = "buildbot-nix";
           webhookSecretFile = config.age.secrets.gitea-webhookSecret.path;
         };
         showTrace = true;
@@ -201,33 +198,6 @@ in
         xterm.enable = true;
         xfce.enable = true;
       };
-    };
-  };
-
-  systemd = {
-    services = {
-      "gitlab-runner" = {
-        after = [
-          "network.target"
-          "network-online.target"
-          "tailscaled.service"
-        ];
-        requires = [
-          "network-online.target"
-          "tailscaled.service"
-        ];
-        serviceConfig = {
-          DevicePolicy = lib.mkForce "auto";
-          User = "root";
-          DynamicUser = lib.mkForce false;
-        };
-      };
-    };
-    targets = {
-      sleep.enable = false;
-      suspend.enable = false;
-      hibernate.enable = false;
-      hybrid-sleep.enable = false;
     };
   };
 
