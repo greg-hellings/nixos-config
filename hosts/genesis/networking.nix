@@ -1,10 +1,15 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  metadata,
+  ...
+}:
 let
-  lan = "ens18";
-  lanIP = "10.42.1.5";
-  iot = "ens19";
+  lan = "enp1s0";
+  lanIP = metadata.hosts.${config.networking.hostName}.ip;
+  iot = "enp2s0";
   iotIP = "192.168.66.250";
-  routerIP = "10.42.1.2";
+  routerIP = metadata.infra.gw;
   extraHosts = builtins.readFile ./net/hosts;
 
   adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
@@ -12,10 +17,11 @@ let
   dnsPort = 53;
   dhcpPort = 67;
   dnsServers = [
-    "9.9.9.9" # Quad 9
-    "1.1.1.1" # Cloudflare
-    "1.0.0.1" # Cloudflare
-    "149.112.112.112" # Quad 9
+    #"9.9.9.9" # Quad 9
+    #"1.1.1.1" # Cloudflare
+    #"1.0.0.1" # Cloudflare
+    #"149.112.112.112" # Quad 9
+    metadata.infra.gw # Currently using our UniFi router for DNS as well
   ];
 in
 {
@@ -32,9 +38,9 @@ in
   };
 
   networking = {
+    defaultGateway = metadata.infra.gw;
     enableIPv6 = false;
     networkmanager.enable = pkgs.lib.mkForce false;
-    defaultGateway = routerIP;
     nameservers = dnsServers;
     interfaces = {
       # This is our LAN port

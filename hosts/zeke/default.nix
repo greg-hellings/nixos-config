@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  metadata,
   top,
   ...
 }:
@@ -64,7 +65,7 @@
   services = {
     k3s = {
       extraFlags = [
-        "--tls-san 10.42.1.13"
+        "--tls-san ${metadata.hosts.${config.networking.hostName}.ip}"
         #"--bind-address ${ip}"
       ];
     };

@@ -1,5 +1,7 @@
 {
+  config,
   lib,
+  metadata,
   ...
 }:
 {
@@ -36,7 +38,7 @@
     kubernetes = {
       enable = true;
       vipInterface = "enp38s0";
-      vip = "10.42.1.6";
+      vip = metadata.hosts.${config.networking.hostName}.ip;
       priority = 255;
     };
     tailscale = {

@@ -1,13 +1,14 @@
 {
   config,
   lib,
+  metadata,
   pkgs,
   top,
   ...
 }:
 
 let
-  ip = "10.42.1.8";
+  ip = metadata.hosts.${config.networking.hostName}.ip;
   mk = file: {
     inherit file;
     owner = "buildbot";
@@ -115,7 +116,7 @@ in
       interfaces = [ "enp68s0" ];
     };
     defaultGateway = {
-      address = " 10.42.1.2";
+      address = metadata.infra.gw;
       interface = "br0";
     };
     firewall.allowedTCPPorts = [
@@ -130,7 +131,7 @@ in
         }
       ];
     };
-    nameservers = [ "10.42.1.5" ];
+    nameservers = [ metadata.infra.dns ];
   };
 
   programs.steam = {

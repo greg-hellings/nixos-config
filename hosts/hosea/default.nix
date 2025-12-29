@@ -4,13 +4,14 @@
 
 {
   config,
+  metadata,
   pkgs,
   ...
 }:
 let
   wanInterface = "enp2s0";
   lanInterface = "enp1s0";
-  lanIpAddress = "10.42.1.7";
+  lanIpAddress = metadata.hosts.${config.networking.hostName}.ip;
 in
 
 {
@@ -70,8 +71,8 @@ in
 
   networking = {
     hostName = "hosea";
-    nameservers = [ "10.42.1.5" ];
-    defaultGateway = "10.42.1.1";
+    nameservers = [ metadata.infra.dns ];
+    defaultGateway = metadata.infra.gw;
     interfaces = {
       "${wanInterface}".useDHCP = true;
       "${lanInterface}" = {
