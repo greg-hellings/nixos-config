@@ -16,11 +16,6 @@
     ./postgres.nix
   ];
 
-  age.secrets.runner-deployer = {
-    file = ../../secrets/gitlab/linode-deployer-runner-reg.age;
-    owner = "gitlab-runner";
-  };
-
   environment.systemPackages = with pkgs; [
     bind
     graphviz
@@ -55,23 +50,10 @@
   ];
 
   services = {
-    gitlab-runner = {
-      enable = true;
-      services.deployer = {
-        executor = "shell";
-        authenticationTokenConfigFile = config.age.secrets.runner-deployer.path;
-      };
-    };
-
     immich-public-proxy = {
       enable = true;
       immichUrl = "https://immich.shire-zebra.ts.net";
     };
-  };
-
-  systemd.services."gitlab-runner".serviceConfig = {
-    DynamicUser = lib.mkForce false;
-    User = "gitlab-runner";
   };
 
   security.sudo.extraRules = [
@@ -89,12 +71,4 @@
       ];
     }
   ];
-
-  users = {
-    groups.gitlab-runner = { };
-    users.gitlab-runner = {
-      isSystemUser = true;
-      group = "gitlab-runner";
-    };
-  };
 }

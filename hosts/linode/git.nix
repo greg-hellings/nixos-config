@@ -87,8 +87,15 @@ in
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
 
-  systemd.services.haproxy = {
-    after = [ "sys-devices-virtual-net-tailscale0.device" ];
+  systemd.services = {
+    haproxy = {
+      after = [
+        "network-online.target"
+      ];
+      wants = [
+        "network-online.target"
+      ];
+    };
   };
 
   services.haproxy = {
