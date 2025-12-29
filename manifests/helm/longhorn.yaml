@@ -30,11 +30,11 @@ spec:
   values:
     defaultSettings:
       createDefaultDiskLabeledNodes: true
-      # This should go back to null when I have more cluster
-      replicaSoftAntiAffinity: null
+      replicaSoftAntiAffinity: true
+      replicaAutoBalance: "best-effort"
     persistence:
       # This should go back to 3 when I have more cluster
-      defaultClassReplicaCount: 2
+      defaultClassReplicaCount: 3
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -156,15 +156,15 @@ parameters:
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: longhorn-fast
+  name: longhorn-3
 provisioner: driver.longhorn.io
 allowVolumeExpansion: true
 reclaimPolicy: Delete
 volumeBindingMode: Immediate
 parameters:
   backupTargetName: default
-  numberOfReplicas: "1"
+  numberOfReplicas: "3"
   staleReplicaTimeout: "2880"
   fromBackup: ""
   fsType: ext4
-  diskSelector: "ssd,fast"
+  diskSelector: "hdd,large"
