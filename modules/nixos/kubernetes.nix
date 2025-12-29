@@ -128,7 +128,6 @@ in
           "--resolv-conf=/etc/resolv.conf"
           "--node-label node.longhorn.io/create-default-disk=config"
           "--supervisor-metrics=true"
-          "--tls-san ${config.networking.hostName}.home"
           "--tls-san ${config.networking.hostName}.thehellings.lan"
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
         ];
@@ -139,7 +138,9 @@ in
           operator-oauth.source = ../../manifests/auto/operator-oauth.yaml;
         };
         role = if cfg.agentOnly then "agent" else "server";
-        serverAddr = lib.mkIf (config.networking.hostName != "isaiah") "https://isaiah.home:6443";
+        serverAddr = lib.mkIf (
+          config.networking.hostName != "isaiah"
+        ) "https://isaiah.shire-zebra.ts.net:6443";
         tokenFile = config.age.secrets.kubernetesToken.path;
       };
       keepalived = {
