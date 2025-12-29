@@ -1,4 +1,8 @@
-{ top, nixpkgs }:
+{
+  metadata,
+  nixpkgs,
+  top,
+}:
 let
   inherit (top.nixunstable) lib;
   mac =
@@ -13,7 +17,7 @@ let
     top.darwin.lib.darwinSystem {
       inherit pkgs system;
       specialArgs = {
-        inherit top;
+        inherit metadata top;
         inherit (top) self;
       };
       modules = [

@@ -118,7 +118,7 @@
 
         darwinConfigurations = (
           import ./darwin {
-            inherit top;
+            inherit top metadata;
             nixpkgs = imported_packages;
           }
         );
