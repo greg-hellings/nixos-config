@@ -19,7 +19,7 @@
     "genesis": {
       "ip": "10.42.1.5",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/CGE2rqlL2Qr0TJkwQMsHFSDkhGWlrUlvfcvcylO1n",
-      "ts": "100.88.91.27",
+      "ts": "100.96.198.104",
       "system": "x86_64-linux",
       "tags": ["router", "server"]
     },

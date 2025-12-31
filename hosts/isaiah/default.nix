@@ -10,6 +10,7 @@
   ];
 
   age.secrets = {
+    gitea-runner-isaiah-podman.file = ../../secrets/gitea/runner-isaiah-podman.age;
     gitea-workerPassword.file = ../../secrets/gitea/workerPassword.age;
     runner-reg.file = ../../secrets/gitlab/kubernetes-k3s-local.age;
   };
@@ -41,6 +42,7 @@
       vip = metadata.hosts.${config.networking.hostName}.ip;
       priority = 255;
     };
+    podman.enable = true;
     tailscale = {
       enable = true;
       tags = [ "home" ];
@@ -72,6 +74,37 @@
   };
 
   services = {
+    gitea-actions-runner.instances.podman = {
+      enable = true;
+      labels = [
+        "debian-latest:docker://node:25-trixie"
+
+        "ubuntu-latest:docker://docker.gitea.com/runner-images:ubuntu-latest"
+        "ubuntu-24.04:docker://docker.gitea.com/runner-images:ubuntu-24.04"
+        "ubuntu-22.04:docker://docker.gitea.com/runner-images:ubuntu-22.04"
+
+        "ubuntu-full-latest:docker://ghcr.io/catthehacker/ubuntu:full-latest"
+        "ubuntu-full-24.04:docker://ghcr.io/catthehacker/ubuntu:full-24.04"
+        "ubuntu-full-22.04:docker://ghcr.io/catthehacker/ubuntu:full-22.04"
+
+        "ubuntu-act-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
+        "ubuntu-act-24.04:docker://ghcr.io/catthehacker/ubuntu:act-24.04"
+        "ubuntu-act-22.04:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
+
+        "ubuntu-runner-latest:docker://ghcr.io/catthehacker/ubuntu:runner-latest"
+        "ubuntu-runner-24.04:docker://ghcr.io/catthehacker/ubuntu:runner-24.04"
+        "ubuntu-runner-22.04:docker://ghcr.io/catthehacker/ubuntu:runner-22.04"
+
+        "ubuntu-rust-latest:docker://ghcr.io/catthehacker/ubuntu:rust-latest"
+        "ubuntu-rust-24.04:docker://ghcr.io/catthehacker/ubuntu:rust-24.04"
+        "ubuntu-rust-22.04:docker://ghcr.io/catthehacker/ubuntu:rust-22.04"
+
+        "nix-latest:docker://src.thehellings.com/greg/builder:latest"
+      ];
+      name = "isaiah-podman";
+      tokenFile = config.age.secrets.gitea-runner-isaiah-podman.path;
+      url = "https://gitea.shire-zebra.ts.net";
+    };
     k3s.clusterInit = true; # This is the first node in the cluster
     openssh = {
       enable = true;

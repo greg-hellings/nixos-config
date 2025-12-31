@@ -12,7 +12,6 @@ let
   routerIP = metadata.infra.gw;
   extraHosts = builtins.readFile ./net/hosts;
 
-  adblockUpdate = pkgs.writeShellScriptBin "adblockUpdate" (builtins.readFile ./adblockUpdate.sh);
   proxyPort = 3128;
   dnsPort = 53;
   dhcpPort = 67;
@@ -111,19 +110,8 @@ in
       };
     };
 
-    # Update adblock list
-    cron = {
-      enable = true;
-      systemCronJobs = [ "* * * * * root ${adblockUpdate} 2>&1 > /var/log/adblock.log" ];
-    };
-
     prometheus.exporters = {
       dnsmasq.enable = true;
-      kea = {
-        enable = true;
-        openFirewall = true;
-        targets = [ (builtins.head config.services.kea.dhcp4.settings.control-sockets).socket-name ];
-      };
     };
   }; # End of services configuration
 
