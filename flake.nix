@@ -99,21 +99,22 @@
           // (builtins.mapAttrs (
             k: v:
             {
-              imports = v._module.args.modules;
+              imports = self.nixosConfigurations.${k}._module.args.modules;
             }
             // (
-              if builtins.hasAttr "tags" metadata.hosts.${k} then
+              if builtins.hasAttr "tags" v then
                 {
                   deployment = {
-                    inherit (metadata.hosts.${k}) tags;
-                    targetHost = metadata.hosts.${k}.ts;
+                    inherit (v) tags;
+                    targetHost = v.ts;
                     targetUser = "greg";
                   };
                 }
               else
                 { }
             )
-          ) self.nixosConfigurations)
+          ) (top.nixunstable.lib.filterAttrs (_: v: !(v ? "external") || !v.external) metadata.hosts))
+          #) self.nixosConfigurations)
         );
 
         darwinConfigurations = (

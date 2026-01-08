@@ -9,6 +9,7 @@
     "chronicles": {
       "ip": "10.42.1.4",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBecZUva9OnZuXLaBun6/1ITo5f9p0YMLPD+q0egLRS",
+      "external": true,
       "ts": "100.119.228.115"
     },
     "exodus": {
@@ -31,6 +32,7 @@
       "tags": ["server"]
     },
     "icdm-root": {
+      "external": true,
       "system": "x86_64-linux"
     },
     "isaiah": {
@@ -43,9 +45,11 @@
       "tags": ["builder", "kube", "server"]
     },
     "iso": {
+      "external": true,
       "system": "x86_64-linux"
     },
     "ivr": {
+      "external": true,
       "system": "aarch64-darwin"
     },
     "jeremiah": {
@@ -58,9 +62,9 @@
       "tags": ["builder", "kube", "server"]
     },
     "joel": {
+      "external": true,
       "ip": "10.42.0.4",
-      "ts": null,
-      "system": "x86_64-linux"
+      "ts": null
     },
     "linode": {
       "ip": null,
@@ -70,25 +74,31 @@
       "tags": ["public", "server"]
     },
     "MacBook-Pro.local": {
+      "external": true,
       "system": "aarc64-darwin"
     },
     "MacBook-Prolocal.local": {
+      "external": true,
       "system": "aarc64-darwin"
     },
     "nas1": {
+      "external": true,
       "ip": "10.42.1.14",
       "ts": "100.114.187.61"
     },
     "nixos": {
+      "external": true,
       "system": "x86_64-linux"
     },
     "proxmoxtemplate": {
+      "external": true,
       "system": "x86_64-linux"
     },
     "vm-gitlab": {
       "system": "x86_64-linux"
     },
     "wsl": {
+      "external": true,
       "system": "aarch64-linux"
     },
     "zeke": {
