@@ -32,6 +32,7 @@ in
       ansible
       direnv
       home-manager
+      python3Packages.ipython
       just
       go
       gopls
@@ -47,6 +48,7 @@ in
       python311
       python3Packages.flake8
       skaffold
+      twine
       x
     ];
     file = {

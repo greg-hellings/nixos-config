@@ -33,6 +33,7 @@ in
 {
   "MacBook-Pro.local" = user "ivr" "gregory.hellings";
   "MacBook-Prolocal.local" = user "ivr" "gregory.hellings";
+  "MacBook-Pro.thehellings.lan" = user "ivr" "gregory.hellings";
   genesis = greg "genesis";
   exodus = greg "exodus";
   zeke = greg "zeke";
