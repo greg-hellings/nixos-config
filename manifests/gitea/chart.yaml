@@ -72,6 +72,8 @@ spec:
           TYPE: level
         repository:
           ENABLE_PUSH_CREATE_USER: "true"
+        service:
+          DISABLE_REGISTRATION: "true"
         storage:
           STORAGE_TYPE: minio
           MINIO_ENDPOINT: "nas1.shire-zebra.ts.net:9000"
