@@ -61,12 +61,14 @@ in
   systemd = {
     services.adblock-update = {
       after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
       script = lib.getExe adblockUpdate;
       serviceConfig.Type = "oneshot";
     };
     timers.adblock-update = {
       wantedBy = [ "multi-user.target" ];
       after = [ "network-online.target" ];
+      requires = [ "network-online.target" ];
       timerConfig = {
         OnCalendar = "daily";
         Unit = "adblock-update.service";
