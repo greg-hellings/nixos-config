@@ -34,7 +34,7 @@ spec:
   instances: 3
   enablePDB: false
   storage:
-    size: 20Gi
+    size: 40Gi
   primaryUpdateStrategy: unsupervised
 
   managed:
