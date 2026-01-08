@@ -46,36 +46,6 @@ in
           let otp = ^bw get totp 10371487-7f40-4b08-9a45-b33e00de318b
           osascript ${vpn} $login.login.username $"($login.login.password)($otp)"
         }
-
-        # From the nushell cookbook: https://www.nushell.sh/cookbook/ssh_agent.html#keychain
-        do --env {
-            let ssh_agent_file = (
-                $nu.temp-path | path join $"ssh-agent-(whoami).nuon"
-            )
-
-            if ($ssh_agent_file | path exists) {
-                let ssh_agent_env = open ($ssh_agent_file)
-                if (ps | find --columns [pid] $ssh_agent_env.SSH_AGENT_PID | is-not-empty) {
-                    load-env $ssh_agent_env
-                    print $"Agent found, and loading ($ssh_agent_env)"
-                    print $env.SSH_AUTH_SOCK
-                    return
-                } else {
-                    print "Agent not found, removing file and starting again"
-                    rm $ssh_agent_file
-                }
-            }
-
-            let ssh_agent_env = ^ssh-agent -c
-                | lines
-                | first 2
-                | parse "setenv {name} {value};"
-                | transpose --header-row
-                | into record
-            print $"Starting agent ($ssh_agent_env)"
-            load-env $ssh_agent_env
-            $ssh_agent_env | save --force $ssh_agent_file
-        }
       '';
       settings = {
         buffer_editor = lib.getExe config.programs.nixvim.package;
