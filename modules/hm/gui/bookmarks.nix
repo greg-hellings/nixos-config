@@ -169,6 +169,10 @@
             name = "NUR search";
             url = "https://nur.nix-community.org/";
           }
+          {
+            name = "runNixOSTest";
+            url = "https://nixos.org/manual/nixos/stable/index.html#sec-calling-nixos-tests";
+          }
         ];
       }
       {
