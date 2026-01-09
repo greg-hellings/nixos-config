@@ -20,3 +20,9 @@ Go through the normal process to setup a NixOS system during installation.
 To add a new host, create a folder in the directory `hosts/` that matches the name of
 the target system. Each host must contain, minimally, a `default.nix` file that serves
 as the basis of configuring that host.
+
+# Test build a VM for your system
+
+* `nom build ".#nixosConfigurations.<host>.config.system.build.vm`
+* `export QEMU_NET_OPTS="hostfwd=tcp::2221-:22"` to export the SSH port
+* `./result/bin/run-<host>-vm`
