@@ -365,16 +365,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1768421753,
-        "narHash": "sha256-bIV31sE1y3CM/5qjpLX0VulRKwBvEIZM75e/X6wnEaY=",
-        "owner": "greg-hellings",
+        "lastModified": 1768434960,
+        "narHash": "sha256-cJbFn17oyg6qAraLr+NVeNJrXsrzJdrudkzI4H2iTcg=",
+        "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "00cfc17cb168ac1fe21fb1ba2faccd44cac720d0",
+        "rev": "b4d88c9ac42ae1a745283f6547701da43b6e9f9b",
         "type": "github"
       },
       "original": {
-        "owner": "greg-hellings",
-        "ref": "fix/8570-nushell-parsing-fix",
+        "owner": "nix-community",
+        "ref": "master",
         "repo": "home-manager",
         "type": "github"
       }

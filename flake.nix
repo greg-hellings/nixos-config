@@ -23,8 +23,7 @@
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
     hmunstable = {
-      #url = "github:nix-community/home-manager/master";
-      url = "github:greg-hellings/home-manager/fix/8570-nushell-parsing-fix";
+      url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixunstable";
     };
     proxmox.url = "github:greg-hellings/proxmox-nixos/fix/212-AcceptEnv-redefinition";
