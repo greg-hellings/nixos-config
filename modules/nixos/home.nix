@@ -37,7 +37,7 @@ with lib;
         mkdir -p $XDG_CONFIG_HOME/attic
         cp ${config.age.secrets.attic.path} $XDG_CONFIG_HOME/attic/config.toml
       '';
-      script = "${pkgs.attic-client}/bin/attic watch-store default";
+      script = "${pkgs.attic-client}/bin/attic watch-store --ignore-upstream-cache-filter default";
       environment = {
         XDG_CONFIG_HOME = "/var/lib/attic-client";
       };
