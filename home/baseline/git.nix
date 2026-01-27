@@ -10,6 +10,7 @@
         co = "checkout";
         ups = "push -u origin HEAD";
         amend = "commit --amend";
+        l = "log --oneline -n 20";
       };
       branch.sort = "-committerdate";
       column.ui = "auto";
