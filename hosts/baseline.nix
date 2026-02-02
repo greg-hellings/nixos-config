@@ -33,6 +33,7 @@
     iperf
     killall
     nano
+    nfs-utils
     lshw
     pciutils
     psmisc

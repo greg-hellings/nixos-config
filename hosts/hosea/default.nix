@@ -37,7 +37,6 @@ in
     jellyfin-ffmpeg
     libva-utils
     mesa-demos
-    nfs-utils
     radeontop
     vulkan-tools
   ];
