@@ -104,6 +104,7 @@
       name = "isaiah-podman";
       settings = {
         container.force_pull = true;
+        runner.capacity = 7;
       };
       tokenFile = config.age.secrets.gitea-runner-isaiah-podman.path;
       url = "https://gitea.shire-zebra.ts.net";
