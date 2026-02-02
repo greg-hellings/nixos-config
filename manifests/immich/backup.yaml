@@ -37,7 +37,7 @@ spec:
                 server: nas1.shire-zebra.ts.net
           containers:
             - name: immich-go
-              image: "registry.thehellings.com/greg/ci-images/immich:latest"
+              image: "src.thehellings.com/greg/immich:latest"
               imagePullPolicy: "Always"
               command:
                 - /bin/sh
