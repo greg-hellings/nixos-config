@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   config,
   ...
@@ -8,17 +7,6 @@
 let
   cfg = config.greg.tailscale;
   tags = lib.concatMapStringsSep "," (s: "tag:${s}") cfg.tags;
-  setScript = pkgs.writeShellApplication {
-    name = "tailscale-set";
-    runtimeInputs = [
-      config.services.tailscale.package
-    ];
-    text = ''
-      tailscale set --accept-routes
-      tailscale set --hostname ${cfg.hostname}
-    ''
-    + lib.optionalString ((builtins.length cfg.tags) > 0) "tailscale set --advertise-tags ${tags}";
-  };
 in
 {
   options = {
@@ -58,15 +46,6 @@ in
       useRoutingFeatures = "both";
     };
     systemd.services = {
-      tailscale-set = {
-        enable = true;
-        after = [
-          "tailscaled.service"
-          "tailscale-autoconnect.service"
-        ];
-        partOf = [ "network-online.target" ];
-        script = lib.getExe setScript;
-      };
       tailscaled.partOf = [ "network-online.target" ];
     };
   };
