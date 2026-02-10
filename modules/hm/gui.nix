@@ -33,6 +33,7 @@ in
             cdrtools
             element-desktop
             freetube
+            kopia-ui
             onlyoffice-desktopeditors
             qpwgraph
             vlc
