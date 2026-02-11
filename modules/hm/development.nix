@@ -15,7 +15,7 @@ let
     nix-fast-build
     nix-output-monitor
     nix-update
-    nixfmt-rfc-style
+    nixfmt
     nixpkgs-review
     nodejs
     process-compose
