@@ -88,7 +88,7 @@ in
             inherit (top.charts.chartsMetadata.external-secrets.external-secrets) repo version;
             enable = true;
             name = top.charts.chartsMetadata.external-secrets.external-secrets.chart;
-            hash = "sha256-S1EGl2QECb6t4ITiZepc7LLwcwNDi3ggUiW1YfSNCqQ=";
+            hash = "sha256-JQJF0wCy9Z0AvPi65mpqgeyCLSw5DUDhGacvjQi7Xqs=";
             createNamespace = true;
             targetNamespace = "external-secrets";
             values = {
@@ -100,7 +100,7 @@ in
             inherit (top.charts.chartsMetadata.kyverno.kyverno) repo version;
             enable = true;
             name = top.charts.chartsMetadata.kyverno.kyverno.chart;
-            hash = "sha256-acETukO1PUR+bAjXR+jBUjymBaB4uSPzDA1uvPqdY3U=";
+            hash = "sha256-epSWDHXI+qmiu/eiw59t7rf/C4gUqMF87poIFvj2mHQ=";
             createNamespace = true;
             targetNamespace = "kyverno-system";
             values = {
@@ -115,7 +115,7 @@ in
             inherit (top.charts.chartsMetadata.tailscale.tailscale-operator) repo version;
             enable = true;
             name = top.charts.chartsMetadata.tailscale.tailscale-operator.chart;
-            hash = "sha256-pkgolk7ji3lEilTlL12BnaIpXtEIVt4MiUFKouH8fcM=";
+            hash = "sha256-2Wm4TVn31cs7QuNkmsDS8pS0C7XvrAYSwwuVSqDTg34=";
             createNamespace = true;
             targetNamespace = "tailscale";
           };

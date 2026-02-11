@@ -64,7 +64,6 @@
   };
 
   programs = {
-    adb.enable = true;
     steam = {
       enable = true;
       protontricks.enable = true;
