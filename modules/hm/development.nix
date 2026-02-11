@@ -9,7 +9,7 @@ let
     bruno # but let's not talk about it
     bruno-cli
     cargo
-    gh-copilot
+    github-copilot-cli
     gnumake
     nix-eval-jobs
     nix-fast-build
