@@ -5,7 +5,6 @@
 }:
 let
   inherit (top.nixunstable) lib;
-  wsl = args: (unstable (args // { extraMods = [ top.wsl.nixosModules.wsl ]; }));
   unstable =
     {
       channel ? top.nixunstable,
@@ -57,7 +56,7 @@ in
 )
 // {
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'
-  nixos = wsl { name = "wsl"; };
+  #nixos = wsl { name = "wsl"; };
   # nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
   #nixos-arm = wsl {
   #  name = "wsl";

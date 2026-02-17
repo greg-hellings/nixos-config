@@ -31,10 +31,6 @@
     # To enable backups: https://github.com/SaumonNet/proxmox-nixos/pull/45
     #proxmox.url = "github:blecher-at/proxmox-nixos/fix-backup-pve-manager";
     nix-hardware.url = "github:nixos/nixos-hardware";
-    nixos-generators = {
-      url = "github:nix-community/nixos-generators";
-      inputs.nixpkgs.follows = "nixunstable";
-    };
     nixvimunstable = {
       url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixunstable";
