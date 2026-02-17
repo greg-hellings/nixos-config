@@ -95,7 +95,7 @@
       "external": true,
       "system": "x86_64-linux"
     },
-    "vm-gitlab": {
+    "gitlab": {
       "system": "x86_64-linux"
     },
     "wsl": {

@@ -66,7 +66,7 @@ in
   };
 
   networking = {
-    hostName = "vm-gitlab"; # Define your hostname.
+    hostName = "gitlab"; # Define your hostname.
     firewall.allowedTCPPorts = [
       80
       registryPort

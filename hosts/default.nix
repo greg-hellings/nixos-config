@@ -4,7 +4,7 @@
   nixpkgs,
 }:
 let
-  vm = args: (unstable (args // { extraMods = [ top.nixos-generators.nixosModules.all-formats ]; }));
+  inherit (top.nixunstable) lib;
   wsl = args: (unstable (args // { extraMods = [ top.wsl.nixosModules.wsl ]; }));
   unstable =
     {
@@ -31,30 +31,58 @@ let
         # Local ones
         ./baseline.nix
         top.self.modules.nixosModule
-        ./${name}
       ]
       ++ extraMods;
     };
 in
-{
-  genesis = unstable { name = "genesis"; };
-  exodus = unstable { name = "exodus"; };
-  zeke = unstable { name = "zeke"; };
-  icdm-root = unstable { name = "icdm-root"; };
-  linode = unstable { name = "linode"; };
-  hosea = unstable { name = "hosea"; };
-  jeremiah = unstable { name = "jeremiah"; };
-  isaiah = unstable { name = "isaiah"; };
-
-  vm-gitlab = vm { name = "vm-gitlab"; };
-  proxmoxtemplate = unstable { name = "proxmoxtemplate"; };
-
-  iso = unstable { name = "iso"; };
+(lib.genAttrs
+  (builtins.attrNames (lib.filterAttrs (_: v: v == "directory") (builtins.readDir ./unstable)))
+  (
+    name:
+    (unstable {
+      inherit name;
+      extraMods = [ ./unstable/${name} ];
+    })
+  )
+)
+// (lib.genAttrs
+  (builtins.attrNames (lib.filterAttrs (_: v: v == "directory") (builtins.readDir ./vm)))
+  (
+    name:
+    (unstable {
+      inherit name;
+      extraMods = [ ./vm/${name} ];
+    })
+  )
+)
+// {
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'
   nixos = wsl { name = "wsl"; };
   # nix build '.#nixosConfigurations.wsl-aarch.config.system.build.installer'
   #nixos-arm = wsl {
-  #name = "wsl";
-  #system = "aarch64-linux";
+  #  name = "wsl";
+  #  system = "aarch64-linux";
   #};
+
+  builder-aarch = lib.nixosSystem {
+    system = "aarch64-linux";
+    modules = [
+      "${top.nixunstable}/nixos/modules/profiles/nix-builder-vm.nix"
+      {
+        virtualisation.host.pkgs = import top.nixunstable { system = "aarch64-darwin"; };
+        boot.loader.grub.devices = [ "/dev/vda" ];
+      }
+    ];
+  };
+
+  builder-x86 = lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [
+      "${top.nixunstable}/nixos/modules/profiles/nix-builder-vm.nix"
+      {
+        virtualisation.host.pkgs = import top.nixunstable { system = "aarch64-darwin"; };
+        boot.loader.grub.devices = [ "/dev/vda" ];
+      }
+    ];
+  };
 }

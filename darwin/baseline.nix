@@ -1,25 +1,13 @@
 {
-  lib,
   pkgs,
   top,
   ...
 }:
 let
-  darwin-aarch-builder = top.nixunstable.lib.nixosSystem {
-    system = "aarch64-linux";
-    modules = [
-      "${top.nixunstable}/nixos/modules/profiles/nix-builder-vm.nix"
-      { virtualisation.host.pkgs = import top.nixunstable { system = "aarch64-darwin"; }; }
-    ];
-  };
-  darwin-x86-builder = top.nixunstable.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [
-      "${top.nixunstable}/nixos/modules/profiles/nix-builder-vm.nix"
-      { virtualisation.host.pkgs = import top.nixunstable { system = "aarch64-darwin"; }; }
-    ];
-  };
-in {
+  #darwin-aarch-builder = top.self.nixosConfigurations.builder-aarch;
+  darwin-x86-builder = top.self.nixosConfigurations.builder-x86;
+in
+{
   environment.systemPackages = with pkgs; [
     hms
   ];
@@ -41,12 +29,18 @@ in {
 
   nix = {
     enable = true;
-    buildMachines = [{
-      hostName = "ssh-ng://builder@localhost";
-      system = "aarch64-linux";
-      maxJobs = 4;
-      supportedFeatures = ["kvm" "benchmarch" "big-parallel"];
-    }];
+    buildMachines = [
+      {
+        hostName = "ssh-ng://builder@localhost";
+        system = "aarch64-linux";
+        maxJobs = 4;
+        supportedFeatures = [
+          "kvm"
+          "benchmarch"
+          "big-parallel"
+        ];
+      }
+    ];
     gc.interval.Hour = 3;
     settings.auto-optimise-store = false; # Darwin bugs?
   };
