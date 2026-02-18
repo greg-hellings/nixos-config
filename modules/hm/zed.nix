@@ -74,7 +74,7 @@ in
         features = {
           copilot = true;
         };
-        relative_line_numbers = true;
+        relative_line_numbers = "enabled";
         telemetry = {
           metrics = true;
         };
