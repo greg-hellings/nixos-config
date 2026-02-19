@@ -21,7 +21,7 @@ in
   age.secrets =
     let
       cfg = n: {
-        file = ../../secrets/gitlab/${n}.age;
+        file = ../../../secrets/gitlab/${n}.age;
         owner = "gitlab";
         group = "gitlab";
         mode = "0444";
@@ -40,13 +40,13 @@ in
       gitlab-deterministic-key = cfg "deterministic-key";
 
       minio_access_key_id = {
-        file = ../../secrets/minio_access_key_id.age;
+        file = ../../../secrets/minio_access_key_id.age;
         owner = "gitlab";
         group = "gitlab";
         mode = "0444";
       };
       minio_secret_access_key = {
-        file = ../../secrets/minio_secret_access_key.age;
+        file = ../../../secrets/minio_secret_access_key.age;
         owner = "gitlab";
         group = "gitlab";
         mode = "0444";

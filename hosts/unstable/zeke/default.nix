@@ -15,7 +15,7 @@
   ];
 
   age.secrets = {
-    gitea-workerPassword.file = ../../secrets/gitea/workerPassword.age;
+    gitea-workerPassword.file = ../../../secrets/gitea/workerPassword.age;
   };
 
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];

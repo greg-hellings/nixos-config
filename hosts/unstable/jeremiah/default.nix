@@ -23,13 +23,13 @@ in
   ];
 
   age.secrets = {
-    runner-reg.file = ../../secrets/gitlab/nixos-qemu-shell.age;
+    runner-reg.file = ../../../secrets/gitlab/nixos-qemu-shell.age;
 
-    gitea-buildbotWorkersFile = mk ../../secrets/gitea/buildbotWorkersFile.age;
-    gitea-oauthToken = mk ../../secrets/gitea/oauthToken.age;
-    gitea-oauthSecret = mk ../../secrets/gitea/oauthSecret.age;
-    gitea-webhookSecret = mk ../../secrets/gitea/webhookSecret.age;
-    gitea-workerPassword = mk ../../secrets/gitea/workerPassword.age;
+    gitea-buildbotWorkersFile = mk ../../../secrets/gitea/buildbotWorkersFile.age;
+    gitea-oauthToken = mk ../../../secrets/gitea/oauthToken.age;
+    gitea-oauthSecret = mk ../../../secrets/gitea/oauthSecret.age;
+    gitea-webhookSecret = mk ../../../secrets/gitea/webhookSecret.age;
+    gitea-workerPassword = mk ../../../secrets/gitea/workerPassword.age;
   };
 
   # Bootloader.

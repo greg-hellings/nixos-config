@@ -6,8 +6,10 @@
 }:
 
 {
-  age.secrets.nextcloudadmin.file = ../../secrets/nextcloudadmin.age;
-  age.secrets.nextcloudadmin.owner = "nextcloud";
+  age.secrets.nextcloudadmin = {
+    file = ../../../secrets/nextcloudadmin.age;
+    owner = "nextcloud";
+  };
 
   services.nextcloud = {
     enable = true;

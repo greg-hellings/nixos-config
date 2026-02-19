@@ -13,7 +13,7 @@
   ];
 
   age.secrets = {
-    compose-attic.file = ../../secrets/compose/attic.env.age;
+    compose-attic.file = ../../../secrets/compose/attic.env.age;
   };
 
   boot = {

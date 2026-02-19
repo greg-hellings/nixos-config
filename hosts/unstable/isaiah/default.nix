@@ -10,9 +10,9 @@
   ];
 
   age.secrets = {
-    gitea-runner-isaiah-podman.file = ../../secrets/gitea/runner-isaiah-podman.age;
-    gitea-workerPassword.file = ../../secrets/gitea/workerPassword.age;
-    runner-reg.file = ../../secrets/gitlab/kubernetes-k3s-local.age;
+    gitea-runner-isaiah-podman.file = ../../../secrets/gitea/runner-isaiah-podman.age;
+    gitea-workerPassword.file = ../../../secrets/gitea/workerPassword.age;
+    runner-reg.file = ../../../secrets/gitlab/kubernetes-k3s-local.age;
   };
 
   boot = {
