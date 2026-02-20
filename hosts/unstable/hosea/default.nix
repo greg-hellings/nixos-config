@@ -123,6 +123,7 @@ in
         ];
       };
       settings = {
+        security.secret_key = "123456789";
         server = {
           domain = "${config.networking.hostName}.shire-zebra.ts.net";
           enforce_domain = true;

@@ -78,6 +78,7 @@ in
       enable = true;
       enableNushellIntegration = true;
       enableZshIntegration = pkgs.stdenv.hostPlatform.isDarwin;
+      shellWrapperName = "y";
     };
   };
 }
