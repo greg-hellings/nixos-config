@@ -26,10 +26,6 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    proxmox.url = "github:greg-hellings/proxmox-nixos/fix/212-AcceptEnv-redefinition";
-    #proxmox.url = "github:SaumonNet/proxmox-nixos";
-    # To enable backups: https://github.com/SaumonNet/proxmox-nixos/pull/45
-    #proxmox.url = "github:blecher-at/proxmox-nixos/fix-backup-pve-manager";
     nix-hardware.url = "github:nixos/nixos-hardware";
     nixvimunstable = {
       url = "github:nix-community/nixvim/main";
@@ -48,11 +44,10 @@
     { self, ... }@top:
     let
       local_overlay = import ./overlays;
-      overlays = system: [
+      overlays = [
         top.agenix.overlays.default
         local_overlay
         top.nixvimunstable.overlays.default
-        top.proxmox.overlays.${system}
         top.nurpkgs.overlays.default
         top.vsext.overlays.default
       ];
@@ -65,13 +60,12 @@
       imported_packages = top.nixunstable.lib.genAttrs systems (
         system:
         import top.nixunstable {
-          inherit system;
+          inherit system overlays;
           config = {
             allowUnfree = true;
             allowUnfreePredicate = _: true;
             permittedInsecurePackages = [ "ventoy-1.1.05" ];
           };
-          overlays = overlays system;
         }
       );
     in

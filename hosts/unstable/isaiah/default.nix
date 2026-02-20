@@ -54,14 +54,6 @@
     };
   };
 
-  fileSystems = {
-    "/media/proxmox" = {
-      device = "10.42.1.4:/volume1/proxmox";
-      fsType = "nfs";
-      options = [ "noatime" ];
-    };
-  };
-
   networking = {
     firewall = {
       enable = true;

@@ -17,7 +17,6 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    top.proxmox.nixosModules.proxmox-ve
     top.buildbot.nixosModules.buildbot-master
     top.buildbot.nixosModules.buildbot-worker
   ];
@@ -75,11 +74,6 @@ in
     "/btrfs" = {
       fsType = "btrfs";
       device = "/dev/nvme0n1p1";
-    };
-    "/media/proxmox" = {
-      device = "10.42.1.4:/volume1/proxmox";
-      fsType = "nfs";
-      options = [ "noatime" ];
     };
   };
 
@@ -181,10 +175,6 @@ in
         enable = true;
         user = "greg";
       };
-    };
-    proxmox-ve = {
-      enable = true;
-      ipAddress = ip;
     };
     sunshine = {
       enable = true;
