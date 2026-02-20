@@ -115,7 +115,7 @@ in
             inherit (top.charts.chartsMetadata.tailscale.tailscale-operator) repo version;
             enable = true;
             name = top.charts.chartsMetadata.tailscale.tailscale-operator.chart;
-            hash = "sha256-2Wm4TVn31cs7QuNkmsDS8pS0C7XvrAYSwwuVSqDTg34=";
+            hash = "sha256-BtZ24mCT2GMHE9iR+2xuIkB+4m1r2OC3WLkY3jC3i3I=";
             createNamespace = true;
             targetNamespace = "tailscale";
           };
