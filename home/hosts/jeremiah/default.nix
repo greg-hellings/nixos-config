@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ ... }:
 {
   xdg.autostart.entries = [
-    "${pkgs.steam}/share/applications/steam.desktop"
+    #"${pkgs.steam}/share/applications/steam.desktop"
   ];
 }

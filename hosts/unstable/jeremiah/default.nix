@@ -129,11 +129,6 @@ in
     nameservers = [ metadata.infra.dns ];
   };
 
-  programs.steam = {
-    enable = true;
-    protontricks.enable = true;
-  };
-
   services = {
     buildbot-nix = {
       master = {
@@ -169,27 +164,5 @@ in
         workerPasswordFile = config.age.secrets.gitea-workerPassword.path;
       };
     };
-    displayManager = {
-      defaultSession = "xfce";
-      autoLogin = {
-        enable = true;
-        user = "greg";
-      };
-    };
-    sunshine = {
-      enable = true;
-      autoStart = true;
-      #capSysAdmin = true;
-      openFirewall = true;
-    };
-    xserver = {
-      enable = true;
-      desktopManager = {
-        xterm.enable = true;
-        xfce.enable = true;
-      };
-    };
   };
-
-  users.extraGroups.video.members = [ "greg" ];
 }
