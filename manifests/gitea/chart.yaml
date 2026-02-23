@@ -23,6 +23,12 @@ spec:
   dependsOn:
     - name: cnpg
       namespace: cnpg-system
+    - name: external-secrets
+      namespace: external-secrets
+    - name: longhorn
+      namespace: longhorn-system
+    - name: tailscale
+      namespace: tailscale
   values:
     # Gitea Helm Chart Values https://gitea.com/gitea/helm-gitea
     global:

@@ -20,6 +20,11 @@ spec:
         kind: HelmRepository
         name: gitlab-runner
       interval: "1h"
+  dependsOn:
+    - name: external-secrets
+      namespace: external-secrets
+    - name: tailscae
+      namespace: tailscale
   values:
     crds:
       create: true

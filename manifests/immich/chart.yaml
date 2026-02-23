@@ -24,6 +24,8 @@ spec:
   dependsOn:
     - name: longhorn
       namespace: longhorn-system
+    - name: external-secrets
+      namespace: external-secrets
   values:
     controllers:
       main:

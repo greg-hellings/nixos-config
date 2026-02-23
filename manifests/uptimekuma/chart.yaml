@@ -21,6 +21,11 @@ spec:
         kind: HelmRepository
         name: uptime-kuma
       interval: "1h"
+  dependsOn:
+    - name: longhorn
+      namespace: longhorn-system
+    - name: mariadb-cluster
+      namespace: mariadb-operator
   values:
     volume:
       storageClassName: longhorn-default

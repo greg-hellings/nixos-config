@@ -35,6 +35,8 @@ spec:
       interval: "1h"
   dependsOn:
     - name: mariadb-operator-crds
+    - name: longhorn
+      namespace: longhorn-system
   values:
     clusterName: "cluster.local"
     crds:
