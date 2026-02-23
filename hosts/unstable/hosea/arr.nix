@@ -21,12 +21,17 @@ let
 in
 {
   services = {
+    radarr = {
+      enable = true;
+      openFirewall = true;
+    };
     transmission = {
       enable = true;
       openPeerPorts = true;
       openRPCPort = true;
       package = pkgs.transmission_4;
       settings = {
+        download-dir = "/arr/transmission/downloads";
         rpc-bind-address = "0.0.0.0";
         rpc-host-whitelist = whitelists;
         rpc-host-whitelist-enabled = false;

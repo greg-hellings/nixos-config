@@ -357,6 +357,19 @@
           }
         ];
       }
+      {
+        name = "Media";
+        bookmarks = [
+          {
+            name = "Transmission";
+            url = "https://hosea.shire-zebra.ts.net:9091/";
+          }
+          {
+            name = "Radarr (Movies)";
+            url = "https://hosea.shire-zebra.ts.net:7878/";
+          }
+        ];
+      }
     ];
   }
 ]
