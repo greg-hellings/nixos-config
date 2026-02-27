@@ -145,7 +145,7 @@ in
         };
         domain = "${config.networking.hostName}.shire-zebra.ts.net:8010";
         evalMaxMemorySize = 8192;
-        evalWorkerCount = 8;
+        evalWorkerCount = 4;
         gitea = {
           enable = true;
           instanceUrl = "https://src.thehellings.com";
