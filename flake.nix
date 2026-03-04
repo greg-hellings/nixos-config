@@ -104,7 +104,6 @@
                 { }
             )
           ) (top.nixunstable.lib.filterAttrs (_: v: !(v ? "external") || !v.external) metadata.hosts))
-          #) self.nixosConfigurations)
         );
 
         darwinConfigurations = (
