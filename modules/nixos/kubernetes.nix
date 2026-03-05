@@ -88,7 +88,7 @@ in
             inherit (top.charts.chartsMetadata.external-secrets.external-secrets) repo version;
             enable = true;
             name = top.charts.chartsMetadata.external-secrets.external-secrets.chart;
-            hash = "sha256-JQJF0wCy9Z0AvPi65mpqgeyCLSw5DUDhGacvjQi7Xqs=";
+            hash = "sha256-dPuUWthwN6L0jdAKRpkDtDedGyDUxUlJrwkvUNwLsrU=";
             createNamespace = true;
             targetNamespace = "external-secrets";
             values = {
@@ -100,7 +100,7 @@ in
             inherit (top.charts.chartsMetadata.kyverno.kyverno) repo version;
             enable = true;
             name = top.charts.chartsMetadata.kyverno.kyverno.chart;
-            hash = "sha256-epSWDHXI+qmiu/eiw59t7rf/C4gUqMF87poIFvj2mHQ=";
+            hash = "sha256-sNdFEupwfnYSo2iGqKwTadPtXfcbyM1kuisavpiGUyU=";
             createNamespace = true;
             targetNamespace = "kyverno-system";
             values = {
