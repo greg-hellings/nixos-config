@@ -15,7 +15,7 @@ spec:
   chart:
     spec:
       chart: gitea
-      version: "12.4.0"
+      version: "12.5.0"
       sourceRef:
         kind: HelmRepository
         name: gitea-repository
@@ -33,6 +33,9 @@ spec:
     # Gitea Helm Chart Values https://gitea.com/gitea/helm-gitea
     global:
       storageClass: longhorn-default
+
+    image:
+      tag: "1.25.4"
 
     replicaCount: 1
 
