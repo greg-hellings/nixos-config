@@ -23,6 +23,8 @@
     moonlight-qt
     mumble
     pre-commit
-    wineWowPackages.stable
+    restic
+    restic-browser
+    wineWow64Packages.stable
   ];
 }
