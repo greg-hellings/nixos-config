@@ -20,7 +20,7 @@
     kubernetes-helm
     kubectl
     kubectl-cnpg
-    moonlight-qt
+    mattermost-desktop
     mumble
     pre-commit
     restic
