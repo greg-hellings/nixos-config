@@ -12,7 +12,7 @@
     ./gnome.nix
     ./home.nix
     ./kde.nix
-    ./kiwix-serve.nix
+    #./kiwix-serve.nix
     ./kubernetes.nix
     ./linode.nix
     ./podman.nix

@@ -29,7 +29,7 @@
     remote-builder.enable = true;
     runner = {
       enable = true;
-      vbox = true;
+      vbox = false;
     };
     tailscale = {
       enable = true;
@@ -69,16 +69,15 @@
         #"--bind-address ${ip}"
       ];
     };
-    xserver.videoDrivers = [ "nvidia" ];
   };
 
   users.users.greg.extraGroups = [
     "podman"
   ];
 
-  virtualisation.virtualbox.host = {
-    enableExtensionPack = true;
-    headless = true;
-    enableWebService = true;
-  };
+  # virtualisation.virtualbox.host = {
+  #   enableExtensionPack = true;
+  #   headless = true;
+  #   enableWebService = true;
+  # };
 }
