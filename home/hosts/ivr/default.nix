@@ -61,7 +61,7 @@ in
       '';
       ".config/uv/uv.toml".text = ''
         [[index]]
-        url = "https://pypidev.ivrtechnology.com"
+        url = "https://pypidev.ivrtechnology.com/simple/"
         name = "pypidev"
       '';
     };
