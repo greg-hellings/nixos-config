@@ -83,18 +83,7 @@ func getHash(ch chan result, file, category, language string) {
 	// TODO: Only call this if the file doesn't already have a hash
 	// in the existing file
 	fmt.Printf("Fetching hash for %s\n", file)
-	cmd := exec.Command("nix-prefetch",
-		"--option",
-		"extra-experimental-features",
-		"flakes",
-		"--check-store",
-		fmt.Sprintf(`fetchtorrent {
-            url="%s/%s/%s.torrent";
-            hash="sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
-            backend="transmission";
-            postUnpack="mkdir -p $downloadedDirectory/tmp; mv $downloadedDirectory/*.zim $downloadedDirectory/tmp";
-        }`, BASE, category, file),
-	)
+	cmd := exec.Command( "nix-prefetch-url", fmt.Sprintf("%s/%s/%s.torrent", BASE, category, file))
 	out, err := cmd.Output()
 	if err != nil {
 		fmt.Printf("Error fetching hash for %s (category: %s, language: %s): %v\n", file, category, language, err)
