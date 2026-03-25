@@ -135,7 +135,7 @@ in
         security.secret_key = "$__file{${config.age.secrets.grafana-secret-key.path}}";
         server = {
           domain = "${config.networking.hostName}.shire-zebra.ts.net";
-          enforce_domain = true;
+          enforce_domain = false;
           http_addr = "0.0.0.0";
           enable_gzip = true;
           http_port = 3001;
