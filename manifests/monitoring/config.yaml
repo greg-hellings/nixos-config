@@ -8,6 +8,9 @@ data:
       scrape_interval: 10s
       evaluation_interval: 10s
     alerting:
+      alertmanagers: []
+    rule_files:
+      - /etc/prometheus/alerts.yml
     scrape_configs:
       # This scrapes endpoints on my servers
       - job_name: node
@@ -20,7 +23,6 @@ data:
               - "hosea.shire-zebra.ts.net:9100"
               - "exodus.shire-zebra.ts.net:9100"
               - "linode.shire-zebra.ts.net:9100"
-              - "vm-gitlab.shire-zebra.ts.net:9100"
       - job_name: systemd
         static_configs:
           - targets:
@@ -31,7 +33,6 @@ data:
               - "hosea.shire-zebra.ts.net:9558"
               - "exodus.shire-zebra.ts.net:9558"
               - "linode.shire-zebra.ts.net:9558"
-              - "vm-gitlab.shire-zebra.ts.net:9558"
       - job_name: ping
         static_configs:
           - targets:
@@ -42,7 +43,6 @@ data:
               - "hosea.shire-zebra.ts.net:9427"
               - "exodus.shire-zebra.ts.net:9427"
               - "linode.shire-zebra.ts.net:9427"
-              - "vm-gitlab.shire-zebra.ts.net:9427"
       - job_name: kea
         static_configs:
           - targets:

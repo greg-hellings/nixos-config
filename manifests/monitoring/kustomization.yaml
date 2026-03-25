@@ -5,6 +5,7 @@ resources:
   - pvc.yaml
   - cluster-role.yaml
   - config.yaml
+  - alerts.yaml
   - deployment.yaml
   - service.yaml
   - ingress.yaml

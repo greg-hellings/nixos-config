@@ -1,0 +1,86 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: prometheus-alerts
+data:
+  alerts.yml: |
+    groups:
+      - name: host_health
+        rules:
+          - alert: HostDown
+            expr: up{job="node"} == 0
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Host {{ $labels.instance }} is unreachable"
+              description: "Node exporter on {{ $labels.instance }} has been unreachable for more than 2 minutes."
+
+          - alert: HighCPULoad
+            expr: 100 - (avg by(instance) (rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 90
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High CPU on {{ $labels.instance }}"
+              description: "CPU usage on {{ $labels.instance }} has been above 90% for 10 minutes (current: {{ $value | printf \"%.1f\" }}%)."
+
+          - alert: LowDiskSpace
+            expr: (node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay"}) * 100 < 10
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Low disk space on {{ $labels.instance }}"
+              description: "Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} has less than 10% free ({{ $value | printf \"%.1f\" }}% remaining)."
+
+          - alert: CriticalDiskSpace
+            expr: (node_filesystem_avail_bytes{mountpoint="/",fstype!~"tmpfs|overlay"} / node_filesystem_size_bytes{mountpoint="/",fstype!~"tmpfs|overlay"}) * 100 < 5
+            for: 2m
+            labels:
+              severity: critical
+            annotations:
+              summary: "Critical disk space on {{ $labels.instance }}"
+              description: "Filesystem {{ $labels.mountpoint }} on {{ $labels.instance }} has less than 5% free ({{ $value | printf \"%.1f\" }}% remaining)."
+
+          - alert: HighMemoryUsage
+            expr: (1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100 > 90
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "High memory usage on {{ $labels.instance }}"
+              description: "Memory usage on {{ $labels.instance }} is above 90% for 10 minutes (current: {{ $value | printf \"%.1f\" }}%)."
+
+      - name: backup_health
+        rules:
+          - alert: ResticBackupStaleness
+            # restic_last_run_success{repository=...} is exported by the prometheus graphite bridge from nas1
+            # Alert if any backup job hasn't succeeded in the last 26 hours
+            expr: time() - restic_last_success_timestamp_seconds > 93600
+            for: 0m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Backup stale for {{ $labels.repository }}"
+              description: "Restic backup job '{{ $labels.repository }}' has not succeeded in over 26 hours."
+
+      - name: kubernetes
+        rules:
+          - alert: PodCrashLooping
+            expr: rate(kube_pod_container_status_restarts_total[15m]) * 60 * 15 > 0
+            for: 5m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Pod {{ $labels.namespace }}/{{ $labels.pod }} is crash-looping"
+              description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has restarted {{ $value | printf \"%.0f\" }} times in the last 15 minutes."
+
+          - alert: PodNotReady
+            expr: kube_pod_status_ready{condition="true"} == 0
+            for: 10m
+            labels:
+              severity: warning
+            annotations:
+              summary: "Pod {{ $labels.namespace }}/{{ $labels.pod }} not ready"
+              description: "Pod {{ $labels.pod }} in namespace {{ $labels.namespace }} has not been ready for more than 10 minutes."

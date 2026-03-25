@@ -21,6 +21,11 @@ in
     ./hardware-configuration.nix
   ];
 
+  age.secrets.grafana-secret-key = {
+    file = ../../../secrets/grafana-secret-key.age;
+    owner = "grafana";
+  };
+
   # Bootloader
   boot = {
     loader = {
@@ -124,7 +129,7 @@ in
         ];
       };
       settings = {
-        security.secret_key = "123456789";
+        security.secret_key = "$__file{${config.age.secrets.grafana-secret-key.path}}";
         server = {
           domain = "${config.networking.hostName}.shire-zebra.ts.net";
           enforce_domain = true;
