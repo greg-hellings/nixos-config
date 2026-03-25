@@ -34,7 +34,11 @@ spec:
               containerPort: 9090
           volumeMounts:
             - name: prometheus-config-values
-              mountPath: /etc/prometheus
+              mountPath: /etc/prometheus/prometheus.yml
+              subPath: prometheus.yml
+            - name: prometheus-alerts
+              mountPath: /etc/prometheus/alerts.yml
+              subPath: alerts.yml
             - name: prometheus-storage-volume
               mountPath: /prometheus
       restartPolicy: Always
@@ -43,6 +47,10 @@ spec:
           configMap:
             defaultMode: 420
             name: prometheus-config
+        - name: prometheus-alerts
+          configMap:
+            defaultMode: 420
+            name: prometheus-alerts
         - name: prometheus-storage-volume
           persistentVolumeClaim:
             claimName: prometheus-data

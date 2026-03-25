@@ -90,6 +90,8 @@ in
   "restic-env.age".publicKeys = everyone;
   "restic-pw.age".publicKeys = everyone;
 
+  "grafana-secret-key.age".publicKeys = everyone;
+
   "dendrite.age".publicKeys = everyone;
   "dendrite_key.age".publicKeys = everyone;
 
