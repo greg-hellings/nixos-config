@@ -25,6 +25,7 @@
     pre-commit
     restic
     restic-browser
+    tea
     wineWow64Packages.stable
   ];
 }
