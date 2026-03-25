@@ -21,6 +21,11 @@ let
 in
 {
   services = {
+    prowlarr = {
+      enable = true;
+      dataDir = "/arr/prowlarr";
+      openFirewall = true;
+    };
     radarr = {
       enable = true;
       openFirewall = true;

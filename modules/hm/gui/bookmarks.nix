@@ -365,6 +365,10 @@
         name = "Media";
         bookmarks = [
           {
+            name = "Prowlarr";
+            url = "https://hosea.shire-zebra.ts.net:9696/";
+          }
+          {
             name = "Transmission";
             url = "https://hosea.shire-zebra.ts.net:9091/";
           }
