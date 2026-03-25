@@ -56,6 +56,22 @@ data:
         static_configs:
           - targets:
               - "hosea.shire-zebra.ts.net:9108"
+      # Restic rest-server backup metrics
+      - job_name: restic_backups
+        static_configs:
+          - targets:
+              - "nas1.shire-zebra.ts.net:30248"
+      # Mattermost metrics
+      - job_name: mattermost
+        metrics_path: /metrics
+        static_configs:
+          - targets:
+              - "mattermost.thehellings.lan:8065"
+      # UniFi metrics via unpoller
+      - job_name: unifi
+        static_configs:
+          - targets:
+              - "unpoller.monitoring.svc.cluster.local:9130"
       # This scrapes metrics from the Kubernetes kubelets
       - job_name: kubelet
         kubernetes_sd_configs:

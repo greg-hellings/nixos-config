@@ -135,4 +135,6 @@ in
   ];
 
   "compose/attic.env.age".publicKeys = everyone;
+
+  "grafana-api-token.age".publicKeys = everyone;
 }
