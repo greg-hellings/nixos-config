@@ -52,6 +52,8 @@ in
     proxies = {
       "jellyfin.home".target = "http://localhost:8096/";
       "jellyfin.thehellings.lan".target = "http://localhost:8096/";
+      "grafana.home".target = "http://localhost:3001/";
+      "grafana.thehellings.lan".target = "http://localhost:3001/";
     };
     tailscale = {
       enable = true;
