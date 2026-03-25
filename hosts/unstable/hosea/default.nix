@@ -76,7 +76,6 @@ in
 
   networking = {
     defaultGateway = metadata.infra.gw;
-    firewall.allowedTCPPorts = [ 3000 ];
     hostName = "hosea";
     interfaces = {
       "${wanInterface}".useDHCP = true;

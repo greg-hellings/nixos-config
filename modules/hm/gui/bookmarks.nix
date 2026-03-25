@@ -247,7 +247,7 @@
             bookmarks = [
               {
                 name = "Grafana";
-                url = "http://hosea.shire-zebra.ts.net:3000/";
+                url = "http://hosea.shire-zebra.ts.net:3001/";
               }
               {
                 name = "Prometheus";
