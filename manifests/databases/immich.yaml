@@ -49,11 +49,11 @@ spec:
         passwordSecret:
           name: postgres-user-immich
 
-  # plugins:
-  #   - name: barman-cloud.cloudnative-pg.io
-  #     isWALArchiver: true
-  #     parameters:
-  #       barmanObjectName: k3sbackup-objectstore
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: k3sbackup-objectstore
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Database
