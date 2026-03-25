@@ -75,9 +75,9 @@ in
   };
 
   networking = {
-    hostName = "hosea";
-    nameservers = [ metadata.infra.dns ];
     defaultGateway = metadata.infra.gw;
+    firewall.allowedTCPPorts = [ 3000 ];
+    hostName = "hosea";
     interfaces = {
       "${wanInterface}".useDHCP = true;
       "${lanInterface}" = {
@@ -90,6 +90,7 @@ in
         ];
       };
     };
+    nameservers = [ metadata.infra.dns ];
   };
 
   services = {
