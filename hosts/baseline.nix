@@ -114,12 +114,6 @@
     };
   };
 
-  networking.firewall.allowedTCPPorts = [
-    9100 # prometheus node exporter
-    9427 # prometheus ping exporter
-    9558 # prometheus systemd exporter
-  ];
-
   security.sudo.extraRules = [
     {
       users = [ "greg" ];

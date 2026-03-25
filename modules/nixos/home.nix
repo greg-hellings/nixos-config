@@ -46,5 +46,14 @@ with lib;
     systemd.tmpfiles.rules = [
       "d /var/lib/attic-client 0755 root root -"
     ];
+
+    # Open Prometheus exporter ports on LAN-connected hosts only.
+    # NOT in baseline.nix to avoid exposing these on internet-facing hosts (e.g. linode).
+    networking.firewall.allowedTCPPorts = [
+      9100 # prometheus node exporter
+      9115 # prometheus blackbox exporter
+      9427 # prometheus ping exporter
+      9558 # prometheus systemd exporter
+    ];
   };
 }
