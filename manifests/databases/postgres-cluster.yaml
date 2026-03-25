@@ -74,6 +74,7 @@ spec:
         key: password
     wal:
       compression: gzip
+  retentionPolicy: "30d"
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: ScheduledBackup
