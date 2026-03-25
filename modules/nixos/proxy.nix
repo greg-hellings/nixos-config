@@ -92,4 +92,9 @@ with lib;
 
     virtualHosts = mapAttrs makeHost cfg;
   };
+
+  config.networking.firewall.allowedTCPPorts = mkIf ((attrValues cfg) != [ ]) [
+    80
+    443
+  ];
 }
