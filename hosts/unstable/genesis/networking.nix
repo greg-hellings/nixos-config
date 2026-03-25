@@ -112,6 +112,18 @@ in
 
     prometheus.exporters = {
       dnsmasq.enable = true;
+      blackbox = {
+        enable = true;
+        openFirewall = true;
+        configFile = pkgs.writeText "blackbox.yml" ''
+          modules:
+            icmp:
+              prober: icmp
+              timeout: 5s
+              icmp:
+                preferred_ip_protocol: ip4
+        '';
+      };
     };
   }; # End of services configuration
 

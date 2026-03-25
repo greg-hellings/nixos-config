@@ -43,6 +43,29 @@ data:
               - "hosea.shire-zebra.ts.net:9427"
               - "exodus.shire-zebra.ts.net:9427"
               - "linode.shire-zebra.ts.net:9427"
+      # ICMP ping reachability for non-NixOS infrastructure
+      - job_name: infra_ping
+        metrics_path: /probe
+        params:
+          module: [icmp]
+        static_configs:
+          - targets:
+              - "10.42.0.3"    # OpenWRT access point
+              - "10.42.0.4"    # Joel (Proxmox)
+              - "10.42.1.1"    # pve1 (Proxmox)
+              - "10.42.1.4"    # chronicles (Synology NAS)
+              - "10.42.1.14"   # nas1 (TrueNAS)
+              - "10.42.2.57"   # odoo
+              - "10.42.2.89"   # mattermost
+              - "10.42.2.155"  # homeassistant
+              - "10.42.3.58"   # USW-Pro-HD-24 (UniFi switch)
+        relabel_configs:
+          - source_labels: [__address__]
+            target_label: __param_target
+          - source_labels: [__param_target]
+            target_label: instance
+          - target_label: __address__
+            replacement: "genesis.shire-zebra.ts.net:9115"
       - job_name: kea
         static_configs:
           - targets:

@@ -1,13 +1,29 @@
 ---
-apiVersion: v1
-kind: Secret
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
 metadata:
   name: unpoller-credentials
-  namespace: monitoring
-type: Opaque
-stringData:
-  # Replace with actual UniFi controller password for the 'unpoller' read-only user
-  password: "CHANGEME"
+spec:
+  target:
+    name: unpoller-credentials
+    deletionPolicy: Delete
+    template:
+      type: Opaque
+      data:
+        username: "{{ .username }}"
+        password: "{{ .password }}"
+  secretStoreRef:
+    name: bitwarden-login
+    kind: ClusterSecretStore
+  data:
+    - secretKey: username
+      remoteRef:
+        key: "15bfc957-5de5-49b2-ab6c-b41800e71564"
+        property: username
+    - secretKey: password
+      remoteRef:
+        key: "15bfc957-5de5-49b2-ab6c-b41800e71564"
+        property: password
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -38,7 +54,10 @@ spec:
             - name: UP_UNIFI_DEFAULT_VERIFY_SSL
               value: "false"
             - name: UP_UNIFI_DEFAULT_USER
-              value: "unpoller"
+              valueFrom:
+                secretKeyRef:
+                  name: unpoller-credentials
+                  key: username
             - name: UP_UNIFI_DEFAULT_PASS
               valueFrom:
                 secretKeyRef:

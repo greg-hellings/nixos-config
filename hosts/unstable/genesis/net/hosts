@@ -1,5 +1,6 @@
 # Local hosts
 10.42.0.1 switch switch.thehellings.lan  # Core switch for the network
+10.42.0.3 ap ap.thehellings.lan  # OpenWRT access point (static IP)
 10.42.0.4 joel.thehellings.lan  # Proxmox
 10.42.0.5 sanswitch.thehellings.lan  # Core switch for the SAN
 
