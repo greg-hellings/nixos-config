@@ -123,6 +123,7 @@ in
           {
             name = "Prometheus";
             type = "prometheus";
+            uid = "prometheus";
             url = "https://prometheus.shire-zebra.ts.net";
             isDefault = true;
             editable = false;
