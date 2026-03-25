@@ -25,6 +25,14 @@ spec:
           kind: ClusterSecretStore
       remoteRef:
         key: 6de3500c-7c6e-4419-b4f5-b2ea0018ff28
+    - secretKey: registration_shared_secret
+      sourceRef:
+        storeRef:
+          name: bitwarden-login
+          kind: ClusterSecretStore
+      remoteRef:
+        key: dc4a301b-52f8-48ba-9702-aeb90012d597
+        property: password
   target:
     name: dendrite-config
     deletionPolicy: Delete
@@ -94,7 +102,7 @@ spec:
           client_api:
             registration_disabled: true
             registration_requires_token: false
-            registration_shared_secret: ""
+            registration_shared_secret: "{{ .registration_shared_secret }}"
             guests_disabled: false
             enable_registration_captcha: false
             recaptcha_api_js_url: ""
