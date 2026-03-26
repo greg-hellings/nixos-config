@@ -77,6 +77,8 @@ data:
               - "hosea.shire-zebra.ts.net:9108"
       # Restic rest-server backup metrics
       - job_name: restic_backups
+        scheme: https
+        tls_config:
         static_configs:
           - targets:
               - "nas1.shire-zebra.ts.net:30248"
