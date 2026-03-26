@@ -9,7 +9,7 @@ let
   lanIP = metadata.hosts.${config.networking.hostName}.ip;
   iot = "enp2s0";
   iotIP = "192.168.66.250";
-  routerIP = metadata.infra.gw;
+  #routerIP = metadata.infra.gw;
   extraHosts = builtins.readFile ./net/hosts;
 
   proxyPort = 3128;
@@ -81,19 +81,6 @@ in
   environment.etc."hosts.d/local".text = extraHosts;
 
   services = {
-    kea = {
-      dhcp4 = (
-        import ./networking/dhcp.nix {
-          inherit
-            iot
-            lan
-            lanIP
-            routerIP
-            ;
-        }
-      );
-    };
-
     #########
     # dnsmasq config
     ########

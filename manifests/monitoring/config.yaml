@@ -66,10 +66,6 @@ data:
             target_label: instance
           - target_label: __address__
             replacement: "genesis.shire-zebra.ts.net:9115"
-      - job_name: kea
-        static_configs:
-          - targets:
-              - "genesis.shire-zebra.ts.net:9547"
       - job_name: dnsmasq
         static_configs:
           - targets:
