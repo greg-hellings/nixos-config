@@ -400,7 +400,7 @@ in
         "uid": "network-overview",
         "title": "Network & UniFi",
         "schemaVersion": 38,
-        "version": 2,
+        "version": 3,
         "refresh": "30s",
         "time": {"from": "now-3h", "to": "now"},
         "panels": [
@@ -416,28 +416,28 @@ in
             "type": "stat",
             "title": "UniFi Devices",
             "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unifipoller_device_uptime_seconds) or vector(0)", "refId": "A"}]
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unpoller_device_uptime_seconds) or vector(0)", "refId": "A"}]
           },
           {
             "id": 7,
             "type": "stat",
             "title": "WiFi Clients",
             "gridPos": {"x": 12, "y": 0, "w": 6, "h": 4},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unifipoller_client_wifi_tx_rate_bps) or vector(0)", "refId": "A"}]
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unpoller_client_uptime_seconds{wired=\"false\"}) or vector(0)", "refId": "A"}]
           },
           {
             "id": 8,
             "type": "stat",
             "title": "Wired Clients",
             "gridPos": {"x": 18, "y": 0, "w": 6, "h": 4},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unifipoller_client_wired_tx_rate_bps) or vector(0)", "refId": "A"}]
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unpoller_client_uptime_seconds{wired=\"true\"}) or vector(0)", "refId": "A"}]
           },
           {
             "id": 9,
             "type": "timeseries",
             "title": "WAN RX (bytes/s)",
             "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_device_wan_receive_bytes_total[5m])", "legendFormat": "{{name}}", "refId": "A"}],
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "unpoller_wan_max_rx_bytes_rate", "legendFormat": "{{name}}", "refId": "A"}],
             "fieldConfig": {"defaults": {"unit": "Bps"}}
           },
           {
@@ -445,7 +445,7 @@ in
             "type": "timeseries",
             "title": "WAN TX (bytes/s)",
             "gridPos": {"x": 12, "y": 4, "w": 12, "h": 8},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_device_wan_transmit_bytes_total[5m])", "legendFormat": "{{name}}", "refId": "A"}],
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "unpoller_wan_max_tx_bytes_rate", "legendFormat": "{{name}}", "refId": "A"}],
             "fieldConfig": {"defaults": {"unit": "Bps"}}
           },
           {
@@ -453,21 +453,21 @@ in
             "type": "timeseries",
             "title": "UniFi Port RX (bytes/s)",
             "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_port_receive_bytes_total[5m])", "legendFormat": "{{port_id}} {{name}}", "refId": "A"}]
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unpoller_device_port_receive_bytes_total[5m])", "legendFormat": "{{port_id}} {{name}}", "refId": "A"}]
           },
           {
             "id": 5,
             "type": "timeseries",
             "title": "UniFi Port TX (bytes/s)",
             "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_port_transmit_bytes_total[5m])", "legendFormat": "{{port_id}} {{name}}", "refId": "A"}]
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unpoller_device_port_transmit_bytes_total[5m])", "legendFormat": "{{port_id}} {{name}}", "refId": "A"}]
           },
           {
             "id": 11,
             "type": "timeseries",
             "title": "Top Client Throughput (bytes/s)",
             "gridPos": {"x": 0, "y": 20, "w": 24, "h": 8},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "topk(10, rate(unifipoller_client_receive_bytes_total[5m]) + rate(unifipoller_client_transmit_bytes_total[5m]))", "legendFormat": "{{name}} {{ip}}", "refId": "A"}],
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "topk(10, rate(unpoller_client_receive_bytes_total[5m]) + rate(unpoller_client_transmit_bytes_total[5m]))", "legendFormat": "{{name}} {{ip}}", "refId": "A"}],
             "fieldConfig": {"defaults": {"unit": "Bps"}}
           },
           {
@@ -482,7 +482,7 @@ in
             "type": "table",
             "title": "Device Status",
             "gridPos": {"x": 12, "y": 28, "w": 12, "h": 8},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "unifipoller_device_uptime_seconds", "instant": true, "refId": "A"}],
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "unpoller_device_uptime_seconds", "instant": true, "refId": "A"}],
             "fieldConfig": {"defaults": {"unit": "s"}}
           }
         ]
