@@ -75,10 +75,14 @@ data:
         static_configs:
           - targets:
               - "hosea.shire-zebra.ts.net:9108"
-      # Restic rest-server backup metrics
+      # Restic rest-server backup metrics (HTTPS with basic auth)
       - job_name: restic_backups
         scheme: https
         tls_config:
+          insecure_skip_verify: true
+        basic_auth:
+          username_file: /etc/prometheus/secrets/restic/username
+          password_file: /etc/prometheus/secrets/restic/password
         static_configs:
           - targets:
               - "nas1.shire-zebra.ts.net:30248"
@@ -93,6 +97,11 @@ data:
         static_configs:
           - targets:
               - "unpoller.monitoring.svc.cluster.local:9130"
+      # kube-state-metrics
+      - job_name: kube_state_metrics
+        static_configs:
+          - targets:
+              - "kube-state-metrics.monitoring.svc.cluster.local:8080"
       # This scrapes metrics from the Kubernetes kubelets
       - job_name: kubelet
         kubernetes_sd_configs:
@@ -111,8 +120,6 @@ data:
           ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
         metrics_path: /metrics/cadvisor
         bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token
-        #authorization:
-        #  credentials_file: /var/run/secrets/kubernetes.io/serviceaccount/token
       # This scrapes Service endpoints in Kubernetes
       - job_name: 'k8sservices'
         kubernetes_sd_configs:
