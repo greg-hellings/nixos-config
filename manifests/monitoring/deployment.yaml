@@ -41,6 +41,9 @@ spec:
               subPath: alerts.yml
             - name: prometheus-storage-volume
               mountPath: /prometheus
+            - name: restic-credentials
+              mountPath: /etc/prometheus/secrets/restic
+              readOnly: true
       restartPolicy: Always
       volumes:
         - name: prometheus-config-values
@@ -54,3 +57,6 @@ spec:
         - name: prometheus-storage-volume
           persistentVolumeClaim:
             claimName: prometheus-data
+        - name: restic-credentials
+          secret:
+            secretName: restic-credentials

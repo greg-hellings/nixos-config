@@ -285,7 +285,7 @@ in
         "uid": "kubernetes-overview",
         "title": "Kubernetes Overview",
         "schemaVersion": 38,
-        "version": 1,
+        "version": 2,
         "refresh": "30s",
         "time": {"from": "now-3h", "to": "now"},
         "panels": [
@@ -294,14 +294,14 @@ in
             "type": "stat",
             "title": "Running Pods",
             "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(kube_pod_status_phase{phase=\"Running\"}) or vector(0)", "refId": "A"}]
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(kube_pod_status_phase{phase=\"Running\"} == 1) or vector(0)", "refId": "A"}]
           },
           {
             "id": 2,
             "type": "stat",
             "title": "Failed Pods",
             "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(kube_pod_status_phase{phase=\"Failed\"}) or vector(0)", "refId": "A"}],
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(kube_pod_status_phase{phase=\"Failed\"} == 1) or vector(0)", "refId": "A"}],
             "fieldConfig": {
               "defaults": {
                 "thresholds": {
@@ -316,12 +316,27 @@ in
             "type": "stat",
             "title": "Pending Pods",
             "gridPos": {"x": 12, "y": 0, "w": 6, "h": 4},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(kube_pod_status_phase{phase=\"Pending\"}) or vector(0)", "refId": "A"}],
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(kube_pod_status_phase{phase=\"Pending\"} == 1) or vector(0)", "refId": "A"}],
             "fieldConfig": {
               "defaults": {
                 "thresholds": {
                   "mode": "absolute",
                   "steps": [{"color": "green", "value": null}, {"color": "yellow", "value": 1}]
+                }
+              }
+            }
+          },
+          {
+            "id": 8,
+            "type": "stat",
+            "title": "Nodes Ready",
+            "gridPos": {"x": 18, "y": 0, "w": 6, "h": 4},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(kube_node_status_condition{condition=\"Ready\",status=\"true\"} == 1) or vector(0)", "refId": "A"}],
+            "fieldConfig": {
+              "defaults": {
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [{"color": "red", "value": null}, {"color": "green", "value": 1}]
                 }
               }
             }
@@ -334,24 +349,46 @@ in
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "topk(10, rate(kube_pod_container_status_restarts_total[15m]) * 900)", "legendFormat": "{{namespace}}/{{pod}}", "refId": "A"}]
           },
           {
+            "id": 9,
+            "type": "timeseries",
+            "title": "Container CPU Usage (cores)",
+            "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "topk(10, rate(container_cpu_usage_seconds_total{container!=\"\",container!=\"POD\"}[5m]))", "legendFormat": "{{namespace}}/{{pod}}/{{container}}", "refId": "A"}]
+          },
+          {
+            "id": 10,
+            "type": "timeseries",
+            "title": "Container Memory Usage",
+            "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "topk(10, container_memory_working_set_bytes{container!=\"\",container!=\"POD\"})", "legendFormat": "{{namespace}}/{{pod}}/{{container}}", "refId": "A"}],
+            "fieldConfig": {"defaults": {"unit": "bytes"}}
+          },
+          {
             "id": 5,
             "type": "table",
             "title": "All Pods",
-            "gridPos": {"x": 0, "y": 12, "w": 24, "h": 10},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "kube_pod_status_phase", "instant": true, "refId": "A"}]
+            "gridPos": {"x": 0, "y": 20, "w": 24, "h": 10},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "kube_pod_status_phase == 1", "instant": true, "refId": "A"}]
+          },
+          {
+            "id": 11,
+            "type": "table",
+            "title": "Deployments",
+            "gridPos": {"x": 0, "y": 30, "w": 24, "h": 8},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "kube_deployment_status_replicas_available", "instant": true, "refId": "A"}]
           },
           {
             "id": 6,
             "type": "timeseries",
             "title": "Node CPU Usage",
-            "gridPos": {"x": 0, "y": 22, "w": 12, "h": 8},
+            "gridPos": {"x": 0, "y": 38, "w": 12, "h": 8},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "100 - (avg by(node) (rate(node_cpu_seconds_total{mode=\"idle\",job=\"node\"}[5m])) * 100)", "refId": "A"}]
           },
           {
             "id": 7,
             "type": "timeseries",
             "title": "Node Memory Usage %",
-            "gridPos": {"x": 12, "y": 22, "w": 12, "h": 8},
+            "gridPos": {"x": 12, "y": 38, "w": 12, "h": 8},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100", "refId": "A"}]
           }
         ]
@@ -363,7 +400,7 @@ in
         "uid": "network-overview",
         "title": "Network & UniFi",
         "schemaVersion": 38,
-        "version": 1,
+        "version": 2,
         "refresh": "30s",
         "time": {"from": "now-3h", "to": "now"},
         "panels": [
@@ -371,43 +408,82 @@ in
             "id": 1,
             "type": "stat",
             "title": "DNS Queries/s",
-            "gridPos": {"x": 0, "y": 0, "w": 8, "h": 4},
+            "gridPos": {"x": 0, "y": 0, "w": 6, "h": 4},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(dnsmasq_queries_total[5m]) or vector(0)", "refId": "A"}]
-          },
-          {
-            "id": 2,
-            "type": "stat",
-            "title": "DHCP Leases",
-            "gridPos": {"x": 8, "y": 0, "w": 8, "h": 4},
-            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "kea_dhcp4_addresses_assigned_total or vector(0)", "refId": "A"}]
           },
           {
             "id": 3,
             "type": "stat",
             "title": "UniFi Devices",
-            "gridPos": {"x": 16, "y": 0, "w": 8, "h": 4},
+            "gridPos": {"x": 6, "y": 0, "w": 6, "h": 4},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unifipoller_device_uptime_seconds) or vector(0)", "refId": "A"}]
+          },
+          {
+            "id": 7,
+            "type": "stat",
+            "title": "WiFi Clients",
+            "gridPos": {"x": 12, "y": 0, "w": 6, "h": 4},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unifipoller_client_wifi_tx_rate_bps) or vector(0)", "refId": "A"}]
+          },
+          {
+            "id": 8,
+            "type": "stat",
+            "title": "Wired Clients",
+            "gridPos": {"x": 18, "y": 0, "w": 6, "h": 4},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "count(unifipoller_client_wired_tx_rate_bps) or vector(0)", "refId": "A"}]
+          },
+          {
+            "id": 9,
+            "type": "timeseries",
+            "title": "WAN RX (bytes/s)",
+            "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_device_wan_receive_bytes_total[5m])", "legendFormat": "{{name}}", "refId": "A"}],
+            "fieldConfig": {"defaults": {"unit": "Bps"}}
+          },
+          {
+            "id": 10,
+            "type": "timeseries",
+            "title": "WAN TX (bytes/s)",
+            "gridPos": {"x": 12, "y": 4, "w": 12, "h": 8},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_device_wan_transmit_bytes_total[5m])", "legendFormat": "{{name}}", "refId": "A"}],
+            "fieldConfig": {"defaults": {"unit": "Bps"}}
           },
           {
             "id": 4,
             "type": "timeseries",
             "title": "UniFi Port RX (bytes/s)",
-            "gridPos": {"x": 0, "y": 4, "w": 12, "h": 8},
+            "gridPos": {"x": 0, "y": 12, "w": 12, "h": 8},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_port_receive_bytes_total[5m])", "legendFormat": "{{port_id}} {{name}}", "refId": "A"}]
           },
           {
             "id": 5,
             "type": "timeseries",
             "title": "UniFi Port TX (bytes/s)",
-            "gridPos": {"x": 12, "y": 4, "w": 12, "h": 8},
+            "gridPos": {"x": 12, "y": 12, "w": 12, "h": 8},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "rate(unifipoller_port_transmit_bytes_total[5m])", "legendFormat": "{{port_id}} {{name}}", "refId": "A"}]
+          },
+          {
+            "id": 11,
+            "type": "timeseries",
+            "title": "Top Client Throughput (bytes/s)",
+            "gridPos": {"x": 0, "y": 20, "w": 24, "h": 8},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "topk(10, rate(unifipoller_client_receive_bytes_total[5m]) + rate(unifipoller_client_transmit_bytes_total[5m]))", "legendFormat": "{{name}} {{ip}}", "refId": "A"}],
+            "fieldConfig": {"defaults": {"unit": "Bps"}}
           },
           {
             "id": 6,
             "type": "timeseries",
             "title": "Ping Latency (ms)",
-            "gridPos": {"x": 0, "y": 12, "w": 24, "h": 8},
+            "gridPos": {"x": 0, "y": 28, "w": 12, "h": 8},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "probe_duration_seconds{job=\"ping\"} * 1000", "legendFormat": "{{instance}}", "refId": "A"}]
+          },
+          {
+            "id": 12,
+            "type": "table",
+            "title": "Device Status",
+            "gridPos": {"x": 12, "y": 28, "w": 12, "h": 8},
+            "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "unifipoller_device_uptime_seconds", "instant": true, "refId": "A"}],
+            "fieldConfig": {"defaults": {"unit": "s"}}
           }
         ]
       }
