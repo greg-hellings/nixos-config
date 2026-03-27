@@ -285,7 +285,7 @@ in
         "uid": "kubernetes-overview",
         "title": "Kubernetes Overview",
         "schemaVersion": 38,
-        "version": 2,
+        "version": 3,
         "refresh": "30s",
         "time": {"from": "now-3h", "to": "now"},
         "panels": [
@@ -390,6 +390,41 @@ in
             "title": "Node Memory Usage %",
             "gridPos": {"x": 12, "y": 38, "w": 12, "h": 8},
             "targets": [{"datasource": {"type": "prometheus", "uid": "prometheus"}, "expr": "(1 - (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes)) * 100", "refId": "A"}]
+          },
+          {
+            "id": 12,
+            "type": "bargauge",
+            "title": "Top 5 Fullest PersistentVolumes",
+            "gridPos": {"x": 0, "y": 46, "w": 24, "h": 8},
+            "targets": [
+              {
+                "datasource": {"type": "prometheus", "uid": "prometheus"},
+                "expr": "topk(5, kubelet_volume_stats_used_bytes / kubelet_volume_stats_capacity_bytes * 100)",
+                "legendFormat": "{{namespace}}/{{persistentvolumeclaim}}",
+                "refId": "A",
+                "instant": true
+              }
+            ],
+            "options": {
+              "reduceOptions": {"calcs": ["lastNotNull"]},
+              "orientation": "horizontal",
+              "displayMode": "gradient"
+            },
+            "fieldConfig": {
+              "defaults": {
+                "unit": "percent",
+                "min": 0,
+                "max": 100,
+                "thresholds": {
+                  "mode": "absolute",
+                  "steps": [
+                    {"color": "green", "value": null},
+                    {"color": "yellow", "value": 70},
+                    {"color": "red", "value": 90}
+                  ]
+                }
+              }
+            }
           }
         ]
       }
