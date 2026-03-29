@@ -49,6 +49,15 @@ in
 
   greg = {
     home = true;
+    nebula = {
+      enable = true;
+      unsafeRoutes = [
+        {
+          route = "10.42.0.0/16";
+          via = "10.157.0.2"; # genesis
+        }
+      ];
+    };
     proxies = {
       "jellyfin.home".target = "http://localhost:8096/";
       "jellyfin.thehellings.lan".target = "http://localhost:8096/";

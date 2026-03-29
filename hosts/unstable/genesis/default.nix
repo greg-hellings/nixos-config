@@ -35,6 +35,12 @@ in
   greg = {
     home = true;
     gnome.enable = false;
+    nebula = {
+      enable = true;
+      # genesis routes the home LAN (10.42.0.0/16) into the Nebula overlay.
+      # Sign genesis's cert with -subnets '10.42.0.0/16' (see secrets/nebula/README.md).
+      routesSubnet = "10.42.0.0/16";
+    };
     proxies = {
     };
   };

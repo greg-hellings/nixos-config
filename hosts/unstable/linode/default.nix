@@ -26,6 +26,10 @@
   greg = {
     home = false;
     linode.enable = true;
+    nebula = {
+      enable = true;
+      isLighthouse = true;
+    };
     proxies."immich.thehellings.com" = {
       genAliases = false;
       target = "http://localhost:${builtins.toString config.services.immich-public-proxy.port}";

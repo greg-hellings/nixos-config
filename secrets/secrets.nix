@@ -137,4 +137,14 @@ in
   "compose/attic.env.age".publicKeys = everyone;
 
   "grafana-api-token.age".publicKeys = everyone;
+
+  # Nebula mesh network — one private key per host, encrypted to that host's
+  # system key + all user keys so Greg can (re)encrypt them from any machine.
+  "nebula/genesis.key.age".publicKeys = everyone;
+  "nebula/hosea.key.age".publicKeys = everyone;
+  "nebula/isaiah.key.age".publicKeys = everyone;
+  "nebula/jeremiah.key.age".publicKeys = everyone;
+  "nebula/linode.key.age".publicKeys = everyone;
+  "nebula/zeke.key.age".publicKeys = everyone;
+  "nebula/exodus.key.age".publicKeys = everyone;
 }

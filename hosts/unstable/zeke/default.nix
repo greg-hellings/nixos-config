@@ -26,6 +26,15 @@
       vipInterface = "enp12s0";
       priority = 253;
     };
+    nebula = {
+      enable = true;
+      unsafeRoutes = [
+        {
+          route = "10.42.0.0/16";
+          via = "10.157.0.2"; # genesis
+        }
+      ];
+    };
     remote-builder.enable = true;
     runner = {
       enable = true;
