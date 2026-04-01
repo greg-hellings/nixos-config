@@ -152,7 +152,8 @@ in
 
       listen = {
         host = "0.0.0.0";
-        port = cfg.port;
+        # Lighthouses and relays need a fixed port; regular nodes use 0 (OS-assigned)
+        port = if (cfg.isLighthouse || cfg.isRelay) then cfg.port else null;
       };
 
       lighthouses = lib.optionals (!cfg.isLighthouse) [ cfg.lighthouseNebulaIp ];
