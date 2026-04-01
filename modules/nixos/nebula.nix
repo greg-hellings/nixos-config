@@ -162,9 +162,9 @@ in
       tun = {
         # Interface name
         device = "nebula0";
-        # unsafe_routes for hosts that need access to a non-Nebula subnet
-        unsafeRoutes = cfg.unsafeRoutes;
       };
+
+      settings.tun.unsafe_routes = map (r: { route = r.route; via = r.via; }) cfg.unsafeRoutes;
 
       # Firewall: permissive defaults — tighten per-host as desired
       firewall = {
