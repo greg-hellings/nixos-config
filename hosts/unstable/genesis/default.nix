@@ -37,6 +37,9 @@ in
     gnome.enable = false;
     nebula = {
       enable = true;
+      # genesis IS the routing node for the home LAN — it does not route through itself.
+      # Override the module default (which points at genesis) to avoid a routing loop.
+      unsafeRoutes = [ ];
       # genesis routes the home LAN (10.42.0.0/16) into the Nebula overlay.
       # Sign genesis's cert with -subnets '10.42.0.0/16' (see secrets/nebula/README.md).
       routesSubnet = "10.42.0.0/16";

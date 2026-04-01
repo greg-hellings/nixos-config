@@ -94,8 +94,19 @@ in
           };
         }
       );
-      default = [ ];
-      description = "List of unsafe_routes to configure on this host (for reaching non-Nebula subnets)";
+      # Default: route the home LAN through genesis (the home router node).
+      # Hosts that ARE genesis (or any other routing node) should override this to [].
+      default = [
+        {
+          route = "10.42.0.0/16";
+          via = "10.157.0.2"; # genesis's Nebula IP
+        }
+      ];
+      description = ''
+        List of unsafe_routes to configure on this host (for reaching non-Nebula subnets).
+        Defaults to routing the home LAN (10.42.0.0/16) through genesis (10.157.0.2).
+        Override to [] on hosts that are themselves a routing node (e.g. genesis).
+      '';
     };
 
     # Whether this host IS the router for an unsafe subnet

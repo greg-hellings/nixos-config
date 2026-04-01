@@ -42,15 +42,7 @@
       vip = metadata.hosts.${config.networking.hostName}.ip;
       priority = 255;
     };
-    nebula = {
-      enable = true;
-      unsafeRoutes = [
-        {
-          route = "10.42.0.0/16";
-          via = "10.157.0.2"; # genesis
-        }
-      ];
-    };
+    nebula.enable = true;
     podman.enable = true;
     tailscale = {
       enable = true;
