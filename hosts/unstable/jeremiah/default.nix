@@ -85,6 +85,13 @@ in
       vip = ip;
       priority = 254;
     };
+    proxies = {
+      # Expose Buildbot over HTTP on the LAN so Klaatu (and other internal
+      # tools) can reach it without Tailscale.  Buildbot's own Gitea OAuth
+      # handles authentication.
+      "buildbot.home".target = "http://localhost:8010/";
+      "buildbot.thehellings.lan".target = "http://localhost:8010/";
+    };
     tailscale = {
       enable = true;
       tags = [ "home" ];
