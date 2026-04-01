@@ -160,8 +160,8 @@ in
       relays = lib.optionals (!cfg.isLighthouse && !cfg.isRelay) [ cfg.lighthouseNebulaIp ];
 
       tun = {
-        # Interface name: nebula.<domain-first-label>
-        dev = "nebula0";
+        # Interface name
+        device = "nebula0";
         # unsafe_routes for hosts that need access to a non-Nebula subnet
         unsafeRoutes = cfg.unsafeRoutes;
       };
