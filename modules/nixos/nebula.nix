@@ -52,7 +52,8 @@ in
         let
           hostData = metadata.hosts.${config.networking.hostName} or { };
         in
-        hostData.nebulaIp or (throw "greg.nebula.nebulaIp must be set for host ${config.networking.hostName}");
+        hostData.nebulaIp
+          or (throw "greg.nebula.nebulaIp must be set for host ${config.networking.hostName}");
     };
 
     lighthouseAddr = lib.mkOption {
@@ -96,12 +97,7 @@ in
       );
       # Default: route the home LAN through genesis (the home router node).
       # Hosts that ARE genesis (or any other routing node) should override this to [].
-      default = [
-        {
-          route = "10.42.0.0/16";
-          via = "10.157.0.2"; # genesis's Nebula IP
-        }
-      ];
+      default = [ ];
       description = ''
         List of unsafe_routes to configure on this host (for reaching non-Nebula subnets).
         Defaults to routing the home LAN (10.42.0.0/16) through genesis (10.157.0.2).
@@ -126,7 +122,7 @@ in
     # agenix: decrypt this host's Nebula private key at boot
     age.secrets."nebula-${config.networking.hostName}-key" = {
       file = ../../secrets/nebula/${config.networking.hostName}.key.age;
-      # nebula service runs as root, key owned by root is fine
+      owner = config.systemd.services."nebula@${nebulaDomain}".serviceConfig.User;
       mode = "0400";
     };
 
@@ -165,7 +161,7 @@ in
         device = "nebula0";
       };
 
-      settings.tun.unsafe_routes = map (r: { route = r.route; via = r.via; }) cfg.unsafeRoutes;
+      settings.tun.unsafe_routes = cfg.unsafeRoutes;
 
       # Firewall: permissive defaults — tighten per-host as desired
       firewall = {
@@ -176,31 +172,30 @@ in
             host = "any";
           }
         ];
-        inbound =
-          [
-            # Allow ICMP (ping) from any Nebula peer
-            {
-              port = "any";
-              proto = "icmp";
-              host = "any";
-            }
-            # Allow all traffic from within the Nebula overlay
-            {
-              port = "any";
-              proto = "any";
-              host = "any";
-            }
-          ]
-          # When routing an unsafe subnet, allow inbound traffic destined
-          # for that subnet from any Nebula peer (local_cidr scopes it)
-          ++ lib.optionals (cfg.routesSubnet != null) [
-            {
-              port = "any";
-              proto = "any";
-              host = "any";
-              local_cidr = cfg.routesSubnet;
-            }
-          ];
+        inbound = [
+          # Allow ICMP (ping) from any Nebula peer
+          {
+            port = "any";
+            proto = "icmp";
+            host = "any";
+          }
+          # Allow all traffic from within the Nebula overlay
+          {
+            port = "any";
+            proto = "any";
+            host = "any";
+          }
+        ]
+        # When routing an unsafe subnet, allow inbound traffic destined
+        # for that subnet from any Nebula peer (local_cidr scopes it)
+        ++ lib.optionals (cfg.routesSubnet != null) [
+          {
+            port = "any";
+            proto = "any";
+            host = "any";
+            local_cidr = cfg.routesSubnet;
+          }
+        ];
       };
     };
 
