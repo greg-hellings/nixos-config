@@ -13,6 +13,8 @@
     gitea-runner-isaiah-podman.file = ../../../secrets/gitea/runner-isaiah-podman.age;
     gitea-workerPassword.file = ../../../secrets/gitea/workerPassword.age;
     runner-reg.file = ../../../secrets/gitlab/kubernetes-k3s-local.age;
+    # TODO: Greg add agenix secret at secrets/gitea-runner-isaiah.age
+    # gitea-runner-isaiah.file = ../../../secrets/gitea-runner-isaiah.age;
   };
 
   boot = {
@@ -52,6 +54,12 @@
     runner = {
       enable = true;
       qemu = true;
+    };
+    gitea-runner = {
+      enable = true;
+      labels = [ "self-hosted" "bare-metal" "host:isaiah" ];
+      # TODO: Greg add agenix secret at secrets/gitea-runner-isaiah.age
+      # tokenFile = config.age.secrets.gitea-runner-isaiah.path;
     };
   };
 

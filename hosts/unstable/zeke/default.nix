@@ -16,6 +16,8 @@
 
   age.secrets = {
     gitea-workerPassword.file = ../../../secrets/gitea/workerPassword.age;
+    # TODO: Greg add agenix secret at secrets/gitea-runner-zeke.age
+    # gitea-runner-zeke.file = ../../../secrets/gitea-runner-zeke.age;
   };
 
   boot.extraModulePackages = [ config.boot.kernelPackages.v4l2loopback ];
@@ -31,6 +33,12 @@
     runner = {
       enable = true;
       vbox = false;
+    };
+    gitea-runner = {
+      enable = true;
+      labels = [ "self-hosted" "bare-metal" "host:zeke" ];
+      # TODO: Greg add agenix secret at secrets/gitea-runner-zeke.age
+      # tokenFile = config.age.secrets.gitea-runner-zeke.path;
     };
     tailscale = {
       enable = true;

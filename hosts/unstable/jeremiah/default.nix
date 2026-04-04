@@ -29,6 +29,8 @@ in
     gitea-oauthSecret = mk ../../../secrets/gitea/oauthSecret.age;
     gitea-webhookSecret = mk ../../../secrets/gitea/webhookSecret.age;
     gitea-workerPassword = mk ../../../secrets/gitea/workerPassword.age;
+    # TODO: Greg add agenix secret at secrets/gitea-runner-jeremiah.age
+    # gitea-runner-jeremiah.file = ../../../secrets/gitea-runner-jeremiah.age;
   };
 
   # Bootloader.
@@ -95,6 +97,12 @@ in
       enable = true;
       threads = 3;
       qemu = true;
+    };
+    gitea-runner = {
+      enable = true;
+      labels = [ "self-hosted" "bare-metal" "host:jeremiah" ];
+      # TODO: Greg add agenix secret at secrets/gitea-runner-jeremiah.age
+      # tokenFile = config.age.secrets.gitea-runner-jeremiah.path;
     };
   };
 

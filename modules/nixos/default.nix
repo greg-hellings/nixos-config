@@ -8,6 +8,7 @@
     ./backup.nix
     ./ceph.nix
     ./db.nix
+    ./gitea-runner.nix
     ./gitlab-runner.nix
     ./gnome.nix
     ./home.nix
