@@ -46,11 +46,11 @@ spec:
   data:
     - secretKey: minio_key
       remoteRef:
-        key: dcbcf704-7dce-48d7-bbd1-b3a801875b3d
+        key: c4c66ab3-2ade-4086-9c0d-b3a80172b1ba
         property: username
     - secretKey: minio_secret
       remoteRef:
-        key: dcbcf704-7dce-48d7-bbd1-b3a801875b3d
+        key: c4c66ab3-2ade-4086-9c0d-b3a80172b1ba
         property: password
 ---
 apiVersion: v1
