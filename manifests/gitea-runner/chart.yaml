@@ -1,0 +1,58 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: gitea
+spec:
+  interval: "24h"
+  url: https://dl.gitea.com/charts/
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: gitea-runner
+  namespace: gitea-runner
+spec:
+  interval: 10m
+  chart:
+    spec:
+      chart: act_runner
+      version: "0.2.5"
+      sourceRef:
+        kind: HelmRepository
+        name: gitea
+      interval: "1h"
+  values:
+    rbac:
+      create: true
+    serviceAccount:
+      create: true
+    # FIXME: The gitea-runner Secret (key: token) must be created by Greg via agenix
+    # before this HelmRelease will deploy successfully.
+    gitea:
+      instanceURL: https://src.thehellings.com
+      runnerToken:
+        existingSecret: gitea-runner
+        existingSecretKey: token
+    imagePullSecrets:
+      - name: image-pull-secrets
+    config:
+      runner:
+        labels:
+          # Ubuntu
+          - "ubuntu-22.04:docker://ubuntu:22.04"
+          - "ubuntu-24.04:docker://ubuntu:24.04"
+          - "ubuntu-24.10:docker://ubuntu:24.10"
+          # Fedora
+          - "fedora-41:docker://fedora:41"
+          - "fedora-42:docker://fedora:42"
+          # CentOS Stream
+          - "centos-stream-9:docker://quay.io/centos/centos:stream9"
+          - "centos-stream-10:docker://quay.io/centos/centos:stream10"
+          # Nix
+          - "nix:docker://nixos/nix:latest"
+          # ci-images (internal registry: src.thehellings.com/greg)
+          - "ci-builder:docker://src.thehellings.com/greg/builder:latest"
+          - "ci-vm-test:docker://src.thehellings.com/greg/vm-test:latest"
+          - "ci-sword:docker://src.thehellings.com/greg/sword-container-builder:latest"
+          - "ci-bitwarden:docker://src.thehellings.com/greg/bitwarden:latest"
+          - "ci-immich:docker://src.thehellings.com/greg/immich:latest"
