@@ -86,13 +86,6 @@ in
       priority = 254;
     };
     nebula.enable = true;
-    proxies = {
-      # Expose Buildbot over HTTP on the LAN so Klaatu (and other internal
-      # tools) can reach it without Tailscale.  Buildbot's own Gitea OAuth
-      # handles authentication.
-      "buildbot.home".target = "http://localhost:8010/";
-      "buildbot.thehellings.lan".target = "http://localhost:8010/";
-    };
     tailscale = {
       enable = true;
       tags = [ "home" ];
@@ -123,6 +116,7 @@ in
       interface = "br0";
     };
     firewall.allowedTCPPorts = [
+      8010
       3389
       9989 # buildbot communications port
     ];
@@ -151,7 +145,7 @@ in
             updateOutputs = false;
           };
         };
-        domain = "${config.networking.hostName}.shire-zebra.ts.net:8010";
+        domain = "${config.networking.hostName}.shire-zebra.ts.net";
         evalMaxMemorySize = 8192;
         evalWorkerCount = 4;
         gitea = {
