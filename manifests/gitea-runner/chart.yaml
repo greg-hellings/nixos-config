@@ -15,8 +15,8 @@ spec:
   interval: 10m
   chart:
     spec:
-      chart: act_runner
-      version: "0.2.5"
+      chart: actions
+      version: "0.0.4"
       sourceRef:
         kind: HelmRepository
         name: gitea
@@ -26,8 +26,6 @@ spec:
       create: true
     serviceAccount:
       create: true
-    # FIXME: The gitea-runner Secret (key: token) must be created by Greg via agenix
-    # before this HelmRelease will deploy successfully.
     gitea:
       instanceURL: https://src.thehellings.com
       runnerToken:
