@@ -60,6 +60,12 @@ in
       enable = true;
       tags = [ "home" ];
     };
+    backup.jobs.albyhub = {
+      src = "/chain/alby";
+      dest = "albyhub";
+      pre = "systemctl stop albyhub || true";
+      post = "systemctl start albyhub";
+    };
   };
 
   hardware = {

@@ -19,23 +19,76 @@ spec:
         key: "dd0de40c-9ad6-4034-9d5c-b311016ebf19"
         property: apikey
 ---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: immich-minio-creds
+spec:
+  target:
+    name: immich-minio-creds
+    deletionPolicy: Delete
+    template:
+      type: Opaque
+      data:
+        access-key: "{{ .minio_key }}"
+        secret-key: "{{ .minio_secret }}"
+        rclone.conf: |
+          [nas1minio]
+          type = s3
+          provider = Minio
+          endpoint = http://nas1.shire-zebra.ts.net:9000
+          access_key_id = {{ .minio_key }}
+          secret_access_key = {{ .minio_secret }}
+          region = us-east-1
+  secretStoreRef:
+    name: bitwarden-login
+    kind: ClusterSecretStore
+  data:
+    - secretKey: minio_key
+      remoteRef:
+        key: dcbcf704-7dce-48d7-bbd1-b3a801875b3d
+        property: username
+    - secretKey: minio_secret
+      remoteRef:
+        key: dcbcf704-7dce-48d7-bbd1-b3a801875b3d
+        property: password
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: immich-backup-staging
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: longhorn-default
+  resources:
+    requests:
+      storage: 400Gi
+---
 apiVersion: batch/v1
 kind: CronJob
 metadata:
   name: backup
 spec:
   schedule: "0 4 * * *" # At 4am each day
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
   jobTemplate:
     spec:
       template:
         spec:
           restartPolicy: Never
           volumes:
-            - name: nas1
-              nfs:
-                path: /mnt/all/backups/immich
-                server: nas1.shire-zebra.ts.net
-          containers:
+            - name: staging
+              persistentVolumeClaim:
+                claimName: immich-backup-staging
+            - name: rclone-config
+              secret:
+                secretName: immich-minio-creds
+                items:
+                  - key: rclone.conf
+                    path: rclone.conf
+          initContainers:
             - name: immich-go
               image: "src.thehellings.com/greg/immich:latest"
               imagePullPolicy: "Always"
@@ -46,18 +99,38 @@ spec:
                   immich-go
                   archive
                   "--write-to-folder"
-                  /nas1
+                  /staging
                   from-immich
                   "--from-api-key"
                   "$IMMICH_API_KEY"
                   "--from-server"
                   "http://immich-server:2283"
               volumeMounts:
-                - name: nas1
-                  mountPath: /nas1
+                - name: staging
+                  mountPath: /staging
               env:
                 - name: IMMICH_API_KEY
                   valueFrom:
                     secretKeyRef:
                       name: immich-login
                       key: apikey
+          containers:
+            - name: rclone-sync
+              image: "rclone/rclone:1.68"
+              command:
+                - /bin/sh
+                - "-c"
+                - |
+                  rclone sync \
+                    --config /rclone-config/rclone.conf \
+                    --checksum \
+                    --progress \
+                    --transfers 4 \
+                    --checkers 8 \
+                    /staging nas1minio:immich
+              volumeMounts:
+                - name: staging
+                  mountPath: /staging
+                - name: rclone-config
+                  mountPath: /rclone-config
+                  readOnly: true

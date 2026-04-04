@@ -6,3 +6,4 @@ resources:
   - chart.yaml
   - ingress.yaml
   - secrets.yaml
+  - dump-cronjob.yaml
