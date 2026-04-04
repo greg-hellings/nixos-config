@@ -64,6 +64,8 @@ spec:
                   mountPath: /dump-staging
                   readOnly: true
               env:
+                - name: MC_CONFIG_DIR
+                  value: /tmp/.mc
                 - name: MINIO_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
@@ -74,3 +76,4 @@ spec:
                     secretKeyRef:
                       name: gitea-config
                       key: minio_secret
+
