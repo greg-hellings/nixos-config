@@ -60,6 +60,12 @@ in
       enable = true;
       tags = [ "home" ];
     };
+    backup.jobs.albyhub = {
+      src = "/chain/alby";
+      dest = "albyhub";
+      pre = "systemctl stop albyhub || true";
+      post = "systemctl start albyhub";
+    };
   };
 
   hardware = {
@@ -145,24 +151,6 @@ in
       };
     };
     prometheus.exporters.graphite.enable = true;
-    restic.backups.albyhub = {
-      # AlbyHub LDK node data — must not be snapshotted live
-      paths = [ "/chain/alby" ];
-      environmentFile = config.age.secrets.restic-env.path;
-      passwordFile = config.age.secrets.restic-pw.path;
-      initialize = true;
-      pruneOpts = [
-        "--keep-daily 7"
-        "--keep-weekly 4"
-        "--keep-monthly 12"
-      ];
-      backupPrepareCommand = "systemctl stop albyhub || true";
-      backupCleanupCommand = "systemctl start albyhub";
-      timerConfig = {
-        OnCalendar = "02:30";
-        RandomizedDelaySec = "30min";
-      };
-    };
     # Configure keymap
     xserver.xkb = {
       layout = "us";
@@ -175,12 +163,6 @@ in
   age.secrets.grafana-api-token = {
     file = ../../../secrets/grafana-api-token.age;
     owner = "grafana";
-  };
-  age.secrets.restic-pw = {
-    file = ../../../secrets/restic-pw.age;
-  };
-  age.secrets.restic-env = {
-    file = ../../../secrets/restic-env.age;
   };
 
   environment.etc = {
