@@ -92,6 +92,8 @@ spec:
           # MINIO_SECRET_ACCESS_KEY: ""
           MINIO_USE_SSL: "false"
           MINIO_INSECURE_SKIP_VERIFY: "true"
+        webhook:
+          ALLOWED_HOST_LIST: loopback,private,*.shire-zebra.ts.net
 
       metrics:
         enabled: false
