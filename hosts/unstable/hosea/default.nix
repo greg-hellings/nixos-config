@@ -26,6 +26,13 @@ in
     owner = "grafana";
   };
 
+  # NOTE: Before deploying, create the secret with:
+  #   agenix -e secrets/albyhub-restic-password.age
+  age.secrets.albyhub-restic-password = {
+    file = ../../../secrets/albyhub-restic-password.age;
+    owner = "root";
+  };
+
   # Bootloader
   boot = {
     loader = {
@@ -102,6 +109,29 @@ in
       settings = {
         workDir = "/chain/alby";
       };
+    };
+    restic.backups.albyhub = {
+      # Backs up AlbyHub's LDK state directory to the nas1 Restic REST server.
+      # The service is stopped before backup to ensure LDK state consistency
+      # and restarted afterward.
+      repository = "rest:https://nas1.shire-zebra.ts.net:30248/albyhub";
+      passwordFile = config.age.secrets.albyhub-restic-password.path;
+      paths = [ "/chain/alby" ];
+      timerConfig = {
+        OnCalendar = "daily";
+        RandomizedDelaySec = "1h";
+      };
+      backupPrepareCommand = ''
+        systemctl stop albyhub.service || true
+      '';
+      backupCleanupCommand = ''
+        systemctl start albyhub.service || true
+      '';
+      pruneOpts = [
+        "--keep-daily 7"
+        "--keep-weekly 4"
+        "--keep-monthly 3"
+      ];
     };
     jellyfin = {
       enable = true;
