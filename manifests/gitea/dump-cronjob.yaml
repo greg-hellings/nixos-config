@@ -1,0 +1,44 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gitea-dump
+  namespace: gitea
+spec:
+  schedule: "0 2 * * *" # At 2am each day (offset from 4am Immich backup)
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          volumes:
+            - name: gitea-data
+              persistentVolumeClaim:
+                claimName: gitea-release-gitea
+                readOnly: true
+            - name: nas1-dumps
+              nfs:
+                server: nas1.shire-zebra.ts.net
+                path: /mnt/all/backups/gitea-dumps
+          containers:
+            - name: gitea-dump
+              image: "gitea/gitea:1.25.4"
+              command:
+                - /bin/sh
+                - "-c"
+                - |
+                  set -e
+                  DUMP_FILE="/nas1/gitea-dump-$(date +%Y%m%d-%H%M%S).zip"
+                  gitea dump -c /data/gitea/conf/app.ini --type zip --file "$DUMP_FILE"
+                  echo "Dump written to $DUMP_FILE"
+                  find /nas1/ -name "*.zip" -mtime +30 -delete
+                  echo "Old dumps cleaned up"
+              volumeMounts:
+                - name: gitea-data
+                  mountPath: /data
+                  readOnly: true
+                - name: nas1-dumps
+                  mountPath: /nas1
