@@ -85,6 +85,7 @@ in
       vip = ip;
       priority = 254;
     };
+    nebula.enable = true;
     tailscale = {
       enable = true;
       tags = [ "home" ];

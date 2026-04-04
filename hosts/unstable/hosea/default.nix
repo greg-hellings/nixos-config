@@ -49,6 +49,7 @@ in
 
   greg = {
     home = true;
+    nebula.enable = true;
     proxies = {
       "jellyfin.home".target = "http://localhost:8096/";
       "jellyfin.thehellings.lan".target = "http://localhost:8096/";

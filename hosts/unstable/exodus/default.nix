@@ -30,6 +30,9 @@
   greg = {
     home = true;
     gnome.enable = true;
+    nebula = {
+      enable = true;
+    };
     podman.enable = true;
     print.enable = true;
     tailscale = {

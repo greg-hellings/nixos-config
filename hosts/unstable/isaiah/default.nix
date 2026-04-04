@@ -42,6 +42,7 @@
       vip = metadata.hosts.${config.networking.hostName}.ip;
       priority = 255;
     };
+    nebula.enable = true;
     podman.enable = true;
     tailscale = {
       enable = true;
