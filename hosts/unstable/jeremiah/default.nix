@@ -85,6 +85,7 @@ in
       vip = ip;
       priority = 254;
     };
+    nebula.enable = true;
     proxies = {
       # Expose Buildbot over HTTP on the LAN so Klaatu (and other internal
       # tools) can reach it without Tailscale.  Buildbot's own Gitea OAuth

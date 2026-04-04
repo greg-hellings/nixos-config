@@ -22,6 +22,7 @@
     ./router.nix
     ./rpi4.nix
     ./syncthing.nix
+    ./nebula.nix
     ./tailscale.nix
     ./vmdev.nix
   ];

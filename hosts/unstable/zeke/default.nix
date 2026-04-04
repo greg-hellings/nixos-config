@@ -26,6 +26,7 @@
       vipInterface = "enp12s0";
       priority = 253;
     };
+    nebula.enable = true;
     remote-builder.enable = true;
     runner = {
       enable = true;
