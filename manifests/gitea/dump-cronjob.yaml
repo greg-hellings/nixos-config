@@ -1,0 +1,61 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gitea-dump
+spec:
+  schedule: "0 3 * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          volumes:
+            - name: gitea-data
+              persistentVolumeClaim:
+                claimName: gitea-shared-storage
+            - name: dump-output
+              nfs:
+                path: /mnt/all/backups/gitea-dumps
+                server: nas1.shire-zebra.ts.net
+          initContainers:
+            - name: gitea-dump
+              image: "gitea/gitea:1.25.4"
+              command:
+                - /bin/sh
+                - "-c"
+                - |
+                  set -e
+                  TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+                  OUTFILE="/dump-output/gitea-dump-${TIMESTAMP}.zip"
+                  gitea dump \
+                    --config /data/gitea/conf/app.ini \
+                    --file "${OUTFILE}" \
+                    --type zip \
+                    --skip-log \
+                    --skip-custom-dir \
+                    --skip-db
+                  echo "Dump written to ${OUTFILE}"
+              volumeMounts:
+                - name: gitea-data
+                  mountPath: /data
+                  readOnly: true
+                - name: dump-output
+                  mountPath: /dump-output
+          containers:
+            - name: cleanup
+              image: "busybox:1.36"
+              command:
+                - /bin/sh
+                - "-c"
+                - |
+                  ls -t /dump-output/gitea-dump-*.zip 2>/dev/null | tail -n +31 | xargs rm -f
+                  echo "Cleanup done."
+              volumeMounts:
+                - name: dump-output
+                  mountPath: /dump-output
