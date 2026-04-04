@@ -1,0 +1,76 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: gitea-dump
+spec:
+  schedule: "0 3 * * *"
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: Never
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+            fsGroup: 1000
+          volumes:
+            - name: gitea-data
+              persistentVolumeClaim:
+                claimName: gitea-shared-storage
+            - name: dump-staging
+              emptyDir: {}
+          initContainers:
+            - name: gitea-dump
+              image: "gitea/gitea:1.25.4"
+              command:
+                - /bin/sh
+                - "-c"
+                - |
+                  set -e
+                  TIMESTAMP=$(date +%Y%m%d-%H%M%S)
+                  OUTFILE="/dump-staging/gitea-dump-${TIMESTAMP}.zip"
+                  gitea dump \
+                    --config /data/gitea/conf/app.ini \
+                    --file "${OUTFILE}" \
+                    --type zip
+                  echo "Dump written to ${OUTFILE}"
+              volumeMounts:
+                - name: gitea-data
+                  mountPath: /data
+                  readOnly: true
+                - name: dump-staging
+                  mountPath: /dump-staging
+          containers:
+            - name: upload-to-s3
+              image: "minio/mc:latest"
+              command:
+                - /bin/sh
+                - "-c"
+                - |
+                  set -e
+                  # Configure mc alias for MinIO
+                  mc alias set nas1 http://nas1.shire-zebra.ts.net:9000 \
+                    "${MINIO_ACCESS_KEY}" "${MINIO_SECRET_KEY}"
+                  # Upload dump to backup-gitea bucket
+                  DUMP_FILE=$(ls /dump-staging/gitea-dump-*.zip | head -1)
+                  mc cp "${DUMP_FILE}" "nas1/backup-gitea/$(basename ${DUMP_FILE})"
+                  echo "Uploaded $(basename ${DUMP_FILE}) to backup-gitea"
+                  # Set 30-day lifecycle on the bucket (idempotent)
+                  mc ilm rule add --expire-days 30 nas1/backup-gitea 2>/dev/null || true
+              volumeMounts:
+                - name: dump-staging
+                  mountPath: /dump-staging
+                  readOnly: true
+              env:
+                - name: MINIO_ACCESS_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: gitea-config
+                      key: minio_key
+                - name: MINIO_SECRET_KEY
+                  valueFrom:
+                    secretKeyRef:
+                      name: gitea-config
+                      key: minio_secret
