@@ -100,7 +100,7 @@ in
   "gitea/oauthToken.age".publicKeys = everyone;
   "gitea/webhookSecret.age".publicKeys = everyone;
   "gitea/workerPassword.age".publicKeys = everyone;
-  "gitea/runner-podman-isaiah.age".publicKeys = users ++ [ hosts.isaiah.pubkey ];
+  "gitea/runner-isaiah-podman.age".publicKeys = everyone;
 
   "gitlab/secret.age".publicKeys = everyone;
   "gitlab/otp.age".publicKeys = everyone;

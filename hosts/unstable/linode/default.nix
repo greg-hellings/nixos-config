@@ -23,12 +23,14 @@
     pgloader
   ];
 
-  age.secrets = {
-    # TODO: Greg add agenix secret at secrets/gitea-runner-linode.age
-    # gitea-runner-linode.file = ../../../secrets/gitea-runner-linode.age;
-  };
-
   greg = {
+    gitea-runner = {
+      enable = true;
+      extraLabels = [
+        "vps:host"
+        "blog:host"
+      ];
+    };
     home = false;
     linode.enable = true;
     nebula = {
@@ -41,12 +43,6 @@
       ssl = true;
     };
     tailscale.enable = true;
-    gitea-runner = {
-      enable = true;
-      labels = [ "self-hosted" "host:linode" ];
-      # TODO: Greg add agenix secret at secrets/gitea-runner-linode.age
-      # tokenFile = config.age.secrets.gitea-runner-linode.path;
-    };
   };
 
   networking = {
