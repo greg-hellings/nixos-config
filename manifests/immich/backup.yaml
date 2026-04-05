@@ -96,6 +96,7 @@ spec:
                 - /bin/sh
                 - "-c"
                 - >-
+                  rm -r /staging/*;
                   immich-go
                   archive
                   "--write-to-folder"
