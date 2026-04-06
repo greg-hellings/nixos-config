@@ -40,4 +40,5 @@ in
 {
   "MacBook-Pro" = mac { name = "ivr"; };
   "MacBook-Prolocal" = mac { name = "ivr"; };
+  "li" = mac { name = "li"; };
 }

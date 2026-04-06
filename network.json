@@ -24,10 +24,7 @@
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO/CGE2rqlL2Qr0TJkwQMsHFSDkhGWlrUlvfcvcylO1n",
       "ts": "100.96.198.104",
       "system": "x86_64-linux",
-      "tags": [
-        "router",
-        "server"
-      ],
+      "tags": ["router", "server"],
       "nebulaIp": "10.157.0.2"
     },
     "hosea": {
@@ -35,9 +32,7 @@
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz",
       "ts": "100.68.203.1",
       "system": "x86_64-linux",
-      "tags": [
-        "server"
-      ],
+      "tags": ["server"],
       "nebulaIp": "10.157.0.3"
     },
     "icdm-root": {
@@ -50,15 +45,8 @@
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf",
       "ts": "100.84.183.79",
       "system": "x86_64-linux",
-      "systems": [
-        "x86_64-linux",
-        "aarch64-linux"
-      ],
-      "tags": [
-        "builder",
-        "kube",
-        "server"
-      ],
+      "systems": ["x86_64-linux", "aarch64-linux"],
+      "tags": ["builder", "kube", "server"],
       "nebulaIp": "10.157.0.4"
     },
     "iso": {
@@ -75,15 +63,8 @@
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0",
       "ts": "100.102.186.39",
       "system": "x86_64-linux",
-      "systems": [
-        "x86_64-linux",
-        "aarch64-linux"
-      ],
-      "tags": [
-        "builder",
-        "kube",
-        "server"
-      ],
+      "systems": ["x86_64-linux", "aarch64-linux"],
+      "tags": ["builder", "kube", "server"],
       "nebulaIp": "10.157.0.5"
     },
     "joel": {
@@ -91,15 +72,16 @@
       "ip": "10.42.0.4",
       "ts": null
     },
+    "li": {
+      "external": true,
+      "system": "aarch64-darwin"
+    },
     "linode": {
       "ip": null,
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMv9Zud3kZOl86gtmkn+uj3D4kiXWDPtyUL02VVLNR4Q",
       "ts": "100.109.86.8",
       "system": "x86_64-linux",
-      "tags": [
-        "public",
-        "server"
-      ],
+      "tags": ["public", "server"],
       "nebulaIp": "10.157.0.1"
     },
     "MacBook-Pro.local": {
@@ -136,15 +118,8 @@
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOos0zQePsa+T6Z2dsKbPOvEdrBQ8a6mx3s7pN6ysCI0",
       "ts": "100.90.74.19",
       "system": "x86_64-linux",
-      "systems": [
-        "x86_64-linux",
-        "aarch64-linux"
-      ],
-      "tags": [
-        "builder",
-        "kube",
-        "server"
-      ],
+      "systems": ["x86_64-linux", "aarch64-linux"],
+      "tags": ["builder", "kube", "server"],
       "nebulaIp": "10.157.0.6"
     }
   }

@@ -40,6 +40,7 @@ in
   zeke = greg "zeke";
   isaiah = greg "isaiah";
   jeremiah = greg "jeremiah";
+  li = user "li" "gregory.hellings";
   linode = greg "linode";
   hosea = greg "hosea";
   gitlab = greg "gitlab";

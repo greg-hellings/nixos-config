@@ -19,5 +19,6 @@ builds:
     - homeConfigurations.exodus
     - darwinConfigurations.MacBook-Pro
     - darwinConfigurations.MacBook-Prolocal
+    - darwinConfigurations.li
     - nixosConfigurations.builder-x86
     - nixosConfigurations.builder-aarch
