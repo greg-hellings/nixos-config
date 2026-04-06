@@ -4,6 +4,7 @@
   curl,
   gnutar,
   nix,
+  nix-output-monitor,
   ...
 }:
 writeShellApplication {
@@ -13,26 +14,16 @@ writeShellApplication {
     curl
     gnutar
     nix
+    nix-output-monitor
   ];
   text = ''
-    dir="$(mktemp -d)"
-    cd "''${dir}"
-
-    # Install nix-darwin
-    nix-build https://github.com/LnL7/nix-darwin/archive/master.tar.gz -A installer
-    ./result/bin/darwin-installer
-
     # Get my configuration
-    mkdir -p ~/.config/darwin
-    cd ~/.config/darwin
-    curl -O -L https://github.com/greg-hellings/nixos-config/archive/refs/heads/main.tar.gz
-    tar xvzf main.tar.gz --strip-components 1
+    cd /etc/nix-darwin
 
     # Build NixOS for this system
-    pushd "''${dir}"
-    nix build "''${HOME}/.config/darwin#darwinConfigurations.$(hostname -s).system"
-    ./result/sw/bin/darwin-rebuild switch --flake ~/.config/darwin
-    popd
-    rm -r "''${dir}"
+    nom build --extra-experimental-features "nix-command flakes" ".#darwinConfigurations.$(hostname -s).system"
+    sudo mv /etc/bashrc /etc/bashrc.before-nix-darwin
+    sudo mv /etc/zshrc /etc/zshrc.before-nix-darwin
+    sudo ./result/sw/bin/darwin-rebuild switch --flake .
   '';
 }

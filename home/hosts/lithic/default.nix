@@ -4,7 +4,7 @@
   ...
 }:
 let
-  username = "gregory.hellings";
+  username = "greg";
 in
 {
   # Disables hitting local cache
@@ -13,7 +13,7 @@ in
     development = true;
     gui = true;
     nix.cache = false;
-    vscodium = false;
+    zed = true;
   };
 
   home = {

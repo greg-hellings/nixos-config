@@ -4,11 +4,13 @@
   top,
 }:
 let
+  inherit (top.nixunstable) lib;
   user =
-    host: username:
+    host:
     let
       inherit (metadata.hosts.${host}) system;
       pkgs = nixpkgs.${system};
+      username = if builtins.hasAttr "user" metadata.hosts.${host} then metadata.hosts.${host}.user else "greg";
     in
     top.hmunstable.lib.homeManagerConfiguration {
       inherit pkgs;
@@ -28,20 +30,9 @@ let
         gnome = false;
       };
     };
-  greg = host: (user host "greg");
 in
-{
-  "MacBook-Pro.local" = user "ivr" "gregory.hellings";
-  "MacBook-Prolocal.local" = user "ivr" "gregory.hellings";
-  "MacBook-Pro.thehellings.lan" = user "ivr" "gregory.hellings";
-  "gregory.hellings-mbp" = user "ivr" "gregory.hellings";
-  genesis = greg "genesis";
-  exodus = greg "exodus";
-  zeke = greg "zeke";
-  isaiah = greg "isaiah";
-  jeremiah = greg "jeremiah";
-  li = user "li" "gregory.hellings";
-  linode = greg "linode";
-  hosea = greg "hosea";
-  gitlab = greg "gitlab";
-}
+(
+  lib.genAttrs
+    (builtins.attrNames (builtins.readDir ./hosts))
+    user
+)

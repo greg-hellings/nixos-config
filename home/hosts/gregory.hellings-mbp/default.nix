@@ -1,11 +1,9 @@
 {
   pkgs,
   lib,
+  username,
   ...
 }:
-let
-  username = "gregory.hellings";
-in
 {
   # Disables hitting local cache
   _module.args.cache = lib.mkForce false;

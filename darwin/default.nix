@@ -37,8 +37,11 @@ let
       ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
     };
 in
-{
-  "MacBook-Pro" = mac { name = "ivr"; };
-  "MacBook-Prolocal" = mac { name = "ivr"; };
-  "li" = mac { name = "li"; };
-}
+(
+  lib.genAttrs
+    (builtins.attrNames (builtins.readDir ./hosts))
+    (
+      name:
+      mac { inherit name; }
+    )
+)

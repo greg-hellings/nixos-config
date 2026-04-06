@@ -31,7 +31,7 @@ in
     nerd-fonts.hack
   ];
 
-  launchd.daemons = lib.genAttrs' [ "x86" "aarch" ] (arch: lib.nameValuePair "builder-${arch}-machine" (builder arch));
+  #launchd.daemons = lib.genAttrs' [ "x86" "aarch" ] (arch: lib.nameValuePair "builder-${arch}-machine" (builder arch));
 
   nix = {
     enable = true;

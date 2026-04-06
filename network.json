@@ -53,9 +53,10 @@
       "external": true,
       "system": "x86_64-linux"
     },
-    "ivr": {
+    "gregory.hellings-mbp": {
       "external": true,
-      "system": "aarch64-darwin"
+      "system": "aarch64-darwin",
+      "user": "gregory.hellings"
     },
     "jeremiah": {
       "builder": true,
@@ -72,7 +73,7 @@
       "ip": "10.42.0.4",
       "ts": null
     },
-    "li": {
+    "lithic": {
       "external": true,
       "system": "aarch64-darwin"
     },

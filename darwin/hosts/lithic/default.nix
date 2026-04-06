@@ -1,6 +1,6 @@
 { ... }:
 let
-  username = "gregory.hellings";
+  username = "greg";
 in
 {
   greg = {
@@ -33,7 +33,6 @@ in
       "podman-desktop"
       "tabby"
       "zed"
-      "zoom"
     ];
     user = username;
   };
