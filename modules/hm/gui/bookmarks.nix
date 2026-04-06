@@ -352,12 +352,29 @@
             ];
           }
           {
+            name = "Jurisdictions";
+            bookmarks = [
+              {
+                name = "Weatherford";
+                url = "https://weatherfordtx.gov/3062/Development-Services";
+              }
+            ];
+          }
+          {
             name = "Door Loop";
             url = "https://btrgpm.app.doorloop.com/home";
           }
           {
             name = "HELOC payoff calculator";
             url = "https://acceleratedstrategies.com/free-calculator/";
+          }
+          {
+            name = "Odoo";
+            url = "http://10.42.2.57:8069/odoo/crm";
+          }
+          {
+            name = "Mattermost";
+            url = "http://10.42.2.89:8065/login";
           }
         ];
       }
@@ -375,6 +392,15 @@
           {
             name = "Radarr (Movies)";
             url = "https://hosea.shire-zebra.ts.net:7878/";
+          }
+        ];
+      }
+      {
+        name = "Home";
+        bookmarks = [
+          {
+            name = "Home Assistant";
+            url = "http://10.42.2.155:8123/config/dashboard";
           }
         ];
       }
