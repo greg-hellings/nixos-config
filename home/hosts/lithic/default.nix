@@ -19,12 +19,15 @@ in
   home = {
     packages = with pkgs; [
       ansible
+      awscli2
+      cargo
       direnv
       home-manager
       python3Packages.ipython
       just
       nixVersions.stable
       pre-commit
+      rustc
     ];
     username = username;
     homeDirectory = "/Users/${username}";
