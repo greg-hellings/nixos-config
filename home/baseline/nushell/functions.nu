@@ -72,3 +72,4 @@ def dc [ $cmd: string = "sh" ] {
 if ("/usr/local/bin" | path exists) {
     $env.PATH = $env.PATH | append "/usr/local/bin"
 }
+$env.PATH = $env.PATH | prepend "~/.local/bin"
