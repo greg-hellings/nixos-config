@@ -21,6 +21,7 @@
     kubectl
     kubectl-cnpg
     mattermost-desktop
+    minio-client
     mumble
     pre-commit
     restic
@@ -28,4 +29,10 @@
     tea
     wineWow64Packages.stable
   ];
+  programs = {
+    discord = {
+      enable = true;
+      settings.SKIP_HOST_UPDATE = true;
+    };
+  };
 }
