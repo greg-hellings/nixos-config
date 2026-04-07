@@ -12,12 +12,16 @@ in
     brews = [
       "bitwarden-cli"
       "direnv"
+      "github-mcp-server"
       {
         name = "libvirt";
         restart_service = true;
       }
+      "mcp-atlassian"
+      "notion-mcp-server"
       "nushell"
       "qemu"
+      "slack-mcp-server"
     ];
     casks = [
       "alt-tab"
@@ -25,9 +29,11 @@ in
       "bitwarden"
       "bruno"
       "chromium"
+      "claude-code"
       "dbeaver-community"
       "ghostty"
       "firefox"
+      "notion"
       "notunes"
       "onlyoffice"
       "podman-desktop"
