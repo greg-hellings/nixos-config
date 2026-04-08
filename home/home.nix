@@ -19,9 +19,14 @@ in
   imports = [
     top.nixvimunstable.homeModules.nixvim
     top.self.modules.homeManagerModule
+    top.agenix.homeManagerModules.default
     ./baseline
   ]
   ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
+
+  age = {
+    identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
+  };
 
   home = {
     inherit homeDirectory username;

@@ -41,6 +41,7 @@ let
   user_ivr = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMYzms+KIe5/bYF3uCyFjA5e1AgMPLIA3c4k417coqBe gregory.hellings@ls23003";
   user_jude = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINnRc/kBhxcjpUtiRQY+BXnSObdp0jFL1395wAQxJip7 greg@jude";
   user_linode = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAINAX6pNx5mbwIa8X+GzktyNijfYmJUpgROFpRxSW9js0 greg@linode";
+  user_lithic = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPVlMoN2pkKRRwKNuMbMczki5ybR34wvjdgDNlgR74Wh greg@gregs-MacBook-Pro-16-inch-Nov-2024";
   user_isaiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAl6DJVrPSujvJSAEA5Q8tRrzfJs/c6DMwqwQEUFffIR greg@isaiah";
   user_hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGrqJQvDspLi1vXQRJ/Z5kN/F8jCBHvaXjo+5zLuIYjR greg@hosea";
   user_jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIYIiecdyM9c7tXgR96983K3wqiJeQRMbrzGIF8Wy6uO greg@jeremiah";
@@ -52,6 +53,7 @@ let
     user_ivr
     user_jude
     user_linode
+    user_lithic
     user_isaiah
     user_hosea
     user_jeremiah
@@ -147,4 +149,7 @@ in
   "nebula/linode.key.age".publicKeys = everyone;
   "nebula/zeke.key.age".publicKeys = everyone;
   "nebula/exodus.key.age".publicKeys = everyone;
+
+  # Custom files
+  "lithic/cargo-config.toml.age".publicKeys = everyone;
 }

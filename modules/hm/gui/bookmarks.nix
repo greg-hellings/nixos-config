@@ -36,6 +36,23 @@
         ];
       }
       {
+        name = "Lithic";
+        bookmarks = [
+          {
+            name = "Okta";
+            url = "https://privacy.okta.com";
+          }
+          {
+            name = "Jira";
+            url = "https://lithichq.atlassian.net";
+          }
+          {
+            name = "Notion";
+            url = "https://www.notion.so/lithichq/";
+          }
+        ];
+      }
+      {
         name = "IVR";
         bookmarks = [
           {

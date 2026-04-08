@@ -23,6 +23,7 @@ let
 in
 {
   environment.systemPackages = with pkgs; [
+    agenix
     hms
   ];
 

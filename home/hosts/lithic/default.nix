@@ -4,11 +4,14 @@
   ...
 }:
 let
-  username = "greg";
+  python = pkgs.python312.withPackages (p: with p; [
+    ipython
+  ]);
 in
 {
   # Disables hitting local cache
   _module.args.cache = lib.mkForce false;
+
   greg = {
     development = true;
     gui = true;
@@ -23,14 +26,13 @@ in
       cargo
       direnv
       home-manager
-      python3Packages.ipython
       just
       nixVersions.stable
       pre-commit
+      pulumi
+      python
       rustc
     ];
-    username = username;
-    homeDirectory = "/Users/${username}";
   };
 
   programs = {

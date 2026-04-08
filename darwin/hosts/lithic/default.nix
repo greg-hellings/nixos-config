@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 let
   username = "greg";
 in
@@ -22,6 +22,7 @@ in
       "nushell"
       "qemu"
       "slack-mcp-server"
+      "zlib"
     ];
     casks = [
       "alt-tab"
