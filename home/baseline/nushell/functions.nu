@@ -69,6 +69,11 @@ def dc [ $cmd: string = "sh" ] {
     }
 }
 
+def claude [ ] {
+    unlock
+    ^claude
+}
+
 if ("/usr/local/bin" | path exists) {
     $env.PATH = $env.PATH | append "/usr/local/bin"
 }

@@ -17,6 +17,7 @@
   home = {
     packages = with pkgs; [
       ansible
+      claude-code
       direnv
       home-manager
       python3Packages.ipython
