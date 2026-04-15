@@ -29,7 +29,13 @@ in
       just
       nixVersions.stable
       pre-commit
-      pulumi
+      (pulumi.withPackages (p: with p; [
+        pulumi-aws-native
+        pulumi-command
+        pulumi-go
+        pulumi-nodejs
+        pulumi-python
+      ]))
       python
       rustc
     ];
