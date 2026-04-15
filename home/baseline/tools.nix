@@ -12,7 +12,7 @@
       dig
       jqp
       kubernetes-helm
-      iamb
+      #iamb
       lazyssh
       rainfrog
       tenere

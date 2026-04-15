@@ -41,9 +41,11 @@
             https://pypidev.ivrtechnology.com/simple/
       '';
       ".config/uv/uv.toml".text = ''
+        index-strategy = "unsafe-first-match"
         [[index]]
         url = "https://pypidev.ivrtechnology.com/simple/"
         name = "pypidev"
+        ignore-error-codes = [403]
       '';
     };
     username = username;
