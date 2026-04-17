@@ -77,6 +77,10 @@
       "external": true,
       "system": "aarch64-darwin"
     },
+    "lithic": {
+      "external": true,
+      "system": "aarch64-darwin"
+    },
     "linode": {
       "ip": null,
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMv9Zud3kZOl86gtmkn+uj3D4kiXWDPtyUL02VVLNR4Q",
@@ -85,13 +89,17 @@
       "tags": ["public", "server"],
       "nebulaIp": "10.157.0.1"
     },
+    "ivr": {
+      "external": true,
+      "system": "aarch64-darwin"
+    },
     "MacBook-Pro.local": {
       "external": true,
-      "system": "aarc64-darwin"
+      "system": "aarch64-darwin"
     },
     "MacBook-Prolocal.local": {
       "external": true,
-      "system": "aarc64-darwin"
+      "system": "aarch64-darwin"
     },
     "nas1": {
       "external": true,

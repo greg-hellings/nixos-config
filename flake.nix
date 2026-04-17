@@ -13,9 +13,6 @@
       url = "github:nix-community/buildbot-nix";
       inputs.nixpkgs.follows = "nixunstable";
     };
-    charts = {
-      url = "github:nix-community/nixhelm";
-    };
     colmena.url = "github:zhaofengli/colmena";
     darwin = {
       url = "github:lnl7/nix-darwin/master";
