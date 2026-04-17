@@ -22,7 +22,7 @@ in
     top.agenix.homeManagerModules.default
     ./baseline
   ]
-  ++ lib.optionals (builtins.pathExists ./hosts/${host}) [ ./hosts/${host} ];
+  ++ lib.optionals (builtins.pathExists ./hosts/${host}/default.nix) [ ./hosts/${host} ];
 
   age = {
     identityPaths = [ "${homeDirectory}/.ssh/id_ed25519" ];
