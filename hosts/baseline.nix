@@ -53,9 +53,25 @@
 
   # Network Manager pulls in too many deps
   networking = {
+    extraHosts =
+      let
+        onNetwork =
+          attr: _k: v:
+          (builtins.hasAttr attr v) && v.${attr} != null;
+        getIPs =
+          attr: domain:
+          (lib.mapAttrsToList (host: v: "${builtins.getAttr attr v} ${host}.${domain}") (
+            lib.filterAttrs (onNetwork attr) metadata.hosts
+          ));
+      in
+      builtins.concatStringsSep "\n" (
+        (getIPs "ts" "shire-zebra.ts.net")
+        ++ (getIPs "nebulaIp" "nebula.thehellings.com")
+        ++ (getIPs "nebulaIp" "nebula")
+        ++ (getIPs "ip" "thehellings.lan")
+      );
     search = [
-      "thehellings.lan"
-      "home"
+      "nebula.thehellings.com"
     ];
     networkmanager.enable = false;
   };
@@ -114,17 +130,23 @@
     };
   };
 
-  security.sudo.extraRules = [
-    {
-      users = [ "greg" ];
-      commands = [
+  security = {
+    sudo-rs = {
+      enable = true;
+      extraRules = [
         {
-          command = "ALL";
-          options = [ "NOPASSWD" ];
+          users = [ "greg" ];
+          commands = [
+            {
+              command = "ALL";
+              options = [ "NOPASSWD" ];
+            }
+          ];
         }
       ];
-    }
-  ];
+    };
+    sudo.enable = false;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.greg = {

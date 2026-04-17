@@ -2,7 +2,6 @@
   config,
   lib,
   pkgs,
-  top,
   ...
 }:
 let
@@ -86,43 +85,6 @@ in
     services = {
       k3s = {
         enable = true;
-        autoDeployCharts = {
-          external-secrets = {
-            inherit (top.charts.chartsMetadata.external-secrets.external-secrets) repo version;
-            enable = true;
-            name = top.charts.chartsMetadata.external-secrets.external-secrets.chart;
-            hash = "sha256-dPuUWthwN6L0jdAKRpkDtDedGyDUxUlJrwkvUNwLsrU=";
-            createNamespace = true;
-            targetNamespace = "external-secrets";
-            values = {
-              crds.create = true;
-              includeCRDs = true;
-            };
-          };
-          kyverno = {
-            inherit (top.charts.chartsMetadata.kyverno.kyverno) repo version;
-            enable = true;
-            name = top.charts.chartsMetadata.kyverno.kyverno.chart;
-            hash = "sha256-sNdFEupwfnYSo2iGqKwTadPtXfcbyM1kuisavpiGUyU=";
-            createNamespace = true;
-            targetNamespace = "kyverno-system";
-            values = {
-              admissionController.replicas = 3;
-              backgroundController.replicas = 3;
-              cleanupController.replicas = 2;
-              reportsController.replicas = 2;
-              crds.install = true;
-            };
-          };
-          tailscale = {
-            inherit (top.charts.chartsMetadata.tailscale.tailscale-operator) repo version;
-            enable = true;
-            name = top.charts.chartsMetadata.tailscale.tailscale-operator.chart;
-            hash = "sha256-BtZ24mCT2GMHE9iR+2xuIkB+4m1r2OC3WLkY3jC3i3I=";
-            createNamespace = true;
-            targetNamespace = "tailscale";
-          };
-        };
         extraFlags = [
           "--cluster-cidr=10.211.0.0/16"
           "--service-cidr=10.221.0.0/16"
@@ -138,7 +100,6 @@ in
           cert-manager.source = cert-manager;
           flux.source = flux;
           node-annotations.source = ../../manifests/auto/nodes.yaml;
-          operator-oauth.source = ../../manifests/auto/operator-oauth.yaml;
         };
         role = if cfg.agentOnly then "agent" else "server";
         serverAddr = lib.mkIf (

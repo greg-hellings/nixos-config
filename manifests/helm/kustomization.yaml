@@ -1,3 +1,6 @@
 resources:
+  - kyverno.yaml
+  - external-secrets.yaml
+  - tailscale.yaml
   - longhorn.yaml # Needed for storage
   - traefik.yaml

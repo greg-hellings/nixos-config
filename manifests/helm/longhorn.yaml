@@ -19,6 +19,11 @@ metadata:
   namespace: longhorn-system
 spec:
   interval: 10m
+  dependsOn:
+    - name: tailscale-operator
+      namespace: tailscale
+    - name: kyverno
+      namespace: kyverno
   chart:
     spec:
       chart: longhorn
