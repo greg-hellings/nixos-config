@@ -65,6 +65,7 @@
           };
         }
       );
+      lib' = import ./lib { inherit (top.nixunstable) lib; };
     in
     top.flake-parts.lib.mkFlake { inputs = top; } {
       inherit systems;
@@ -76,6 +77,7 @@
               nixpkgs = imported_packages.x86_64-linux;
               specialArgs = {
                 inherit
+                  lib'
                   metadata
                   self
                   top
@@ -112,7 +114,7 @@
 
         nixosConfigurations = (
           import ./hosts {
-            inherit top metadata;
+            inherit top metadata lib';
             nixpkgs = imported_packages;
           }
         );

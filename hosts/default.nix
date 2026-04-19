@@ -1,5 +1,6 @@
 {
   top,
+  lib',
   metadata,
   nixpkgs,
 }:
@@ -18,7 +19,7 @@ let
     channel.lib.nixosSystem {
       pkgs = nixpkgs.${system};
       specialArgs = {
-        inherit metadata top;
+        inherit metadata top lib';
       };
       modules = [
         {

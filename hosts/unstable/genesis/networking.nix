@@ -1,7 +1,9 @@
 {
   config,
-  pkgs,
+  lib,
+  lib',
   metadata,
+  pkgs,
   ...
 }:
 let
@@ -9,7 +11,6 @@ let
   lanIP = metadata.hosts.${config.networking.hostName}.ip;
   iot = "enp2s0";
   iotIP = "192.168.66.250";
-  #routerIP = metadata.infra.gw;
   extraHosts = builtins.readFile ./net/hosts;
 
   proxyPort = 3128;
@@ -84,17 +85,42 @@ in
     #########
     # dnsmasq config
     ########
-    dnsmasq = {
+    bind = {
       enable = true;
-      settings = {
-        domain = "thehellings.lan";
-        expand-hosts = true;
-        log-queries = true;
-        no-hosts = true; # Do not read /etc/hosts, which makes genesis resolve to 127.0.0.2
-        addn-hosts = "/etc/adblock_hosts";
-        hostsdir = "/etc/hosts.d/";
-        server = dnsServers;
-      };
+      cacheNetworks = [
+        metadata.infra.lan
+        metadata.infra.tailscale
+        metadata.infra.nebula
+      ];
+      zones =
+        let
+          makeZoneFile =
+            hosts: domain:
+            let
+              preamble = [
+                "$ORIGIN\t${domain}."
+                "$TTL\t1h"
+                "@\tIN\tSOA\t${config.networking.hostName}\tgreg@thehellings.com (1 1m 1m 1m 1m)"
+                "\tIN\tNS\t${config.networking.hostName}"
+              ];
+              makeHost = host: "${host.name}\tIN\tA\t${host.address}";
+            in
+            pkgs.writeText "${domain}" (
+              builtins.concatStringsSep "\n" (preamble ++ (lib.map makeHost hosts) ++ [ "" ])
+            );
+        in
+        lib.mapAttrs
+          (domain: net: {
+            master = true;
+            file = makeZoneFile (lib'.hostsByNet net metadata.hosts) domain;
+          })
+          {
+            "shire-zebra.ts.net" = "tailscale";
+            "nebula.thehellings.com" = "nebula";
+            nebula = "nebula";
+            "thehellings.lan" = "lan";
+            lan = "lan";
+          };
     };
 
     prometheus.exporters = {

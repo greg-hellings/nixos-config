@@ -20,14 +20,14 @@ metadata:
 spec:
   interval: 10m
   dependsOn:
-    - name: tailscale-operator
+    - name: tailscale
       namespace: tailscale
     - name: kyverno
-      namespace: kyverno
+      namespace: kyverno-system
   chart:
     spec:
       chart: longhorn
-      version: "1.10.2"
+      version: "1.11.1"
       sourceRef:
         kind: HelmRepository
         name: longhorn
