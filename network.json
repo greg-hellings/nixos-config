@@ -113,6 +113,10 @@
       "external": true,
       "system": "x86_64-linux"
     },
+    "printer": {
+      "external": true,
+      "ip": "10.42.1.3"
+    },
     "proxmoxtemplate": {
       "external": true,
       "system": "x86_64-linux"
