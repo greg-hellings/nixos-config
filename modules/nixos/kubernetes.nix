@@ -7,8 +7,8 @@
 let
   cfg = config.greg.kubernetes;
   cert-manager = pkgs.fetchurl {
-    url = "https://github.com/cert-manager/cert-manager/releases/download/v1.18.2/cert-manager.yaml";
-    sha256 = "0vx1nfyhl0rzb6psfxplq8pfp18mrrdk83n8rj2ph8q6r15vcih5";
+    url = "https://github.com/cert-manager/cert-manager/releases/download/v1.20.2/cert-manager.yaml";
+    sha256 = "sha256-HOEcrpEq3sxp5rtiNDX6/J7SFQX57/+YvXHXuA8B2x8=";
   };
   flux = pkgs.fetchurl {
     url = "https://github.com/fluxcd/flux2/releases/download/v2.7.2/install.yaml";

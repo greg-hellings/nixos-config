@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - chart.yaml
   - user.yaml
+  - ingress.yaml

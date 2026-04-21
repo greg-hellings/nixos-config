@@ -1,0 +1,161 @@
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+  name: immich
+spec:
+  imageName: "ghcr.io/tensorchord/cloudnative-vectorchord:18"
+  #postgresUID: 1
+  instances: 1
+  storage:
+    size: 60Gi
+  primaryUpdateStrategy: unsupervised
+  postgresql:
+    shared_preload_libraries:
+      - vchord.so
+
+  bootstrap:
+    # Use these with the name "immich-1" to restore from the backups
+    recovery:
+      source: origin
+    # Use these two lines in order to restore from the other database,
+    # once it has restored from the WALs
+    #pg_basebackup:
+    #  source: restore
+    # Use this block to bootstrap the cluster, if you don't have backups.
+    # What are you doing without backups, you chump?!
+    # initdb:
+    #   database: immich
+    #   owner: immich
+    #   secret:
+    #     name: postgres-user-immich
+    #   dataChecksums: true
+    #   postInitApplicationSQL:
+    #     - ALTER SYSTEM SET search_path TO "$user", public, vectors;
+    #     - SET search_path TO "$user", public, vectors;
+    #     - CREATE EXTENSION IF NOT EXISTS "cube";
+    #     - CREATE EXTENSION IF NOT EXISTS "earthdistance";
+    #     - GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO "immich";
+
+  externalClusters:
+    - name: origin
+      plugin:
+        name: barman-cloud.cloudnative-pg.io
+        parameters:
+          barmanObjectName: k3sbackup-objectstore
+          serverName: immich
+    - name: restore
+      connectionParameters:
+        host: immich-1-rw
+        user: streaming_replica
+        sslmode: verify-full
+      sslCert:
+        name: immich-1-replication
+        key: tls.crt
+      sslKey:
+        name: immich-1-replication
+        key: tls.key
+      sslRootCert:
+        name: immich-1-ca
+        key: ca.crt
+
+  managed:
+    roles:
+      - name: immich
+        ensure: present
+        comment: Immich DB user
+        login: true
+        superuser: true
+        passwordSecret:
+          name: postgres-user-immich
+
+  plugins:
+    - name: barman-cloud.cloudnative-pg.io
+      isWALArchiver: true
+      parameters:
+        barmanObjectName: k3sbackup-objectstore
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Database
+metadata:
+  name: database-immich
+spec:
+  name: immich
+  owner: immich
+  cluster:
+    name: immich
+  extensions:
+    - name: vectors
+      ensure: present
+    - name: vectorchord
+      ensure: present
+    - name: cube
+      ensure: present
+    - name: earthdistance
+      ensure: present
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: k3sbackup-externalsecret
+spec:
+  target:
+    name: k3sbackup-secret
+    deletionPolicy: Delete
+    template:
+      type: Opaque
+      data:
+        username: |-
+          {{ .username }}
+        password: |-
+          {{ .password }}
+  data:
+    - secretKey: username
+      sourceRef:
+        storeRef:
+          name: bitwarden-login
+          kind: ClusterSecretStore
+      remoteRef:
+        key: 685b29c6-9264-4e60-ba4a-b2ea005a5d7b
+        property: username
+    - secretKey: password
+      sourceRef:
+        storeRef:
+          name: bitwarden-login
+          kind: ClusterSecretStore
+      remoteRef:
+        key: 685b29c6-9264-4e60-ba4a-b2ea005a5d7b
+        property: password
+
+---
+apiVersion: barmancloud.cnpg.io/v1
+kind: ObjectStore
+metadata:
+  name: k3sbackup-objectstore
+spec:
+  configuration:
+    destinationPath: "s3://k3sbackup/postgres"
+    endpointURL: "http://chronicles.thehellings.lan:9000/"
+    s3Credentials:
+      accessKeyId:
+        name: k3sbackup-secret
+        key: username
+      secretAccessKey:
+        name: k3sbackup-secret
+        key: password
+    wal:
+      compression: gzip
+  retentionPolicy: "30d"
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: ScheduledBackup
+metadata:
+  name: immich-backup
+spec:
+  immediate: false # Create one when this is added to the cluster
+  schedule: "0 2 0 * * *" # 1AM, nightly
+  backupOwnerReference: self
+  cluster:
+    name: immich
+  method: plugin
+  pluginConfiguration:
+    name: barman-cloud.cloudnative-pg.io

@@ -1,32 +1,21 @@
 apiVersion: source.toolkit.fluxcd.io/v1
 kind: HelmRepository
 metadata:
-  name: kubernetes-dashboard
+  name: headlamp
 spec:
-  url: https://kubernetes.github.io/dashboard/
+  url: "https://kubernetes-sigs.github.io/headlamp/"
   interval: "24h"
 ---
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: kubernetes-dashboard
+  name: headlamp
 spec:
   interval: "24h"
   chart:
     spec:
-      chart: kubernetes-dashboard
+      chart: headlamp
       sourceRef:
         kind: HelmRepository
-        name: kubernetes-dashboard
+        name: headlamp
       interval: "24h"
-  values:
-    app:
-      settings:
-        global:
-          clusterName: Hellings Home
-          itemsPerPage: 25
-      ingress:
-        enabled: true
-        hosts:
-          - dashboard.shire-zebra.ts.net
-        ingressClassName: tailscale
