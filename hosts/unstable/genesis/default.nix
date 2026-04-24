@@ -2,29 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ lib, pkgs, ... }:
-
-let
-  adblockUpdate = pkgs.writeShellApplication {
-    name = "adblock-update";
-    runtimeInputs = with pkgs; [
-      curl
-      gnused
-      systemd
-    ];
-    text = ''
-      curl -s https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sed '1,33d' > /etc/adblock_hosts
-      curl -s https://adaway.org/hosts.txt | sed '1,24d' | sed 's/127.0.0.1/0.0.0.0/' >> /etc/adblock_hosts
-
-      # Custom domains that I need to preserve for some reason
-      for f in "segment.com" "segment.io" "branch.io" "dev.visualwebsiteoptimizer.com" "click.discord.com"; do
-       	sed -i -e "/''${f}/d" /etc/adblock_hosts  # Blocks Trelly content for house investors
-      done
-
-      systemctl restart dnsmasq
-    '';
-  };
-in
+{ pkgs, ... }:
 {
   imports = [
     # Include the results of the hardware scan.
@@ -35,15 +13,6 @@ in
   greg = {
     home = true;
     gnome.enable = false;
-    nebula = {
-      enable = true;
-      # genesis IS the routing node for the home LAN — it does not route through itself.
-      # Override the module default (which points at genesis) to avoid a routing loop.
-      unsafeRoutes = [ ];
-      # genesis routes the home LAN (10.42.0.0/16) into the Nebula overlay.
-      # Sign genesis's cert with -subnets '10.42.0.0/16' (see secrets/nebula/README.md).
-      routesSubnet = "10.42.0.0/16";
-    };
     proxies = {
     };
   };
@@ -66,22 +35,4 @@ in
   ];
 
   networking.hostName = "genesis"; # Define your hostname.
-
-  systemd = {
-    services.adblock-update = {
-      after = [ "network-online.target" ];
-      requires = [ "network-online.target" ];
-      script = lib.getExe adblockUpdate;
-      serviceConfig.Type = "oneshot";
-    };
-    timers.adblock-update = {
-      wantedBy = [ "multi-user.target" ];
-      after = [ "network-online.target" ];
-      requires = [ "network-online.target" ];
-      timerConfig = {
-        OnCalendar = "daily";
-        Unit = "adblock-update.service";
-      };
-    };
-  };
 }

@@ -25,9 +25,20 @@ let
   ];
 in
 {
-  greg.tailscale = {
-    enable = true;
-    tags = [ "home" ];
+  greg = {
+    nebula = {
+      enable = true;
+      # genesis IS the routing node for the home LAN — it does not route through itself.
+      # Override the module default (which points at genesis) to avoid a routing loop.
+      unsafeRoutes = [ ];
+      # genesis routes the home LAN (10.42.0.0/16) into the Nebula overlay.
+      # Sign genesis's cert with -subnets '10.42.0.0/16' (see secrets/nebula/README.md).
+      routesSubnet = "10.42.0.0/16";
+    };
+    tailscale = {
+      enable = true;
+      tags = [ "home" ];
+    };
   };
 
   # Really, why do I still have to force-disable this crap?
@@ -121,22 +132,6 @@ in
             "thehellings.lan" = "lan";
             lan = "lan";
           };
-    };
-
-    prometheus.exporters = {
-      dnsmasq.enable = true;
-      blackbox = {
-        enable = true;
-        openFirewall = true;
-        configFile = pkgs.writeText "blackbox.yml" ''
-          modules:
-            icmp:
-              prober: icmp
-              timeout: 5s
-              icmp:
-                preferred_ip_protocol: ip4
-        '';
-      };
     };
   }; # End of services configuration
 

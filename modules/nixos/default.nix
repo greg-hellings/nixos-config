@@ -4,6 +4,7 @@
 
 {
   imports = [
+    ./adblock-update.nix
     ./albyhub.nix
     ./backup.nix
     ./ceph.nix

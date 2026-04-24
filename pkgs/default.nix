@@ -12,6 +12,7 @@ in
   #iso = top.self.nixosConfigurations.iso.config.system.build.isoImage;
   #iso-beta = self.nixosConfigurations.iso-beta.config.system.build.isoImage;
   aacs = c ./aacs.nix { };
+  adblock_update = c ./adblock_update.nix { };
   brew = c ./homebrew.nix { };
   create_ssl = c ./create_ssl.nix { };
   gcc-tune = c ./gcc-tune.nix { };
