@@ -40,7 +40,7 @@ metadata:
         },
         {
           "path": "/mnt/disk1",
-          "allowScheduling": false,
+          "allowScheduling": true,
           "tags": ["hdd", "large"]
         }
       ]
