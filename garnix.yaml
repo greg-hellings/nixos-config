@@ -24,7 +24,6 @@ builds:
   # due to the intrepretation of the glob excludes, but which I still need included
   - include:
       # These are Mac homeConfigurations, which I do not have the infra to build at home
-      - homeConfigurations.exodus
       - homeConfigurations."gregory.hellings-mbp"
       - homeConfigurations.gregs-MacBook-Pro-16-inch-Nov-2024
       # These are builder images used on my Macs, but they can't always access the cache
