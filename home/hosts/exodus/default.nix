@@ -24,6 +24,7 @@
     minio-client
     mumble
     pre-commit
+    prismlauncher
     restic
     restic-browser
     tea

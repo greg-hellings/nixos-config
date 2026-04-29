@@ -23,6 +23,7 @@
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixunstable";
     };
+    minecraft.url = "github:Infinidoge/nix-minecraft";
     nix-hardware.url = "github:nixos/nixos-hardware";
     nixvimunstable = {
       url = "github:nix-community/nixvim/main";
@@ -47,6 +48,7 @@
         top.nixvimunstable.overlays.default
         top.nurpkgs.overlays.default
         top.vsext.overlays.default
+        top.minecraft.overlay
       ];
       metadata = builtins.fromJSON (builtins.readFile ./network.json);
       systems = [
