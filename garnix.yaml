@@ -1,24 +1,34 @@
 builds:
-  exclude:
-    - "homeConfigurations.*"
-    - "nixosConfigurations.*"
-    - "packages.*"
-    # bitwarden-cli package is broken on aarch64-darwin
-    - "packages.aarch64-darwin.img-bitwarden"
-    # kmod-31 is not a thing on Darwin
-    - "packages.aarch64-darwin.qemu-hook"
-    - "packages.aarch64-darwin.vfio_shutdown"
-    - "packages.aarch64-darwin.vfio_startup"
-    # This one is a bit of a beast and shouldn't take up Garnix time
-    - "packages.aarch64-darwin.zim"
-    # These are just images which I will build when
-    # I feel like it
-    - "devShells.*"
-  include:
-    - "packages.aarch64-darwin.*"
-    - homeConfigurations.exodus
-    - darwinConfigurations.MacBook-Pro
-    - darwinConfigurations.MacBook-Prolocal
-    - darwinConfigurations.li
-    - nixosConfigurations.builder-x86
-    - nixosConfigurations.builder-aarch
+  # Exclude most things, as I locally build x86_64-linux and aarch64-linux
+  - exclude:
+      - "homeConfigurations.*"
+      - "nixosConfigurations.*"
+      - "packages.*"
+      # bitwarden-cli package is broken on aarch64-darwin
+      - "packages.aarch64-darwin.img-bitwarden"
+      # kmod-31 is not a thing on Darwin
+      - "packages.aarch64-darwin.qemu-hook"
+      - "packages.aarch64-darwin.vfio_shutdown"
+      - "packages.aarch64-darwin.vfio_startup"
+      # This one is a bit of a beast and shouldn't take up Garnix time
+      - "packages.aarch64-darwin.zim"
+      # These are just images which I will build when
+      # I feel like it
+      - "devShells.*"
+    include:
+      - "packages.aarch64-darwin.*"
+      - darwinConfigurations.MacBook-Pro
+      - darwinConfigurations.MacBook-Prolocal
+      - darwinConfigurations.li
+  # Some specific includes which are not specific enough to override the rules above,
+  # due to the intrepretation of the glob excludes, but which I still need included
+  - include:
+      # These are Mac homeConfigurations, which I do not have the infra to build at home
+      - homeConfigurations.exodus
+      - homeConfigurations."gregory.hellings-mbp"
+      - homeConfigurations.gregs-MacBook-Pro-16-inch-Nov-2024
+      # These are builder images used on my Macs, but they can't always access the cache
+      # on my local infrastructure, so I build them in Garnix so they are accessible
+      # outside of my network, too
+      - nixosConfigurations.builder-x86
+      - nixosConfigurations.builder-aarch
