@@ -10,7 +10,6 @@ final: prev:
       in
       {
         daikinone = cp ./daikinone.nix { };
-        xonsh-apipenv = cp ./xonsh-apipenv.nix { };
       }
     )
   ];
@@ -25,7 +24,6 @@ final: prev:
     withBDplus = true;
   };
   handbrake = prev.handbrake.override { libbluray = final.libbluray-custom; };
-  pipenv-ivr = prev.callPackage ./pipenv.nix { };
   OVMFFull = prev.OVMFFull.override {
     secureBoot = true;
     msVarsTemplate = true;

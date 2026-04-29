@@ -158,6 +158,8 @@ in
                   "https://thehellings.com"
                 else
                   "https://kuma.shire-zebra.ts.net/";
+              "devtools.debugger.remote-enabled" = true;
+              "devtools.debugger.remote-port" = 9222;
               "doh-rollout.doorhanger-decision" = "UIDisabled";
               "doh-rollout.doneFirstRun" = true;
               "signon.rememberSignons" = false;

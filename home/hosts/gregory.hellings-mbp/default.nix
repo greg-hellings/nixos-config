@@ -22,11 +22,11 @@
       home-manager
       python3Packages.ipython
       just
+      glab
       go
       gopls
       mariadb
       nixVersions.stable
-      pipenv-ivr
       pre-commit
       python311
       python3Packages.flake8

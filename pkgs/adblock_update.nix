@@ -2,14 +2,12 @@
   writeShellApplication,
   curl,
   gnused,
-  systemd,
 }:
 writeShellApplication {
   name = "adblock-update";
   runtimeInputs = [
     curl
     gnused
-    systemd
   ];
   text = ''
     curl -s https://raw.githubusercontent.com/StevenBlack/hosts/master/hosts | sed '1,33d' > /etc/adblock_hosts
@@ -19,7 +17,5 @@ writeShellApplication {
     for f in "segment.com" "segment.io" "branch.io" "dev.visualwebsiteoptimizer.com" "click.discord.com"; do
      	sed -i -e "/''${f}/d" /etc/adblock_hosts  # Blocks Trelly content for house investors
     done
-
-    systemctl restart dnsmasq
   '';
 }
