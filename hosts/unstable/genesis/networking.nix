@@ -102,6 +102,7 @@ in
         metadata.infra.lan
         metadata.infra.tailscale
         metadata.infra.nebula
+        "127.0.0.0/8"
       ];
       zones =
         let
