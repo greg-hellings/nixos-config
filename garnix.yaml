@@ -28,5 +28,3 @@ builds:
       # to build at home
       - homeConfigurations."gregory.hellings-mbp"
       - homeConfigurations.gregs-MacBook-Pro-16-inch-Nov-2024
-      - darwinConfigurations.li.pkgs.darwin.linux-builder
-      - darwinConfigurations.li.pkgs.darwin.linux-builder-x86_64
