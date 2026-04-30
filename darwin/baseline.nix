@@ -1,23 +1,32 @@
 {
-  lib,
   pkgs,
   top,
   ...
 }:
 let
-  builder-config = {
-    darwin-aarch-builder = top.self.nixosConfigurations.builder-aarch;
-    darwin-x86-builder = top.self.nixosConfigurations.builder-x86;
+  system = builtins.replaceStrings [ "darwin" ] [ "linux" ] pkgs.stdenv.hostPlatform.system;
+  builderConfig = top.nixunstable.lib.nixosSystem {
+    inherit system;
+    modules = [
+      "${top.nixunstable}/nixos/modules/profiles/nix-builder-vm.nix"
+      {
+        virtualisation = {
+          host.pkgs = pkgs;
+          darwin-builder = {
+            workingDirectory = "/var/lib/darwin-builder";
+            hostPort = 22;
+          };
+        };
+      }
+    ];
   };
-  builder = arch: let
-    b = builder-config."darwin-${arch}-builder";
-  in {
-    command = "${b.config.system.build.macos-builder-installer}/bin/create-builder";
+  builder = {
+    command = "${builderConfig.config.system.build.macos-builder-installer}/bin/create-builder";
     serviceConfig = {
       KeepAlive = true;
       RunAtLoad = true;
-      StandardOutPath = "/var/log/builder-vm-${arch}.log";
-      StandardErrorPath = "/var/log/builder-vm-${arch}.stderr.log";
+      StandardOutPath = "/var/log/builder-vm-${system}.log";
+      StandardErrorPath = "/var/log/builder-vm-${system}.stderr.log";
     };
   };
 in
@@ -31,6 +40,8 @@ in
     dejavu_fonts
     nerd-fonts.hack
   ];
+
+  launchd.daemons.darwin-builder = builder;
 
   nix = {
     enable = true;
