@@ -57,6 +57,7 @@ with lib;
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBLOqwbp4hFYkiJpokh9i2RToa/6tQcwthDNQH69tyBF root@vm-matrix.thehellings.lan"
         # Mac
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBT5BFHQz1I5k/zkLQNLjL77EaqfdpRiF2Ci4eS9LMDK gregory.hellings@jude.thehellings.lan"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPVlMoN2pkKRRwKNuMbMczki5ybR34wvjdgDNlgR74Wh greg@gregs-MacBook-Pro-16-inch-Nov-2024"
       ];
       homeMode = "500";
       isNormalUser = true;
