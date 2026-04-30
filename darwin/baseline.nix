@@ -32,23 +32,10 @@ in
     nerd-fonts.hack
   ];
 
-  launchd.daemons = lib.genAttrs' [ "x86" "aarch" ] (arch: lib.nameValuePair "builder-${arch}-machine" (builder arch));
-
   nix = {
     enable = true;
-    buildMachines = [
-      {
-        hostName = "ssh-ng://builder@localhost";
-        system = "aarch64-linux";
-        maxJobs = 4;
-        supportedFeatures = [
-          "kvm"
-          "benchmarch"
-          "big-parallel"
-        ];
-      }
-    ];
     gc.interval.Hour = 3;
+    linux-builder.enable = true;
     settings.auto-optimise-store = false; # Darwin bugs?
   };
 
