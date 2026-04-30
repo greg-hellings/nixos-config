@@ -31,6 +31,7 @@ in
       "bitwarden"
       "bruno"
       "chromium"
+      "claude"
       "dbeaver-community"
       "ghostty"
       "firefox"
