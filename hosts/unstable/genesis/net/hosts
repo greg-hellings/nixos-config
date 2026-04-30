@@ -22,8 +22,6 @@
 
 # VMs
 10.42.4.1 matrix matrix.thehellings.lan
-#10.42.4.2 vm-jellyfin vm-jellyfin.thehellings.lan
-10.42.4.3 git gitlab git.thehellings.lan gitlab.thehellings.lan
 
 # VIP
 10.42.5.1 longhorn.cluster matrix.cluster pgadmin.cluter postgres.cluster immich.cluster
@@ -37,7 +35,6 @@
 100.88.91.27 dns.home
 100.70.99.91 exodus.home exodus.shire-zebra.ts.net
 100.96.198.104 genesis.home genesis.shire-zebra.ts.net smart.home zwave.home nixcache.home gitcache.home dashy.home uptime.home speed.home
-100.117.28.111 gitlab.home gitlab.shire-zebra.ts.net gitlab.thehellings.lan registry.thehellings.lan git.thehellings.lan
 100.68.203.1 hosea.home hosea.shire-zebra.ts.net grafana.home
 100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net pgadmin.kubernetes longhorn.kubernetes
 100.102.186.39 jeremiah.home jeremiah.shire-zebra.ts.net matrix.kubernetes immich.kubernetes postgres.kubernetes buildbot.home

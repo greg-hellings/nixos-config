@@ -66,20 +66,4 @@
       immichUrl = "https://immich.shire-zebra.ts.net";
     };
   };
-
-  security.sudo.extraRules = [
-    {
-      users = [ "gitlab-runner" ];
-      commands = [
-        {
-          command = "/run/current-system/sw/bin/systemctl";
-          options = [ "NOPASSWD" ];
-        }
-        {
-          command = "/run/current-system/sw/bin/podman";
-          options = [ "NOPASSWD" ];
-        }
-      ];
-    }
-  ];
 }

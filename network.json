@@ -121,9 +121,6 @@
       "external": true,
       "system": "x86_64-linux"
     },
-    "gitlab": {
-      "system": "x86_64-linux"
-    },
     "wsl": {
       "external": true,
       "system": "aarch64-linux"

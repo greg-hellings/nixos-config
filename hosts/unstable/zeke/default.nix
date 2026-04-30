@@ -28,10 +28,6 @@
     };
     nebula.enable = true;
     remote-builder.enable = true;
-    runner = {
-      enable = true;
-      vbox = false;
-    };
     tailscale = {
       enable = true;
       tags = [ "home" ];

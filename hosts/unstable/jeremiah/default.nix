@@ -22,8 +22,6 @@ in
   ];
 
   age.secrets = {
-    runner-reg.file = ../../../secrets/gitlab/nixos-qemu-shell.age;
-
     gitea-buildbotWorkersFile = mk ../../../secrets/gitea/buildbotWorkersFile.age;
     gitea-oauthToken = mk ../../../secrets/gitea/oauthToken.age;
     gitea-oauthSecret = mk ../../../secrets/gitea/oauthSecret.age;
@@ -95,11 +93,6 @@ in
       tags = [ "home" ];
     };
     remote-builder.enable = true;
-    runner = {
-      enable = true;
-      threads = 3;
-      qemu = true;
-    };
   };
 
   hardware = {

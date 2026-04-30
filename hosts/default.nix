@@ -45,16 +45,6 @@ in
     })
   )
 )
-// (lib.genAttrs
-  (builtins.attrNames (lib.filterAttrs (_: v: v == "directory") (builtins.readDir ./vm)))
-  (
-    name:
-    (unstable {
-      inherit name;
-      extraMods = [ ./vm/${name} ];
-    })
-  )
-)
 // {
   # nix build '.#nixosConfigurations.wsl.config.system.build.installer'
   #nixos = wsl { name = "wsl"; };
@@ -63,26 +53,4 @@ in
   #  name = "wsl";
   #  system = "aarch64-linux";
   #};
-
-  builder-aarch = lib.nixosSystem {
-    system = "aarch64-linux";
-    modules = [
-      "${top.nixunstable}/nixos/modules/profiles/nix-builder-vm.nix"
-      {
-        virtualisation.host.pkgs = import top.nixunstable { system = "aarch64-darwin"; };
-        boot.loader.grub.devices = [ "/dev/vda" ];
-      }
-    ];
-  };
-
-  builder-x86 = lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [
-      "${top.nixunstable}/nixos/modules/profiles/nix-builder-vm.nix"
-      {
-        virtualisation.host.pkgs = import top.nixunstable { system = "aarch64-darwin"; };
-        boot.loader.grub.devices = [ "/dev/vda" ];
-      }
-    ];
-  };
 }

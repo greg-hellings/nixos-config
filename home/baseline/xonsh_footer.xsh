@@ -38,11 +38,6 @@ def _ivr2(args):
     vpn("gregory_hellings@ra.ivrtechnology.com", "IVR Technology")
 aliases['ivr2'] = _ivr2
 
-def _glrestart(args):
-    sudo nixos-container run gitlab -- systemctl restart gitlab
-    sudo nixos-container run gitlab -- systemctl restart nginx
-aliases['glrestart'] = _glrestart
-
 def _aws_creds(args):
     $AWS_ACCESS_KEY_ID=$(bw get username "AWS Access Key")
     $AWS_SECRET_ACCESS_KEY=$(bw get password "AWS Access Key")

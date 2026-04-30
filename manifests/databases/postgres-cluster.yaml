@@ -11,13 +11,6 @@ spec:
 
   managed:
     roles:
-      - name: gitlab
-        ensure: present
-        comment: Gitlab user
-        login: true
-        superuser: false
-        passwordSecret:
-          name: postgres-user-gitlab
       - name: pgadmin
         ensure: present
         comment: PG Admin user

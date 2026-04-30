@@ -43,10 +43,6 @@
       tags = [ "home" ];
     };
     remote-builder.enable = true;
-    runner = {
-      enable = true;
-      qemu = true;
-    };
     gitea-runner = {
       enable = true;
       extraLabels = [ "bare-metal:host" ];

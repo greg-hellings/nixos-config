@@ -43,10 +43,6 @@
       enable = true;
       tags = [ "mobile" ];
     };
-    runner = {
-      enable = true;
-      qemu = true;
-    };
   };
 
   hardware = {
