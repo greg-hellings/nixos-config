@@ -27,6 +27,7 @@ in
       direnv
       home-manager
       just
+      mcp-grafana
       nixVersions.stable
       pre-commit
       (pulumi.withPackages (p: with p; [
