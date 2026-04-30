@@ -9,6 +9,7 @@
 let
   builderHosts = lib.filterAttrs (_n: v: (builtins.hasAttr "builder" v) && v.builder) metadata.hosts;
   cfg = config.greg.nix;
+  hostname = x: if cfg.cache then "${x}.shire-zebra.ts.net" else "${x}.thehellings.lan";
 in
 {
   options.greg.nix = {
@@ -22,7 +23,7 @@ in
     programs.ssh.extraConfig = builtins.concatStringsSep "\n" (
       lib.map (x: ''
         Host ${x}-builder
-          Hostname ${x}.shire-zebra.ts.net
+          Hostname ${hostname x}
           User remote-builder-user
       '') (lib.attrNames builderHosts)
     );
