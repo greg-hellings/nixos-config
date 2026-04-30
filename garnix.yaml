@@ -20,14 +20,13 @@ builds:
       - darwinConfigurations.MacBook-Pro
       - darwinConfigurations.MacBook-Prolocal
       - darwinConfigurations.li
-  # Some specific includes which are not specific enough to override the rules above,
-  # due to the intrepretation of the glob excludes, but which I still need included
+  # Some specific includes which are not specific enough to override the rules
+  # above, due to the intrepretation of the glob excludes, but which I still
+  # need included
   - include:
-      # These are Mac homeConfigurations, which I do not have the infra to build at home
+      # These are Mac homeConfigurations, which I do not have the infra
+      # to build at home
       - homeConfigurations."gregory.hellings-mbp"
       - homeConfigurations.gregs-MacBook-Pro-16-inch-Nov-2024
-      # These are builder images used on my Macs, but they can't always access the cache
-      # on my local infrastructure, so I build them in Garnix so they are accessible
-      # outside of my network, too
-      - nixosConfigurations.builder-x86
-      - nixosConfigurations.builder-aarch
+      - darwinConfigurations.li.pkgs.darwin.linux-builder
+      - darwinConfigurations.li.pkgs.darwin.linux-builder-x86_64
