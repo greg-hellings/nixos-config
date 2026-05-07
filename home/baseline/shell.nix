@@ -26,6 +26,7 @@
       nixcopy = "nix copy --to \"s3://binary-cache/?profile=default&endpoint=nas.home%3A9000&scheme=http\"";
       r = "run0";
       updateScript = "nix-shell maintainers/scripts/update.nix --argstr package";
+      p = "${lib.getExe pkgs.podman-tui}";
 
       # General
       k = "kubectl";

@@ -29,6 +29,8 @@ in
       just
       mcp-grafana
       nixVersions.stable
+      podman
+      poetry
       pre-commit
       (pulumi.withPackages (p: with p; [
         pulumi-aws-native
@@ -39,6 +41,7 @@ in
       ]))
       python
       rustc
+      terraform
     ];
   };
 
