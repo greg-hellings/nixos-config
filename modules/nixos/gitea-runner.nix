@@ -45,22 +45,27 @@ in
         "debian-latest:docker://node:25-trixie"
 
         "ubuntu-latest:docker://docker.gitea.com/runner-images:ubuntu-latest"
+        "ubuntu-26.04:docker://docker.gitea.com/runner-images:ubuntu-26.04"
         "ubuntu-24.04:docker://docker.gitea.com/runner-images:ubuntu-24.04"
         "ubuntu-22.04:docker://docker.gitea.com/runner-images:ubuntu-22.04"
 
         "ubuntu-full-latest:docker://ghcr.io/catthehacker/ubuntu:full-latest"
+        "ubuntu-full-26.04:docker://ghcr.io/catthehacker/ubuntu:full-26.04"
         "ubuntu-full-24.04:docker://ghcr.io/catthehacker/ubuntu:full-24.04"
         "ubuntu-full-22.04:docker://ghcr.io/catthehacker/ubuntu:full-22.04"
 
         "ubuntu-act-latest:docker://ghcr.io/catthehacker/ubuntu:act-latest"
+        "ubuntu-act-26.04:docker://ghcr.io/catthehacker/ubuntu:act-26.04"
         "ubuntu-act-24.04:docker://ghcr.io/catthehacker/ubuntu:act-24.04"
         "ubuntu-act-22.04:docker://ghcr.io/catthehacker/ubuntu:act-22.04"
 
         "ubuntu-runner-latest:docker://ghcr.io/catthehacker/ubuntu:runner-latest"
+        "ubuntu-runner-26.04:docker://ghcr.io/catthehacker/ubuntu:runner-26.04"
         "ubuntu-runner-24.04:docker://ghcr.io/catthehacker/ubuntu:runner-24.04"
         "ubuntu-runner-22.04:docker://ghcr.io/catthehacker/ubuntu:runner-22.04"
 
         "ubuntu-rust-latest:docker://ghcr.io/catthehacker/ubuntu:rust-latest"
+        "ubuntu-rust-26.04:docker://ghcr.io/catthehacker/ubuntu:rust-26.04"
         "ubuntu-rust-24.04:docker://ghcr.io/catthehacker/ubuntu:rust-24.04"
         "ubuntu-rust-22.04:docker://ghcr.io/catthehacker/ubuntu:rust-22.04"
 
