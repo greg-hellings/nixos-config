@@ -37,11 +37,4 @@ let
       ++ lib.optionals (builtins.pathExists ./hosts/${name}) [ ./hosts/${name} ];
     };
 in
-(
-  lib.genAttrs
-    (builtins.attrNames (builtins.readDir ./hosts))
-    (
-      name:
-      mac { inherit name; }
-    )
-)
+(lib.genAttrs (builtins.attrNames (builtins.readDir ./hosts)) (name: mac { inherit name; }))

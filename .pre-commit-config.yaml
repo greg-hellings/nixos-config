@@ -17,7 +17,7 @@ repos:
       - id: mixed-line-ending
       - id: trailing-whitespace
   - repo: https://github.com/adrienverge/yamllint.git
-    rev: v1.37.1
+    rev: v1.38.0
     hooks:
       - id: yamllint
         args:
@@ -32,7 +32,7 @@ repos:
               document-start: false
               line-length: false
   - repo: https://github.com/NixOS/nixfmt
-    rev: v1.1.0
+    rev: v1.2.0
     hooks:
       - id: nixfmt-nix
   - repo: https://github.com/astro/deadnix

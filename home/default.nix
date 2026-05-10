@@ -10,7 +10,8 @@ let
     let
       inherit (metadata.hosts.${host}) system;
       pkgs = nixpkgs.${system};
-      username = if builtins.hasAttr "user" metadata.hosts.${host} then metadata.hosts.${host}.user else "greg";
+      username =
+        if builtins.hasAttr "user" metadata.hosts.${host} then metadata.hosts.${host}.user else "greg";
     in
     top.hmunstable.lib.homeManagerConfiguration {
       inherit pkgs;
@@ -31,8 +32,4 @@ let
       };
     };
 in
-(
-  lib.genAttrs
-    (builtins.attrNames (builtins.readDir ./hosts))
-    user
-)
+(lib.genAttrs (builtins.attrNames (builtins.readDir ./hosts)) user)

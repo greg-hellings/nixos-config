@@ -58,12 +58,17 @@ in
           "gregory.hellings"
         ]; # For home and for work machines
         substituters =
-          (if cfg.cache then [
-            #"http://chronicles.shire-zebra.ts.net:9000/binary-cache/"
-            "http://nas1.shire-zebra.ts.net:8080/default"
-          ] else [
-            "http://nas1.thehellings.lan:8080/default"
-          ])
+          (
+            if cfg.cache then
+              [
+                #"http://chronicles.shire-zebra.ts.net:9000/binary-cache/"
+                "http://nas1.shire-zebra.ts.net:8080/default"
+              ]
+            else
+              [
+                "http://nas1.thehellings.lan:8080/default"
+              ]
+          )
           ++ [
             "https://ai.cachix.org"
             "https://nixpkgs-python.cachix.org"

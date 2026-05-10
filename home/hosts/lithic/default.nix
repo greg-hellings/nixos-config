@@ -4,9 +4,11 @@
   ...
 }:
 let
-  python = pkgs.python312.withPackages (p: with p; [
-    ipython
-  ]);
+  python = pkgs.python312.withPackages (
+    p: with p; [
+      ipython
+    ]
+  );
 in
 {
   # Disables hitting local cache
@@ -32,13 +34,15 @@ in
       podman
       poetry
       pre-commit
-      (pulumi.withPackages (p: with p; [
-        pulumi-aws-native
-        pulumi-command
-        pulumi-go
-        pulumi-nodejs
-        pulumi-python
-      ]))
+      (pulumi.withPackages (
+        p: with p; [
+          pulumi-aws-native
+          pulumi-command
+          pulumi-go
+          pulumi-nodejs
+          pulumi-python
+        ]
+      ))
       python
       rustc
       terraform

@@ -54,7 +54,7 @@ with lib;
 
                 target = mkOption {
                   type = types.str;
-                  description = ''The destination that is being proxied.'';
+                  description = "The destination that is being proxied.";
                   example = "http://localhost:8080";
                 };
 
