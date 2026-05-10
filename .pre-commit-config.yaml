@@ -30,6 +30,7 @@ repos:
               comments: false
               comments-indentation: false
               document-start: false
+              line-length: false
   - repo: https://github.com/NixOS/nixfmt
     rev: v1.1.0
     hooks:

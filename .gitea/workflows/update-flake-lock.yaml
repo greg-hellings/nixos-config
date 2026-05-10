@@ -1,13 +1,13 @@
 name: Update flake.lock
 
-on:
+"on":
   schedule:
     - cron: "0 0 * * 0"  # Every Sunday at midnight UTC
   workflow_dispatch:
 
 jobs:
   update-flake-lock:
-    runs-on: [bare-metal, nix-latest]
+    runs-on: nix-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v4
