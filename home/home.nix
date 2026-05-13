@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs',
   lib,
   host ? "most",
   top,
@@ -38,7 +39,7 @@ in
       gh
       git
       gnupatch
-      hms
+      pkgs'.hms
       btop
       inetutils
       jq
@@ -46,7 +47,7 @@ in
       nix-prefetch
       nmap
       openssl
-      setup-ssh
+      pkgs'.setup-ssh
       tmux
       tree
       unzip

@@ -1,7 +1,12 @@
-{ config, pkgs, ... }:
+{
+  config,
+  pkgs,
+  pkgs',
+  ...
+}:
 
 {
-  environment.systemPackages = [ pkgs.upgrade-pg-cluster ];
+  environment.systemPackages = [ pkgs'.upgrade-pg-cluster ];
 
   services.postgresql = {
     enable = true;

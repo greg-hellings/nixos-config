@@ -15,11 +15,17 @@ let
     }:
     let
       inherit (metadata.hosts.${name}) system;
+      pkgs' = top.self.packages.${system};
     in
     channel.lib.nixosSystem {
       pkgs = nixpkgs.${system};
       specialArgs = {
-        inherit metadata top lib';
+        inherit
+          metadata
+          top
+          lib'
+          pkgs'
+          ;
       };
       modules = [
         {

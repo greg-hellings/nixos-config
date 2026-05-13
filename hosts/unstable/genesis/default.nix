@@ -2,7 +2,12 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ top, pkgs, ... }:
+{
+  top,
+  pkgs,
+  pkgs',
+  ...
+}:
 {
   imports = [
     # Include the results of the hardware scan.
@@ -31,7 +36,7 @@
   };
 
   environment.systemPackages = with pkgs; [
-    create_ssl
+    pkgs'.create_ssl
     step-ca
   ];
 

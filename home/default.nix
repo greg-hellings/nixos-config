@@ -10,6 +10,7 @@ let
     let
       inherit (metadata.hosts.${host}) system;
       pkgs = nixpkgs.${system};
+      pkgs' = top.self.packages.${system};
       username =
         if builtins.hasAttr "user" metadata.hosts.${host} then metadata.hosts.${host}.user else "greg";
     in
@@ -25,6 +26,7 @@ let
           host
           username
           metadata
+          pkgs'
           ;
         nixvim = top.nixvimunstable;
         gui = false;
