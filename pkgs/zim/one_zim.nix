@@ -25,6 +25,7 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     # }
   );
   phases = [ "installPhase" ];
+  preferLocalBuild = true;
   installPhase = ''
     set -x
     ln -s ${finalAttrs.src} $out
