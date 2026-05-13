@@ -31,10 +31,9 @@
     efibootmgr
     findutils
     file
-    gcc-tune
     git
     gnupatch
-    hms # My own home manager switcher
+    top.self.packages.${pkgs.stdenv.hostPlatform.system}.hms # My own home manager switcher
     iperf
     killall
     nano

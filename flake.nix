@@ -26,6 +26,7 @@
     minecraft.url = "github:Infinidoge/nix-minecraft";
     niks3.url = "github:Mic92/niks3";
     nix-hardware.url = "github:nixos/nixos-hardware";
+    nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
     nixvimunstable = {
       url = "github:nix-community/nixvim/main";
       inputs.nixpkgs.follows = "nixunstable";
@@ -146,16 +147,17 @@
             pkgs = imported_packages.${system};
           };
 
-          packages = (import ./pkgs { inherit pkgs; });
+          packages = (import ./pkgs { inherit pkgs top; });
 
           checks = import ./checks.nix {
             inherit system top self';
-            inherit (pkgs) lib;
+            inherit (top.nixpkgs-lib) lib;
           };
 
           devShells = import ./shells.nix {
             inherit pkgs;
             inherit (top) colmena;
+            inherit (self') packages;
           };
         };
     };

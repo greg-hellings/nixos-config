@@ -30,4 +30,3 @@ final: prev:
     tpmSupport = true;
   };
 }
-// (import ../pkgs { pkgs = prev; })

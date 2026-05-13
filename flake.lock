@@ -428,6 +428,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-lib_2": {
+      "locked": {
+        "lastModified": 1778379128,
+        "narHash": "sha256-+yjPmoKsTqe/FQHriXzIfI0ELuEt3+1LXc0BE8nU/Yc=",
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "rev": "e361b0ff94723bc94283566dc2a13a46f07eaf5c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "nixpkgs.lib",
+        "type": "github"
+      }
+    },
     "nixpkgs_2": {
       "locked": {
         "lastModified": 1769461804,
@@ -561,6 +576,7 @@
         "minecraft": "minecraft",
         "niks3": "niks3",
         "nix-hardware": "nix-hardware",
+        "nixpkgs-lib": "nixpkgs-lib_2",
         "nixunstable": "nixunstable",
         "nixvimunstable": "nixvimunstable",
         "nurpkgs": "nurpkgs",

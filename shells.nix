@@ -1,6 +1,7 @@
 {
-  pkgs,
   colmena,
+  packages,
+  pkgs,
   ...
 }:
 let
@@ -16,8 +17,8 @@ in
       git
       gnutar
       gzip
-      inject
-      inject-darwin
+      packages.inject
+      packages.inject-darwin
       nano
     ];
   };
