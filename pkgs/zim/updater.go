@@ -83,7 +83,7 @@ func getHash(ch chan result, file, category, language string) {
 	// TODO: Only call this if the file doesn't already have a hash
 	// in the existing file
 	fmt.Printf("Fetching hash for %s\n", file)
-	cmd := exec.Command( "nix-prefetch-url", fmt.Sprintf("%s/%s/%s.torrent", BASE, category, file))
+	cmd := exec.Command( "nix-prefetch-url", fmt.Sprintf("%s/%s/%s", BASE, category, file))
 	out, err := cmd.Output()
 	if err != nil {
 		fmt.Printf("Error fetching hash for %s (category: %s, language: %s): %v\n", file, category, language, err)
@@ -115,6 +115,7 @@ type result struct {
 
 type Zim struct {
 	Name string `json:"name"`
+	Version string `json:"version"`
 	Hash string `json:"hash"`
 }
 
