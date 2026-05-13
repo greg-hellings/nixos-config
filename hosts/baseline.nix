@@ -3,12 +3,16 @@
   lib,
   metadata,
   pkgs,
+  top,
   ...
 }:
 {
   imports = [
     ../modules/nix-conf.nix
+    top.niks3.nixosModules.niks3-auto-upload
   ];
+
+  age.secrets.niks3-api-token.file = ../secrets/niks3/api_token.age;
 
   console = {
     font = "Lat2-Terminus16";
@@ -16,6 +20,7 @@
   };
 
   environment.systemPackages = with pkgs; [
+    top.niks3.packages.${pkgs.stdenv.hostPlatform.system}.niks3
     agenix
     bitwarden-cli
     bmon
@@ -97,6 +102,12 @@
   # Enable the OpenSSH daemon for remote control
   services = {
     locate.enable = true;
+    niks3-auto-upload = {
+      enable = config.greg.nix.cache;
+      authTokenFile = config.age.secrets.niks3-api-token.path;
+      serverUrl = "http://hosea.nebula.thehellings.com:5751";
+      verifyS3Integrity = true;
+    };
     openssh = {
       enable = true;
       settings.X11Forwarding = true;

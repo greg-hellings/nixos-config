@@ -123,9 +123,14 @@
                 # Better storage engines
                 # https://www.curseforge.com/minecraft/mc-mods/refined-storage
                 refined-storage = pkgs.fetchurl {
-                  url = "https://mediafilez.forgecdn.net/files/7961/605/refinedstorage-fabric-3.0.0-beta.5.jar";
-                  hash = "sha256-UiXNrGw/giCZAnCjFzFc9k4mrq6deTtL6Z00arSUFOU=";
+                  url = "https://mediafilez.forgecdn.net/files/8032/790/refinedstorage-fabric-3.0.0-beta.8.jar";
+                  hash = "sha256-XY5I+sw5JlWnKK/hPUOJsk2gnmqH4Iygq+aooN27NJY=";
                 };
+                # https://www.curseforge.com/minecraft/mc-mods/storage-drawers
+                #storagedrawers = pkgs.fetchurl {
+                #url = "https://mediafilez.forgecdn.net/files/7352/799/StorageDrawers-fabric-1.21.11-20.0.0.jar";
+                #hash = "sha256-eBKCmAtjAhdAjOyLMRneu/NZnNt+orIezxPy6V8g/S8=";
+                #};
                 survivalfly = pkgs.fetchurl {
                   url = "https://mediafilez.forgecdn.net/files/7870/312/survivalfly-1.3_fabric-mc26.1.1.jar";
                   hash = "sha256-Kai4wSxckpXbs1yLp8wJ4BmmjNkdDbeqerqWGIz3+Zk=";

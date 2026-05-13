@@ -6,6 +6,7 @@
   config,
   metadata,
   pkgs,
+  top,
   ...
 }:
 let
@@ -19,11 +20,30 @@ in
     # Include the results of the hardware scan.
     ./arr.nix
     ./hardware-configuration.nix
+    top.niks3.nixosModules.niks3
   ];
 
-  age.secrets.grafana-secret-key = {
-    file = ../../../secrets/grafana-secret-key.age;
-    owner = "grafana";
+  age.secrets = {
+    cache-private-key = {
+      file = ../../../secrets/cache-private-key.age;
+      owner = "niks3";
+    };
+    grafana-secret-key = {
+      file = ../../../secrets/grafana-secret-key.age;
+      owner = "grafana";
+    };
+    niks3-access-key-id = {
+      file = ../../../secrets/niks3/access_key_id.age;
+      owner = "niks3";
+    };
+    niks3-api-token = {
+      file = ../../../secrets/niks3/api_token.age;
+      owner = "niks3";
+    };
+    niks3-secret-access-key = {
+      file = ../../../secrets/niks3/secret_access_key.age;
+      owner = "niks3";
+    };
   };
 
   # Bootloader
@@ -98,6 +118,7 @@ in
         ];
       };
     };
+    firewall.interfaces.nebula0.allowedTCPPorts = [ 5751 ];
     nameservers = [ metadata.infra.dns ];
   };
 
@@ -149,6 +170,27 @@ in
         };
         analytics.reporting_enabled = false;
       };
+    };
+    niks3 = {
+      enable = true;
+
+      apiTokenFile = config.age.secrets.niks3-api-token.path;
+      gc.enable = false;
+      httpAddr = "${metadata.hosts.hosea.nebulaIp}:5751";
+      nginx = {
+        enable = true;
+        domain = "hosea.nebula";
+        enableACME = false;
+        forceSSL = false;
+      };
+      s3 = {
+        accessKeyFile = config.age.secrets.niks3-access-key-id.path;
+        bucket = "niks3";
+        endpoint = "nas1.shire-zebra.ts.net:9000";
+        secretKeyFile = config.age.secrets.niks3-secret-access-key.path;
+        useSSL = false;
+      };
+      signKeyFiles = [ config.age.secrets.cache-private-key.path ];
     };
     prometheus.exporters.graphite.enable = true;
     # Configure keymap

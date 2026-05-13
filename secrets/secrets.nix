@@ -72,18 +72,11 @@ in
   "minio.age".publicKeys = everyone;
 
   "attic.age".publicKeys = everyone;
-  "cache-private-key.age".publicKeys = builders ++ [
-    user_jeremiah
-    user_isaiah
-    user_jude
-    user_exodus
-  ];
-  "cache-credentials.age".publicKeys = builders ++ [
-    user_jeremiah
-    user_isaiah
-    user_jude
-    user_exodus
-  ];
+  "cache-private-key.age".publicKeys = everyone;
+  "cache-credentials.age".publicKeys = everyone;
+  "niks3/access_key_id.age".publicKeys = everyone;
+  "niks3/api_token.age".publicKeys = everyone;
+  "niks3/secret_access_key.age".publicKeys = everyone;
 
   "restic-env.age".publicKeys = everyone;
   "restic-pw.age".publicKeys = everyone;

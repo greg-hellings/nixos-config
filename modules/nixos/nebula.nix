@@ -27,7 +27,7 @@ let
   nebulaDomain = "nebula.thehellings.com";
   # Linode's public address — used by all non-lighthouse hosts to reach it.
   # Override with greg.nebula.lighthouseAddr if the public IP ever changes.
-  defaultLighthouseAddr = "linode.${nebulaDomain}";
+  defaultLighthouseAddr = "thehellings.com";
 in
 {
   options.greg.nebula = {

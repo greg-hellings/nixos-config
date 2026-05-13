@@ -61,7 +61,7 @@ in
               (
                 val:
                 lib.nameValuePair "/_${val}" {
-                  proxyPass = "http://matrix.kubernetes";
+                  proxyPass = "https://matrix.shire-zebra.ts.net";
                 }
               )
               [

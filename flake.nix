@@ -24,6 +24,7 @@
       inputs.nixpkgs.follows = "nixunstable";
     };
     minecraft.url = "github:Infinidoge/nix-minecraft";
+    niks3.url = "github:Mic92/niks3";
     nix-hardware.url = "github:nixos/nixos-hardware";
     nixvimunstable = {
       url = "github:nix-community/nixvim/main";

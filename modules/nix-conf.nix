@@ -62,7 +62,8 @@ in
             if cfg.cache then
               [
                 #"http://chronicles.shire-zebra.ts.net:9000/binary-cache/"
-                "http://nas1.shire-zebra.ts.net:8080/default"
+                "http://nas1.shire-zebra.ts.net:9000/niks3"
+                #"http://nas1.shire-zebra.ts.net:8080/default"
               ]
             else
               [
@@ -78,6 +79,7 @@ in
             "https://nixhelm.cachix.org"
           ];
         trusted-public-keys = [
+          "niks3:8iztr/NACwYEK5O7JJtGFGuv+ho/cmwql8NeoCiXNto="
           #"chronicles.shire-zebra.ts.net:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
           "default:DTGxNijw2D8FrZJPT1pFTWcLqbt60tovL+9Z+VW0HRY="
           "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
