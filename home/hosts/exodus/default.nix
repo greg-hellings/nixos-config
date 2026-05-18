@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 {
   greg = {
@@ -34,6 +34,15 @@
     discord = {
       enable = true;
       settings.SKIP_HOST_UPDATE = true;
+    };
+  };
+  xdg.desktopEntries = {
+    prismlauncher = {
+      name = "Prism Launcher - Minecraft";
+      actions.minecraft = {
+        name = "Minecraft";
+        exec = lib.getExe pkgs.prismlauncher;
+      };
     };
   };
 }
