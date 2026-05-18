@@ -62,6 +62,7 @@
           serverProperties = {
             allow-flight = true;
             motd = "Maya's Minecraft World";
+            online-mode = true;
           };
           whitelist = { };
 
@@ -128,8 +129,8 @@
                 # Better storage engines
                 # https://www.curseforge.com/minecraft/mc-mods/refined-storage
                 refined-storage = pkgs.fetchurl {
-                  url = "https://mediafilez.forgecdn.net/files/8032/790/refinedstorage-fabric-3.0.0-beta.8.jar";
-                  hash = "sha256-XY5I+sw5JlWnKK/hPUOJsk2gnmqH4Iygq+aooN27NJY=";
+                  url = "https://mediafilez.forgecdn.net/files/8086/588/refinedstorage-fabric-3.0.0.jar";
+                  hash = "sha256-LuOF0aYQon78AQeD5fQ8OXHCnekfa+PNKpH7cqimFNs=";
                 };
                 # https://www.curseforge.com/minecraft/mc-mods/storage-drawers
                 #storagedrawers = pkgs.fetchurl {
