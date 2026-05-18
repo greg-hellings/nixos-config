@@ -86,6 +86,7 @@
                   self
                   top
                   ;
+                pkgs' = top.self.packages.x86_64-linux;
               };
             };
           }
