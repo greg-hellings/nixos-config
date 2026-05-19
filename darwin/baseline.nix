@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs',
   top,
   ...
 }:
@@ -33,7 +34,7 @@ in
 {
   environment.systemPackages = with pkgs; [
     agenix
-    hms
+    pkgs'.hms
   ];
 
   fonts.packages = with pkgs; [
@@ -41,12 +42,13 @@ in
     nerd-fonts.hack
   ];
 
-  launchd.daemons.darwin-builder = builder;
+  #launchd.daemons.darwin-builder = builder;
 
   nix = {
+    #buildMachines = [ { systems = ["aarch64-linux"]; sshUser = "builder"; sshKey = "/etc/nix/builder_ed25519"; hostName = "localhost:31022"; protocol = "ssh-ng"; }];
     enable = true;
     gc.interval.Hour = 3;
-    linux-builder.enable = true;
+    #linux-builder.enable = true;
     settings.auto-optimise-store = false; # Darwin bugs?
   };
 
