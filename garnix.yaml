@@ -20,3 +20,4 @@ builds:
       # to build at home
       - homeConfigurations."gregory.hellings-mbp"
       - homeConfigurations.gregs-MacBook-Pro-16-inch-Nov-2024
+      - homeConfigurations.ivr
