@@ -19,6 +19,7 @@ let
       specialArgs = {
         inherit metadata top;
         inherit (top) self;
+        pkgs' = top.self.packages.${system};
       };
       modules = [
         {
