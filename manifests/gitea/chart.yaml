@@ -119,6 +119,53 @@ spec:
         cpu: "100m"
         memory: "2Gi"
 
+    # Anubis anti-crawler sidecar
+    # Anubis listens on :8080 and proxies to Gitea at http://localhost:3000
+    # Ingress is updated to route to the anubis port instead of http
+    extraContainers:
+      - name: anubis
+        image: ghcr.io/techarohq/anubis:latest
+        imagePullPolicy: Always
+        env:
+          - name: BIND
+            value: ":8080"
+          - name: DIFFICULTY
+            value: "4"
+          - name: METRICS_BIND
+            value: ":9090"
+          - name: POLICY_FNAME
+            value: "/etc/anubis/policy.yaml"
+          - name: SERVE_ROBOTS_TXT
+            value: "true"
+          - name: TARGET
+            value: "http://localhost:3000"
+        volumeMounts:
+          - name: anubis-policy
+            mountPath: /etc/anubis
+            readOnly: true
+        resources:
+          limits:
+            cpu: "750m"
+            memory: "256Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          seccompProfile:
+            type: RuntimeDefault
+
+    extraVolumes:
+      - name: anubis-policy
+        configMap:
+          name: anubis-policy
+
     strategy:
       type: RollingUpdate
       rollingUpdate:

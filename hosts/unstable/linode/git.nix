@@ -1,4 +1,4 @@
-{ ... }:
+{ config, ... }:
 
 let
   srcDomain = "src.thehellings.com";
@@ -6,15 +6,23 @@ let
 in
 {
   greg.proxies."${srcDomain}" = {
-    target = "https://gitea.shire-zebra.ts.net";
+    target = "http://unix:${config.services.anubis.instances.git.settings.BIND}";
     ssl = true;
     genAliases = false;
     extraConfig = ''
-      proxy_ssl_verify off;
-      proxy_ssl_server_name on;
-      proxy_set_header X-Forwarded-Proto $scheme;
-      proxy_set_header X-Forwarded-Ssl on;
+      #proxy_ssl_verify off;
+      #proxy_ssl_server_name on;
+
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Http-Version $server_protocol;
+      proxy_set_header User-Agent $http_user_agent;
       client_max_body_size 100000m;
+
+      #proxy_set_header Host $host;
+      #proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      #proxy_set_header X-Forwarded-Proto $scheme;
+      #proxy_set_header X-Forwarded-Ssl on;
+
       # Ultimate AI Block List v1.7 20250924
       # https://perishablepress.com/ultimate-ai-block-list/
 
@@ -87,6 +95,44 @@ in
 
   networking.firewall.allowedTCPPorts = [ sshPort ];
 
+  services = {
+    anubis = {
+      instances = {
+        git = {
+          enable = true;
+          settings = {
+            BIND = "/run/anubis/anubis-git/anubis.sock";
+            COOKIE_DOMAIN = "thehellings.com";
+            SERVE_ROBOTS_TXT = true;
+            TARGET = "https://gitea.shire-zebra.ts.net/";
+          };
+        };
+      };
+    };
+
+    haproxy = {
+      enable = true;
+      config = ''
+        global
+          daemon
+          maxconn 20
+
+        defaults
+          timeout connect 500s
+          timeout client 500s
+          timeout server 1h
+
+        listen gitsshd
+          bind *:${toString sshPort}
+          timeout client 1h
+          mode tcp
+          server git-isaiah isaiah.shire-zebra.ts.net:32222
+          server git-jeremiah jeremiah.shire-zebra.ts.net:32222
+          server git-zeke zeke.shire-zebra.ts.net:32222
+      '';
+    };
+  };
+
   systemd.services = {
     haproxy = {
       after = [
@@ -98,25 +144,5 @@ in
     };
   };
 
-  services.haproxy = {
-    enable = true;
-    config = ''
-      global
-        daemon
-        maxconn 20
-
-      defaults
-        timeout connect 500s
-        timeout client 500s
-        timeout server 1h
-
-      listen gitsshd
-        bind *:${toString sshPort}
-        timeout client 1h
-        mode tcp
-        server git-isaiah isaiah.shire-zebra.ts.net:32222
-        server git-jeremiah jeremiah.shire-zebra.ts.net:32222
-        server git-zeke zeke.shire-zebra.ts.net:32222
-    '';
-  };
+  users.users.nginx.extraGroups = [ config.users.groups.anubis.name ];
 }
