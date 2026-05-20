@@ -115,10 +115,15 @@ in
                 "@\tIN\tSOA\t${config.networking.hostName}\tgreg@thehellings.com (1 1m 1m 1m 1m)"
                 "\tIN\tNS\t${config.networking.hostName}"
               ];
-              makeHost = host: "${host.name}\tIN\tA\t${host.address}";
+              makeHost =
+                host:
+                [ "${host.name}\tIN\tA\t${host.address}" ]
+                ++ lib.map (a: "${a}\tIN\tA\t${host.address}") (
+                  if builtins.hasAttr "aliases" host then host.aliases else [ ]
+                );
             in
             pkgs.writeText "${domain}" (
-              builtins.concatStringsSep "\n" (preamble ++ (lib.map makeHost hosts) ++ [ "" ])
+              builtins.concatStringsSep "\n" (preamble ++ (lib.flatten (lib.map makeHost hosts)) ++ [ "" ])
             );
         in
         lib.mapAttrs

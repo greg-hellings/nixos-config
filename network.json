@@ -13,7 +13,8 @@
       "ip": "10.42.1.4",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBecZUva9OnZuXLaBun6/1ITo5f9p0YMLPD+q0egLRS",
       "external": true,
-      "ts": "100.119.228.115"
+      "ts": "100.119.228.115",
+      "aliases": [ "s3" ]
     },
     "exodus": {
       "ip": null,

@@ -15,6 +15,7 @@
       (name: value: {
         inherit name;
         address = builtins.getAttr netAttr value;
+        aliases = lib.optionals (builtins.hasAttr "aliases" value) (builtins.getAttr "aliases" value);
       })
       (
         lib.filterAttrs (
