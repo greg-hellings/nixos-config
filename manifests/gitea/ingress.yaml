@@ -8,7 +8,8 @@ spec:
     service:
       name: gitea-release-http
       port:
-        name: http
+        # Route through Anubis anti-crawler sidecar instead of directly to Gitea
+        name: anubis
   tls:
     - hosts:
         - gitea

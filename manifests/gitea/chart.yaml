@@ -47,6 +47,12 @@ spec:
         type: LoadBalancer
         port: 32222
         nodePort: 32222
+      # Anubis sidecar port — ingress routes here; Anubis proxies to :3000
+      additionalPorts:
+        - name: anubis
+          port: 8080
+          targetPort: 8080
+          protocol: TCP
 
     gitea:
       admin:
@@ -118,6 +124,51 @@ spec:
       requests:
         cpu: "100m"
         memory: "2Gi"
+
+    # Anubis anti-crawler sidecar
+    # Anubis listens on :8080 and proxies to Gitea at http://localhost:3000
+    # Ingress is updated to route to the anubis port instead of http
+    extraContainers:
+      - name: anubis
+        image: ghcr.io/techarohq/anubis:latest
+        imagePullPolicy: Always
+        env:
+          - name: BIND
+            value: ":8080"
+          - name: DIFFICULTY
+            value: "4"
+          - name: ED25519_PRIVATE_KEY_HEX
+            valueFrom:
+              secretKeyRef:
+                name: anubis-key
+                key: ED25519_PRIVATE_KEY_HEX
+          - name: METRICS_BIND
+            value: ":9090"
+          - name: SERVE_ROBOTS_TXT
+            value: "true"
+          - name: TARGET
+            value: "http://localhost:3000"
+          - name: OG_PASSTHROUGH
+            value: "true"
+          - name: OG_EXPIRY_TIME
+            value: "24h"
+        resources:
+          limits:
+            cpu: "750m"
+            memory: "256Mi"
+          requests:
+            cpu: "250m"
+            memory: "256Mi"
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 1000
+          runAsNonRoot: true
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+          seccompProfile:
+            type: RuntimeDefault
 
     strategy:
       type: RollingUpdate
