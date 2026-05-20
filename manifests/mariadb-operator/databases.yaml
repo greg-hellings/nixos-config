@@ -11,6 +11,7 @@ spec:
         kind: HelmRepository
         name: mariadb-operator
       interval: "1h"
+      version: "26.3.0"
   dependsOn:
     - name: mariadb-operator-crds
     - name: mariadb-operator
