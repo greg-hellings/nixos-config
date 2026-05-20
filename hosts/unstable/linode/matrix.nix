@@ -2,12 +2,24 @@
 # them by the following commands:
 # nix run nixpkgs.matrix-synapse
 # register_new_matrix_user -k "B9EoPr2WV9hzwc7uL2Sx1JmvCeKDEOGCpB0uginQcQtEH4wzRtkSIdo7lltrjSQa" http://localhost:8448
-{ config, lib, ... }:
+{ config, ... }:
 let
   domain = "${config.networking.domain}";
   fqdn = "matrix.${domain}";
 in
 {
+  greg.proxies."${fqdn}" = {
+    extraConfig = ''
+      error_log /var/log/nginx/debug.log debug;
+      proxy_ssl_verify off;
+      proxy_ssl_server_name on;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-Ssl on;
+    '';
+    genAliases = false;
+    ssl = true;
+    target = "https://matrix.shire-zebra.ts.net";
+  };
   services.nginx = {
     virtualHosts = {
       # Server the '.well-known' files to find the Matrix API server
@@ -43,36 +55,6 @@ in
             add_header Access-Control-Allow-Origin *;
             return 200 '${builtins.toJSON client}';
           '';
-      };
-
-      # Reverse proxy in front of the actual Matrix server
-      "${fqdn}" = {
-        enableACME = true;
-        forceSSL = true;
-
-        extraConfig = ''
-          error_log /var/log/nginx/debug.log debug;
-        '';
-
-        # Not the appropriate place for the chat client
-        locations =
-          (builtins.listToAttrs (
-            builtins.map
-              (
-                val:
-                lib.nameValuePair "/_${val}" {
-                  proxyPass = "https://matrix.shire-zebra.ts.net";
-                }
-              )
-              [
-                "matrix"
-                "synapse"
-                "dendrite"
-              ]
-          ))
-          // {
-            "/".extraConfig = "return 404;";
-          };
       };
     };
   };

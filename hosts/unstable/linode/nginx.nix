@@ -34,10 +34,5 @@ in
       ssl = true;
       genAliases = false;
     };
-    "doubles.thehellings.com" = {
-      target = "http://localhost:8081";
-      ssl = true;
-      genAliases = false;
-    };
   };
 }
