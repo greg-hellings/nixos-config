@@ -13,25 +13,23 @@
     includes = [ "config.local" ];
     enableDefaultConfig = false;
 
-    matchBlocks =
+    settings =
       let
         nas = {
-          user = "admin";
+          User = "admin";
         };
         owned = {
-          user = "greg";
+          User = "greg";
         };
       in
       {
         inherit nas;
 
         "*" = {
-          dynamicForwards = [ { port = 10240; } ];
-          serverAliveInterval = 60;
-          extraOptions = {
-            LogLevel = "error";
-            SetEnv = "TERM=xterm-256color";
-          };
+          DynamicForward = [ "10240" ];
+          ServerAliveInterval = 60;
+          LogLevel = "error";
+          SetEnv = { TERM = "xterm-256color"; };
         };
 
         "10.42.1.4" = lib.hm.dag.entryBefore [ "10.42.*" ] nas;
@@ -41,46 +39,46 @@
         "chronicles.thehellings.lan" = lib.hm.dag.entryBefore [ "*.thehellings.lan" ] nas;
 
         gh = {
-          user = "git";
-          hostname = "github.com";
+          User = "git";
+          Hostname = "github.com";
         };
         "src" = {
-          user = "git";
-          hostname = "jeremiah.shire-zebra.ts.net";
-          port = 32222;
+          User = "git";
+          Hostname = "jeremiah.shire-zebra.ts.net";
+          Port = 32222;
         };
         srcpub = {
-          user = "git";
-          hostname = "src.thehellings.com";
-          port = 2222;
+          User = "git";
+          Hostname = "src.thehellings.com";
+          Port = 2222;
         };
         ivr = {
-          user = "git";
-          hostname = "gitlab.com";
+          User = "git";
+          Hostname = "gitlab.com";
         };
 
         "ivr.thehellings.lan" = lib.hm.dag.entryBefore [ "ivr" ] {
-          user = "gregory.hellings";
+          User = "gregory.hellings";
         };
 
         "*.thehellings.lan" = owned;
         "10.42.*" = owned;
 
         "host.crosswire.org crosswire" = {
-          hostname = "host.crosswire.org";
-          user = "ghellings";
+          Hostname = "host.crosswire.org";
+          User = "ghellings";
         };
 
         fedpeople = {
-          hostname = "fedorapeople.org";
-          user = "greghellings";
+          Hostname = "fedorapeople.org";
+          User = "greghellings";
         };
 
         "src.fedoraproject.org pkgs.fedoraproject.org" = {
-          user = "greghellings";
+          User = "greghellings";
         };
 
-        "127.*".extraOptions = {
+        "127.*" = {
           PubkeyAcceptedAlgorithms = "+ssh-rsa";
           HostkeyAlgorithms = "+ssh-rsa";
         };
