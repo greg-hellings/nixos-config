@@ -137,11 +137,6 @@ spec:
             value: ":8080"
           - name: DIFFICULTY
             value: "4"
-          - name: ED25519_PRIVATE_KEY_HEX
-            valueFrom:
-              secretKeyRef:
-                name: anubis-key
-                key: ED25519_PRIVATE_KEY_HEX
           - name: METRICS_BIND
             value: ":9090"
           - name: SERVE_ROBOTS_TXT
