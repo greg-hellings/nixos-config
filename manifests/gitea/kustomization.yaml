@@ -7,4 +7,3 @@ resources:
   - ingress.yaml
   - secrets.yaml
   - dump-cronjob.yaml
-  - anubis-secret.yaml
