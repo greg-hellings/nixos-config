@@ -57,6 +57,12 @@
       "external": true,
       "system": "x86_64-linux"
     },
+    "gitea": {
+      "external": true,
+      "system": "x86_64-linux",
+      "ts": "100.64.232.81",
+      "ip": "10.42.5.1"
+    },
     "gregory.hellings-mbp": {
       "external": true,
       "system": "aarch64-darwin",

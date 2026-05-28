@@ -66,8 +66,8 @@ spec:
           APP_NAME: "Gitea: Greg's Cup of Git"
           RUN_MODE: dev
         server:
-          DOMAIN: "thehellings.com"
-          ROOT_URL: "https://src.thehellings.com"
+          DOMAIN: "shire-zebra.ts.net"
+          ROOT_URL: "https://gitea.shire-zebra.ts.net"
           SSH_PORT: "2222"
         database:
           DB_TYPE: postgres
