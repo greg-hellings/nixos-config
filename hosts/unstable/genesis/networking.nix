@@ -22,6 +22,7 @@ let
     #"1.0.0.1" # Cloudflare
     #"149.112.112.112" # Quad 9
     metadata.infra.gw # Currently using our UniFi router for DNS as well
+    "100.100.100.100"
   ];
 in
 {
@@ -132,7 +133,7 @@ in
             file = makeZoneFile (lib'.hostsByNet net metadata.hosts) domain;
           })
           {
-            "shire-zebra.ts.net" = "tailscale";
+            #"shire-zebra.ts.net" = "tailscale";
             "nebula.thehellings.com" = "nebula";
             nebula = "nebula";
             "thehellings.lan" = "lan";

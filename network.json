@@ -14,7 +14,7 @@
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBecZUva9OnZuXLaBun6/1ITo5f9p0YMLPD+q0egLRS",
       "external": true,
       "ts": "100.119.228.115",
-      "aliases": [ "s3" ]
+      "aliases": ["s3"]
     },
     "exodus": {
       "ip": null,
@@ -56,12 +56,6 @@
     "iso": {
       "external": true,
       "system": "x86_64-linux"
-    },
-    "gitea": {
-      "external": true,
-      "system": "x86_64-linux",
-      "ts": "100.64.232.81",
-      "ip": "10.42.5.1"
     },
     "gregory.hellings-mbp": {
       "external": true,
