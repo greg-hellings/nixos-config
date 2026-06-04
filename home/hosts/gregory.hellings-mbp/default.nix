@@ -36,14 +36,14 @@
       ".pip/pip.conf".text = ''
         [global]
         retries = 1
-        index-url = https://pypi.python.org/simple
+        index-url = https://pypi.python.org/
         extra-index-url =
-            https://pypidev.ivrtechnology.com/simple/
+            https://pypidev.ivrtechnology.com/
       '';
       ".config/uv/uv.toml".text = ''
         index-strategy = "unsafe-first-match"
         [[index]]
-        url = "https://pypidev.ivrtechnology.com/simple/"
+        url = "https://pypidev.ivrtechnology.com/"
         name = "pypidev"
         ignore-error-codes = [403]
       '';
