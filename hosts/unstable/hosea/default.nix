@@ -18,7 +18,6 @@ in
 {
   imports = [
     # Include the results of the hardware scan.
-    ./arr.nix
     ./hardware-configuration.nix
     top.niks3.nixosModules.niks3
   ];
@@ -199,6 +198,25 @@ in
       variant = "";
     };
   };
+
+  systemd.mounts =
+    let
+      nfs = name: {
+        what = "nas1.shire-zebra.ts.net:/mnt/all/${name}";
+        type = "nfs";
+        name = "${name}.mount";
+        where = "/${name}";
+        requires = [ "tailscaled-autoconnect.service" ];
+        after = [ "tailscaled-autoconnect.service" ];
+        wantedBy = [ "multi-user.target" ];
+        mountConfig.Options = "_netdev,noexec,timeo=50,retrans=5,soft";
+      };
+    in
+    [
+      (nfs "music")
+      (nfs "photos")
+      (nfs "video")
+    ];
 
   # After first deploy: create a Grafana service account + API token for Klaatu
   # via the Grafana UI, then encrypt it: agenix -e secrets/grafana-api-token.age

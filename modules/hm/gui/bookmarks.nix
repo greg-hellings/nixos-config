@@ -399,16 +399,24 @@
         name = "Media";
         bookmarks = [
           {
-            name = "Prowlarr";
-            url = "https://hosea.shire-zebra.ts.net:9696/";
+            name = "Flaresolverr";
+            url = "http://nas1.shire-zebra.ts.net:30098";
           }
           {
-            name = "Transmission";
-            url = "https://hosea.shire-zebra.ts.net:9091/";
+            name = "Prowlarr";
+            url = "http://nas1.shire-zebra.ts.net:30050/";
+          }
+          {
+            name = "Sonarr (TV)";
+            url = "http://nas1.shire-zebra.ts.net:30113/";
           }
           {
             name = "Radarr (Movies)";
-            url = "https://hosea.shire-zebra.ts.net:7878/";
+            url = "http://nas1.shire-zebra.ts.net:30025/";
+          }
+          {
+            name = "Transmission";
+            url = "http://nas1.shire-zebra.ts.net:30096/";
           }
         ];
       }
