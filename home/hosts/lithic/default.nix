@@ -26,12 +26,16 @@ in
       ansible
       awscli2
       cargo
+      clippy
       direnv
+      go
       home-manager
       just
       mcp-grafana
+      nil
       nixVersions.stable
       podman
+      podman-compose
       poetry
       pre-commit
       (pulumi.withPackages (
@@ -45,6 +49,7 @@ in
       ))
       python
       rustc
+      rustfmt
       terraform
     ];
   };
