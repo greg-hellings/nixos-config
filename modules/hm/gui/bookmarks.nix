@@ -415,8 +415,8 @@
             url = "http://nas1.shire-zebra.ts.net:30025/";
           }
           {
-            name = "Transmission";
-            url = "http://nas1.shire-zebra.ts.net:30096/";
+            name = "Deluge";
+            url = "http://nas1.shire-zebra.ts.net:30038/";
           }
         ];
       }
