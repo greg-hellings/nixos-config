@@ -27,10 +27,7 @@
     niks3.url = "github:Mic92/niks3";
     nix-hardware.url = "github:nixos/nixos-hardware";
     nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
-    nixvimunstable = {
-      url = "github:nix-community/nixvim/main";
-      inputs.nixpkgs.follows = "nixunstable";
-    };
+    nixvimunstable.url = "github:nix-community/nixvim/main";
     nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
     nurpkgs.url = "github:nix-community/NUR";
     vsext.url = "github:nix-community/nix-vscode-extensions";
@@ -65,7 +62,10 @@
           config = {
             allowUnfree = true;
             allowUnfreePredicate = _: true;
-            permittedInsecurePackages = [ "ventoy-1.1.05" ];
+            permittedInsecurePackages = [
+              "ventoy-1.1.05"
+              "electron-39.8.10"
+            ];
           };
         }
       );
