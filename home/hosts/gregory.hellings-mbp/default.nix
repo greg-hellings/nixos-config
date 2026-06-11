@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs',
   lib,
   username,
   ...
@@ -20,6 +21,7 @@
       claude-code
       direnv
       home-manager
+      pkgs'.dockerCompat
       python3Packages.ipython
       just
       glab
