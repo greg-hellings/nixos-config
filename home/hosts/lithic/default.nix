@@ -1,5 +1,6 @@
 {
   pkgs,
+  pkgs',
   lib,
   ...
 }:
@@ -28,6 +29,7 @@ in
       cargo
       clippy
       direnv
+      pkgs'.dockerCompat
       go
       home-manager
       just

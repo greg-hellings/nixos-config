@@ -16,6 +16,12 @@ let
     adblock_update = c ./adblock_update.nix { };
     brew = c ./homebrew.nix { };
     create_ssl = c ./create_ssl.nix { };
+    dockerCompat = pkgs.runCommand "docker-compat" {
+      nativeBuildInputs  = [];
+    } ''
+      mkdir -p $out/bin
+      ln -s ${pkgs.podman}/bin/podman $out/bin/docker
+    '';
     gcc-tune = c ./gcc-tune.nix { };
     #gen-build = c ./gen-build { };
     hms = c ./hms { };
