@@ -32,10 +32,37 @@ let
   };
 in
 {
-  environment.systemPackages = with pkgs; [
-    agenix
-    pkgs'.hms
-  ];
+  environment = {
+    launchDaemons = {
+      "limit.maxfiles.plist" = {
+        enable = true;
+        text = ''
+        <?xml version="1.0" encoding="UTF-8"?>
+        <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+        <plist version="1.0">
+          <dict>
+            <key>Label</key>
+            <string>limit.maxfiles</string>
+            <key>ProgramArguments</key>
+            <array>
+              <string>launchctl</string>
+              <string>limit</string>
+              <string>maxfiles</string>
+              <string>524288</string>
+              <string>524288</string>
+            </array>
+            <key>RunAtLoad</key>
+            <true/>
+          </dict>
+        </plist>
+        '';
+      };
+    };
+    systemPackages = with pkgs; [
+      agenix
+      pkgs'.hms
+    ];
+  };
 
   fonts.packages = with pkgs; [
     dejavu_fonts
