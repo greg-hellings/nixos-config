@@ -316,6 +316,26 @@
                 name = "Buildbot";
                 url = "http://jeremiah.shire-zebra.ts.net:8010/";
               }
+              {
+                name = "Garage WebUI";
+                url = "http://nas1.shire-zebra.ts.net:30186/";
+              }
+              {
+                name = "Garage RPC";
+                url = "http://nas1.shire-zebra.ts.net:30187/";
+              }
+              {
+                name = "Garage S3 API";
+                url = "http://nas1.shire-zebra.ts.net:30188/";
+              }
+              {
+                name = "Garage S3 Web";
+                url = "http://nas1.shire-zebra.ts.net:30189/";
+              }
+              {
+                name = "Garage Admin";
+                url = "http://nas1.shire-zebra.ts.net:30190/";
+              }
             ];
           }
           {
