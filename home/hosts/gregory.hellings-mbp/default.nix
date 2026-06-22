@@ -50,6 +50,10 @@
         ignore-error-codes = [403]
       '';
     };
+    sessionVariables = {
+      BW_GITLAB_ITEM = "7d3da4e9-5f9a-49d0-8e14-b39c010a4001";
+      BW_ANTHROPIC_ITEM = "e122fd08-3506-4f21-9c6a-b42b00fe5be1";
+    };
     username = username;
     homeDirectory = "/Users/${username}";
   };

@@ -1,5 +1,5 @@
 # vim: set filetype=nushell :
-let servers = [isaiah jeremiah zeke genesis]
+let servers = [isaiah jeremiah zeke genesis hosea]
 
 def par-map [ items: list, c: closure ] {
   let results = $items | par-each -k $c
@@ -67,13 +67,6 @@ def dc [ $cmd: string = "sh" ] {
         "down" => (podman compose -f .devcontainer/(open .devcontainer/devcontainer.json | get dockerComposeFile | first) down),
         _ => (devcontainer --help),
     }
-}
-
-def claude [ ] {
-    unlock
-    $env.GITLAB_TOKEN = ^bw get item 7d3da4e9-5f9a-49d0-8e14-b39c010a4001 | from json | get fields | find claudeapi | get value
-    #$env.ANTHROPIC_API_KEY = ^bw get item e122fd08-3506-4f21-9c6a-b42b00fe5be1 | from json | get login.password
-    ^claude
 }
 
 if ("/usr/local/bin" | path exists) {

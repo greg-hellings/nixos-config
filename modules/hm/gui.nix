@@ -77,7 +77,7 @@ in
 
       programs.firefox = {
         enable = true; # (!pkgs.stdenv.hostPlatform.isDarwin);
-        configPath = "${config.xdg.configHome}/mozilla/firefox";
+        configPath = if pkgs.stdenv.hostPlatform.isDarwin then "${config.home.homeDirectory}/Library/Application Support/Firefox" else "${config.xdg.configHome}/mozilla/firefox";
         package = pkgs.firefox-bin;
         policies = {
           DisableAppUpdate = true;
