@@ -29,15 +29,15 @@ in
       cargo
       clippy
       direnv
-      pkgs'.dockerCompat
+      docker
+      docker-compose
+      docker-buildx
       go
       home-manager
       just
       mcp-grafana
       nil
       nixVersions.stable
-      podman
-      podman-compose
       poetry
       pre-commit
       (pulumi.withPackages (
