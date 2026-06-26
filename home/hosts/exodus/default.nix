@@ -23,6 +23,7 @@
     mattermost-desktop
     minio-client
     mumble
+    nix-index
     pre-commit
     prismlauncher
     restic
