@@ -122,6 +122,21 @@
       "external": true,
       "system": "x86_64-linux"
     },
+    "pve2": {
+      "external": true,
+      "ip": "10.42.1.15",
+      "system": "x86_64-linux"
+    },
+    "pve3": {
+      "external": true,
+      "ip": "10.42.1.16",
+      "system": "x86_64-linux"
+    },
+    "pve4": {
+      "external": true,
+      "ip": "10.42.1.17",
+      "system": "x86_64-linux"
+    },
     "wsl": {
       "external": true,
       "system": "aarch64-linux"
