@@ -11,6 +11,7 @@ in
     enable = true;
     brews = [
       "bitwarden-cli"
+      "colima"
       "direnv"
       "github-mcp-server"
       {
@@ -31,7 +32,6 @@ in
       "bruno"
       "chromium"
       "claude-code"
-      "colima"
       "dbeaver-community"
       "ghostty"
       "firefox"
