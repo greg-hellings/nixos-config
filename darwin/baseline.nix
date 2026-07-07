@@ -61,6 +61,7 @@ in
     systemPackages = with pkgs; [
       agenix
       pkgs'.hms
+      procps  # Includes tools like `watch`, `kill`, and `ps`
     ];
   };
 
