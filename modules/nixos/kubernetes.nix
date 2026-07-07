@@ -14,6 +14,7 @@ let
     url = "https://github.com/fluxcd/flux2/releases/download/v2.7.2/install.yaml";
     sha256 = "sha256-Qs1qJmgZm8q9xZsORjT/N/wzpbWVVODXtzDpjnAYMuQ=";
   };
+  keepaliveIp = "10.42.5.1";
 in
 {
   options.greg = {
@@ -95,6 +96,7 @@ in
           "--supervisor-metrics=true"
           "--tls-san ${config.networking.hostName}.thehellings.lan"
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
+          "--tls-san ${keepaliveIp}"
         ];
         manifests = {
           cert-manager.source = cert-manager;
@@ -116,7 +118,7 @@ in
           state = if (config.networking.hostName == "isaiah") then "MASTER" else "BACKUP";
           virtualIps = [
             {
-              addr = "10.42.5.1/16";
+              addr = "${keepaliveIp}/16";
               dev = cfg.vipInterface;
             }
           ];
