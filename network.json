@@ -9,6 +9,10 @@
     "tailscale": "100.64.0.0/10"
   },
   "hosts": {
+    "builder2": {
+      "ip": "10.42.1.17",
+      "system": "x86_64-linux"
+    },
     "chronicles": {
       "ip": "10.42.1.4",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEBecZUva9OnZuXLaBun6/1ITo5f9p0YMLPD+q0egLRS",
