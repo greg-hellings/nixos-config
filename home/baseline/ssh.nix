@@ -27,9 +27,12 @@
 
         "*" = {
           DynamicForward = [ "10240" ];
-          ServerAliveInterval = 60;
+          ForwardAgent = "yes";
           LogLevel = "error";
-          SetEnv = { TERM = "xterm-256color"; };
+          ServerAliveInterval = 60;
+          SetEnv = {
+            TERM = "xterm-256color";
+          };
         };
 
         "10.42.1.4" = lib.hm.dag.entryBefore [ "10.42.*" ] nas;
