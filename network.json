@@ -131,15 +131,34 @@
       "ip": "10.42.1.15",
       "system": "x86_64-linux"
     },
+    "pve2bmc": {
+      "derp": "10.42.2.129",
+      "external": true,
+      "mac": "00:25:90:4b:34:e8",
+      "ip": "10.42.6.2",
+      "system": "ipmi"
+    },
     "pve3": {
       "external": true,
       "ip": "10.42.1.16",
       "system": "x86_64-linux"
     },
+    "pve3bmc": {
+      "derp": "10.42.2.181",
+      "external": true,
+      "ip": "10.42.6.3",
+      "mac": "00:25:90:4a:dc:2e",
+      "system": "ipmi"
+    },
     "pve4": {
       "external": true,
       "ip": "10.42.1.17",
       "system": "x86_64-linux"
+    },
+    "pve4bmc": {
+      "external": true,
+      "ip": "10.42.6.4",
+      "system": "ipmi"
     },
     "wsl": {
       "external": true,
