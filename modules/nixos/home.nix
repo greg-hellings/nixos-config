@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }:
 
@@ -18,34 +17,8 @@ with lib;
   };
 
   config = mkIf cfg {
-    age.secrets.attic.file = ../../secrets/attic.age;
     networking.domain = "thehellings.lan";
     time.timeZone = "America/Chicago";
-
-    systemd.services.attic-client = {
-      enable = true;
-      description = "Attic client watch-store service";
-      after = [ "network.target" ];
-      wantedBy = [ "multi-user.target" ];
-      serviceConfig = {
-        Type = "simple";
-        Restart = "on-failure";
-        RestartSec = "5s";
-      };
-      preStart = ''
-        set -x
-        mkdir -p $XDG_CONFIG_HOME/attic
-        cp ${config.age.secrets.attic.path} $XDG_CONFIG_HOME/attic/config.toml
-      '';
-      script = "${pkgs.attic-client}/bin/attic watch-store --ignore-upstream-cache-filter default";
-      environment = {
-        XDG_CONFIG_HOME = "/var/lib/attic-client";
-      };
-    };
-
-    systemd.tmpfiles.rules = [
-      "d /var/lib/attic-client 0755 root root -"
-    ];
 
     # Open Prometheus exporter ports on LAN-connected hosts only.
     # NOT in baseline.nix to avoid exposing these on internet-facing hosts (e.g. linode).

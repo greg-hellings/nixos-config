@@ -9,9 +9,12 @@
     top.hermes.nixosModules.default
   ];
   greg = {
-    home = true;
-    tailscale.enable = true;
+    nebula = {
+      enable = true;
+      nebulaIp = "10.157.0.8";
+    };
   };
+  networking.hostName = "hermes";
   nix.settings = {
     sandbox = false;
   };
@@ -50,7 +53,7 @@
         context_file_max_chars = 25000;
         file_read_max_chars = 100000;
         goals = {
-          max_turns = 20;  # Number of times Hermes tells the model to keep working towards the goal
+          max_turns = 20; # Number of times Hermes tells the model to keep working towards the goal
         };
         memory = {
           memory_enabled = true;
