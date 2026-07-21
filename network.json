@@ -35,6 +35,12 @@
       "tags": ["router", "server"],
       "nebulaIp": "10.157.0.2"
     },
+    "hermes": {
+      "ip": "10.42.1.18",
+      "mac": "BC:24:11:EF:3B:94",
+      "system": "x86_64-linux",
+      "tags": ["server"]
+    },
     "hosea": {
       "ip": "10.42.1.7",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz",
