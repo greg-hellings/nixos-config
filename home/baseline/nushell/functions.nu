@@ -12,6 +12,10 @@ def --env unlock [] {
     }
 }
 
+def nebulaIps [] {
+    open ../../network.json | get hosts | items { |h, e| $e.nebulaIp? } | filter { |e| $e != null } | sort
+}
+
 def rebuild [ $target: string = "switch" ] {
     if (uname | get operating-system) == "Darwin" {
         sudo darwin-rebuild $target
