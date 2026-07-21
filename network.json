@@ -38,6 +38,7 @@
     "hermes": {
       "ip": "10.42.1.18",
       "mac": "BC:24:11:EF:3B:94",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILFYyzz/9i5rXprCQj9IL1ulrbQ6E9BOSeOcvf4D/b0G",
       "system": "x86_64-linux",
       "tags": ["server"]
     },
