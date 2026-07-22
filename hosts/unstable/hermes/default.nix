@@ -1,5 +1,7 @@
 {
+  config,
   modulesPath,
+  lib,
   top,
   ...
 }:
@@ -13,6 +15,10 @@
       enable = true;
       nebulaIp = "10.157.0.8";
     };
+    proxies = lib.genAttrs' [ "thehellings.lan" "nebula.thehellings.com" "shire-zebra.ts.net" ] (
+      name:
+      (lib.nameValuePair "${config.networking.hostName}.${name}" { target = "http://127.0.0.1:9119"; })
+    );
   };
   nix.settings = {
     sandbox = false;
