@@ -30,6 +30,7 @@ let
       modules = [
         {
           nixpkgs.hostPlatform = system;
+          networking.hostName = name;
         }
         # Imported ones
         top.agenix.nixosModules.default

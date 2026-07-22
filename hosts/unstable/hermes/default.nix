@@ -14,11 +14,11 @@
       nebulaIp = "10.157.0.8";
     };
   };
-  networking.hostName = "hermes";
   nix.settings = {
     sandbox = false;
   };
   proxmoxLXC = {
+    manageHostName = true;
     manageNetwork = false;
     privileged = true;
   };
@@ -117,4 +117,10 @@
       sttLibrary = "faster-whisper";
     };
   };
+
+  systemd.suppressedSystemUnits = [
+    "dev-mqueue.mount"
+    "sys-kernel-debug.mount"
+    "sys-fs-fuse-connections.mount"
+  ];
 }
