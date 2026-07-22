@@ -10,11 +10,16 @@
     (modulesPath + "/virtualisation/proxmox-lxc.nix")
     top.hermes.nixosModules.default
   ];
+  age.secrets.hermes = {
+    file = ../../../secrets/hermes.age;
+    owner = "hermes";
+  };
   greg = {
     nebula = {
       enable = true;
       nebulaIp = "10.157.0.8";
     };
+    nix.cache = false;
     proxies = lib.genAttrs' [ "thehellings.lan" "nebula.thehellings.com" "shire-zebra.ts.net" ] (
       name:
       (lib.nameValuePair "${config.networking.hostName}.${name}" { target = "http://127.0.0.1:9119"; })
@@ -32,6 +37,13 @@
     fstrim.enable = false;
     hermes-agent = {
       enable = true;
+      addToSystemPackages = true;
+      environment = {
+        MATRIX_HOMESERVER = "https://thehellings.com";
+      };
+      environmentFiles = [
+        config.age.secrets.hermes.path
+      ];
       settings = {
         agent = {
           reasoning_effort = "medium";
@@ -61,11 +73,24 @@
         goals = {
           max_turns = 20; # Number of times Hermes tells the model to keep working towards the goal
         };
+        matrix = {
+          allowed_users = [
+            "@greg:thehellings.com"
+          ];
+          allowed_rooms = [
+            "!agents:thehellings.com"
+          ];
+          free_response_rooms = [
+            "!agents:thehellings.com"
+          ];
+          require_mention = true;
+        };
         memory = {
           memory_enabled = true;
           user_profile_enabled = true;
           write_approval = true;
         };
+        model.default = "anthropic/claude-opus-4.8";
         quick_commands = {
           disk = {
             type = "exec";
@@ -98,8 +123,12 @@
           max_lines = 2000;
           max_line_length = 2000;
         };
+        toolsets = [ "all" ];
         worktree = true; # Enable multiple agents in the same repo
       };
+    };
+    nebula.networks."nebula.thehellings.com" = {
+      tun.disable = true;
     };
     openssh = {
       enable = true;

@@ -125,4 +125,6 @@ in
 
   # Custom files
   "lithic/cargo-config.toml.age".publicKeys = everyone;
+
+  "hermes.age".publicKeys = everyone;
 }
