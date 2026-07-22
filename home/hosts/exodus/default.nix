@@ -23,9 +23,11 @@
     mattermost-desktop
     minio-client
     mumble
+    nebula
     nix-index
     pre-commit
     prismlauncher
+    rclone
     restic
     restic-browser
     tea
