@@ -36,8 +36,9 @@
       "nebulaIp": "10.157.0.2"
     },
     "hermes": {
+      "external": true,
       "ip": "10.42.1.18",
-      "mac": "BC:24:11:EF:3B:94",
+      "mac": "BC:24:11:E4:72:AB",
       "nebulaIp": "10.157.0.8",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILFYyzz/9i5rXprCQj9IL1ulrbQ6E9BOSeOcvf4D/b0G",
       "system": "x86_64-linux",

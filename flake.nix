@@ -104,7 +104,7 @@
                 {
                   deployment = {
                     inherit (v) tags;
-                    targetHost = v.ts;
+                    targetHost = if (v ? "nebulaIp") then v.nebulaIp else v.ts;
                     targetUser = "greg";
                   };
                 }
