@@ -88,6 +88,7 @@ in
       priority = 254;
     };
     nebula.enable = true;
+    proxies."buildbot.nebula.thehellings.com".target = "http://buildbot.nebula.thehellings.com:8010/";
     tailscale = {
       enable = true;
       tags = [ "home" ];
@@ -142,12 +143,12 @@ in
             updateOutputs = false;
           };
         };
-        domain = "${config.networking.hostName}.shire-zebra.ts.net:8010";
+        domain = "buildbot.nebula.thehellings.com:8010";
         evalMaxMemorySize = 8192;
         evalWorkerCount = 4;
         gitea = {
           enable = true;
-          instanceUrl = "https://gitea.shire-zebra.ts.net";
+          instanceUrl = "https://src.thehellings.com";
           oauthId = "7ec9107d-379b-47c8-870f-1191956d0500";
           oauthSecretFile = config.age.secrets.gitea-oauthSecret.path;
           tokenFile = config.age.secrets.gitea-oauthToken.path;
@@ -155,7 +156,7 @@ in
           webhookSecretFile = config.age.secrets.gitea-webhookSecret.path;
         };
         showTrace = true;
-        #webhookBaseUrl = "http://${config.networking.hostName}.shire-zebra.ts.net:8010";
+        #webhookBaseUrl = "http://${config.networking.hostName}.nebula.thehellings.com:8010";
         workersFile = config.age.secrets.gitea-buildbotWorkersFile.path;
       };
       worker = {
