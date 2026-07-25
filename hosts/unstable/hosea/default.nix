@@ -185,7 +185,7 @@ in
       s3 = {
         accessKeyFile = config.age.secrets.niks3-access-key-id.path;
         bucket = "niks3";
-        endpoint = "nas1.shire-zebra.ts.net:9000";
+        endpoint = "nas1.shire-zebra.ts.net:30188";
         secretKeyFile = config.age.secrets.niks3-secret-access-key.path;
         useSSL = false;
       };

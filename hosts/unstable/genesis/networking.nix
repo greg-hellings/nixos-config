@@ -133,7 +133,7 @@ in
             file = makeZoneFile (lib'.hostsByNet net metadata.hosts) domain;
           })
           {
-            #"shire-zebra.ts.net" = "tailscale";
+            "shire-zebra.ts.net" = "tailscale";
             "nebula.thehellings.com" = "nebula";
             nebula = "nebula";
             "thehellings.lan" = "lan";

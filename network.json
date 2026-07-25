@@ -118,6 +118,7 @@
       "system": "aarch64-darwin"
     },
     "nas1": {
+      "aliases": [ "*.nas1" ],
       "external": true,
       "ip": "10.42.1.14",
       "ts": "100.114.187.61"
