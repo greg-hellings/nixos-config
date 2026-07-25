@@ -16,6 +16,38 @@ def nebulaIps [] {
     open /etc/nixos/network.json | get hosts | items { |h, e| $e.nebulaIp? } | where $it != null | sort
 }
 
+def genNebulaCert [ --ips: string, --name: string ] {
+    let public = $'~/SynologyDrive/nebula/($name).key.pub' | path expand
+    let private = $'~/SynologyDrive/nebula/($name).key' | path expand
+    let cert = $'/etc/nixos/secrets/nebula/($name).crt'
+    let ca_cert = '~/SynologyDrive/nebula/ca.crt' | path expand
+    let ca_key = '~/SynologyDrive/nebula/ca.key' | path expand
+
+    # Generate public key if there isn't one already
+    if ( not ($public | path exists) ) {
+        nebula-cert keygen -out-key $private -out-pub $public
+    }
+    # Clear old cert if there is one
+    if ( $cert | path exists) {
+        rm $cert
+    }
+
+    # Create and sign certs
+    (nebula-cert sign
+        -ca-crt $ca_cert
+        -ca-key $ca_key
+        -name $name
+        -networks $ips
+        -out-crt $cert
+        -in-pub $public
+    )
+
+    # Agenix update
+    cd /etc/nixos/secrets
+    cat $private | agenix -e $'nebula/($name).key.age'
+}
+
+
 def rebuild [ $target: string = "switch" ] {
     if (uname | get operating-system) == "Darwin" {
         sudo darwin-rebuild $target
@@ -39,7 +71,8 @@ def deploy [ $host: string, $build: string = "" ] {
     if $buildhost == "linode" or $buildhost == "genesis" {
         $buildhost = "isaiah"
     }
-    nixos-rebuild switch --sudo --use-substitutes --target-host $host --build-host $buildhost
+    colmena apply --on $host
+    #nixos-rebuild switch --sudo --use-substitutes --target-host $host --build-host $buildhost
 }
 
 def ff [ $file: string ] {

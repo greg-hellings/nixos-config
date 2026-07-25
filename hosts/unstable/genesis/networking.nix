@@ -130,7 +130,7 @@ in
         lib.mapAttrs
           (domain: net: {
             master = true;
-            file = makeZoneFile (lib'.hostsByNet net metadata.hosts) domain;
+            file = makeZoneFile (lib'.hostsByNet net (metadata.hosts // metadata.external)) domain;
           })
           {
             "shire-zebra.ts.net" = "tailscale";
