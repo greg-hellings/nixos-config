@@ -13,7 +13,7 @@ def --env unlock [] {
 }
 
 def nebulaIps [] {
-    open ../../network.json | get hosts | items { |h, e| $e.nebulaIp? } | filter { |e| $e != null } | sort
+    open /etc/nixos/network.json | get hosts | items { |h, e| $e.nebulaIp? } | where $it != null | sort
 }
 
 def rebuild [ $target: string = "switch" ] {
