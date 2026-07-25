@@ -93,10 +93,6 @@ in
   "gitea/workerPassword.age".publicKeys = everyone;
   "gitea/runner-isaiah-podman.age".publicKeys = everyone;
 
-  "acme_password.age".publicKeys = everyone;
-  "ca/intermediate_key.age".publicKeys = everyone;
-  "ca/root_key.age".publicKeys = everyone;
-
   "minio_secret_access_key.age".publicKeys = everyone;
   "minio_access_key_id.age".publicKeys = everyone;
 
