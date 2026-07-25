@@ -19,10 +19,6 @@
       inputs.nixpkgs.follows = "nixunstable";
     };
     flake-parts.url = "github:hercules-ci/flake-parts";
-    hermes = {
-      url = "github:nousresearch/hermes-agent";
-      inputs.nixpkgs.follows = "nixunstable";
-    };
     hmunstable = {
       url = "github:nix-community/home-manager/master";
       inputs.nixpkgs.follows = "nixunstable";
