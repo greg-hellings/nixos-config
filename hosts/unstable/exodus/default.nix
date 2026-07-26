@@ -9,7 +9,7 @@
 {
   imports = [
     ./hardware-configuration.nix
-    top.nix-hardware.nixosModules.framework-11th-gen-intel
+    top.nix-hardware.nixosModules.framework-intel-core-ultra-series1
   ];
 
   boot = {
