@@ -79,10 +79,10 @@ func (l *Language) Populate(code string, done chan bool) {
 	l.dirty = false
 	for f := range languageType.Fields() {
 		if f.IsExported() {
-			waitFor += 1
 			ptrPtrZim := reflect.Indirect(reflect.ValueOf(l)).
 			    FieldByName(f.Name)
 			if ptrPtrZim.IsValid() && !ptrPtrZim.IsNil() {
+				waitFor += 1
 				go reflect.Indirect(ptrPtrZim).
 				    Addr().
 				    Interface().
@@ -92,6 +92,7 @@ func (l *Language) Populate(code string, done chan bool) {
 				// TODO: Figure out how to set a value over the nil pointer
 				// of the field, so we can auto-detect when these are available
 				// in the future
+				// waitFor += 1
 				//z := &Zim{Name: f.Name, Version: "1999-01-01", Hash: ""}
 				//ptrPtrZim.Set(reflect.ValueOf(z))
 				//go z.Populate(strings.ToLower(f.Name), code, childDone)
@@ -106,16 +107,6 @@ func (l *Language) Populate(code string, done chan bool) {
 			break
 		}
 		l.dirty = l.dirty || d
-	}
-	// Nil out fields that shouldn't be emitted
-	for f := range languageType.Fields() {
-		if f.IsExported() {
-			ptrZim := reflect.Indirect(reflect.ValueOf(l)).
-			    FieldByName(f.Name)
-			if ptrZim.IsValid() && !ptrZim.IsNil() && reflect.Indirect(ptrZim).Addr().Interface().(*Zim).Hash == "" {
-				ptrZim.Set(reflect.ValueOf(nil))
-			}
-		}
 	}
 
 	//fmt.Printf("%s\tFinished populate\n", code)
@@ -272,7 +263,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = os.WriteFile(outputPath, ret, 0644)
+	err = os.WriteFile(outputPath, []byte(fmt.Sprintf("%s\n", ret)), 0644)
 	if err != nil {
 		fmt.Printf("Error writing to file %s: %v\n", outputPath, err)
 		os.Exit(1)
