@@ -16,12 +16,15 @@ let
     adblock_update = c ./adblock_update.nix { };
     brew = c ./homebrew.nix { };
     create_ssl = c ./create_ssl.nix { };
-    dockerCompat = pkgs.runCommand "docker-compat" {
-      nativeBuildInputs  = [];
-    } ''
-      mkdir -p $out/bin
-      ln -s ${pkgs.podman}/bin/podman $out/bin/docker
-    '';
+    dockerCompat =
+      pkgs.runCommand "docker-compat"
+        {
+          nativeBuildInputs = [ ];
+        }
+        ''
+          mkdir -p $out/bin
+          ln -s ${pkgs.podman}/bin/podman $out/bin/docker
+        '';
     gcc-tune = c ./gcc-tune.nix { };
     #gen-build = c ./gen-build { };
     hms = c ./hms { };
@@ -29,6 +32,7 @@ let
     inject = c ./inject.nix { };
     setup-ssh = c ./setup-ssh { };
     upgrade-pg-cluster = c ./upgrade-pg-cluster.nix { };
+    zim-updater = c ./zim/updater.nix { };
   };
   x86Linux = {
     qemu-hook = c ./qemu-hook.nix { };

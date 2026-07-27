@@ -9,7 +9,7 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
-	"path/filepath"
+	"reflect"
 	"regexp"
 	"sort"
 	"strings"
@@ -17,27 +17,153 @@ import (
 
 const BASE = "https://download.kiwix.org/zim"
 
-func getTypes() []string {
-	return []string{
-		"phet",
-		"wikipedia",
-		"wiktionary",
-		"wikiversity",
-		"wikisource",
-		"wikibooks",
-		"gutenberg",
-		"ted",
+// ///////////////////////////////////////////////////////////////////////////
+// ////////////////  THE BLOB ITSELF /////////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
+type Blobs struct {
+	En    Language `json:"en"`
+	Fr    Language `json:"fr"`
+	Ht    Language `json:"ht"`
+	dirty bool
+}
+
+func (b *Blobs) Populate() {
+	done := make(chan bool)
+	waitFor := 0
+	// Launch self-populating efforts
+	blobType := reflect.Indirect(reflect.ValueOf(b)).Type()
+	for f := range blobType.Fields() {
+		if f.IsExported() {
+			//fmt.Printf("%s:\tBeginning population efforts\n", f.Name)
+			waitFor += 1
+			go reflect.Indirect(reflect.ValueOf(b)).
+				FieldByName(f.Name).
+				Addr().
+				Interface().
+				(*Language).
+				Populate(strings.ToLower(f.Name), done)
+		}
+	}
+	// Wait until all languages are completed
+	for d := range done {
+		waitFor -= 1
+		if waitFor == 0 {
+			fmt.Println("Completed waiting for all languages")
+			close(done)
+			break
+		}
+		b.dirty = b.dirty || d
 	}
 }
 
-func getLanguages() []string {
-	return []string{
-		"ht",
-		"en",
-		"fr",
+/////////////////////////////////////////////////////////////////////////////
+//////////////////////// The Language ///////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////
+
+type Language struct {
+	Gutenberg   *Zim `json:"gutenberg,omitempty"`
+	Phet        *Zim `json:"phet,omitempty"`
+	Ted         *Zim `json:"ted,omitempty"`
+	Wikibooks   *Zim `json:"wikibooks,omitempty"`
+	Wikipedia   *Zim `json:"wikipedia,omitempty"`
+	Wikisource  *Zim `json:"wikisource,omitempty"`
+	Wikiversity *Zim `json:"wikiversity,omitempty"`
+	Wiktionary  *Zim `json:"wiktionary,omitempty"`
+	dirty       bool
+}
+
+func (l *Language) Populate(code string, done chan bool) {
+	childDone := make(chan bool)
+	waitFor := 0
+	languageType := reflect.Indirect(reflect.ValueOf(l)).Type()
+	l.dirty = false
+	for f := range languageType.Fields() {
+		if f.IsExported() {
+			waitFor += 1
+			ptrPtrZim := reflect.Indirect(reflect.ValueOf(l)).
+			    FieldByName(f.Name)
+			if ptrPtrZim.IsValid() && !ptrPtrZim.IsNil() {
+				go reflect.Indirect(ptrPtrZim).
+				    Addr().
+				    Interface().
+				    (*Zim).
+				    Populate(strings.ToLower(f.Name), code, childDone)
+			} else {
+				// TODO: Figure out how to set a value over the nil pointer
+				// of the field, so we can auto-detect when these are available
+				// in the future
+				//z := &Zim{Name: f.Name, Version: "1999-01-01", Hash: ""}
+				//ptrPtrZim.Set(reflect.ValueOf(z))
+				//go z.Populate(strings.ToLower(f.Name), code, childDone)
+			}
+		}
+	}
+	// Wait until children are all done
+	for d := range childDone {
+		waitFor -= 1
+		if waitFor == 0 {
+			close(childDone)
+			break
+		}
+		l.dirty = l.dirty || d
+	}
+	// Nil out fields that shouldn't be emitted
+	for f := range languageType.Fields() {
+		if f.IsExported() {
+			ptrZim := reflect.Indirect(reflect.ValueOf(l)).
+			    FieldByName(f.Name)
+			if ptrZim.IsValid() && !ptrZim.IsNil() && reflect.Indirect(ptrZim).Addr().Interface().(*Zim).Hash == "" {
+				ptrZim.Set(reflect.ValueOf(nil))
+			}
+		}
+	}
+
+	//fmt.Printf("%s\tFinished populate\n", code)
+	done <- l.dirty
+}
+
+// ///////////////////////////////////////////////////////////////////////////
+// ////////////////////// A Single Zim ///////////////////////////////////////
+// ///////////////////////////////////////////////////////////////////////////
+type Zim struct {
+	Name    string `json:"name"`
+	Version string `json:"version"`
+	Hash    string `json:"hash"`
+	dirty   bool
+}
+
+func (z *Zim) Populate(category string, language string, done chan bool) {
+	//fmt.Printf("%s:%s\tBeginning populate for\n", language, category)
+	// Look for a possible Zim file
+	links := getLinks(getPage(category))
+	link, err := getName(links, category, language)
+	if err != nil {
+		fmt.Printf("%s:%s\tNo zim found\n", language, category)
+		done <- false
+		return
+	}
+	//fmt.Printf("%s:%s\tFound link: %s\n", category, language, link)
+	// Extract name and version
+	re := regexp.MustCompilePOSIX("^([a-zA-Z_]+)_([0-9-]+)\\.zim$")
+	match := re.FindStringSubmatch(link)
+	if len(match) != 3 {
+		fmt.Printf("%s:%s Matches: %s", language, category, match)
+		os.Exit(1)
+	}
+	// Check if the name and version mismatch
+	if match[1] == z.Name && match[2] == z.Version {
+		fmt.Printf("Skipping existing hash: %s\n", link)
+		done <- false
+	} else {
+		z.Name = match[1]
+		z.Version = match[2]
+		// Fetch the Zim file, if it differs from what we currently have
+		z.UpdateHash(category)
+		done <- true
 	}
 }
 
+// Helper function to fetch the HTML of a given type page
 func getPage(t string) string {
 	page, err := http.Get(fmt.Sprintf("%s/%s/", BASE, t))
 	if err != nil {
@@ -48,6 +174,7 @@ func getPage(t string) string {
 	return string(pageBytes)
 }
 
+// Helper function to parse out all the links from the page
 func getLinks(page string) []string {
 	ret := []string{}
 
@@ -60,6 +187,7 @@ func getLinks(page string) []string {
 	return ret
 }
 
+// Helper function to get the most likely link for this particular entry
 func getName(links []string, t, lang string) (string, error) {
 	candidates := []string{}
 	prefix := fmt.Sprintf("%s_%s_all", t, lang)
@@ -79,44 +207,39 @@ func getName(links []string, t, lang string) (string, error) {
 	}
 }
 
-func getHash(ch chan result, file, category, language string) {
-	// TODO: Only call this if the file doesn't already have a hash
-	// in the existing file
-	fmt.Printf("Fetching hash for %s\n", file)
-	cmd := exec.Command( "nix-prefetch-url", fmt.Sprintf("%s/%s/%s", BASE, category, file))
+// Helper function to get the hash value from the resulting link
+func (z *Zim) UpdateHash(category string) error {
+	file := fmt.Sprintf("%s_%s.zim", z.Name, z.Version)
+
+	// First fetch the file into our local Nix store
+	fmt.Printf("Fetching hash: %s\n", file)
+	cmd := exec.Command("nix-prefetch-url", fmt.Sprintf("%s/%s/%s", BASE, category, file))
 	out, err := cmd.Output()
 	if err != nil {
-		fmt.Printf("Error fetching hash for %s (category: %s, language: %s): %v\n", file, category, language, err)
+		fmt.Printf("%s: ERROR fetching hash: %v\n", file, err)
 		if exitErr, ok := err.(*exec.ExitError); ok {
 			fmt.Printf("Command stderr: %s\n", string(exitErr.Stderr))
 		}
-		ch <- result{category, language, ""}
-		return
+		return errors.New("Error fetching file")
 	}
 	hash := strings.TrimSpace(string(out))
-	fmt.Printf("Successfully fetched hash for %s (category: %s, language: %s)\n", file, category, language)
-	ch <- result{category, language, hash}
-}
+	fmt.Printf("%s: Successfully fetched raw hash\n", file)
+	fmt.Printf("%s: Hash is: %s\n", file, hash)
 
-func outputIsValid(o map[string]map[string]Zim) bool {
-	for a := range o {
-		for b := range o[a] {
-			if o[a][b].Hash == "" {
-				return false
-			}
+	// Then, convert the hash to SRI
+	cmd2 := exec.Command("nix", "hash", "convert", "--to", "sri", hash, "--hash-algo", "sha256")
+	out2, err2 := cmd2.Output()
+	if err2 != nil {
+		fmt.Printf("%s: Error converting hash to SRI: %v\n", file, err)
+		if exitErr, ok := err.(*exec.ExitError); ok {
+			fmt.Printf("%s: Command stderr: %s\n", file, string(exitErr.Stderr))
 		}
+		return errors.New("Error fetching file")
 	}
-	return true
-}
-
-type result struct {
-	category, language, hash string
-}
-
-type Zim struct {
-	Name string `json:"name"`
-	Version string `json:"version"`
-	Hash string `json:"hash"`
+	z.Hash = strings.TrimSpace(string(out2))
+	z.dirty = true
+	fmt.Printf("%s: Successfully convert hash to SRI: %s", file, out2)
+	return nil
 }
 
 func main() {
@@ -125,84 +248,25 @@ func main() {
 
 	// Determine the output file path
 	var outputPath string
-	if *outputFile != "" {
-		outputPath = *outputFile
-	} else {
-		// Get the directory where updater.go is located
-		execPath, err := os.Executable()
-		if err != nil {
-			// Fallback to current directory if we can't determine executable path
-			outputPath = "blobs.json"
-		} else {
-			dir := filepath.Dir(execPath)
-			outputPath = filepath.Join(dir, "blobs.json")
-		}
-	}
+	outputPath = *outputFile
 
 	fmt.Println("Writing file to ", outputPath)
 
 	// Read existing cache if it exists
-	cached := make(map[string]map[string]Zim)
+	var blobs Blobs
 	if data, err := os.ReadFile(outputPath); err == nil {
-		if err := json.Unmarshal(data, &cached); err != nil {
+		if err := json.Unmarshal(data, &blobs); err != nil {
 			fmt.Printf("Warning: could not parse existing cache file: %v\n", err)
 		} else {
 			fmt.Printf("Loaded existing cache from %s\n", outputPath)
 		}
+	} else {
+		fmt.Printf("Error reading file: %s", err)
+		os.Exit(1)
 	}
+	blobs.Populate()
 
-	output := make(map[string]map[string]Zim)
-	comms := make(chan result)
-	pendingHashes := 0
-
-	for _, t := range getTypes() {
-		page := getPage(t)
-		links := getLinks(page)
-		for _, lang := range getLanguages() {
-			if file, err := getName(links, t, lang); err == nil {
-				if _, ok := output[lang]; !ok {
-					output[lang] = make(map[string]Zim)
-				}
-
-				// Check if this file already exists in cache with same name
-				if cachedLang, ok := cached[lang]; ok {
-					if cachedEntry, ok := cachedLang[t]; ok && cachedEntry.Name == file {
-						// Reuse cached hash
-						fmt.Printf("Using cached hash for %s (category: %s, language: %s)\n", file, t, lang)
-						output[lang][t] = cachedEntry
-						continue
-					}
-				}
-
-				// File is new or name has changed, fetch hash
-				output[lang][t] = Zim{file, ""}
-				pendingHashes++
-				go getHash(comms, file, t, lang)
-			}
-		}
-	}
-
-	// Only wait for results if we actually spawned goroutines
-	if pendingHashes > 0 {
-		hashesReceived := 0
-		for r := range comms {
-			if entry, ok := output[r.language][r.category]; ok {
-				entry.Hash = r.hash
-				output[r.language][r.category] = entry
-			}
-			hashesReceived++
-			if hashesReceived >= pendingHashes {
-				close(comms)
-				break
-			}
-		}
-	}
-
-	// Verify all hashes are present
-	if !outputIsValid(output) {
-		fmt.Println("Warning: Some hashes are missing from the output")
-	}
-	ret, err := json.MarshalIndent(output, "", "  ")
+	ret, err := json.MarshalIndent(&blobs, "", "  ")
 	if err != nil {
 		fmt.Printf("Error marshaling JSON: %v\n", err)
 		os.Exit(1)
