@@ -2,18 +2,18 @@
   "en": {
     "gutenberg": {
       "name": "gutenberg_en_all",
-      "version": "2023-08",
-      "hash": "sha256-OXmdHdsLZcW4nCUQsy7sMpUssS8NV7ztkCgS/nsISuw="
+      "version": "2025-11",
+      "hash": "sha256-AWd8jVVKHKssv9AgrJnryn3Wx0084NE/JmorpgPfryg="
     },
     "phet": {
       "name": "phet_en_all",
-      "version": "2025-03",
-      "hash": "sha256-ARuUzU2o17J2/ZedHc2acXl33dtHCbQJEb72UQUEm1Y="
+      "version": "2026-05",
+      "hash": "sha256-zAAq/X5rjQUiYmjMpBtWP5z3J2ZHJMmIxFKnxLAhOlA="
     },
     "wikibooks": {
       "name": "wikibooks_en_all_maxi",
-      "version": "2025-10",
-      "hash": "sha256-ONBh/ze1Fv2Ffm5b9vDzYS/i2cWSa4pM4MLZnozr2n8="
+      "version": "2026-04",
+      "hash": "sha256-wt7Zr+RkfCsFrOudMCYBADacu6IvPQDkZ6Y0VG2j9hA="
     },
     "wikipedia": {
       "name": "wikipedia_en_all_maxi",
@@ -22,40 +22,40 @@
     },
     "wikisource": {
       "name": "wikisource_en_all_maxi",
-      "version": "2025-11",
-      "hash": "sha256-p1Jio+PMTZVSLIDIOBeMG3acXJg83CwQM7zIWDUyozM="
+      "version": "2026-05",
+      "hash": "sha256-OA4b+U8mxpcX3fst6hrMyctucYTQOlG/b4qZDiVlcf4="
     },
     "wikiversity": {
       "name": "wikiversity_en_all_maxi",
-      "version": "2025-11",
-      "hash": "sha256-IG/gAUdc/vHRrIWGHhw8vMJdLWwqrNbfh+SiclQRIAI="
+      "version": "2026-05",
+      "hash": "sha256-8mZ1CSUcF4QnDIyN0M2KedQ4pcSUCmzHBlOm93MYpCE="
     },
     "wiktionary": {
       "name": "wiktionary_en_all_nopic",
-      "version": "2025-09",
-      "hash": "sha256-Ghcb60qeGaSJtTKQkJoMx/XucX7Lt1XY145lD3gHlMg="
+      "version": "2026-05",
+      "hash": "sha256-Dwiz+viVQt0zb077R9KQRgtUtxG9ixA/DeXAkCdD4rM="
     }
   },
   "fr": {
     "gutenberg": {
       "name": "gutenberg_fr_all",
-      "version": "2025-10",
-      "hash": "sha256-gLHxLXJNwwcxM/mZHtoJ8ojbGQ1fugxgni/+RXccwhU="
+      "version": "2026-01",
+      "hash": "sha256-sGn1TeKwBK0+Er5YOJWq6g0itEm4gIGvKxv/PW0DIao="
     },
     "phet": {
       "name": "phet_fr_all",
-      "version": "2025-03",
-      "hash": "sha256-CSboZNTIowLLhp1u9wkxH8xmu3LvQNx5q493AOYJRIc="
+      "version": "2026-05",
+      "hash": "sha256-bJmchFnaPcofE/hy3ZcRggMT9osHqXwLbwMLJ+cpF28="
     },
     "wikibooks": {
       "name": "wikibooks_fr_all_maxi",
-      "version": "2025-09",
-      "hash": "sha256-KHCc/73L5Bd9iZ47SRV6vpI8fVM1v9hk1TpEvTro2uo="
+      "version": "2026-07",
+      "hash": "sha256-csI+E5UFGi42BLGWWHxQhVr5KSihCFc53KGKwo557Ck="
     },
     "wikipedia": {
       "name": "wikipedia_fr_all_maxi",
-      "version": "2025-06",
-      "hash": "sha256-ve7Mbh96/ObNbV/KVNYZpfLN+HdWlJ7C5LItEdVkRH0="
+      "version": "2026-05",
+      "hash": "sha256-YUAbGzYYr+c2RQqGjHIF9XL1kNsxDgRKnHK1H7/PtDE="
     },
     "wikisource": {
       "name": "wikisource_fr_all_maxi",
@@ -64,25 +64,25 @@
     },
     "wikiversity": {
       "name": "wikiversity_fr_all_maxi",
-      "version": "2025-09",
-      "hash": "sha256-55fdtw/cRezq6nkRp6wuwkukBiqsQKdwh9QWVAgFcBI="
+      "version": "2026-05",
+      "hash": "sha256-nVDHtkWIOJkoiGixnA1zVR1QS58thjc12FJyagK3Ec0="
     },
     "wiktionary": {
       "name": "wiktionary_fr_all_nopic",
-      "version": "2025-11",
-      "hash": "sha256-P0CJptee5rDzccxyRDBzyRLuuFOcaLsJYi6DkBFUfIc="
+      "version": "2026-05",
+      "hash": "sha256-7UXByW2IIL0hec8RPT39jpg5IEGvRMD47hc4Y4vFkJs="
     }
   },
   "ht": {
     "phet": {
       "name": "phet_ht_all",
-      "version": "2025-03",
-      "hash": "sha256-bHrPzE8H7ptrP6r5wPlXSsXNlTiKxJ9KatABC4kwx+s="
+      "version": "2026-05",
+      "hash": "sha256-GiJ1jllhioyMYidQ7+Lcbdd9JN2yf04ZQgnO8XaGAqY="
     },
     "wikipedia": {
       "name": "wikipedia_ht_all_maxi",
-      "version": "2026-04",
-      "hash": "sha256-qUX0pKxIyNsWX4V6kNIsP4Z9nc6TDhwdDR0MmpDOQFs="
+      "version": "2026-07",
+      "hash": "sha256-InS9cMRaIv9ArlKVwKUypz56m4DgSR7Tl6XpSTMzH+o="
     }
   }
 }
