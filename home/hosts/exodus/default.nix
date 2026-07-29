@@ -25,6 +25,7 @@
     mumble
     nebula
     nix-index
+    adoptopenjdk-icedtea-web
     pre-commit
     prismlauncher
     rclone
