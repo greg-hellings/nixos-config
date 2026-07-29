@@ -28,6 +28,15 @@
       "tags": ["router", "server"],
       "nebulaIp": "10.157.0.2"
     },
+    "gregory.hellings-mbp": {
+      "external": true,
+      "system": "aarch64-darwin",
+      "user": "gregory.hellings"
+    },
+    "gregs-MacBook-Pro-16-inch-Nov-2024": {
+      "external": true,
+      "system": "aarch64-darwin"
+    },
     "hosea": {
       "ip": "10.42.1.7",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz",
@@ -50,13 +59,12 @@
       "external": true,
       "system": "x86_64-linux"
     },
-    "gregory.hellings-mbp": {
+    "ivr": {
       "external": true,
-      "system": "aarch64-darwin",
-      "user": "gregory.hellings"
+      "system": "aarch64-darwin"
     },
     "jeremiah": {
-      "aliases": [ "buildbot" ],
+      "aliases": ["buildbot"],
       "builder": true,
       "ip": "10.42.1.8",
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0",
@@ -66,9 +74,12 @@
       "tags": ["builder", "kube", "server"],
       "nebulaIp": "10.157.0.5"
     },
-    "gregs-MacBook-Pro-16-inch-Nov-2024": {
-      "external": true,
-      "system": "aarch64-darwin"
+    "kuma": {
+      "ip": "10.42.1.19",
+      "nebulaIp": "10.157.0.8",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhr+LmYMOk4Hixxew2FiAvL8sycgQvnhK8PBGjfnkJb",
+      "system": "x86_64-linux",
+      "tags": ["server"]
     },
     "lithic": {
       "external": true,
@@ -81,10 +92,6 @@
       "system": "x86_64-linux",
       "tags": ["public", "server"],
       "nebulaIp": "10.157.0.1"
-    },
-    "ivr": {
-      "external": true,
-      "system": "aarch64-darwin"
     },
     "MacBook-Pro.local": {
       "external": true,
@@ -131,12 +138,12 @@
       "ip": "10.42.0.4"
     },
     "k3s": {
-      "aliases": [ "*.k3s" ],
+      "aliases": ["*.k3s"],
       "ip": "10.42.5.1",
       "nebulaIp": "10.157.100.1"
     },
     "nas1": {
-      "aliases": [ "*.nas1" ],
+      "aliases": ["*.nas1"],
       "ip": "10.42.1.14",
       "ts": "100.114.187.61"
     },
@@ -161,7 +168,8 @@
       "ip": "10.42.1.17"
     },
     "pve4bmc": {
-      "ip": "10.42.6.4"
+      "ip": "10.42.6.4",
+      "mac": "00:25:90:4a:d8:2e"
     }
   }
 }
