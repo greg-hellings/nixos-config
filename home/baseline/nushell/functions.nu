@@ -16,6 +16,10 @@ def nebulaIps [] {
     open /etc/nixos/network.json | get hosts | items { |h, e| $e.nebulaIp? } | where $it != null | sort
 }
 
+def localIps [] {
+    open /etc/nixos/network.json | get hosts | items { |h, e| $e.ip? } | where $it != null | sort
+}
+
 def genNebulaCert [ --ips: string, --name: string ] {
     let public = $'~/SynologyDrive/nebula/($name).key.pub' | path expand
     let private = $'~/SynologyDrive/nebula/($name).key' | path expand
