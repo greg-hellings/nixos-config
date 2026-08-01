@@ -12,3 +12,20 @@ spec:
   tls:
     - hosts:
         - gitea
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gitea-direct
+spec:
+  rules:
+    - host: git.k3s.nebula.thehellings.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gitea-release-http
+                port:
+                  name: http

@@ -496,16 +496,16 @@
     },
     "nixunstable": {
       "locked": {
-        "lastModified": 1784356753,
-        "narHash": "sha256-12KrbMiWLcf8m7pCvAtZh1ZrgF85ZXDXvfR/fWTKy84=",
-        "owner": "nixos",
+        "lastModified": 1784700541,
+        "narHash": "sha256-LcCdjhqwjFVrFTNW6tHm3KNYRrD1TA6bYRea30yIIjw=",
+        "owner": "geri1701",
         "repo": "nixpkgs",
-        "rev": "61b7c44c4073f0b827768aff0049561b5110ea5a",
+        "rev": "3c598184d1f70c5d0beeea8b95d01ab0179e4ef7",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-unstable",
+        "owner": "geri1701",
+        "ref": "lego-v5-acme-spike",
         "repo": "nixpkgs",
         "type": "github"
       }

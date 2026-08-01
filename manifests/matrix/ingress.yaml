@@ -13,3 +13,20 @@ spec:
   tls:
     - hosts:
         - matrix
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: matrix-direct
+spec:
+  rules:
+    - host: matrix.k3s.nebula.thehellings.com
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: dendrite
+                port:
+                  number: 8008
