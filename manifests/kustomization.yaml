@@ -11,6 +11,5 @@ resources:
   - monitoring
   - pinchflat
   - smokeping
-  - uptimekuma
   - donetick
   - gitea
