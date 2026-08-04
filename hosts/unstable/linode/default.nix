@@ -326,7 +326,7 @@ in
   virtualisation.oci-containers = {
     backend = "podman";
     containers."homepage" = {
-      image = "registry.thehellings.com:443/greg/homepage/gregs-homepage:latest";
+      image = "src.thehellings.com/greg/homepage:latest";
       ports = [ "${homepage}:80" ];
     };
   };
