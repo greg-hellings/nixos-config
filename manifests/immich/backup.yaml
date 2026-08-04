@@ -33,24 +33,24 @@ spec:
         access-key: "{{ .minio_key }}"
         secret-key: "{{ .minio_secret }}"
         rclone.conf: |
-          [nas1minio]
+          [garage]
           type = s3
           provider = Minio
-          endpoint = http://nas1.shire-zebra.ts.net:9000
+          endpoint = http://nas1.shire-zebra.ts.net:30188
           access_key_id = {{ .minio_key }}
           secret_access_key = {{ .minio_secret }}
-          region = us-east-1
+          region = garage
   secretStoreRef:
     name: bitwarden-login
     kind: ClusterSecretStore
   data:
     - secretKey: minio_key
       remoteRef:
-        key: c4c66ab3-2ade-4086-9c0d-b3a80172b1ba
+        key: 8fce2750-aa62-4892-b90c-b49c001f494b
         property: username
     - secretKey: minio_secret
       remoteRef:
-        key: c4c66ab3-2ade-4086-9c0d-b3a80172b1ba
+        key: 8fce2750-aa62-4892-b90c-b49c001f494b
         property: password
 ---
 apiVersion: v1
@@ -128,7 +128,7 @@ spec:
                     --progress \
                     --transfers 4 \
                     --checkers 8 \
-                    /staging nas1minio:immich
+                    /staging garage:immich
               volumeMounts:
                 - name: staging
                   mountPath: /staging

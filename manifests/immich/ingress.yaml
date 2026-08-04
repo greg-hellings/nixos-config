@@ -22,6 +22,8 @@ spec:
                 name: immich-server
                 port:
                   name: http
+    - <<: *host
+      host: immich.k3s.nebula.thehellings.com
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
