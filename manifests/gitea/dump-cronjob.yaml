@@ -18,12 +18,12 @@ spec:
           volumes:
             - name: gitea-data
               persistentVolumeClaim:
-                claimName: gitea-shared-storage
+                claimName: gitea-new
             - name: dump-staging
               emptyDir: {}
           initContainers:
             - name: gitea-dump
-              image: "gitea/gitea:1.25.4"
+              image: "gitea/gitea:1.27.1"
               command:
                 - /bin/sh
                 - "-c"
@@ -51,12 +51,12 @@ spec:
                 - |
                   set -e
                   # Configure mc alias for MinIO
-                  mc alias set nas1 http://nas1.shire-zebra.ts.net:9000 \
+                  mc alias set nas1 http://nas1.shire-zebra.ts.net:30188 \
                     "${MINIO_ACCESS_KEY}" "${MINIO_SECRET_KEY}"
                   # Upload dump to backup-gitea bucket
                   DUMP_FILE=$(ls /dump-staging/gitea-dump-*.zip | head -1)
-                  mc cp "${DUMP_FILE}" "nas1/backup-gitea/$(basename ${DUMP_FILE})"
-                  echo "Uploaded $(basename ${DUMP_FILE}) to backup-gitea"
+                  mc cp "${DUMP_FILE}" "nas1/gitea-backup/$(basename ${DUMP_FILE})"
+                  echo "Uploaded $(basename ${DUMP_FILE}) to gitea-backup"
                   # Set 30-day lifecycle on the bucket (idempotent)
                   mc ilm rule add --expire-days 30 nas1/backup-gitea 2>/dev/null || true
               volumeMounts:
@@ -69,10 +69,10 @@ spec:
                 - name: MINIO_ACCESS_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: gitea-config
+                      name: gitea-backup
                       key: minio_key
                 - name: MINIO_SECRET_KEY
                   valueFrom:
                     secretKeyRef:
-                      name: gitea-config
+                      name: gitea-backup
                       key: minio_secret
