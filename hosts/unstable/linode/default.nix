@@ -59,7 +59,7 @@ in
       };
     };
     gitea-runner = {
-      enable = false;
+      enable = true;
       extraLabels = [
         "vps:host"
         "blog:host"
