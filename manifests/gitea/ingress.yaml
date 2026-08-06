@@ -19,7 +19,7 @@ metadata:
   name: gitea-direct
 spec:
   rules:
-    - host: git.k3s.nebula.thehellings.com
+    - host: git.k3s.thehellings.lan
       http:
         paths:
           - path: /

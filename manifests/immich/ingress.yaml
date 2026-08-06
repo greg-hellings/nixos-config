@@ -24,6 +24,8 @@ spec:
                   name: http
     - <<: *host
       host: immich.k3s.nebula.thehellings.com
+    - <<: *host
+      host: immich.k3s.thehellings.lan
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress

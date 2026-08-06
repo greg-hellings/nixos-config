@@ -20,7 +20,7 @@ metadata:
   name: matrix-direct
 spec:
   rules:
-    - host: matrix.k3s.nebula.thehellings.com
+    - host: matrix.k3s.thehellings.lan
       http:
         paths:
           - path: /

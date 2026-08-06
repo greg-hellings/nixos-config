@@ -93,7 +93,7 @@ spec:
           MINIO_USE_SSL: "false"
           MINIO_INSECURE_SKIP_VERIFY: "true"
         security:
-          ALLOWED_HOST_LIST: loopback,private,*.shire-zebra.ts.net,*.nebula.thehellings.com
+          ALLOWED_HOST_LIST: loopback,private,*.shire-zebra.ts.net,*.nebula.thehellings.com,*.thehellings.lan
 
       metrics:
         enabled: false
