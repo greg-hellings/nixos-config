@@ -15,8 +15,6 @@ let
     sha256 = "sha256-Qs1qJmgZm8q9xZsORjT/N/wzpbWVVODXtzDpjnAYMuQ=";
   };
   keepaliveIp = "10.42.5.1";
-  nebulaName = "k3s.nebula.thehellings.com";
-  nebulaIp = "10.157.100.1";
 in
 {
   options.greg = {
@@ -46,13 +44,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    assertions = [
-      {
-        assertion = config.greg.nebula.enable;
-        message = "Configure Nebula for this host, first";
-      }
-    ];
-
     age.secrets = {
       bw_secret.file = ../../secrets/kubernetes/bw_secret.age;
       dendrite_key.file = ../../secrets/dendrite_key.age;
@@ -106,8 +97,6 @@ in
           "--tls-san ${config.networking.hostName}.thehellings.lan"
           "--tls-san ${config.networking.hostName}.shire-zebra.ts.net"
           "--tls-san ${keepaliveIp}"
-          "--tls-san ${nebulaName}"
-          "--tls-san ${nebulaIp}"
         ];
         manifests = {
           cert-manager.source = cert-manager;
@@ -135,21 +124,6 @@ in
               }
             ];
             virtualRouterId = 77;
-            extraConfig = ''
-              advert_int 1
-            '';
-          };
-          k3s-nebula = {
-            interface = "nebula0";
-            priority = 1;
-            state = if (config.networking.hostName == "isaiah") then "MASTER" else "BACKUP";
-            virtualIps = [
-              {
-                addr = "${nebulaIp}/16";
-                dev = "nebula0";
-              }
-            ];
-            virtualRouterId = 78;
             extraConfig = ''
               advert_int 1
             '';

@@ -1,8 +1,9 @@
 {
+  config,
+  lib,
+  metadata,
   pkgs,
   pkgs',
-  lib,
-  config,
   ...
 }:
 
@@ -70,6 +71,12 @@ in
     nebula = {
       enable = true;
       isLighthouse = true;
+      unsafeRoutes = [
+        {
+          route = "10.42.0.0/16";
+          via = metadata.hosts.genesis.nebulaIp;
+        }
+      ];
     };
     tailscale.enable = true;
   };
@@ -126,7 +133,7 @@ in
             COOKIE_DOMAIN = "thehellings.com";
             SERVE_ROBOTS_TXT = true;
             SLOG_LEVEL = "DEBUG";
-            TARGET = "http://git.k3s.nebula.thehellings.com";
+            TARGET = "http://git.k3s.thehellings.lan";
           };
         };
       };
@@ -149,9 +156,9 @@ in
           bind *:${toString sshPort}
           timeout client 1h
           mode tcp
-          server git-isaiah isaiah.nebula.thehellings.com:32222
-          server git-jeremiah jeremiah.nebula.thehellings.com:32222
-          server git-zeke zeke.nebula.thehellings.com:32222
+          server git-isaiah isaiah.thehellings.lan:32222
+          server git-jeremiah jeremiah.thehellings.lan:32222
+          server git-zeke zeke.thehellings.lan:32222
 
         frontend https
           bind *:80
@@ -184,10 +191,10 @@ in
           option accept-unsafe-violations-in-http-response
           retries 3
           option forwardfor
-          http-request set-header Host git.k3s.nebula.thehellings.com
-          server git-isaiah isaiah.nebula.thehellings.com:80
-          server git-jeremiah jeremiah.nebula.thehellings.com:80
-          server git-zeke zeke.nebula.thehellings.com:80
+          http-request set-header Host git.k3s.thehellings.lan
+          server git-isaiah isaiah.thehellings.lan:80
+          server git-jeremiah jeremiah.thehellings.lan:80
+          server git-zeke zeke.thehellings.lan:80
 
         backend matrix
           mode http
@@ -195,10 +202,10 @@ in
           option accept-unsafe-violations-in-http-response
           retries 3
           option forwardfor
-          http-request set-header Host matrix.k3s.nebula.thehellings.com
-          server git-isaiah isaiah.nebula.thehellings.com:80
-          server git-jeremiah jeremiah.nebula.thehellings.com:80
-          server git-zeke zeke.nebula.thehellings.com:80
+          http-request set-header Host matrix.k3s.thehellings.lan
+          server git-isaiah isaiah.thehellings.lan:80
+          server git-jeremiah jeremiah.thehellings.lan:80
+          server git-zeke zeke.thehellings.lan:80
 
         backend web
           mode http

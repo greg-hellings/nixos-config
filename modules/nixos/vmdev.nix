@@ -23,6 +23,13 @@ with lib;
         type = types.str;
         description = "Kernel module type to install - amd, intel, etc";
       };
+      host = mkOption {
+        type = types.enum [
+          "libvirt"
+          "vbox"
+        ];
+        description = "Which VM hosting type to configure";
+      };
     };
   };
 
@@ -35,7 +42,6 @@ with lib;
       nixos-generators
       packer
       swtpm
-      virt-manager
       virtio-win
       xorriso
     ];
@@ -44,7 +50,7 @@ with lib;
 
     # Enable the virtualisation services
     virtualisation = {
-      libvirtd = {
+      libvirtd = mkIf (cfg.host == "libvirt") {
         enable = true;
         onBoot = "ignore"; # Do not auto-restart VMs on boot, unless they are marked autostart
         qemu = {
@@ -53,6 +59,11 @@ with lib;
             package = pkgs.swtpm;
           };
         };
+      };
+      virtualbox.host = mkIf (cfg.host == "vbox") {
+        enable = true;
+        enableExtensionPack = true;
+        headless = true;
       };
     };
 

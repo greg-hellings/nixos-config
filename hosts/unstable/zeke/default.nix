@@ -32,6 +32,10 @@
       enable = true;
       tags = [ "home" ];
     };
+    vmdev = {
+      enable = true;
+      host = "vbox";
+    };
   };
 
   hardware = {
@@ -71,10 +75,4 @@
   users.users.greg.extraGroups = [
     "podman"
   ];
-
-  # virtualisation.virtualbox.host = {
-  #   enableExtensionPack = true;
-  #   headless = true;
-  #   enableWebService = true;
-  # };
 }

@@ -77,7 +77,7 @@ in
       };
     };
     firewall = {
-      enable = false;
+      enable = true;
       allowedUDPPorts = [
         dhcpPort
         dnsPort
@@ -88,7 +88,7 @@ in
         80
       ];
     };
-    nftables.enable = false;
+    nftables.enable = true;
   };
 
   environment.etc."hosts.d/local".text = extraHosts;

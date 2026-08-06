@@ -47,6 +47,10 @@
       enable = true;
       extraLabels = [ "bare-metal:host" ];
     };
+    vmdev = {
+      enable = true;
+      host = "libvirt";
+    };
   };
 
   networking = {

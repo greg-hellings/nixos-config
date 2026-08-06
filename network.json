@@ -86,6 +86,7 @@
       "system": "aarch64-darwin"
     },
     "linode": {
+      "connectAddr": "thehellings.com",
       "ip": null,
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMv9Zud3kZOl86gtmkn+uj3D4kiXWDPtyUL02VVLNR4Q",
       "ts": "100.109.86.8",
