@@ -61,9 +61,10 @@ in
     };
     gitea-runner = {
       enable = true;
-      extraLabels = [
+      labels = [
         "vps:host"
         "blog:host"
+        "nixos-linode:host"
       ];
     };
     home = false;
@@ -182,6 +183,8 @@ in
           use_backend next if { req_ssl_sni -i next.thehellings.com }
           use_backend matrix if { hdr(host) -i matrix.thehellings.com }
           use_backend matrix if { req_ssl_sni -i matrix.thehellings.com }
+          use_backend immich if { hdr(host) -i immich.thehellings.com }
+          use_backend immich if { req_ssl_sni -i immich.thehellings.com }
           use_backend web if { hdr(host) -i thehellings.com }
           use_backend web if { req_ssl_sni -i thehellings.com }
 
@@ -195,6 +198,14 @@ in
           server git-isaiah isaiah.thehellings.lan:80
           server git-jeremiah jeremiah.thehellings.lan:80
           server git-zeke zeke.thehellings.lan:80
+
+        backend immich
+          mode http
+          balance roundrobin
+          option accept-unsafe-violations-in-http-response
+          retries 3
+          option forwardfor
+          server immich-proxy 127.0.0.1:${builtins.toString config.services.immich-public-proxy.port}
 
         backend matrix
           mode http
@@ -229,7 +240,7 @@ in
 
     immich-public-proxy = {
       enable = true;
-      immichUrl = "https://immich.shire-zebra.ts.net";
+      immichUrl = "http://immich.k3s.thehellings.lan";
     };
 
     logrotate = {
