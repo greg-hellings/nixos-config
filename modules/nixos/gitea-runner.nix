@@ -98,6 +98,19 @@ in
         inherit labels;
         inherit (cfg) name;
         enable = true;
+        hostPackages = with pkgs; [
+          bash
+          buildah
+          coreutils
+          curl
+          gawk
+          gitMinimal
+          gnused
+          nix
+          nodejs
+          podman
+          wget
+        ];
         url = cfg.instanceURL;
         tokenFile = config.age.secrets."gitea-runner-${host}-podman".path;
         settings = {
