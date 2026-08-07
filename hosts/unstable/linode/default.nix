@@ -11,6 +11,21 @@ let
   homepage = "127.0.0.1:30080";
   nextcloudPort = 8080;
   sshPort = 2222;
+  matrixServer = pkgs.writeText "matrix_server" (
+    builtins.toJSON {
+      "m.server" = "matrix.thehellings.com:443";
+    }
+  );
+  matrixClient = pkgs.writeText "matrix_client" (
+    builtins.toJSON {
+      "m.homeserver" = {
+        base_url = "https://matrix.thehellings.com";
+      };
+      "m.identity_server" = {
+        base_url = "https://vector.im";
+      };
+    }
+  );
 in
 {
   imports = [
@@ -224,6 +239,8 @@ in
           option accept-unsafe-violations-in-http-response
           retries 3
           option forwardfor
+          http-request return status 200 content-type "application/json" file ${matrixClient} hdr "cache-control" "no-cache" if { path /.well-known/matrix/client }
+          http-request return status 200 content-type "application/json" file ${matrixServer} hdr "cache-control" "no-cache" if { path /.well-known/matrix/server }
           server web-container ${homepage}
 
         backend next
