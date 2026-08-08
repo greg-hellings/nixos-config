@@ -9,10 +9,6 @@
     "tailscale": "100.64.0.0/10"
   },
   "hosts": {
-    "builder2": {
-      "ip": "10.42.1.17",
-      "system": "x86_64-linux"
-    },
     "exodus": {
       "ip": null,
       "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxmnCj2E9DxcnefPW+n4yCuLShxqr0p024riogdeXA3",
