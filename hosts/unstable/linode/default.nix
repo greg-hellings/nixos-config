@@ -280,7 +280,7 @@ in
       enable = true;
       package = pkgs.nextcloud33;
       appstoreEnable = true;
-      hostName = "localhost";
+      hostName = "127.0.0.1";
       https = false;
       config = {
         adminpassFile = config.age.secrets.nextcloudadmin.path;
