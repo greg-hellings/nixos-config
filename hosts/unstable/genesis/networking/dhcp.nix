@@ -60,7 +60,7 @@
         reservations = [
           # Static IPs for personal work
           {
-            hw-address = "00:23:24:72:64:32"; # Joel
+            hw-address = "00:23:24:72:64:32"; # PVE1
             ip-address = "10.42.0.4";
           }
           {
@@ -75,10 +75,6 @@
             hw-address = "01:a8:a1:59:c7:8a:12"; # BMC management interface for isaiah
             #ip-address = "10.42.2.253";
             ip-address = "10.42.100.6";
-          }
-          {
-            hw-address = "7c:83:34:b9:ee:ec"; # PVE1
-            ip-address = "10.42.1.1";
           }
           {
             hw-address = "74:ee:2a:66:b3:51"; # printer
