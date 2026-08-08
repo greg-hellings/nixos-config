@@ -67,7 +67,7 @@ spec:
           RUN_MODE: dev
         server:
           DOMAIN: "shire-zebra.ts.net"
-          ROOT_URL: "https://gitea.shire-zebra.ts.net"
+          ROOT_URL: "https://git.k3s.thehellings.lan"
           SSH_PORT: "2222"
         database:
           DB_TYPE: postgres
