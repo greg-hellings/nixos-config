@@ -51,8 +51,8 @@ data:
         static_configs:
           - targets:
               - "10.42.0.3"    # OpenWRT access point
-              - "10.42.0.4"    # Joel (Proxmox)
-              - "10.42.1.1"    # pve1 (Proxmox)
+              - "10.42.0.4"    # pve1 (Proxmox)
+              - "10.42.1.1"    # UDM gateway (Ubiquiti)
               - "10.42.1.4"    # chronicles (Synology NAS)
               - "10.42.1.14"   # nas1 (TrueNAS)
               - "10.42.2.57"   # odoo
