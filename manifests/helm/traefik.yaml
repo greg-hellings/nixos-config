@@ -10,6 +10,16 @@ spec:
       - "--api.dashboard=true"
       - "--api.insecure=true"
       - "--log.level=DEBUG"
+      # Access logging: gives per-request visibility (client IP, host,
+      # path, bytes, duration) for every ingress route Traefik terminates
+      # (git.k3s.thehellings.lan, matrix.k3s.thehellings.lan, immich, etc).
+      # This is the layer HAProxy on linode forwards :80 traffic to, so
+      # having request-level logs here is essential for tracing bandwidth
+      # spikes back to a specific host/path/client rather than just a
+      # backend-level byte count.
+      - "--accesslog=true"
+      - "--accesslog.format=json"
+      - "--accesslog.fields.headers.defaultmode=keep"
     ports:
       postgres:
         expose:
@@ -20,3 +30,4 @@ spec:
       traefik:
         expose:
           default: true
+
