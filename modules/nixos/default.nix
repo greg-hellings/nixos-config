@@ -16,6 +16,7 @@
     #./kiwix-serve.nix
     ./kubernetes.nix
     ./linode.nix
+    ./monitoring-access.nix
     ./podman.nix
     ./print.nix
     ./proxy.nix
