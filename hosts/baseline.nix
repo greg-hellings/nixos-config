@@ -101,6 +101,19 @@
   # Enable the OpenSSH daemon for remote control
   services = {
     locate.enable = true;
+
+    # Defensive rate-limit: cap any single misbehaving service's journal
+    # output fleet-wide. Discovered live on kuma (uptime-kuma logging a
+    # Prometheus-label validation error on every monitor beat, ~100k
+    # lines/hour) that a runaway logger can itself become the obstacle to
+    # incident investigation — journalctl becomes slow/unresponsive and
+    # disk fills — on top of drowning out genuinely useful log signal.
+    # This doesn't fix a specific app's bug, but bounds the blast radius.
+    journald.extraConfig = ''
+      RateLimitIntervalSec=30s
+      RateLimitBurst=2000
+    '';
+
     niks3-auto-upload = {
       enable = config.greg.nix.cache;
       authTokenFile = config.age.secrets.niks3-api-token.path;

@@ -49,6 +49,14 @@ in
     pkgs'.upgrade-pg-cluster
   ];
 
+  # Historical per-interface bandwidth tracking (5-min granularity, kept for
+  # months). This is what's actually missing when diagnosing "traffic was
+  # high for the past several hours" reports after the fact — journalctl
+  # timestamps only tell you what else was happening, not the traffic curve
+  # itself. `vnstat -h`/`vnstat --json h` gives an immediate confirm/deny of
+  # a reported window without waiting on live sampling.
+  services.vnstat.enable = true;
+
   greg = {
     backup.jobs = {
       nextcloud-bkup = {
@@ -164,6 +172,7 @@ in
           log /dev/log local0
 
         defaults
+          log global
           timeout connect 500s
           timeout client 500s
           timeout server 1h
@@ -176,6 +185,12 @@ in
           server git-jeremiah jeremiah.thehellings.lan:32222
           server git-zeke zeke.thehellings.lan:32222
 
+        listen stats
+          bind 127.0.0.1:8404
+          stats enable
+          stats uri /
+          stats refresh 10s
+
         frontend https
           bind *:80
           bind *:443 ssl crt ${config.security.acme.certs."thehellings.com".directory}/full.pem
@@ -187,8 +202,8 @@ in
 
           option http-server-close
           option http-keep-alive
+          option httplog
 
-          #option httplog
           #declare capture response len 80
           #http-response capture res.hdr(Location) id 0
 
@@ -300,12 +315,22 @@ in
     };
 
     # Move to :8080 so that we can run haproxy as the primary HTTP service
-    nginx.virtualHosts."${config.services.nextcloud.hostName}".listen = [
-      {
-        addr = "127.0.0.1";
-        port = nextcloudPort;
-      }
-    ];
+    nginx = {
+      virtualHosts."${config.services.nextcloud.hostName}".listen = [
+        {
+          addr = "127.0.0.1";
+          port = nextcloudPort;
+        }
+      ];
+
+      # Route nginx access logs through syslog/journald (rather than only to
+      # /var/log/nginx/access.log, which the read-only monitoring account
+      # can't read) so `journalctl -t nginx-access` gives visibility into
+      # Nextcloud request traffic during bandwidth investigations.
+      appendHttpConfig = ''
+        access_log syslog:server=unix:/dev/log,tag=nginx-access combined;
+      '';
+    };
 
     openssh.settings.PasswordAuthentication = false;
 
