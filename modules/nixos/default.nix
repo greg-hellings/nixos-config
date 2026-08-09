@@ -7,7 +7,6 @@
     ./adblock-update.nix
     ./albyhub.nix
     ./backup.nix
-    ./ceph.nix
     ./db.nix
     ./gitea-runner.nix
     ./gnome.nix
