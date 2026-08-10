@@ -178,10 +178,24 @@ in
           timeout server 1h
           # HAProxy defaults to end-to-end keep-alive (client AND server side)
           # unless a proxy overrides it. Bound how long an idle client-facing
-          # keep-alive connection is held: maxconn is only 80, and leaving
-          # this unset falls back to "timeout client" (500s), which is far
-          # longer than needed just to wait for a pipelined next request.
-          timeout http-keep-alive 30s
+          # keep-alive connection is held rather than falling back to
+          # "timeout client" (500s).
+          #
+          # CORRECTION (see #39): this was originally set to 30s as a
+          # tidy-up given maxconn=80, without considering client-side
+          # connection pooling behavior. That was too aggressive: DAVx5 (and
+          # OkHttp-based HTTP clients generally) keep idle pooled
+          # connections open for up to 5 minutes client-side before
+          # eviction. With a 30s haproxy-side timeout, any client connection
+          # idle between 30s-300s got silently closed by haproxy, and the
+          # client's next reuse of it produced exactly the "unexpected end
+          # of stream"/EOFException class of error this investigation
+          # started from - just relocated from the haproxy<->nginx leg
+          # (fixed in `backend next` below) to the client<->haproxy leg.
+          # Set comfortably above OkHttp's 300s default so a client's own
+          # pool eviction always happens first and haproxy is never the one
+          # to close a connection the client still thinks is good.
+          timeout http-keep-alive 6m
 
         listen gitsshd
           bind *:${toString sshPort}
@@ -266,6 +280,7 @@ in
 
         backend next
           log global
+          log-tag next
           mode http
           balance roundrobin
           option accept-unsafe-violations-in-http-response
