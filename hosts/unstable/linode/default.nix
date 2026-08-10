@@ -325,10 +325,19 @@ in
 
       # Route nginx access logs through syslog/journald (rather than only to
       # /var/log/nginx/access.log, which the read-only monitoring account
-      # can't read) so `journalctl -t nginx-access` gives visibility into
+      # can't read) so `journalctl -t nginx_access` gives visibility into
       # Nextcloud request traffic during bandwidth investigations.
+      #
+      # NOTE: nginx's syslog "tag" only allows alphanumeric characters and
+      # underscores (no hyphens) - an earlier version of this used
+      # tag=nginx-access, which fails nginx's config test with:
+      #   nginx: [emerg] syslog "tag" only allows alphanumeric characters
+      #   and underscore in .../nginx.conf:114
+      # That broke nginx.service (and, transitively, Nextcloud/next.thehellings.com,
+      # which is proxied through nginx on 127.0.0.1:8080) until nginx hit its
+      # systemd restart limit and gave up (start-limit-hit).
       appendHttpConfig = ''
-        access_log syslog:server=unix:/dev/log,tag=nginx-access combined;
+        access_log syslog:server=unix:/dev/log,tag=nginx_access combined;
       '';
     };
 
