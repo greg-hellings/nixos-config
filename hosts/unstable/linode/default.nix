@@ -176,6 +176,12 @@ in
           timeout connect 500s
           timeout client 500s
           timeout server 1h
+          # HAProxy defaults to end-to-end keep-alive (client AND server side)
+          # unless a proxy overrides it. Bound how long an idle client-facing
+          # keep-alive connection is held: maxconn is only 80, and leaving
+          # this unset falls back to "timeout client" (500s), which is far
+          # longer than needed just to wait for a pipelined next request.
+          timeout http-keep-alive 30s
 
         listen gitsshd
           bind *:${toString sshPort}
@@ -265,6 +271,17 @@ in
           option accept-unsafe-violations-in-http-response
           retries 3
           option forwardfor
+          # nginx (the actual listener on 127.0.0.1:8080) has
+          # keepalive_timeout 65s and will silently close an idle backend
+          # socket after that. HAProxy's default mode is end-to-end
+          # keep-alive, so without this it will happily try to reuse a
+          # backend connection nginx already closed once a mobile client's
+          # own (longer) keep-alive idle assumption outlives 65s - producing
+          # exactly the "unexpected end of stream" / EOFException the
+          # CalDAV/CardDAV client saw. Since the backend is localhost, the
+          # cost of a fresh TCP connection per request is negligible, so
+          # just don't try to reuse them here.
+          option http-server-close
           #http-response replace-value Location http://localhost:${builtins.toString nextcloudPort}/(.*) https://next.thehellings.com/\2
           server nextcloud 127.0.0.1:${builtins.toString nextcloudPort}
       '';
