@@ -253,10 +253,6 @@
                 name = "Longhorn";
                 url = "http://longhorn.shire-zebra.ts.net";
               }
-              {
-                name = "PGAdmin4";
-                url = "http://pgadmin.shire-zebra.ts.net/";
-              }
             ];
           }
           {

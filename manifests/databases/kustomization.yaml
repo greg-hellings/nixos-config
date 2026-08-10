@@ -4,6 +4,5 @@ resources:
   - namespace.yaml
   - secrets.yaml
   - postgres-cluster.yaml
-  - postgres-pgadmin.yaml
   - postgres-matrix.yaml
   - ingress.yaml

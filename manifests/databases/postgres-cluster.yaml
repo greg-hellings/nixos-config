@@ -11,13 +11,6 @@ spec:
 
   managed:
     roles:
-      - name: pgadmin
-        ensure: present
-        comment: PG Admin user
-        login: true
-        superuser: true
-        passwordSecret:
-          name: postgres-user-pgadmin
       - name: matrix
         ensure: present
         comment: Matrix DB user

@@ -23,7 +23,7 @@
 10.42.4.1 matrix matrix.thehellings.lan
 
 # VIP
-10.42.5.1 longhorn.cluster matrix.cluster pgadmin.cluter postgres.cluster immich.cluster
+10.42.5.1 longhorn.cluster matrix.cluster postgres.cluster immich.cluster
 
 # IPMI
 10.42.100.6 isaiahbmc isaiahbmc.thehellings.lan
@@ -35,7 +35,7 @@
 100.70.99.91 exodus.home exodus.shire-zebra.ts.net
 100.96.198.104 genesis.home genesis.shire-zebra.ts.net smart.home zwave.home nixcache.home gitcache.home dashy.home uptime.home speed.home
 100.68.203.1 hosea.home hosea.shire-zebra.ts.net grafana.home
-100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net pgadmin.kubernetes longhorn.kubernetes
+100.84.183.79 isaiah.home isaiah.shire-zebra.ts.net longhorn.kubernetes
 100.102.186.39 jeremiah.home jeremiah.shire-zebra.ts.net matrix.kubernetes immich.kubernetes postgres.kubernetes buildbot.home
 100.90.74.19 zeke.home zeke.shire-zebra.ts.net
 100.109.86.8 linode.home linode.shire-zebra.ts.net
