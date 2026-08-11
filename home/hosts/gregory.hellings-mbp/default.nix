@@ -20,13 +20,15 @@
       ansible
       claude-code
       direnv
-      home-manager
       pkgs'.dockerCompat
-      python3Packages.ipython
-      just
       glab
       go
       gopls
+      home-manager
+      python3Packages.ipython
+      just
+      k9s
+      kubectl
       mariadb
       nixVersions.stable
       pre-commit
