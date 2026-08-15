@@ -14,6 +14,7 @@
       #iamb
       lazyssh
       rainfrog
+      ripgrep
       tenere
       uv
       wiki-tui
