@@ -108,6 +108,7 @@ spec:
           {{ .username }}
         password: |-
           {{ .password }}
+        region: garage
   data:
     - secretKey: username
       sourceRef:
@@ -115,7 +116,7 @@ spec:
           name: bitwarden-login
           kind: ClusterSecretStore
       remoteRef:
-        key: 685b29c6-9264-4e60-ba4a-b2ea005a5d7b
+        key: 8fce2750-aa62-4892-b90c-b49c001f494b
         property: username
     - secretKey: password
       sourceRef:
@@ -123,7 +124,7 @@ spec:
           name: bitwarden-login
           kind: ClusterSecretStore
       remoteRef:
-        key: 685b29c6-9264-4e60-ba4a-b2ea005a5d7b
+        key: 8fce2750-aa62-4892-b90c-b49c001f494b
         property: password
 
 ---
@@ -133,8 +134,8 @@ metadata:
   name: k3sbackup-objectstore
 spec:
   configuration:
-    destinationPath: "s3://k3sbackup/postgres"
-    endpointURL: "http://chronicles.thehellings.lan:9000/"
+    destinationPath: "s3://immich-db-backup/"
+    endpointURL: "http://nas1.thehellings.lan:30188/"
     s3Credentials:
       accessKeyId:
         name: k3sbackup-secret
@@ -142,6 +143,9 @@ spec:
       secretAccessKey:
         name: k3sbackup-secret
         key: password
+      region:
+        name: k3sbackup-secret
+        key: region
     wal:
       compression: gzip
   retentionPolicy: "30d"
