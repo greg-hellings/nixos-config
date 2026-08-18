@@ -237,6 +237,23 @@ in
             # to this real file instead.
             logpath = "/var/log/haproxy.log";
             port = "http,https";
+            # Without this, fail2ban's systemd backend (used because
+            # `backend = systemd` is set globally in the jail defaults -
+            # see `journalctl -u fail2ban`: "Jail started without
+            # 'journalmatch' set. Jail regexs will be checked against all
+            # journal entries...") scans every journal entry from every
+            # unit on the host, not just haproxy's, on every poll cycle.
+            # Confirmed via `journalctl --since -1h | wc -l` vs
+            # `journalctl --since -1h SYSLOG_IDENTIFIER=haproxy | wc -l`:
+            # haproxy is ~91% of all journal traffic on this host, so the
+            # existing waste is small today, but it scales with unrelated
+            # services' log volume (unbounded) rather than haproxy's, and
+            # will only get worse as more services are added to this box.
+            # Scoping the match narrows fail2ban's systemd-backend reads
+            # to just haproxy's entries, mirroring the stock `sshd` filter
+            # (see /etc/fail2ban/filter.d/sshd.conf), which pins both
+            # `_SYSTEMD_UNIT` and `_COMM` for the same reason.
+            journalmatch = "_SYSTEMD_UNIT=haproxy.service + _COMM=haproxy";
           };
         };
       };
