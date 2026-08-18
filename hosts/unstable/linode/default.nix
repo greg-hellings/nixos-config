@@ -175,21 +175,6 @@ in
     # duplicating HAProxy's own logging config.
     rsyslogd = {
       enable = true;
-      # Mirrors nixpkgs' stock defaultConfig
-      # (<nixpkgs/nixos/modules/services/logging/rsyslogd.nix>) but adds
-      # `local0.none` to the catch-all so HAProxy's traffic lands only in
-      # haproxy.log below, not also duplicated into /var/log/messages.
-      defaultConfig = ''
-        # "local1" is used for dhcpd messages.
-        local1.*                     -/var/log/dhcpd
-
-        mail.*                       -/var/log/mail
-
-        *.=warning;*.=err            -/var/log/warn
-        *.crit                        /var/log/warn
-
-        *.*;mail.none;local1.none;local0.none    -/var/log/messages
-      '';
       extraConfig = ''
         local0.* -/var/log/haproxy.log
       '';
