@@ -163,6 +163,23 @@ in
       };
     };
 
+    # HAProxy (below) is configured with `log /dev/log local0`, which lands
+    # in the systemd journal but isn't a growing text file fail2ban's
+    # (default) file-based backend can tail. rsyslogd bridges that gap: it
+    # reads from the same journal socket journald forwards to (wired up
+    # automatically - enabling rsyslogd flips journald's
+    # `forwardToSyslog` on by default, see
+    # <nixpkgs/nixos/modules/system/boot/systemd/journald.nix>), so
+    # routing the `local0` facility to a real file here is enough to give
+    # fail2ban's `haproxy` jail (see below) a logpath to watch, without
+    # duplicating HAProxy's own logging config.
+    rsyslogd = {
+      enable = true;
+      extraConfig = ''
+        local0.* -/var/log/haproxy.log
+      '';
+    };
+
     fail2ban = {
       enable = true;
       bantime = "24h";
@@ -178,11 +195,49 @@ in
         "99.9.15.123/32"
       ];
       jails = {
-        haproxy.settings = {
-          enabled = true;
-          filter = "haproxy";
-          logpath = "/dev/log"; # TODO: Fixme
-          port = "http,https";
+        haproxy = {
+          # fail2ban ships a "haproxy-http-auth" filter, but no generic
+          # "haproxy" one - referencing filter = "haproxy" (as a string,
+          # under `.settings` below) pointed at a file that doesn't exist,
+          # so the jail failed to load entirely (see
+          # `journalctl -u fail2ban`: "Found no accessible config files
+          # for 'filter.d/haproxy'" / "Errors in jail 'haproxy'.
+          # Skipping..."). Setting `filter` here (top-level, not nested in
+          # `.settings`) as an attrset instead of a string name tells the
+          # NixOS module to auto-generate
+          # /etc/fail2ban/filter.d/haproxy.conf from this content (see
+          # `mkFilter` in <nixpkgs/nixos/modules/services/security/fail2ban.nix>).
+          #
+          # Matches two classes of scanning/bot traffic actually observed
+          # hammering this host's logs: naked-TLS-handshake probes (no
+          # valid SNI/cipher offer) and requests HAProxy couldn't route to
+          # any backend at all (<NOSRV> - typically the same scanners
+          # hitting the bare IP without a matching Host/SNI ACL).
+          filter = {
+            INCLUDES.before = "common.conf";
+            Definition = {
+              _daemon = "haproxy";
+              # %(__prefix_line)s (from common.conf) consumes the syslog
+              # preamble rsyslogd/journald adds ("Aug 18 04:20:07 linode
+              # haproxy[1292]: "), matching the same idiom as fail2ban's
+              # stock haproxy-http-auth.conf filter above.
+              failregex = ''
+                ^%(__prefix_line)s<HOST>:\d+ \[\S+\] \S+/\d+: (SSL handshake failure|Connection closed during SSL handshake)
+                ^%(__prefix_line)s<HOST>:\d+ \[\S+\] \S+~? \S+/<NOSRV>
+              '';
+              ignoreregex = "";
+            };
+          };
+          settings = {
+            enabled = true;
+            # See the rsyslogd config below: HAProxy logs to the `local0`
+            # syslog facility, which journald receives but can't be
+            # tailed as a growing text file the way fail2ban's file
+            # backend needs. rsyslogd is configured to write local0 out
+            # to this real file instead.
+            logpath = "/var/log/haproxy.log";
+            port = "http,https";
+          };
         };
       };
       maxretry = 5;
@@ -336,6 +391,15 @@ in
     logrotate = {
       enable = true;
       settings = {
+        haproxy = {
+          enable = true;
+          files = "/var/log/haproxy.log";
+          # rsyslogd (not haproxy) owns this file; signal it to reopen its
+          # own fd after rotation, the same convention glibc-syslog
+          # daemons use, rather than relying on copytruncate (which would
+          # race a fail2ban tail mid-rotation).
+          postrotate = "${pkgs.systemd}/bin/systemctl kill -s HUP syslog.service";
+        };
         postgresBackup = {
           enable = true;
           files = "${config.services.postgresqlBackup.location}/*.gz";
