@@ -163,12 +163,37 @@ in
       };
     };
 
+    fail2ban = {
+      enable = true;
+      bantime = "24h";
+      bantime-increment = {
+        enable = true;
+        multipliers = "1 2 4 8 16 32 64 128";
+        overalljails = true;
+      };
+      ignoreIP = [
+        "100.64.0.0/10"
+        "10.157.0.0/16"
+        "10.42.0.0/16"
+        "99.9.15.123/32"
+      ];
+      jails = {
+        haproxy.settings = {
+          enabled = true;
+          filter = "haproxy";
+          logpath = "/dev/log"; # TODO: Fixme
+          port = "http,https";
+        };
+      };
+      maxretry = 5;
+    };
+
     haproxy = {
       enable = true;
       config = ''
         global
-          nbthread 4
-          maxconn 80
+          nbthread 2
+          maxconn 2000
           log /dev/log local0
 
         defaults
@@ -245,9 +270,10 @@ in
           retries 3
           option forwardfor
           http-request set-header Host git.k3s.thehellings.lan
-          server git-isaiah isaiah.thehellings.lan:80
-          server git-jeremiah jeremiah.thehellings.lan:80
-          server git-zeke zeke.thehellings.lan:80
+          #server git-isaiah isaiah.thehellings.lan:80
+          #server git-jeremiah jeremiah.thehellings.lan:80
+          #server git-zeke zeke.thehellings.lan:80
+          server anubsis unix@${config.services.anubis.instances.git.settings.BIND}
 
         backend immich
           mode http
