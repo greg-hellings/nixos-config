@@ -17,7 +17,9 @@ def nebulaIps [] {
 }
 
 def localIps [] {
-    open /etc/nixos/network.json | get hosts | items { |h, e| $e.ip? } | where $it != null | sort
+    let hosts = open /etc/nixos/network.json | get hosts | items { |h, e| $e.ip? } | where $it != null
+    let external = open /etc/nixos/network.json | get external | items { |h, e| $e.ip? } | where $it != null | sort
+    $hosts ++ $external | sort -n
 }
 
 def genNebulaCert [ --ips: string, --name: string ] {
