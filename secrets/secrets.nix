@@ -122,6 +122,7 @@ in
   "nebula/exodus.key.age".publicKeys = everyone;
   "nebula/hermes.key.age".publicKeys = everyone;
   "nebula/kuma.key.age".publicKeys = everyone;
+  "nebula/money.key.age".publicKeys = everyone;
 
   # Custom files
   "lithic/cargo-config.toml.age".publicKeys = everyone;

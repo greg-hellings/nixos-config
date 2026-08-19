@@ -98,6 +98,13 @@
       "external": true,
       "system": "aarch64-darwin"
     },
+    "money": {
+      "eternal": true,
+      "ip": "10.42.1.20",
+      "nebulaIp": "10.157.0.10",
+      "system": "x86_64-linux",
+      "tags": ["server"]
+    },
     "nixos": {
       "external": true,
       "system": "x86_64-linux"
