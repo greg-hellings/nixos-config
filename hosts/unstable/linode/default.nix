@@ -265,7 +265,7 @@ in
       config = ''
         global
           nbthread 2
-          maxconn 2000
+          maxconn 3000
           log /dev/log local0
 
         defaults
