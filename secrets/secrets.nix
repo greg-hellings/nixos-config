@@ -111,6 +111,9 @@ in
 
   "grafana-api-token.age".publicKeys = everyone;
 
+  "wealthfolio-secret-key.age".publicKeys = everyone;
+  "wealthfolio-auth-hash.age".publicKeys = everyone;
+
   # Nebula mesh network — one private key per host, encrypted to that host's
   # system key + all user keys so Greg can (re)encrypt them from any machine.
   "nebula/genesis.key.age".publicKeys = everyone;
