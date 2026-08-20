@@ -266,6 +266,17 @@ in
         global
           nbthread 2
           maxconn 3000
+          # haproxy's own open-fd budget is roughly 2 fds per proxied
+          # connection (client + server side) plus listeners/logging, so at
+          # maxconn=3000 it needs ~6000+ fds available. The systemd unit
+          # doesn't set LimitNOFILE, so haproxy inherits the distro default
+          # soft limit of 1024 -- nowhere near enough headroom once traffic
+          # actually approaches maxconn. haproxy can raise its own soft
+          # limit up to the (much higher) hard limit at startup via
+          # `ulimit-n`, without needing extra process capabilities, so just
+          # tell it to do that explicitly instead of relying on the
+          # (insufficient) default.
+          ulimit-n 8000
           log /dev/log local0
 
         defaults
