@@ -560,7 +560,17 @@ in
     };
   };
 
-  users.users.haproxy.extraGroups = [ config.security.acme.certs."thehellings.com".group ];
+  users.users.haproxy.extraGroups = [
+    config.security.acme.certs."thehellings.com".group
+    # Since #47e4f14, the `git` backend routes through the Anubis proxy over
+    # a unix socket (mode 0770, owned by anubis:anubis) instead of talking
+    # to the k3s backends directly. HAProxy was never granted membership in
+    # that group, so every connection attempt to the socket fails with
+    # EACCES, HAProxy logs it as backend `git/anubsis` returning `SC` (no
+    # server contactable), and every request to src.thehellings.com gets a
+    # 503 even though git.k3s.thehellings.lan and Anubis are both healthy.
+    config.services.anubis.instances.git.group
+  ];
 
   # Actually serve the content from here
   virtualisation.oci-containers = {
