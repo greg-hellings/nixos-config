@@ -320,8 +320,29 @@ in
           stats refresh 10s
 
         frontend https
-          bind *:80
-          bind *:443 ssl crt ${config.security.acme.certs."thehellings.com".directory}/full.pem
+          # Explicit backlog matching global maxconn (3000): HAProxy's
+          # "expose-fd listeners" hot-reload mechanism (see the stats
+          # socket line in the global section) hands the existing kernel
+          # listening socket's fd to the new worker on reload rather than
+          # re-creating it, which means the socket's listen() backlog is
+          # only actually re-applied on a full process restart, not a
+          # reload. Observed live on 2026-08-21: `ss -tln` showed the
+          # :443 listener's Send-Q (kernel backlog) pinned at 80 -- a
+          # leftover from a much older `maxconn 80` config (see the
+          # timeout http-keep-alive comment above) -- despite maxconn
+          # having been raised to 3000 for a while. Constant internet
+          # background scan/bot traffic (see fail2ban's haproxy jail
+          # logs -- hundreds of distinct source IPs per few seconds) was
+          # enough to overflow that 80-slot accept queue on its own,
+          # producing intermittent ECONNRESET/timeout for any in-flight
+          # legitimate request (including the Matrix Kuma monitor) even
+          # though haproxy itself was healthy and never restarted.
+          # Setting backlog explicitly here makes it self-correcting on
+          # every reload instead of silently carrying forward a stale
+          # value from whatever maxconn happened to be in effect the
+          # last time the process was fully restarted.
+          bind *:80 backlog 4096
+          bind *:443 ssl crt ${config.security.acme.certs."thehellings.com".directory}/full.pem backlog 4096
 
           http-request redirect scheme https unless { ssl_fc }
           http-request add-header X-Forwarded-Proto https
