@@ -35,7 +35,7 @@ spec:
       storageClass: longhorn-default
 
     image:
-      tag: "1.27.1"
+      tag: "1.27.2"
 
     replicaCount: 1
 
@@ -66,8 +66,8 @@ spec:
           APP_NAME: "Gitea: Greg's Cup of Git"
           RUN_MODE: dev
         server:
-          DOMAIN: "shire-zebra.ts.net"
-          ROOT_URL: "https://git.k3s.thehellings.lan"
+          DOMAIN: "thehellings.com"
+          ROOT_URL: "https://src.thehellings.com"
           SSH_PORT: "2222"
         database:
           DB_TYPE: postgres
@@ -85,7 +85,7 @@ spec:
           DISABLE_REGISTRATION: "true"
         storage:
           STORAGE_TYPE: minio
-          MINIO_ENDPOINT: "nas1.shire-zebra.ts.net:30188"
+          MINIO_ENDPOINT: "nas1.thehellings.lan:30188"
           MINIO_BUCKET: gitea
           MINIO_LOCATION: garage
           # MINIO_ACCESS_KEY_ID: ""
