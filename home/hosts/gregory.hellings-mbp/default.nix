@@ -65,6 +65,23 @@
       enable = true;
       enableNushellIntegration = true;
     };
+    claude-settings = {
+      enabledPlugins = [
+        "atlassian@claude-plugins-official"
+        "code-review@claude-plugins-official"
+        "superpowers@claude-plugins-official"
+        "gitlab@claude-plugins-official"
+        "sdlc@ivrtg"
+      ];
+      extraKnownMarketplaces = {
+        ivrtg = {
+          source = {
+            source = "git";
+            url = "git@gitlab.com:ivrtech/engineering/ivrtg-sdlc-playbook.git";
+          };
+        };
+      };
+    };
     nushell = {
       enable = true;
     };

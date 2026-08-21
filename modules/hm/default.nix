@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./claude.nix
     ./development.nix
     ./gnome.nix
     ./gui.nix

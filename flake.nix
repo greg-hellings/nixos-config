@@ -29,7 +29,7 @@
     nixpkgs-lib.url = "github:nix-community/nixpkgs.lib";
     nixvimunstable.url = "github:nix-community/nixvim/main";
     #nixunstable.url = "github:nixos/nixpkgs/nixos-unstable";
-    nixunstable.url = "github:geri1701/nixpkgs/lego-v5-acme-spike";
+    nixunstable.url = "github:greg-hellings/nixpkgs/greg-acme-fix";
     nurpkgs.url = "github:nix-community/NUR";
     vsext.url = "github:nix-community/nix-vscode-extensions";
     wsl = {
