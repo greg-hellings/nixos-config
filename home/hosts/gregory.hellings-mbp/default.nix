@@ -97,7 +97,7 @@
         };
       };
     };
-    ssh.matchBlocks = lib.listToAttrs (
+    ssh.settings = lib.listToAttrs (
       lib.map
         (key: {
           name = "${key}.ivrtechnology.com";
