@@ -53,6 +53,7 @@ let
       "mcp__claude_ai_Atlassian__addCommentToJiraIssue"
       "mcp__claude_ai_Atlassian__getAccessibleAtlassianResources"
       "mcp__claude_ai_Atlassian__getConfluencePage"
+      "mcp__claude_ai_Atlassian__getJiraProjectIssueTypesMetadata"
       "mcp__claude_ai_Atlassian__getJiraIssue"
       "mcp__claude_ai_Atlassian__getJiraIssueTypeMetaWithFields"
       "mcp__claude_ai_Atlassian__getIssueLinkTypes"
