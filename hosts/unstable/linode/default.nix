@@ -344,6 +344,29 @@ in
           bind *:80 backlog 4096
           bind *:443 ssl crt ${config.security.acme.certs."thehellings.com".directory}/full.pem backlog 4096
 
+          # CORRECTION (2026-08-25 Matrix Kuma DOWN flap): the backlog=4096
+          # fix above (2026-08-21) only addressed the kernel accept queue
+          # overflowing; it does nothing about TLS handshake *CPU* capacity.
+          # This box is 2 vCPUs, and constant internet background
+          # scan/bot traffic (the same hundreds-of-source-IPs-per-few-seconds
+          # noise fail2ban's `haproxy` jail bans -- see below) still gets to
+          # spend a full TLS handshake's worth of CPU on this frontend
+          # *before* fail2ban's log-tailing ban can react, because fail2ban
+          # is inherently reactive (it only acts after enough failregex
+          # matches have already been logged). During a burst, that
+          # handshake-CPU contention was enough to starve legitimate
+          # in-flight handshakes (including the Matrix Kuma monitor's, and
+          # our own external re-checks during this triage, which were
+          # allow-listed in fail2ban's ignoreIP and therefore never banned,
+          # yet still saw ~30% empty-reply/timeout failures against a
+          # healthy, unrestarted haproxy and healthy backends). A stick-table
+          # connection-rate cap at the frontend rejects a flooding source at
+          # the TCP layer, before it costs any TLS handshake CPU, closing
+          # the gap fail2ban's reactive banning leaves open.
+          stick-table type ip size 200k expire 30s store conn_rate(10s)
+          tcp-request connection track-sc0 src
+          tcp-request connection reject if { sc_conn_rate(0) gt 40 }
+
           http-request redirect scheme https unless { ssl_fc }
           http-request add-header X-Forwarded-Proto https
 
