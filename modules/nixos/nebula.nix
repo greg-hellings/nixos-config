@@ -116,6 +116,24 @@ in
         Example: "10.42.0.0/16"
       '';
     };
+
+    # preferred_ranges: hints Nebula about local network ranges so it can
+    # discover the fastest path to an adjacent node (e.g. prefer a direct
+    # LAN hop over relaying through the lighthouse when two peers share a
+    # subnet). See https://nebula.defined.net/docs/config/ for details.
+    preferredRanges = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ "10.42.0.0/16" ];
+      description = ''
+        List of CIDR ranges Nebula should prefer when a peer advertises
+        multiple candidate addresses. Defaults to the home LAN (matching
+        the default unsafeRoutes CIDR) so LAN-local peers hole-punch
+        directly instead of falling back to relaying through the
+        lighthouse. Maps to Nebula's top-level `preferred_ranges` setting.
+        Override to [] to disable the hint (e.g. on hosts with no LAN
+        presence, such as linode).
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -162,6 +180,8 @@ in
       };
 
       settings.tun.unsafe_routes = cfg.unsafeRoutes;
+
+      settings.preferred_ranges = cfg.preferredRanges;
 
       # Firewall: permissive defaults — tighten per-host as desired
       firewall = {
