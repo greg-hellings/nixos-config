@@ -24,7 +24,7 @@ let
       "--keep-weekly 5"
       "--keep-monthly 12"
     ];
-    repository = "rest:https://nas1.shire-zebra.ts.net:30248/${job.dest}";
+    repository = "rest:http://nas1.shire-zebra.ts.net:30248/${job.dest}";
   };
 in
 with lib;
