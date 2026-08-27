@@ -134,6 +134,25 @@ in
         presence, such as linode).
       '';
     };
+
+    # punchy.respond: when a tunnel goes stale/dead (e.g. after a peer's
+    # UDP source port changes — "Host roamed to new udp ip/port" in the
+    # logs), have this node proactively send a punch packet back to speed
+    # up NAT hole-punching / re-handshake instead of waiting on the passive
+    # retry cycle (which was observed taking 1-2 min, falling back to the
+    # lighthouse relay in the meantime and tripping Kuma's zero-retry ping
+    # monitors). See https://nebula.defined.net/docs/config/punchy/.
+    punchyRespond = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = ''
+        Maps to Nebula's `punchy.respond` setting. Default true: reach out
+        and re-punch when hole punching / a tunnel handshake fails, rather
+        than only waiting passively. Low-risk even on a flat LAN with no
+        real NAT between peers — it just speeds up recovery after a UDP
+        source port change.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -182,6 +201,8 @@ in
       settings.tun.unsafe_routes = cfg.unsafeRoutes;
 
       settings.preferred_ranges = cfg.preferredRanges;
+
+      settings.punchy.respond = cfg.punchyRespond;
 
       # Firewall: permissive defaults — tighten per-host as desired
       firewall = {
