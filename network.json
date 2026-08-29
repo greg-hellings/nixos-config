@@ -175,6 +175,11 @@
     "pve4bmc": {
       "ip": "10.42.6.4",
       "mac": "00:25:90:4a:d8:2e"
+    },
+    "switch02": {
+      "description": "Arista 40G switch",
+      "ip": "10.42.0.5",
+      "user": "greg"
     }
   }
 }
