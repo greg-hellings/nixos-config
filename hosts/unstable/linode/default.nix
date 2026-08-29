@@ -458,6 +458,11 @@ in
     immich-public-proxy = {
       enable = true;
       immichUrl = "http://immich.k3s.thehellings.lan";
+      settings = {
+        ipp = {
+          allowDownload = 1;
+        };
+      };
     };
 
     logrotate = {
