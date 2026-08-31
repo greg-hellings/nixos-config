@@ -153,6 +153,31 @@ in
         source port change.
       '';
     };
+
+    # udpSocketBufferBytes: size (in bytes) of the outside UDP socket's
+    # read/write buffers, mapped to Nebula's `listen.read_buffer` /
+    # `listen.write_buffer`. Left unset, Nebula falls back to the kernel's
+    # net.core.rmem_default/wmem_default (typically ~208KB on stock NixOS),
+    # which is too small to sustain a single high-throughput TCP-over-Nebula
+    # flow (e.g. Immich image downloads relayed linode -> genesis) across a
+    # ~68ms WAN RTT: the kernel starts dropping inbound UDP datagrams once
+    # the socket buffer fills between Nebula's read syscalls, which shows up
+    # as climbing `Udp: RcvbufErrors` in /proc/net/snmp on both tunnel
+    # endpoints and, since each dropped Nebula packet carries an encrypted
+    # TCP segment, cascades into TCP retransmits on the tunneled connection
+    # and a large effective throughput cut. Nebula uses SO_RCVBUFFORCE /
+    # SO_SNDBUFFORCE to set this beyond net.core.rmem_max/wmem_max without
+    # needing a sysctl change, and the kernel doubles whatever value is
+    # configured here. See https://nebula.defined.net/docs/config/listen/.
+    udpSocketBufferBytes = lib.mkOption {
+      type = lib.types.nullOr lib.types.ints.positive;
+      default = 10485760; # 10MiB (kernel doubles to ~20MiB actual)
+      description = ''
+        Maps to Nebula's `listen.read_buffer` and `listen.write_buffer`
+        settings (both set to the same value). Set to null to leave the
+        kernel defaults (net.core.rmem_default/wmem_default) in place.
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
@@ -203,6 +228,11 @@ in
       settings.preferred_ranges = cfg.preferredRanges;
 
       settings.punchy.respond = cfg.punchyRespond;
+
+      settings.listen = lib.optionalAttrs (cfg.udpSocketBufferBytes != null) {
+        read_buffer = cfg.udpSocketBufferBytes;
+        write_buffer = cfg.udpSocketBufferBytes;
+      };
 
       # Firewall: permissive defaults — tighten per-host as desired
       firewall = {
