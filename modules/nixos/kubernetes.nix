@@ -51,6 +51,7 @@ in
     };
 
     environment.systemPackages = [
+      pkgs.cryptsetup
       pkgs.etcd
       pkgs.fluxcd
       pkgs.kubectl-cnpg
