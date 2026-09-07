@@ -27,7 +27,7 @@ spec:
   chart:
     spec:
       chart: longhorn
-      version: "1.11.3"
+      version: "1.12.1"
       sourceRef:
         kind: HelmRepository
         name: longhorn
@@ -156,7 +156,7 @@ reclaimPolicy: Delete
 volumeBindingMode: Immediate
 parameters:
   backupTargetName: default
-  numberOfReplicas: "2"
+  numberOfReplicas: "3"
   staleReplicaTimeout: "2880"
   fromBackup: ""
   fsType: ext4
