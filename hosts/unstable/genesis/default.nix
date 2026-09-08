@@ -57,7 +57,7 @@
               uuid = "7884dc5a-ae21-43d5-9506-a934d59be19a";
             };
           };
-          package = pkgs.fabricServers.fabric.override { jre_headless = pkgs.openjdk25_headless; };
+          package = pkgs.fabricServers.fabric-26_1_2.override { jre_headless = pkgs.openjdk25_headless; };
 
           serverProperties = {
             allow-flight = true;
