@@ -7,8 +7,8 @@
     },
     "phet": {
       "name": "phet_en_all",
-      "version": "2026-05",
-      "hash": "sha256-zAAq/X5rjQUiYmjMpBtWP5z3J2ZHJMmIxFKnxLAhOlA="
+      "version": "2026-08",
+      "hash": "sha256-sQKr+K8cmCxJjBZ+/mqQmePLVD3xhLk8mUIbL9734aA="
     },
     "wikibooks": {
       "name": "wikibooks_en_all_maxi",
@@ -32,8 +32,8 @@
     },
     "wiktionary": {
       "name": "wiktionary_en_all_nopic",
-      "version": "2026-05",
-      "hash": "sha256-Dwiz+viVQt0zb077R9KQRgtUtxG9ixA/DeXAkCdD4rM="
+      "version": "2026-08",
+      "hash": "sha256-Unb2Oi5FFRjsW3xEUsqaT3L65ImR2j/n68R990uudgo="
     }
   },
   "fr": {
@@ -44,8 +44,8 @@
     },
     "phet": {
       "name": "phet_fr_all",
-      "version": "2026-05",
-      "hash": "sha256-bJmchFnaPcofE/hy3ZcRggMT9osHqXwLbwMLJ+cpF28="
+      "version": "2026-08",
+      "hash": "sha256-+RHm8oCJlS/0my9UtmrW24owox7G1wrdN/3dMD3CfME="
     },
     "wikibooks": {
       "name": "wikibooks_fr_all_maxi",
@@ -64,8 +64,8 @@
     },
     "wikiversity": {
       "name": "wikiversity_fr_all_maxi",
-      "version": "2026-05",
-      "hash": "sha256-nVDHtkWIOJkoiGixnA1zVR1QS58thjc12FJyagK3Ec0="
+      "version": "2026-08",
+      "hash": "sha256-1fRmEUEmyuOyA4E6OvVKa8q5Z5xOo+wVO3YWyvSEdLA="
     },
     "wiktionary": {
       "name": "wiktionary_fr_all_nopic",
@@ -76,8 +76,8 @@
   "ht": {
     "phet": {
       "name": "phet_ht_all",
-      "version": "2026-05",
-      "hash": "sha256-GiJ1jllhioyMYidQ7+Lcbdd9JN2yf04ZQgnO8XaGAqY="
+      "version": "2026-08",
+      "hash": "sha256-hUXrBzVo+zPz8x2NqSF1Z6Ia7kW8sL1VftIUoOWJRR4="
     },
     "wikipedia": {
       "name": "wikipedia_ht_all_maxi",
