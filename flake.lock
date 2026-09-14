@@ -496,16 +496,16 @@
     },
     "nixunstable": {
       "locked": {
-        "lastModified": 1787169427,
-        "narHash": "sha256-oWBlAc6NzXiQFevP8TEN/2r04bQ40Afeiyo2l5YjGb4=",
-        "owner": "greg-hellings",
+        "lastModified": 1789286504,
+        "narHash": "sha256-eiEK7cKZORNEvX0GeF3RtNEF/JXhgf2RqSp3230q13E=",
+        "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "255e40c0b9b54ec0c585dbac4414560da69f5b9c",
+        "rev": "ef34387ddd751e1ab8857adf4676492d32eb24ec",
         "type": "github"
       },
       "original": {
-        "owner": "greg-hellings",
-        "ref": "greg-acme-fix",
+        "owner": "nixos",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
