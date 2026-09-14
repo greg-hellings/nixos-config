@@ -109,10 +109,10 @@
     # incident investigation — journalctl becomes slow/unresponsive and
     # disk fills — on top of drowning out genuinely useful log signal.
     # This doesn't fix a specific app's bug, but bounds the blast radius.
-    journald.extraConfig = ''
-      RateLimitIntervalSec=30s
-      RateLimitBurst=2000
-    '';
+    journald.settings.Journal = {
+      RateLimitIntervalSec = "30s";
+      RateLimitBurst = "2000";
+    };
 
     niks3-auto-upload = {
       enable = config.greg.nix.cache;
