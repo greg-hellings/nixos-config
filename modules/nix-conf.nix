@@ -48,7 +48,10 @@ in
         builders-use-substitutes = true;
         cores = 0; # Use all cores for builds
         download-buffer-size = 500 * 1024 * 1024;
-        experimental-features = "nix-command flakes";
+        experimental-features = [
+          "nix-command"
+          "flakes"
+        ];
         keep-outputs = true;
         keep-derivations = true;
         min-free = (toString (1024 * 1024 * 1024));
