@@ -10,6 +10,12 @@ let
   builderHosts = lib.filterAttrs (_n: v: (builtins.hasAttr "builder" v) && v.builder) metadata.hosts;
   cfg = config.greg.nix;
   hostname = x: if cfg.cache then "${x}.shire-zebra.ts.net" else "${x}.thehellings.lan";
+  # Checks if this hostName appears in the list of builder hosts
+  isBuilder =
+    let
+      h = if (lib.hasAttr "networking" config) then config.networking.hostName else "";
+    in
+    (builtins.elem h (lib.mapAttrsToList (k: _: k) builderHosts));
 in
 {
   options.greg.nix = {
@@ -29,11 +35,13 @@ in
     );
 
     nix = {
-      buildMachines = lib.mapAttrsToList (k: v: {
-        inherit (v) systems;
-        hostName = "${k}-builder";
-        protocol = "ssh-ng";
-      }) builderHosts;
+      buildMachines = lib.mkIf (!isBuilder) (
+        lib.mapAttrsToList (k: v: {
+          inherit (v) systems;
+          hostName = "${k}-builder";
+          protocol = "ssh-ng";
+        }) builderHosts
+      );
       distributedBuilds = true;
       gc = {
         automatic = true;
