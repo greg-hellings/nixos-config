@@ -114,6 +114,7 @@
       "eternal": true,
       "ip": "10.42.1.21",
       "nebulaIp": "10.157.0.11",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID2brTBfO2tl28C62iLlAIODs6wYORlBD3LYcKTkJJ5h",
       "system": "x86_64-linux",
       "tags": ["server"]
     },

@@ -4,26 +4,6 @@ let
     pred: set:
     builtins.removeAttrs set (builtins.filter (name: !pred name set.${name}) (builtins.attrNames set));
 
-  # linode = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMv9Zud3kZOl86gtmkn+uj3D4kiXWDPtyUL02VVLNR4Q";
-  # jude = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOos0zQePsa+T6Z2dsKbPOvEdrBQ8a6mx3s7pN6ysCI0 root@jude";
-  # isaiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHleYKtfV4W1Z63Ysu9w5Rbglqlz4F92YcZoMkucoTNf";
-  # genesis = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIEI9jbTPmEWQ0F2bLYmnIOLmBnag1fkKxHRjz3X8lB/k root@genesis";
-  # hosea = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKLIwkTTXA56sUlUjEulXXZRvZy5H4a5ZwgKWLlpkQDz";
-  # jeremiah = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIOjQjXq9WYU2Ki27BR9WwJ4ZruS/lJXbjC1b0Q42Adi0";
-  # matrix = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMIbvNNYrsT9sSBSwIL9c0LiHDaOiztlTJZAGgTDGUHq root@vm-matrix";
-  # exodus = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFxmnCj2E9DxcnefPW+n4yCuLShxqr0p024riogdeXA3";
-
-  # systems = [
-  #   genesis
-  #   linode
-  #   jude
-  #   isaiah
-  #   hosea
-  #   jeremiah
-  #   matrix
-  #   exodus
-  # ];
-
   systems = (
     builtins.attrValues (builtins.mapAttrs (_: v: v.pubkey) (filterAttrs (_: v: v ? "pubkey") hosts))
   );
@@ -116,16 +96,17 @@ in
 
   # Nebula mesh network — one private key per host, encrypted to that host's
   # system key + all user keys so Greg can (re)encrypt them from any machine.
+  "nebula/exodus.key.age".publicKeys = everyone;
   "nebula/genesis.key.age".publicKeys = everyone;
+  "nebula/hermes.key.age".publicKeys = everyone;
   "nebula/hosea.key.age".publicKeys = everyone;
   "nebula/isaiah.key.age".publicKeys = everyone;
   "nebula/jeremiah.key.age".publicKeys = everyone;
-  "nebula/linode.key.age".publicKeys = everyone;
-  "nebula/zeke.key.age".publicKeys = everyone;
-  "nebula/exodus.key.age".publicKeys = everyone;
-  "nebula/hermes.key.age".publicKeys = everyone;
   "nebula/kuma.key.age".publicKeys = everyone;
+  "nebula/linode.key.age".publicKeys = everyone;
   "nebula/money.key.age".publicKeys = everyone;
+  "nebula/pinchflat.key.age".publicKeys = users ++ [ hosts.pinchflat.pubkey ];
+  "nebula/zeke.key.age".publicKeys = everyone;
 
   # Custom files
   "lithic/cargo-config.toml.age".publicKeys = everyone;
