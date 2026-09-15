@@ -28,6 +28,7 @@
     btrfs-progs
     coreutils-full
     diffutils
+    e2fsprogs
     efibootmgr
     findutils
     file
@@ -39,6 +40,7 @@
     nano
     nfs-utils
     lshw
+    parted
     pciutils
     psmisc
     pwgen
