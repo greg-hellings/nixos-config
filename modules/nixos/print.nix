@@ -17,7 +17,9 @@ with lib;
     # ipp://printer.thehellings.lan:631/ - generic postscript printer
     services.printing = {
       enable = true;
-      drivers = with pkgs; [ gutenprint ] ++ (lib.optional pkgs.stdenv.isx86_64 gutenprintBin);
+      drivers =
+        with pkgs;
+        [ gutenprint ] ++ (lib.optional pkgs.stdenv.hostPlatform.isx86_64 gutenprintBin);
     };
 
     hardware.printers.ensurePrinters = [
