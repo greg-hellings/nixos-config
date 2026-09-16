@@ -44,6 +44,8 @@ in
     user = username;
   };
 
+  nix.settings.max-jobs = 1;
+
   system.primaryUser = username;
 
   users.users."${username}" = {
