@@ -17,12 +17,12 @@
     },
     "wikipedia": {
       "name": "wikipedia_en_all_maxi",
-      "version": "2026-02",
+      "version": "2026-08",
       "hash": "sha256-vwhTv5TtjFNSTl7mcoi8SJiBm8nUlq8rP4UrZYir3Sc="
     },
     "wikisource": {
       "name": "wikisource_en_all_maxi",
-      "version": "2026-05",
+      "version": "2026-09",
       "hash": "sha256-OA4b+U8mxpcX3fst6hrMyctucYTQOlG/b4qZDiVlcf4="
     },
     "wikiversity": {
@@ -69,8 +69,8 @@
     },
     "wiktionary": {
       "name": "wiktionary_fr_all_nopic",
-      "version": "2026-05",
-      "hash": "sha256-7UXByW2IIL0hec8RPT39jpg5IEGvRMD47hc4Y4vFkJs="
+      "version": "2026-08",
+      "hash": "sha256-1E9574Nvi7xGT5Np4bi4vfztlZaLQtFYE1eZdcA/eFs="
     }
   },
   "ht": {
