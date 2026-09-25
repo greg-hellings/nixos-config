@@ -414,12 +414,29 @@ in
           mode http
           balance roundrobin
           option accept-unsafe-violations-in-http-response
+          option httpchk GET /
           retries 3
           option forwardfor
           http-request set-header Host matrix.k3s.thehellings.lan
-          server git-isaiah isaiah.thehellings.lan:80
-          server git-jeremiah jeremiah.thehellings.lan:80
-          server git-zeke zeke.thehellings.lan:80
+          # FIX (2026-09-07 Matrix Kuma DOWN, timeout of 48000ms exceeded):
+          # this backend had no health check at all, so haproxy treated all
+          # three servers as permanently UP regardless of real reachability
+          # and kept round-robining requests across them uniformly. zeke
+          # (10.42.1.13 / nebula 10.157.0.6) went unreachable on the LAN
+          # (ARP INCOMPLETE from genesis and isaiah, nebula tunnel dead
+          # since ~2026-09-06 01:25 CDT/06:25 UTC per genesis's nebula
+          # journal, ~19h before this alert) with no corresponding config
+          # change in this repo, i.e. a hardware/network-side outage of the
+          # zeke box itself, not something Greg did. Every ~1-in-3 request
+          # that landed on git-zeke hung until haproxy's own `timeout server
+          # 1h`/`retries 3` gave up, which is what Kuma's 48s HTTP client
+          # timeout was catching. Adding `option httpchk` (plus per-server
+          # `check` below) lets haproxy actively probe each backend and
+          # automatically pull a dead one out of rotation instead of only
+          # discovering it's dead on a live client request.
+          server git-isaiah isaiah.thehellings.lan:80 check
+          server git-jeremiah jeremiah.thehellings.lan:80 check
+          server git-zeke zeke.thehellings.lan:80 check
 
         backend web
           mode http
