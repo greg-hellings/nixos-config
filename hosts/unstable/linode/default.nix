@@ -434,6 +434,26 @@ in
           # `check` below) lets haproxy actively probe each backend and
           # automatically pull a dead one out of rotation instead of only
           # discovering it's dead on a live client request.
+          #
+          # FIX (2026-09-17 Matrix Kuma DOWN, timeout of 48000ms exceeded):
+          # this backend also defaults to HAProxy's end-to-end keep-alive, so
+          # it tries to reuse a pooled connection to isaiah/jeremiah/zeke's
+          # k3s ingress even after that ingress's own keepalive timeout has
+          # silently closed it -- the exact same stale-backend-connection
+          # class of bug already diagnosed and fixed for `backend next`
+          # (nginx keepalive_timeout 65s) above. Direct curls to all three
+          # backends during this triage succeeded immediately every time,
+          # confirming the backends themselves were healthy; the haproxy
+          # access log instead showed repeated ~30s hangs cycling across
+          # git-isaiah/git-jeremiah/git-zeke, matching a stale reused
+          # connection rather than a dead server. Mirror the `next` backend
+          # fix here too: force a fresh backend connection per request
+          # instead of reusing a pooled one that may already be
+          # half-closed. This is complementary to the httpchk fix above,
+          # not a replacement for it -- httpchk detects a fully dead
+          # server, http-server-close prevents hangs against a server that
+          # is alive but has quietly closed its end of a pooled connection.
+          option http-server-close
           server git-isaiah isaiah.thehellings.lan:80 check
           server git-jeremiah jeremiah.thehellings.lan:80 check
           server git-zeke zeke.thehellings.lan:80 check
