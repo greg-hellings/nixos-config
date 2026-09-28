@@ -500,7 +500,7 @@ in
 
     nextcloud = {
       enable = true;
-      package = pkgs.nextcloud33;
+      package = pkgs.nextcloud34;
       appstoreEnable = true;
       hostName = "127.0.0.1";
       https = false;
