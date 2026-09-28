@@ -70,9 +70,7 @@ in
     home = true;
     nebula.enable = true;
     proxies = {
-      "jellyfin.home".target = "http://localhost:8096/";
       "jellyfin.thehellings.lan".target = "http://localhost:8096/";
-      "grafana.home".target = "http://localhost:3001/";
       "grafana.thehellings.lan".target = "http://localhost:3001/";
     };
     tailscale = {
@@ -152,7 +150,7 @@ in
             name = "Prometheus";
             type = "prometheus";
             uid = "prometheus";
-            url = "https://prometheus.shire-zebra.ts.net";
+            url = "https://prometheus.nebula.thehellings.com";
             isDefault = true;
             editable = false;
           }
@@ -161,7 +159,7 @@ in
       settings = {
         security.secret_key = "$__file{${config.age.secrets.grafana-secret-key.path}}";
         server = {
-          domain = "${config.networking.hostName}.shire-zebra.ts.net";
+          domain = "${config.networking.hostName}.nebula.thehellings.com";
           enforce_domain = false;
           http_addr = "0.0.0.0";
           enable_gzip = true;
@@ -185,7 +183,7 @@ in
       s3 = {
         accessKeyFile = config.age.secrets.niks3-access-key-id.path;
         bucket = "niks3";
-        endpoint = "nas1.shire-zebra.ts.net:30188";
+        endpoint = "nas1.thehellings.lan:30188";
         secretKeyFile = config.age.secrets.niks3-secret-access-key.path;
         useSSL = false;
       };
@@ -202,7 +200,7 @@ in
   systemd.mounts =
     let
       nfs = name: {
-        what = "nas1.shire-zebra.ts.net:/mnt/all/${name}";
+        what = "nas1.thehellings.lan:/mnt/all/${name}";
         type = "nfs";
         name = "${name}.mount";
         where = "/${name}";

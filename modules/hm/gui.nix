@@ -77,7 +77,11 @@ in
 
       programs.firefox = {
         enable = true; # (!pkgs.stdenv.hostPlatform.isDarwin);
-        configPath = if pkgs.stdenv.hostPlatform.isDarwin then "${config.home.homeDirectory}/Library/Application Support/Firefox" else "${config.xdg.configHome}/mozilla/firefox";
+        configPath =
+          if pkgs.stdenv.hostPlatform.isDarwin then
+            "${config.home.homeDirectory}/Library/Application Support/Firefox"
+          else
+            "${config.xdg.configHome}/mozilla/firefox";
         package = pkgs.firefox-bin;
         policies = {
           DisableAppUpdate = true;
@@ -153,12 +157,12 @@ in
             settings = {
               "app.update.auto" = false;
               "browser.ctrlTab.sortByRecentlyUsed" = true;
-              "browser.startup.page" = 3;
+              "browser.startup.page" = 3; # Restore previous session
               "browser.startup.homepage" =
                 if pkgs.stdenv.hostPlatform.isDarwin then
                   "https://thehellings.com"
                 else
-                  "https://kuma.shire-zebra.ts.net/";
+                  "https://kuma.nebula.thehellings.com/";
               "devtools.debugger.remote-enabled" = true;
               "devtools.debugger.remote-port" = 9222;
               "doh-rollout.doorhanger-decision" = "UIDisabled";

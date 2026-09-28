@@ -47,7 +47,7 @@
         };
         "src" = {
           User = "git";
-          Hostname = "jeremiah.shire-zebra.ts.net";
+          Hostname = "jeremiah.thehellings.lan";
           Port = 32222;
         };
         srcpub = {

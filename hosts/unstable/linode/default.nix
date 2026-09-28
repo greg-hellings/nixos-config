@@ -120,14 +120,6 @@ in
     networkmanager.enable = lib.mkForce false;
   };
 
-  programs.ssh.extraConfig = lib.strings.concatStringsSep "\n" [
-    "Host chronicles.shire-zebra.ts.net"
-    "    User backup"
-    "    IdentityFile /etc/ssh/backup_ed25519"
-    "    StrictHostKeyChecking no"
-    "    UserKnownHostsFile /dev/null"
-  ];
-
   security.acme = {
     acceptTerms = true;
     defaults = {

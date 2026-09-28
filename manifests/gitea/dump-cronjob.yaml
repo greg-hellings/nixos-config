@@ -51,7 +51,7 @@ spec:
                 - |
                   set -e
                   # Configure mc alias for MinIO
-                  mc alias set nas1 http://nas1.shire-zebra.ts.net:30188 \
+                  mc alias set nas1 http://nas1.thehellings.lan:30188 \
                     "${MINIO_ACCESS_KEY}" "${MINIO_SECRET_KEY}"
                   # Upload dump to backup-gitea bucket
                   DUMP_FILE=$(ls /dump-staging/gitea-dump-*.zip | head -1)

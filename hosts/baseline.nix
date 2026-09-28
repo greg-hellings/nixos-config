@@ -146,7 +146,7 @@
           };
           targets = [
             "thehellings.com"
-            "genesis.shire-zebra.ts.net"
+            "genesis.nebula.thehellings.com"
             "www.google.com"
           ];
         };

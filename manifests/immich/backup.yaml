@@ -36,7 +36,7 @@ spec:
           [garage]
           type = s3
           provider = Minio
-          endpoint = http://nas1.shire-zebra.ts.net:30188
+          endpoint = http://nas1.thehellings.lan:30188
           access_key_id = {{ .minio_key }}
           secret_access_key = {{ .minio_secret }}
           region = garage

@@ -16,33 +16,33 @@ data:
       - job_name: node
         static_configs:
           - targets:
-              - "genesis.shire-zebra.ts.net:9100"
-              - "isaiah.shire-zebra.ts.net:9100"
-              - "jeremiah.shire-zebra.ts.net:9100"
-              - "zeke.shire-zebra.ts.net:9100"
-              - "hosea.shire-zebra.ts.net:9100"
-              - "exodus.shire-zebra.ts.net:9100"
-              - "linode.shire-zebra.ts.net:9100"
+              - "genesis.nebula.thehellings.com:9100"
+              - "isaiah.nebula.thehellings.com:9100"
+              - "jeremiah.nebula.thehellings.com:9100"
+              - "zeke.nebula.thehellings.com:9100"
+              - "hosea.nebula.thehellings.com:9100"
+              - "exodus.nebula.thehellings.com:9100"
+              - "linode.nebula.thehellings.com:9100"
       - job_name: systemd
         static_configs:
           - targets:
-              - "genesis.shire-zebra.ts.net:9558"
-              - "isaiah.shire-zebra.ts.net:9558"
-              - "jeremiah.shire-zebra.ts.net:9558"
-              - "zeke.shire-zebra.ts.net:9558"
-              - "hosea.shire-zebra.ts.net:9558"
-              - "exodus.shire-zebra.ts.net:9558"
-              - "linode.shire-zebra.ts.net:9558"
+              - "genesis.nebula.thehellings.com:9558"
+              - "isaiah.nebula.thehellings.com:9558"
+              - "jeremiah.nebula.thehellings.com:9558"
+              - "zeke.nebula.thehellings.com:9558"
+              - "hosea.nebula.thehellings.com:9558"
+              - "exodus.nebula.thehellings.com:9558"
+              - "linode.nebula.thehellings.com:9558"
       - job_name: ping
         static_configs:
           - targets:
-              - "genesis.shire-zebra.ts.net:9427"
-              - "isaiah.shire-zebra.ts.net:9427"
-              - "jeremiah.shire-zebra.ts.net:9427"
-              - "zeke.shire-zebra.ts.net:9427"
-              - "hosea.shire-zebra.ts.net:9427"
-              - "exodus.shire-zebra.ts.net:9427"
-              - "linode.shire-zebra.ts.net:9427"
+              - "genesis.nebula.thehellings.com:9427"
+              - "isaiah.nebula.thehellings.com:9427"
+              - "jeremiah.nebula.thehellings.com:9427"
+              - "zeke.nebula.thehellings.com:9427"
+              - "hosea.nebula.thehellings.com:9427"
+              - "exodus.nebula.thehellings.com:9427"
+              - "linode.nebula.thehellings.com:9427"
       # ICMP ping reachability for non-NixOS infrastructure
       - job_name: infra_ping
         metrics_path: /probe
@@ -65,16 +65,16 @@ data:
           - source_labels: [__param_target]
             target_label: instance
           - target_label: __address__
-            replacement: "genesis.shire-zebra.ts.net:9115"
+            replacement: "genesis.nebula.thehellings.com:9115"
       - job_name: dnsmasq
         static_configs:
           - targets:
-              - "genesis.shire-zebra.ts.net:9153"
+              - "genesis.nebula.thehellings.com:9153"
       # Converter from TrueNAS
       - job_name: graphite
         static_configs:
           - targets:
-              - "hosea.shire-zebra.ts.net:9108"
+              - "hosea.nebula.thehellings.com:9108"
       # Restic rest-server backup metrics (HTTPS with basic auth)
       - job_name: restic_backups
         scheme: https
@@ -85,7 +85,7 @@ data:
           password_file: /etc/prometheus/secrets/restic/password
         static_configs:
           - targets:
-              - "nas1.shire-zebra.ts.net:30248"
+              - "nas1.thehellings.lan:30248"
       # Mattermost metrics
       - job_name: mattermost
         metrics_path: /metrics

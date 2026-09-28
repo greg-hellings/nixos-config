@@ -233,8 +233,16 @@
                 url = "https://10.42.0.4:8006/";
               }
               {
-                name = "Jeremiah";
-                url = "https://jeremiah.shire-zebra.ts.net:8006/";
+                name = "PVE2";
+                url = "https://pve2.thehellings.lan:8006/";
+              }
+              {
+                name = "PVE3";
+                url = "https://pve3.thehellings.lan:8006/";
+              }
+              {
+                name = "PVE4";
+                url = "https://pve4.thehellings.lan:8006/";
               }
             ];
           }
@@ -247,11 +255,11 @@
               }
               {
                 name = "Kubernetes Dashboard";
-                url = "https://dashboard.shire-zebra.ts.net/";
+                url = "https://dashboard.k3s.nebula.thehellings.com/";
               }
               {
                 name = "Longhorn";
-                url = "http://longhorn.shire-zebra.ts.net";
+                url = "http://longhorn.k3s.nebula.thehellings.com";
               }
             ];
           }
@@ -260,19 +268,15 @@
             bookmarks = [
               {
                 name = "Grafana";
-                url = "http://hosea.shire-zebra.ts.net:3001/";
+                url = "http://grafana.nebula.thehellings.com:3001/";
               }
               {
                 name = "Prometheus";
-                url = "http://prometheus.shire-zebra.ts.net/";
-              }
-              {
-                name = "Smokeping";
-                url = "https://ping.shire-zebra.ts.net/smokeping/smokeping.cgi";
+                url = "http://prometheus.k3s.nebula.thehellings.com/";
               }
               {
                 name = "Uptime Kuma";
-                url = "https://kuma.shire-zebra.ts.net";
+                url = "https://kuma.nebula.thehellings.com";
               }
             ];
           }
@@ -281,11 +285,11 @@
             bookmarks = [
               {
                 name = "Bitcoin dashboard";
-                url = "http://hosea.shire-zebra.ts.net:60845/";
+                url = "http://hosea.nebula.thehellings.com:60845/";
               }
               {
                 name = "Ride the Lightning";
-                url = "http://hosea.shire-zebra.ts.net:3000/";
+                url = "http://hosea.nebula.thehellings.com:3000/";
               }
             ];
           }
@@ -294,11 +298,11 @@
             bookmarks = [
               {
                 name = "NAS1 Minio Console";
-                url = "http://nas1.shire-zebra.ts.net:30212/";
+                url = "http://nas1.thehellings.lan:30212/";
               }
               {
                 name = "NAS1 Minio Direct";
-                url = "http://nas1.shire-zebra.ts.net:9002/";
+                url = "http://nas1.thehellings.lan:9002/";
               }
               {
                 name = "Chronicles Minio";
@@ -306,31 +310,31 @@
               }
               {
                 name = "Pinchflat";
-                url = "https://pinchflat.shire-zebra.ts.net/";
+                url = "https://pinchflat.nebula.thehellings.com/";
               }
               {
                 name = "Buildbot";
-                url = "http://jeremiah.shire-zebra.ts.net:8010/";
+                url = "http://buildbot.nebula.thehellings.com:8010/";
               }
               {
                 name = "Garage WebUI";
-                url = "http://nas1.shire-zebra.ts.net:30186/";
+                url = "http://nas1.thehellings.lan:30186/";
               }
               {
                 name = "Garage RPC";
-                url = "http://nas1.shire-zebra.ts.net:30187/";
+                url = "http://nas1.thehellings.lan:30187/";
               }
               {
                 name = "Garage S3 API";
-                url = "http://nas1.shire-zebra.ts.net:30188/";
+                url = "http://nas1.thehellings.lan:30188/";
               }
               {
                 name = "Garage S3 Web";
-                url = "http://nas1.shire-zebra.ts.net:30189/";
+                url = "http://nas1.thehellings.lan:30189/";
               }
               {
                 name = "Garage Admin";
-                url = "http://nas1.shire-zebra.ts.net:30190/";
+                url = "http://nas1.thehellings.lan:30190/";
               }
             ];
           }
@@ -348,11 +352,11 @@
           }
           {
             name = "Portainer";
-            url = "https://nas1.shire-zebra.ts.net:31015";
+            url = "https://nas1.thehellings.lan:31015";
           }
           {
             name = "Restic";
-            url = "http://nas1.shire-zebra.ts.net:30248";
+            url = "http://nas1.thehellings.lan:30248";
           }
         ];
       }
@@ -416,23 +420,23 @@
         bookmarks = [
           {
             name = "Flaresolverr";
-            url = "http://nas1.shire-zebra.ts.net:30098";
+            url = "http://nas1.thehellings.lan:30098";
           }
           {
             name = "Prowlarr";
-            url = "http://nas1.shire-zebra.ts.net:30050/";
+            url = "http://nas1.thehellings.lan:30050/";
           }
           {
             name = "Sonarr (TV)";
-            url = "http://nas1.shire-zebra.ts.net:30113/";
+            url = "http://nas1.thehellings.lan:30113/";
           }
           {
             name = "Radarr (Movies)";
-            url = "http://nas1.shire-zebra.ts.net:30025/";
+            url = "http://nas1.thehellings.lan:30025/";
           }
           {
             name = "Deluge";
-            url = "http://nas1.shire-zebra.ts.net:30038/";
+            url = "http://nas1.thehellings.lan:30038/";
           }
         ];
       }

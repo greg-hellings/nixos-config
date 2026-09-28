@@ -9,7 +9,7 @@
 let
   builderHosts = lib.filterAttrs (_n: v: (builtins.hasAttr "builder" v) && v.builder) metadata.hosts;
   cfg = config.greg.nix;
-  hostname = x: if cfg.cache then "${x}.shire-zebra.ts.net" else "${x}.thehellings.lan";
+  hostname = x: if cfg.cache then "${x}.nebula.thehellings.com" else "${x}.thehellings.lan";
   # Checks if this hostName appears in the list of builder hosts
   isBuilder =
     let
@@ -70,11 +70,11 @@ in
         ]; # For home and for work machines
         substituters =
           (
+            # Yes, these are temporarily the same while testing that it
+            # works OK with both of them
             if cfg.cache then
               [
-                #"http://chronicles.shire-zebra.ts.net:9000/binary-cache/"
-                "http://niks3.nas1.shire-zebra.ts.net:30189/"
-                #"http://nas1.shire-zebra.ts.net:8080/default"
+                "http://niks3.nas1.thehellings.lan:30189/"
               ]
             else
               [
@@ -91,7 +91,6 @@ in
           ];
         trusted-public-keys = [
           "niks3:8iztr/NACwYEK5O7JJtGFGuv+ho/cmwql8NeoCiXNto="
-          #"chronicles.shire-zebra.ts.net:0qWYHn3gGllXChhAaaxKlNZtRy6yG/XJs1RFSqV3nW8="
           "default:DTGxNijw2D8FrZJPT1pFTWcLqbt60tovL+9Z+VW0HRY="
           "ai.cachix.org-1:N9dzRK+alWwoKXQlnn0H6aUx0lU/mspIoz8hMvGvbbc="
           "nixpkgs-python.cachix.org-1:hxjI7pFxTyuTHn2NkvWCrAUcNZLNS3ZAvfYNuYifcEU="
