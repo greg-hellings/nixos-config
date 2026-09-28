@@ -163,6 +163,7 @@ in
                   "https://thehellings.com"
                 else
                   "https://kuma.nebula.thehellings.com/";
+              "browser.newtabpage.enabled" = false;
               "devtools.debugger.remote-enabled" = true;
               "devtools.debugger.remote-port" = 9222;
               "doh-rollout.doorhanger-decision" = "UIDisabled";
@@ -174,6 +175,7 @@ in
               gsconnect
               foxyproxy-standard
               multi-account-containers
+              new-tab-override
               octotree
               okta-browser-plugin
               refined-github
