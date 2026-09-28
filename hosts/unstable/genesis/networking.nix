@@ -11,7 +11,6 @@ let
   lanIP = metadata.hosts.${config.networking.hostName}.ip;
   iot = "enp2s0";
   iotIP = "192.168.66.250";
-  extraHosts = builtins.readFile ./net/hosts;
 
   proxyPort = 3128;
   dnsPort = 53;
@@ -90,8 +89,6 @@ in
     };
     nftables.enable = true;
   };
-
-  environment.etc."hosts.d/local".text = extraHosts;
 
   services = {
     #########
