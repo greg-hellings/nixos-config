@@ -414,46 +414,13 @@ in
           mode http
           balance roundrobin
           option accept-unsafe-violations-in-http-response
-          option httpchk GET /
           retries 3
           option forwardfor
           http-request set-header Host matrix.k3s.thehellings.lan
-          # FIX (2026-09-07 Matrix Kuma DOWN, timeout of 48000ms exceeded):
-          # this backend had no health check at all, so haproxy treated all
-          # three servers as permanently UP regardless of real reachability
-          # and kept round-robining requests across them uniformly. zeke
-          # (10.42.1.13 / nebula 10.157.0.6) went unreachable on the LAN
-          # (ARP INCOMPLETE from genesis and isaiah, nebula tunnel dead
-          # since ~2026-09-06 01:25 CDT/06:25 UTC per genesis's nebula
-          # journal, ~19h before this alert) with no corresponding config
-          # change in this repo, i.e. a hardware/network-side outage of the
-          # zeke box itself, not something Greg did. Every ~1-in-3 request
-          # that landed on git-zeke hung until haproxy's own `timeout server
-          # 1h`/`retries 3` gave up, which is what Kuma's 48s HTTP client
-          # timeout was catching. Adding `option httpchk` (plus per-server
-          # `check` below) lets haproxy actively probe each backend and
-          # automatically pull a dead one out of rotation instead of only
-          # discovering it's dead on a live client request.
-          #
-          # FIX (2026-09-17 Matrix Kuma DOWN, timeout of 48000ms exceeded):
-          # this backend also defaults to HAProxy's end-to-end keep-alive, so
-          # it tries to reuse a pooled connection to isaiah/jeremiah/zeke's
-          # k3s ingress even after that ingress's own keepalive timeout has
-          # silently closed it -- the exact same stale-backend-connection
-          # class of bug already diagnosed and fixed for `backend next`
-          # (nginx keepalive_timeout 65s) above. Direct curls to all three
-          # backends during this triage succeeded immediately every time,
-          # confirming the backends themselves were healthy; the haproxy
-          # access log instead showed repeated ~30s hangs cycling across
-          # git-isaiah/git-jeremiah/git-zeke, matching a stale reused
-          # connection rather than a dead server. Mirror the `next` backend
-          # fix here too: force a fresh backend connection per request
-          # instead of reusing a pooled one that may already be
-          # half-closed. This is complementary to the httpchk fix above,
-          # not a replacement for it -- httpchk detects a fully dead
-          # server, http-server-close prevents hangs against a server that
-          # is alive but has quietly closed its end of a pooled connection.
-          option http-server-close
+          option httpchk
+          http-check send meth GET uri / hdr Host matrix.k3s.thehellings.lan
+          option http-keep-alive
+          timeout http-keep-alive 500
           server git-isaiah isaiah.thehellings.lan:80 check
           server git-jeremiah jeremiah.thehellings.lan:80 check
           server git-zeke zeke.thehellings.lan:80 check
@@ -476,17 +443,7 @@ in
           option accept-unsafe-violations-in-http-response
           retries 3
           option forwardfor
-          # nginx (the actual listener on 127.0.0.1:8080) has
-          # keepalive_timeout 65s and will silently close an idle backend
-          # socket after that. HAProxy's default mode is end-to-end
-          # keep-alive, so without this it will happily try to reuse a
-          # backend connection nginx already closed once a mobile client's
-          # own (longer) keep-alive idle assumption outlives 65s - producing
-          # exactly the "unexpected end of stream" / EOFException the
-          # CalDAV/CardDAV client saw. Since the backend is localhost, the
-          # cost of a fresh TCP connection per request is negligible, so
-          # just don't try to reuse them here.
-          option http-server-close
+          option http-keep-alive
           #http-response replace-value Location http://localhost:${builtins.toString nextcloudPort}/(.*) https://next.thehellings.com/\2
           server nextcloud 127.0.0.1:${builtins.toString nextcloudPort}
       '';
