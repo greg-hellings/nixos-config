@@ -84,6 +84,23 @@
     };
     nushell = {
       enable = true;
+      extraConfig = ''
+        let agiservers  = [agidev1 pciagi1 pciagi2 pciagi3 pciagi4 hcagi2];
+        let webservers  = [webdev5 hcweb2 hcweb3 pciweb2 pciweb3];
+        let autoservers  = [asdev1 hcas2 pcias1];
+
+        def agi_do [c : closure] {
+          par-map $agiservers $c
+        }
+
+        def web_do [c: closure] {
+          par-map $webservers $c
+        }
+
+        def auto_do [c: closure] {
+          par-map $autoservers $c
+        }
+      '';
     };
     starship = {
       enable = true;
