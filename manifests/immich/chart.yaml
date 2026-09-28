@@ -32,7 +32,7 @@ spec:
         containers:
           main:
             image:
-              tag: v3.1.0
+              tag: v3.2.4
             env:
               DB_HOSTNAME: immich-rw
               DB_DATABASE_NAME: immich
