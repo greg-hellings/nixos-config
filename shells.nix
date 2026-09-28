@@ -11,7 +11,7 @@ in
   default = pkgs.mkShell {
     buildInputs = with pkgs; [
       bashInteractive
-      colmena.defaultPackage.${system}
+      colmena.packages.${system}.default
       stdenv.cc
       curl
       git

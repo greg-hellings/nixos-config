@@ -51,11 +51,11 @@
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1790189016,
-        "narHash": "sha256-6YGyJyFq6i4ZQ8/4gEwRk5RNFqCfK3bAqSsGvH7CrKA=",
+        "lastModified": 1790597931,
+        "narHash": "sha256-n7PLWexb7FvdkRAU4SW2EBRSepMCiriOytP01d6D+2s=",
         "owner": "zhaofengli",
         "repo": "colmena",
-        "rev": "4d2d652a81322c906b9d945c331715d6c088261f",
+        "rev": "3b1e4fa3a0e1950549993ace98f582fb8a699a1e",
         "type": "github"
       },
       "original": {
