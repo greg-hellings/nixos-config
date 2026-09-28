@@ -309,9 +309,23 @@ in
           bind *:${toString sshPort}
           timeout client 1h
           mode tcp
-          server git-isaiah isaiah.thehellings.lan:32222
-          server git-jeremiah jeremiah.thehellings.lan:32222
-          server git-zeke zeke.thehellings.lan:32222
+          # FIX (2026-09-28 Gitea SSH Port Kuma DOWN): this backend had no
+          # health check, so haproxy round-robined SSH connections across
+          # isaiah/jeremiah/zeke uniformly even when a backend was
+          # unreachable. isaiah (10.42.1.6 / nebula 10.157.0.4) is
+          # currently offline -- ARP INCOMPLETE from genesis/jeremiah/zeke,
+          # Tailscale reports it offline -- with no corresponding config
+          # change in this repo, i.e. a hardware/network-side outage of
+          # the isaiah box itself, not something Greg did (same failure
+          # mode as the 2026-09-07 zeke outage fixed for the matrix
+          # backend in #60). Roughly 1 in 3 SSH connect attempts landed on
+          # dead git-isaiah and hung/reset, matching Kuma's port-check
+          # failures. Add a plain TCP `check` per server so haproxy
+          # actively probes reachability and pulls a dead backend out of
+          # rotation automatically.
+          server git-isaiah isaiah.thehellings.lan:32222 check
+          server git-jeremiah jeremiah.thehellings.lan:32222 check
+          server git-zeke zeke.thehellings.lan:32222 check
 
         listen stats
           bind 127.0.0.1:8404
