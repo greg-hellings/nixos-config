@@ -1,4 +1,4 @@
-{ ... }:
+{ lib, ... }:
 
 {
   programs.git = {
@@ -33,7 +33,7 @@
         enabled = "true";
       };
       tag.sort = "version:refname";
-      user = {
+      user = lib.mkDefault {
         name = "Greg Hellings";
         email = "greg.hellings@gmail.com";
       };

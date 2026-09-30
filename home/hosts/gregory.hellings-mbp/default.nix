@@ -82,6 +82,10 @@
         };
       };
     };
+    git.settings.user = {
+      email = "gregory.hellings@ivrtechnology.com";
+      name = "Greg Hellings";
+    };
     nushell = {
       enable = true;
       extraConfig = ''
