@@ -14,5 +14,6 @@ let
     lib.filterAttrs (_: v: v.pkgs.stdenv.hostPlatform.system == system) top.self.homeConfigurations
   );
   pkgs = lib.mapAttrs' (n: v: lib.nameValuePair "pkg-${n}" v) self'.packages;
+  shells = lib.mapAttrs' (n: v: lib.nameValuePair "shell-${n}" v) self'.devShells;
 in
-homemanager // nixos // pkgs
+homemanager // nixos // pkgs // shells
