@@ -492,7 +492,7 @@ in
 
     nextcloud = {
       enable = true;
-      package = pkgs.nextcloud34;
+      package = pkgs.nextcloud35;
       appstoreEnable = true;
       hostName = "127.0.0.1";
       https = false;
