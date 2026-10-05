@@ -1,5 +1,5 @@
 # vim: set filetype=nushell :
-let servers = [isaiah jeremiah zeke genesis hosea]
+let servers = [isaiah jeremiah zeke genesis hosea kuma money pinchflat]
 
 def par-map [ items: list, c: closure ] {
   let results = $items | par-each -k $c
@@ -20,6 +20,17 @@ def localIps [] {
     let hosts = open /etc/nixos/network.json | get hosts | items { |h, e| $e.ip? } | where $it != null
     let external = open /etc/nixos/network.json | get external | items { |h, e| $e.ip? } | where $it != null | sort
     $hosts ++ $external | sort -n
+}
+
+def restartNebula [ ] {
+    print "Restarting nebula on Linode"
+    ssh thehellings.com sudo systemctl restart nebula@nebula.thehellings.com
+    print "Restarting on Genesis"
+    ssh genesis.shire-zebra.ts.net sudo systemctl restart nebula@nebula.thehellings.com
+    print "Restarting on all Nebula nodes"
+    par-map $servers {|$e|
+        ssh $'($e).thehellings.lan' sudo systemctl restart nebula@nebula.thehellings.com
+    }
 }
 
 def genNebulaCert [ --ips: string, --name: string ] {
