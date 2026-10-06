@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  lib',
   metadata,
   pkgs,
   top,
@@ -61,20 +62,20 @@
   networking = {
     extraHosts =
       let
-        onNetwork =
-          attr: _k: v:
-          (builtins.hasAttr attr v) && v.${attr} != null;
         getIPs =
-          attr: domain:
-          (lib.mapAttrsToList (host: v: "${builtins.getAttr attr v} ${host}.${domain}") (
-            lib.filterAttrs (onNetwork attr) metadata.hosts
-          ));
+          net: domain:
+          lib.map (
+            v:
+            [ "${v.address} ${v.name}.${domain}" ] ++ (lib.map (v': "${v.address} ${v'}.${domain}") v.aliases)
+          ) ((lib'.hostsByNet net metadata.hosts) ++ (lib'.hostsByNet net metadata.external));
       in
       builtins.concatStringsSep "\n" (
-        (getIPs "ts" "shire-zebra.ts.net")
-        ++ (getIPs "nebulaIp" "nebula.thehellings.com")
-        ++ (getIPs "nebulaIp" "nebula")
-        ++ (getIPs "ip" "thehellings.lan")
+        lib.flatten (
+          (getIPs "tailscale" "shire-zebra.ts.net")
+          ++ (getIPs "nebula" "nebula.thehellings.com")
+          ++ (getIPs "nebula" "nebula")
+          ++ (getIPs "lan" "thehellings.lan")
+        )
       );
     search = [
       "nebula.thehellings.com"
