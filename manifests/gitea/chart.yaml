@@ -35,7 +35,7 @@ spec:
       storageClass: longhorn-default
 
     image:
-      tag: "1.27.3"
+      tag: "28.1.0"
 
     replicaCount: 1
 
