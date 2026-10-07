@@ -174,6 +174,7 @@ in
       apiTokenFile = config.age.secrets.niks3-api-token.path;
       gc.enable = false;
       httpAddr = "${metadata.hosts.hosea.nebulaIp}:5751";
+      cacheUrl = "http://niks3.nas1.thehellings.lan:30189/";
       nginx = {
         enable = true;
         domain = "hosea.nebula";
