@@ -131,6 +131,83 @@ in
       enable = true;
       openFirewall = true;
     };
+    ytdl-sub = {
+      user = "nobody";
+      group = "nogroup";
+      instances = {
+        youtube = {
+          enable = true;
+          config = {
+            presets = {
+              "You Tube" = {
+                preset = [
+                  "Jellyfin TV Show by Date"
+                  "Max 2160p"
+                  "Only Recent"
+                ];
+                embed_thumbnail = true;
+
+                overrides = {
+                  tv_show_directory = "/video/yt/shows";
+                  only_recent_max_files = 10;
+                };
+              };
+              "Dota" = {
+                preset = [
+                  "Jellyfin TV Show by Date"
+                  "Max 2160p"
+                  "Only Recent"
+                  "Filter Duration"
+                ];
+                embed_thumbnail = "True";
+                overrides = {
+                  filter_duration_min_s = 121;
+                  only_recent_max_files = 10;
+                  tv_show_directory = "/video/yt/dota";
+                };
+              };
+            };
+          };
+          readWritePaths = [
+            "/video/yt/dota"
+            "/video/yt/shows"
+          ];
+          schedule = "*:0/5";
+          subscriptions = {
+            "You Tube" = {
+              "Aircrete Harry" = "https://www.youtube.com/@AircreteHarry";
+              "Aptera Owners Club" = "https://www.youtube.com/@ApteraOwnersClub";
+              "DeBoss Garage" = "https://www.youtube.com/@DEBOSSGARAGE";
+              "Destination Adventure" = "https://www.youtube.com/@Destination_Adventure";
+              "Dividendology" = "https://www.youtube.com/@Dividendology";
+              "Dome Gaia" = "https://www.youtube.com/@domegaia";
+              "Dustups" = "https://www.youtube.com/@dustupstexas";
+              "Edison Motors" = "https://www.youtube.com/@EdisonMotors";
+              "Hardware Haven" = "https://www.youtube.com/@HardwareHaven";
+              "KTZ Systems" = "https://www.youtube.com/@ktzsystems";
+              "Lets Get Rusty" = "https://www.youtube.com/@LetsGetRusty";
+              "NAS Compares" = "https://www.youtube.com/@nascompares";
+              "Off Grid Dome Living" = "https://www.youtube.com/@off-griddomeliving8018";
+              "Serve The Home" = "https://www.youtube.com/@ServeTheHomeVideo";
+              "The Campulance Man" = "https://www.youtube.com/@TheCampulanceMan";
+              "The DIY HVAC Guy" = "https://www.youtube.com/@diyhvacguy";
+              "Undecided" = "https://www.youtube.com/@UndecidedMF";
+              "Weekend Update" = "https://www.youtube.com/playlist?list=PLS_gQd8UB-hJZaYQLoQJ4XowUpXXjFxaV";
+            };
+            "Dota" = {
+              "BLAST SLAM Dota 2" = "https://www.youtube.com/@BLASTDota";
+              "Dota 2" = "https://www.youtube.com/@dota2";
+              "Dota 2 Rapier" = "https://www.youtube.com/@Dota2Rapier";
+              "ESL Dota 2" = "https://www.youtube.com/@ESLDota2";
+              "Fissure Dota 2 En" = "https://www.youtube.com/@fiss_dota2_en";
+              "Fissure Dota 2" = "https://www.youtube.com/@fissure_studio";
+              "Noob From UA" = "https://www.youtube.com/@NoobFromUA";
+              "PGL Dota 2" = "https://www.youtube.com/@PGL_DOTA2";
+            };
+          };
+        };
+      };
+    };
     grafana = {
       enable = true;
       provision = {
