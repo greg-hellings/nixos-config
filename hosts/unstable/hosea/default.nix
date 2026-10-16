@@ -4,6 +4,7 @@
 
 {
   config,
+  lib,
   metadata,
   pkgs,
   top,
@@ -138,37 +139,34 @@ in
         youtube = {
           enable = true;
           config = {
+            configuration.working_directory = lib.mkForce "/var/lib/ytdl-sub/working";
             presets = {
               "You Tube" = {
                 preset = [
                   "Jellyfin TV Show by Date"
                   "Max 2160p"
-                  "Only Recent"
+                  "Only Recent Archive"
                 ];
-                embed_thumbnail = true;
-
                 overrides = {
                   tv_show_directory = "/video/yt/shows";
-                  only_recent_max_files = 10;
                 };
               };
               "Dota" = {
                 preset = [
                   "Jellyfin TV Show by Date"
                   "Max 2160p"
-                  "Only Recent"
+                  "Only Recent Archive"
                   "Filter Duration"
                 ];
-                embed_thumbnail = "True";
                 overrides = {
                   filter_duration_min_s = 121;
-                  only_recent_max_files = 10;
                   tv_show_directory = "/video/yt/dota";
                 };
               };
             };
           };
           readWritePaths = [
+            "/var/lib/ytdl-sub/working"
             "/video/yt/dota"
             "/video/yt/shows"
           ];
