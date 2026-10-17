@@ -7,6 +7,13 @@
 
 let
   cfg = config.greg.zed;
+  zedPy = pkgs.python3.withPackages (
+    p: with p; [
+      python-lsp-server
+      python-lsp-ruff
+      ruff
+    ]
+  );
 in
 {
   options.greg.zed = lib.mkEnableOption "Whether to install the Zed editor";
@@ -16,21 +23,26 @@ in
       enable = true;
       extensions = [
         "ansible"
-        "cargo-tom"
+        "cargo-toml"
         "dockerfile"
-        "mcp-server-gitlab"
+        "gitlab-ci-ls"
         "helm"
         "html"
         "ini"
         "jsonnet"
+        "justfile"
         "latex"
         "make"
         "markdown-oxide"
         "material-icon-theme"
+        "mcp-server-gitlab"
+        "mcp-server-grafana"
         "nix"
+        "nixd"
         "nu"
         "postgres-context-server"
         "python-refactoring"
+        "rust-analyzer"
         "slint"
         "snippets"
         "toml"
@@ -40,8 +52,11 @@ in
         direnv
         nil
         nix
-        python3
+        nixd
+        rust-analyzer
         rustc
+        slint-lsp
+        zedPy
       ];
       installRemoteServer = true;
       userKeymaps = [
@@ -57,7 +72,7 @@ in
         agent = {
           default_model = {
             provider = "copilot_chat";
-            model = "claude-4";
+            model = "claude-opus-5-5";
           };
           single_file_review = true;
         };
@@ -74,9 +89,32 @@ in
         features = {
           copilot = true;
         };
+        lsp = {
+          rust-analyzer.binary.path_lookup = true;
+          nix.binary.path_lookup = true;
+          python.binary.path_lookup = true;
+          slint.binary.path_lookup = true;
+        };
+        node = {
+          path = lib.getExe pkgs.nodejs;
+          npm_path = lib.getExe' pkgs.nodejs "npm";
+        };
         relative_line_numbers = "enabled";
         telemetry = {
           metrics = true;
+        };
+        terminal = {
+          detect_venv = {
+            on = {
+              directories = [
+                "venv"
+                ".venv"
+              ];
+              activate_script = "default";
+            };
+          };
+          env.TERM = "alacritty";
+          shell = "system";
         };
         theme = {
           mode = "system";
