@@ -48,7 +48,6 @@ in
   # At the point where you want to use it, put
   # age.secrets.matrix.file = ../../secrets/matrix.age;
   # Then you can reference the file at /run/agenix/matrix
-  "nextcloudadmin.age".publicKeys = everyone;
 
   "linode-forgejo-runner.age".publicKeys = everyone;
   "jude-forgejo-runner.age".publicKeys = everyone;
