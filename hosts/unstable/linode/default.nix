@@ -34,10 +34,6 @@ in
 
   age.secrets = {
     acme.file = ../../../secrets/acme.age;
-    nextcloudadmin = {
-      file = ../../../secrets/nextcloudadmin.age;
-      owner = "nextcloud";
-    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -497,8 +493,6 @@ in
       hostName = "127.0.0.1";
       https = false;
       config = {
-        adminpassFile = config.age.secrets.nextcloudadmin.path;
-        adminuser = "greg";
         dbhost = "/run/postgresql";
         dbtype = "pgsql";
       };

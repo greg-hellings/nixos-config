@@ -48,7 +48,6 @@ in
   # At the point where you want to use it, put
   # age.secrets.matrix.file = ../../secrets/matrix.age;
   # Then you can reference the file at /run/agenix/matrix
-  "nextcloudadmin.age".publicKeys = everyone;
 
   "linode-forgejo-runner.age".publicKeys = everyone;
   "jude-forgejo-runner.age".publicKeys = everyone;
@@ -105,7 +104,6 @@ in
   "nebula/kuma.key.age".publicKeys = everyone;
   "nebula/linode.key.age".publicKeys = everyone;
   "nebula/money.key.age".publicKeys = everyone;
-  "nebula/pinchflat.key.age".publicKeys = users ++ [ hosts.pinchflat.pubkey ];
   "nebula/zeke.key.age".publicKeys = everyone;
 
   # Custom files

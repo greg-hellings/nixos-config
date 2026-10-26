@@ -21,7 +21,6 @@
     kubectl
     kubectl-cnpg
     mattermost-desktop
-    minio-client
     mumble
     nebula
     nix-index
