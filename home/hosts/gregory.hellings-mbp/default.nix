@@ -45,7 +45,7 @@
             https://pypidev.ivrtechnology.com/
       '';
       ".config/uv/uv.toml".text = ''
-        index-strategy = "unsafe-first-match"
+        index-strategy = "unsafe-best-match"
         [[index]]
         url = "https://pypidev.ivrtechnology.com/"
         name = "pypidev"
@@ -104,6 +104,8 @@
         def auto_do [c: closure] {
           par-map $autoservers $c
         }
+
+        $env.PATH = $env.PATH | prepend "~/.cargo/bin"
       '';
     };
     starship = {
