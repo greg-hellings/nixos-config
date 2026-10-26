@@ -309,10 +309,6 @@
                 url = "http://chronicles.shire-zebra.ts.net:9001";
               }
               {
-                name = "Pinchflat";
-                url = "https://pinchflat.nebula.thehellings.com/";
-              }
-              {
                 name = "Buildbot";
                 url = "http://buildbot.nebula.thehellings.com:8010/";
               }

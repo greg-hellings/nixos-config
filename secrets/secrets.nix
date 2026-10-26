@@ -104,7 +104,6 @@ in
   "nebula/kuma.key.age".publicKeys = everyone;
   "nebula/linode.key.age".publicKeys = everyone;
   "nebula/money.key.age".publicKeys = everyone;
-  "nebula/pinchflat.key.age".publicKeys = users ++ [ hosts.pinchflat.pubkey ];
   "nebula/zeke.key.age".publicKeys = everyone;
 
   # Custom files

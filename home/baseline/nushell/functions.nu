@@ -1,5 +1,5 @@
 # vim: set filetype=nushell :
-let servers = [isaiah jeremiah zeke genesis hosea kuma money pinchflat]
+let servers = [isaiah jeremiah zeke genesis hosea kuma money]
 
 def par-map [ items: list, c: closure ] {
   let results = $items | par-each -k $c
