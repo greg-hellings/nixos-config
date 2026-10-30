@@ -144,6 +144,16 @@
       "ip": "10.42.5.1",
       "nebulaIp": "10.157.0.5"
     },
+    "ivr": {
+      "aliases": ["ivrlaptop", "mac1"],
+      "ip": "10.42.111.1",
+      "mac": "b6:cc:75:08:ff:6b"
+    },
+    "lithic": {
+      "aliases": ["lithiclap", "mac2"],
+      "ip": "10.42.111.2",
+      "mac": "da:8f:f5:86:f7:e2"
+    },
     "nas1": {
       "aliases": ["*.nas1"],
       "ip": "10.42.1.14",
