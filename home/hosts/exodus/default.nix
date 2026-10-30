@@ -15,6 +15,7 @@
     freeciv
     gimp
     gnucash
+    just
     k9s
     kdePackages.kdenlive
     kubernetes-helm
@@ -27,10 +28,14 @@
     adoptopenjdk-icedtea-web
     pre-commit
     prismlauncher
+    (python311.withPackages (p: [
+      p.virtualenv
+    ]))
     rclone
     restic
     restic-browser
     tea
+    uv
     wineWow64Packages.stable
   ];
   programs = {
