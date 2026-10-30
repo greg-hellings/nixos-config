@@ -77,14 +77,14 @@
           "ctrl+shift+k=goto_split:up"
           "ctrl+shift+l=goto_split:right"
 
-          "ctrl+b>h=new_split:left"
-          "ctrl+b>j=new_split:down"
-          "ctrl+b>k=new_split:up"
-          "ctrl+b>l=new_split:right"
+          "ctrl+a>h=new_split:left"
+          "ctrl+a>j=new_split:down"
+          "ctrl+a>k=new_split:up"
+          "ctrl+a>l=new_split:right"
 
-          "ctrl+b>t=new_tab"
-          "ctrl+b>n=next_tab"
-          "ctrl+b>p=previous_tab"
+          "ctrl+a>t=new_tab"
+          "ctrl+a>n=next_tab"
+          "ctrl+a>p=previous_tab"
         ];
       };
     };
