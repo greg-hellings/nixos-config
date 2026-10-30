@@ -8,6 +8,7 @@
   home.packages =
     with pkgs;
     [
+      claude-code
       dig
       jqp
       kubernetes-helm
@@ -24,6 +25,35 @@
     ]);
 
   programs = {
+    herdr = {
+      enable = true;
+      settings = {
+        keys = {
+          # Panel navigation
+          focus_pane_down = "ctrl+j";
+          focus_pane_left = "ctrl+h";
+          focus_pane_right = "ctrl+l";
+          focus_pane_up = "ctrl+k";
+          # Tab navigation
+          next_tab = "ctrl+shift+l";
+          previous_tab = "ctrl+shift+h";
+        };
+        onboarding = false;
+        terminal = {
+          default_shell = lib.getExe config.programs.nushell.package;
+          new_cwd = "follow";
+          shell_mode = "auto";
+        };
+        theme = {
+          name = "dracula";
+          auto_switch = false;
+        };
+        ui = {
+          sound.enabled = false;
+          toast.delivery = "system";
+        };
+      };
+    };
     zellij = {
       enable = true;
       enableZshIntegration = pkgs.stdenv.hostPlatform.isDarwin;

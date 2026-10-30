@@ -55,13 +55,18 @@
           Hostname = "src.thehellings.com";
           Port = 2222;
         };
-        ivr = {
+        ivrgit = {
           User = "git";
           Hostname = "gitlab.com";
         };
 
-        "ivr.thehellings.lan" = lib.hm.dag.entryBefore [ "ivr" ] {
+        "ivr" = {
+          Hostname = "ivr.thehellings.lan";
           User = "gregory.hellings";
+        };
+        "lithic" = {
+          Hostname = "lithic.thehellings.lan";
+          User = "greg";
         };
 
         "*.thehellings.lan" = owned;
