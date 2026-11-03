@@ -32,6 +32,7 @@ in
       "bruno"
       "chromium"
       "claude"
+      "claude-code"
       "dbeaver-community"
       "ghostty"
       "firefox"

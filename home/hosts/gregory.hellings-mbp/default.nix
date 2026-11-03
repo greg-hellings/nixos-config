@@ -18,7 +18,6 @@
   home = {
     packages = with pkgs; [
       ansible
-      claude-code
       direnv
       pkgs'.dockerCompat
       glab

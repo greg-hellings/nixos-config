@@ -8,7 +8,6 @@
   home.packages =
     with pkgs;
     [
-      claude-code
       dig
       jqp
       kubernetes-helm
