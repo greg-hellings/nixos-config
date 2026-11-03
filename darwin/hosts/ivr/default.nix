@@ -16,6 +16,7 @@ in
         name = "libvirt";
         restart_service = true;
       }
+      "libxmlsec1"
       "nushell"
       "poetry"
       {
