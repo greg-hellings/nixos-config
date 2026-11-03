@@ -12,8 +12,8 @@
     },
     "wikibooks": {
       "name": "wikibooks_en_all_maxi",
-      "version": "2026-04",
-      "hash": "sha256-wt7Zr+RkfCsFrOudMCYBADacu6IvPQDkZ6Y0VG2j9hA="
+      "version": "2026-10",
+      "hash": "sha256-g1AUzeLDhfgKY4iEf7iWJCmWajpkoDtYVS8WhMyD58g="
     },
     "wikipedia": {
       "name": "wikipedia_en_all_maxi",
@@ -49,8 +49,8 @@
     },
     "wikibooks": {
       "name": "wikibooks_fr_all_maxi",
-      "version": "2026-07",
-      "hash": "sha256-csI+E5UFGi42BLGWWHxQhVr5KSihCFc53KGKwo557Ck="
+      "version": "2026-10",
+      "hash": "sha256-VUQ7RnNmgWjRnncN8ST5VelObuZiGuN0K5vXGO5cc58="
     },
     "wikipedia": {
       "name": "wikipedia_fr_all_maxi",
@@ -81,8 +81,8 @@
     },
     "wikipedia": {
       "name": "wikipedia_ht_all_maxi",
-      "version": "2026-07",
-      "hash": "sha256-InS9cMRaIv9ArlKVwKUypz56m4DgSR7Tl6XpSTMzH+o="
+      "version": "2026-10",
+      "hash": "sha256-NmMNdHCmnDdR6NchdWumgOf1A2TV6TKRuMK2BHyYdZg="
     }
   }
 }
