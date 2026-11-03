@@ -50,6 +50,7 @@ in
       extraPackages = with pkgs; [
         cargo
         direnv
+        gitlab-ci-ls
         nil
         nix
         nixd
@@ -90,9 +91,10 @@ in
           copilot = true;
         };
         lsp = {
-          rust-analyzer.binary.path_lookup = true;
+          gitlab-ci.binary.path_lookup = true;
           nix.binary.path_lookup = true;
           python.binary.path_lookup = true;
+          rust-analyzer.binary.path_lookup = true;
           slint.binary.path_lookup = true;
         };
         node = {
