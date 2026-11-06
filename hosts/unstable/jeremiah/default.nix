@@ -17,8 +17,7 @@ in
 {
   imports = [
     ./hardware-configuration.nix
-    top.buildbot.nixosModules.buildbot-master
-    top.buildbot.nixosModules.buildbot-worker
+    top.buildbot.nixosModules.nixbot
   ];
 
   age.secrets = {
@@ -26,7 +25,6 @@ in
     gitea-oauthToken = mk ../../../secrets/gitea/oauthToken.age;
     gitea-oauthSecret = mk ../../../secrets/gitea/oauthSecret.age;
     gitea-webhookSecret = mk ../../../secrets/gitea/webhookSecret.age;
-    gitea-workerPassword = mk ../../../secrets/gitea/workerPassword.age;
   };
 
   # Bootloader.
@@ -125,39 +123,29 @@ in
   };
 
   services = {
-    buildbot-nix = {
-      master = {
-        enable = true;
-        admins = [ "greg" ];
-        authBackend = "gitea";
-        # Optional to build non-default branches at a time
-        branches = {
-          default = {
-            matchGlob = "ma*";
-            registerGCRoots = false;
-            updateOutputs = false;
-          };
+    nixbot = {
+      enable = true;
+      admins = [ "gitea:greg" ];
+      # Optional to build non-default branches at a time
+      branches = {
+        default = {
+          matchGlob = "ma*";
+          registerGCRoots = false;
+          updateOutputs = false;
         };
-        domain = "buildbot.nebula.thehellings.com:8010";
-        evalMaxMemorySize = 8192;
-        evalWorkerCount = 4;
-        gitea = {
-          enable = true;
-          instanceUrl = "https://src.thehellings.com";
-          oauthId = "7ec9107d-379b-47c8-870f-1191956d0500";
-          oauthSecretFile = config.age.secrets.gitea-oauthSecret.path;
-          tokenFile = config.age.secrets.gitea-oauthToken.path;
-          topic = "buildbot-nix";
-          webhookSecretFile = config.age.secrets.gitea-webhookSecret.path;
-        };
-        showTrace = true;
-        #webhookBaseUrl = "http://${config.networking.hostName}.nebula.thehellings.com:8010";
-        workersFile = config.age.secrets.gitea-buildbotWorkersFile.path;
       };
-      worker = {
+      domain = "buildbot.nebula.thehellings.com:8010";
+      evalMaxMemorySize = 8192;
+      evalWorkerCount = 4;
+      gitea = {
         enable = true;
-        workerPasswordFile = config.age.secrets.gitea-workerPassword.path;
+        instanceUrl = "https://src.thehellings.com";
+        oauthId = "7ec9107d-379b-47c8-870f-1191956d0500";
+        oauthSecretFile = config.age.secrets.gitea-oauthSecret.path;
+        tokenFile = config.age.secrets.gitea-oauthToken.path;
+        topic = "buildbot-nix";
       };
+      showTrace = true;
     };
   };
 }

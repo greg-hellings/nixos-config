@@ -10,7 +10,7 @@
       inputs.nixpkgs.follows = "nixunstable";
     };
     buildbot = {
-      url = "github:nix-community/buildbot-nix";
+      url = "github:Mic92/nixbot";
       inputs.nixpkgs.follows = "nixunstable";
     };
     colmena.url = "github:zhaofengli/colmena";
