@@ -24,9 +24,4 @@ final: prev:
     withBDplus = true;
   };
   handbrake = prev.handbrake.override { libbluray = final.libbluray-custom; };
-  OVMFFull = prev.OVMFFull.override {
-    secureBoot = true;
-    msVarsTemplate = true;
-    tpmSupport = true;
-  };
 }
