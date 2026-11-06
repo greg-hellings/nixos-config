@@ -10,8 +10,8 @@ let
   ip = metadata.hosts.${config.networking.hostName}.ip;
   mk = file: {
     inherit file;
-    owner = "buildbot";
-    group = "buildbot";
+    owner = "nixbot";
+    group = "nixbot";
   };
 in
 {
