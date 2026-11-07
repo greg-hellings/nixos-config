@@ -13,10 +13,22 @@ spec:
     - hosts:
         - gitea
 ---
+apiVersion: traefik.io/v1alpha1
+kind: Middleware
+metadata:
+  name: srcname
+spec:
+  headers:
+    customRequestHeaders:
+      Host: "src.thehellings.com"
+      X-Forwarded-Proto: "https"
+---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: gitea-direct
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: "gitea-srcname@kubernetescrd"
 spec:
   rules:
     - host: git.k3s.thehellings.lan

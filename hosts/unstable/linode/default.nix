@@ -399,6 +399,7 @@ in
           retries 3
           option forwardfor
           http-request set-header Host git.k3s.thehellings.lan
+          http-request set-header X-Real-IP %[src]
           #server git-isaiah isaiah.thehellings.lan:80
           #server git-jeremiah jeremiah.thehellings.lan:80
           #server git-zeke zeke.thehellings.lan:80

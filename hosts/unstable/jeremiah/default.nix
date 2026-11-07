@@ -81,7 +81,8 @@ in
       priority = 254;
     };
     nebula.enable = true;
-    proxies."buildbot.nebula.thehellings.com".target = "http://buildbot.nebula.thehellings.com:8010/";
+    proxies."buildbot.nebula.thehellings.com".target =
+      "http://${config.services.nixbot.domain}:${toString config.services.nixbot.port}/";
     tailscale = {
       enable = true;
       tags = [ "home" ];
@@ -134,7 +135,7 @@ in
           updateOutputs = false;
         };
       };
-      domain = "buildbot.nebula.thehellings.com:8010";
+      domain = "buildbot.nebula.thehellings.com";
       evalMaxMemorySize = 8192;
       evalWorkerCount = 4;
       gitea = {
@@ -145,6 +146,8 @@ in
         tokenFile = config.age.secrets.gitea-oauthToken.path;
         topic = "buildbot-nix";
       };
+      nginx.enable = false;
+      port = 8010;
       showTrace = true;
     };
   };
