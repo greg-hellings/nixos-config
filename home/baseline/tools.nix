@@ -41,10 +41,8 @@ in
       jqp
       kubernetes-helm
       #iamb
-      lazyssh
       rainfrog
       ripgrep
-      tenere
       uv
       wiki-tui
     ]
