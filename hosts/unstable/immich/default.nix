@@ -11,6 +11,11 @@ in
 {
   imports = [ "${modulesPath}/virtualisation/proxmox-image.nix" ];
 
+  environment.systemPackages = [
+    pkgs.fdisk
+    pkgs.e2fsprogs
+  ];
+
   # Migration of Immich off Kubernetes (manifests/immich/) onto its own
   # Proxmox VM. Translated from manifests/immich/{chart,database,pvc}.yaml:
   #   - CNPG `immich` cluster (cloudnative-vectorchord:18) -> local
@@ -103,6 +108,4 @@ in
     # Match the CNPG cluster's major version so the dump restores cleanly.
     postgresql.package = pkgs.postgresql_18;
   };
-
-  proxmox.qemuConf.diskSize = 500000;
 }

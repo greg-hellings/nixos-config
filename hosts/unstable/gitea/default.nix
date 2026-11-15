@@ -12,6 +12,11 @@ in
 {
   imports = [ "${modulesPath}/virtualisation/proxmox-image.nix" ];
 
+  environment.systemPackages = [
+    pkgs.fdisk
+    pkgs.e2fsprogs
+  ];
+
   # Migration of Gitea off Kubernetes (manifests/gitea/) onto its own Proxmox
   # VM. Translated from the Helm values in manifests/gitea/chart.yaml:
   #   - CNPG `postgres` cluster (db/user `gitea`) -> local PostgreSQL over the
@@ -191,6 +196,4 @@ in
         --must-change-password
     '';
   };
-
-  proxmox.qemuConf.diskSize = 150000;
 }

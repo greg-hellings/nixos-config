@@ -17,6 +17,11 @@ in
 {
   imports = [ "${modulesPath}/virtualisation/proxmox-image.nix" ];
 
+  environment.systemPackages = [
+    pkgs.fdisk
+    pkgs.e2fsprogs
+  ];
+
   # Migration of the Dendrite Matrix homeserver off Kubernetes
   # (manifests/matrix/ + the `matrix` database in manifests/databases/) onto
   # its own Proxmox VM. Settings translated from the dendrite.yaml template in
@@ -257,5 +262,4 @@ in
     after = [ "postgresql.target" ];
     requires = [ "postgresql.target" ];
   };
-  proxmox.qemuConf.diskSize = 150000;
 }
