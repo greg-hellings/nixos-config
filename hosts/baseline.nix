@@ -95,6 +95,7 @@
         extraHostNames = [
           "${n}.thehellings.lan"
           "${n}.shire-zebra.ts.net"
+          "${n}.nebula.thehellings.com"
         ];
         publicKey = v.pubkey;
       }) (lib.filterAttrs (_: v: v ? "pubkey") metadata.hosts);
