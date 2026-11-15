@@ -26,6 +26,7 @@
     },
     "gitea": {
       "ip": "10.42.1.23",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL/uDa98CQ8EQUAXuXJJUdntEpe91DqnODwHRalHdUmt",
       "system": "x86_64-linux",
       "tags": ["server"],
       "nebulaIp": "10.157.0.12"
@@ -49,6 +50,7 @@
     },
     "immich": {
       "ip": "10.42.1.21",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIO8bGsaZypXK0T7xJbAppGZ6WNJ6Dbk2so+QIHQvSoOX",
       "system": "x86_64-linux",
       "tags": ["server"],
       "nebulaIp": "10.157.0.14"
@@ -112,6 +114,7 @@
     },
     "matrix": {
       "ip": "10.42.1.22",
+      "pubkey": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDStCsrYLhgoCQvL1OUNGtibpzSbvamz0TN3f96NXuOj",
       "system": "x86_64-linux",
       "tags": ["server"],
       "nebulaIp": "10.157.0.13"
