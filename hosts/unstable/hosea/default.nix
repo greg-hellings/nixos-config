@@ -121,13 +121,6 @@ in
   };
 
   services = {
-    albyhub = {
-      enable = true;
-      openFirewall = true;
-      settings = {
-        workDir = "/chain/alby";
-      };
-    };
     jellyfin = {
       enable = true;
       openFirewall = true;
