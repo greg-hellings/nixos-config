@@ -191,4 +191,6 @@ in
         --must-change-password
     '';
   };
+
+  proxmox.qemuConf.diskSize = 150000;
 }

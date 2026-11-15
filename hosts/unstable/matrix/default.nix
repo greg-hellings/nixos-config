@@ -257,4 +257,5 @@ in
     after = [ "postgresql.target" ];
     requires = [ "postgresql.target" ];
   };
+  proxmox.qemuConf.diskSize = 150000;
 }

@@ -103,4 +103,6 @@ in
     # Match the CNPG cluster's major version so the dump restores cleanly.
     postgresql.package = pkgs.postgresql_18;
   };
+
+  proxmox.qemuConf.diskSize = 500000;
 }
