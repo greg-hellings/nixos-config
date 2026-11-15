@@ -18,8 +18,9 @@ in
   imports = [ "${modulesPath}/virtualisation/proxmox-image.nix" ];
 
   environment.systemPackages = [
-    pkgs.fdisk
     pkgs.e2fsprogs
+    pkgs.fdisk
+    pkgs.parted
   ];
 
   # Migration of the Dendrite Matrix homeserver off Kubernetes
