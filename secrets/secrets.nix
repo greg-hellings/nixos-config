@@ -67,8 +67,12 @@ in
 
   "dendrite.age".publicKeys = everyone;
   "dendrite_key.age".publicKeys = everyone;
+  "matrix/dendrite.env.age".publicKeys = everyone;
 
   "gitea/buildbotWorkersFile.age".publicKeys = everyone;
+  "gitea/adminPassword.age".publicKeys = everyone;
+  "gitea/minioAccessKeyId.age".publicKeys = everyone;
+  "gitea/minioSecretAccessKey.age".publicKeys = everyone;
   "gitea/oauthSecret.age".publicKeys = everyone;
   "gitea/oauthToken.age".publicKeys = everyone;
   "gitea/webhookSecret.age".publicKeys = everyone;
