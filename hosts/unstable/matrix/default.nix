@@ -19,8 +19,8 @@ in
 
   environment.systemPackages = [
     pkgs.e2fsprogs
-    pkgs.fdisk
     pkgs.parted
+    pkgs.unixtools.fdisk
   ];
 
   # Migration of the Dendrite Matrix homeserver off Kubernetes

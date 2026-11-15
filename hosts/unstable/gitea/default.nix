@@ -14,8 +14,8 @@ in
 
   environment.systemPackages = [
     pkgs.e2fsprogs
-    pkgs.fdisk
     pkgs.parted
+    pkgs.unixtools.fdisk
   ];
 
   # Migration of Gitea off Kubernetes (manifests/gitea/) onto its own Proxmox

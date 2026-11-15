@@ -13,8 +13,8 @@ in
 
   environment.systemPackages = [
     pkgs.e2fsprogs
-    pkgs.fdisk
     pkgs.parted
+    pkgs.unixtools.fdisk
   ];
 
   # Migration of Immich off Kubernetes (manifests/immich/) onto its own
