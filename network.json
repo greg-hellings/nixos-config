@@ -24,6 +24,12 @@
       "tags": ["router", "server"],
       "nebulaIp": "10.157.0.2"
     },
+    "gitea": {
+      "ip": "10.42.1.23",
+      "system": "x86_64-linux",
+      "tags": ["server"],
+      "nebulaIp": "10.157.0.12"
+    },
     "gregory.hellings-mbp": {
       "external": true,
       "system": "aarch64-darwin",
@@ -40,6 +46,12 @@
       "system": "x86_64-linux",
       "tags": ["server"],
       "nebulaIp": "10.157.0.3"
+    },
+    "immich": {
+      "ip": "10.42.1.21",
+      "system": "x86_64-linux",
+      "tags": ["server"],
+      "nebulaIp": "10.157.0.14"
     },
     "isaiah": {
       "builder": true,
@@ -97,6 +109,12 @@
     "MacBook-Prolocal.local": {
       "external": true,
       "system": "aarch64-darwin"
+    },
+    "matrix": {
+      "ip": "10.42.1.22",
+      "system": "x86_64-linux",
+      "tags": ["server"],
+      "nebulaIp": "10.157.0.14"
     },
     "money": {
       "connectAddr": "10.42.1.20",
