@@ -46,12 +46,12 @@
           Hostname = "github.com";
         };
         "src" = {
-          User = "git";
-          Hostname = "jeremiah.thehellings.lan";
-          Port = 32222;
+          User = "gitea";
+          Hostname = "gitea.nebula.thehellings.com";
+          Port = 2222;
         };
         srcpub = {
-          User = "git";
+          User = "gitea";
           Hostname = "src.thehellings.com";
           Port = 2222;
         };
