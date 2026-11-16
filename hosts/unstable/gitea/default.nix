@@ -144,9 +144,7 @@ in
           MINIO_USE_SSL = false;
           MINIO_INSECURE_SKIP_VERIFY = true;
         };
-        # The k8s values set this under [security], where Gitea ignores it;
-        # [webhook] is where it actually applies (e.g. buildbot on jeremiah).
-        webhook.ALLOWED_HOST_LIST = "loopback,private,*.shire-zebra.ts.net,*.nebula.thehellings.com,*.thehellings.lan";
+        security.ALLOWED_HOST_LIST = "loopback,private,*.shire-zebra.ts.net,*.nebula.thehellings.com,*.thehellings.lan";
       };
     };
 
