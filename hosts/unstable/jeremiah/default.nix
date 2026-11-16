@@ -144,7 +144,7 @@ in
         oauthId = "7ec9107d-379b-47c8-870f-1191956d0500";
         oauthSecretFile = config.age.secrets.gitea-oauthSecret.path;
         tokenFile = config.age.secrets.gitea-oauthToken.path;
-        topic = "buildbot-nix";
+        topic = "nixbot";
       };
       nginx.enable = false;
       port = 8010;
