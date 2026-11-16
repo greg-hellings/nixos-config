@@ -145,7 +145,7 @@ in
             COOKIE_DOMAIN = "thehellings.com";
             SERVE_ROBOTS_TXT = true;
             SLOG_LEVEL = "DEBUG";
-            TARGET = "http://git.k3s.thehellings.lan";
+            TARGET = "http://gitea.nebula.thehellings.com";
           };
         };
       };
