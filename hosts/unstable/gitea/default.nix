@@ -144,7 +144,10 @@ in
           MINIO_USE_SSL = false;
           MINIO_INSECURE_SKIP_VERIFY = true;
         };
-        security.ALLOWED_HOST_LIST = "loopback,private,*.shire-zebra.ts.net,*.nebula.thehellings.com,*.thehellings.lan";
+        security = {
+          ALLOWED_HOST_LIST = "loopback,private,*.shire-zebra.ts.net,*.nebula.thehellings.com,*.thehellings.lan";
+          EGRESS_MODE = "lax";
+        };
       };
     };
 
