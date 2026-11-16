@@ -23,7 +23,7 @@ spec:
               emptyDir: {}
           initContainers:
             - name: gitea-dump
-              image: "gitea/gitea:1.27.1"
+              image: "gitea/gitea:28.1.0"
               command:
                 - /bin/sh
                 - "-c"
@@ -44,7 +44,7 @@ spec:
                   mountPath: /dump-staging
           containers:
             - name: upload-to-s3
-              image: "minio/mc:latest"
+              image: "quay.io/minio/aistor/mc:latest"
               command:
                 - /bin/sh
                 - "-c"
