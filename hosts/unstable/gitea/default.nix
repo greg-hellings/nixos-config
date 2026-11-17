@@ -90,7 +90,10 @@ in
   networking = {
     defaultGateway = metadata.infra.gw;
     nameservers = [ metadata.infra.dns ];
-    firewall.allowedTCPPorts = [ sshPort ];
+    firewall.allowedTCPPorts = [
+      cfg.settings.server.HTTP_PORT
+      sshPort
+    ];
     interfaces.ens18 = {
       useDHCP = false;
       ipv4.addresses = [
@@ -123,7 +126,7 @@ in
       settings = {
         server = {
           ROOT_URL = "https://src.thehellings.com/";
-          HTTP_ADDR = "127.0.0.1";
+          HTTP_ADDR = metadata.hosts.gitea.nebulaIp;
           HTTP_PORT = 3000;
           # Built-in SSH server so the system sshd stays on 22 for admin
           # access. linode's haproxy forwards src.thehellings.com:2222 here.

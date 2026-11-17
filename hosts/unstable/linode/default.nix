@@ -145,7 +145,7 @@ in
             COOKIE_DOMAIN = "thehellings.com";
             SERVE_ROBOTS_TXT = true;
             SLOG_LEVEL = "DEBUG";
-            TARGET = "http://gitea.nebula.thehellings.com";
+            TARGET = "http://gitea.nebula.thehellings.com:3000";
           };
         };
       };
@@ -382,7 +382,7 @@ in
           option accept-unsafe-violations-in-http-response
           retries 3
           option forwardfor
-          #http-request set-header Host gitea.nebula.thehellings.com
+          http-request set-header Host src.thehellings.com
           http-request set-header X-Forwarded-Proto https
           http-request set-header X-Real-IP %[src]
           server anubsis unix@${config.services.anubis.instances.git.settings.BIND}
