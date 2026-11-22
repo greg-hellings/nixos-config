@@ -436,7 +436,7 @@ in
 
     immich-public-proxy = {
       enable = true;
-      immichUrl = "http://immich.k3s.thehellings.lan";
+      immichUrl = "http://immich.nebula.thehellings.com";
       settings = {
         ipp = {
           allowDownload = 1;

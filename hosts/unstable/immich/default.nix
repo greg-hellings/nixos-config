@@ -92,13 +92,15 @@ in
 
     immich = {
       enable = true;
+      # Matches what was migrated over from k8s
+      database = {
+        name = "postgres";
+        user = "postgres";
+      };
       host = "127.0.0.1";
       port = 2283;
-      # database.enable/createDB and redis.enable default to true: local
-      # PostgreSQL (with vectorchord) and redis over unix sockets.
       machine-learning.enable = true;
-      # settings left null on purpose: the system config lives in the
-      # database restored from k8s and stays editable in the web UI.
+      mediaLocation = "/data";
     };
 
     openssh = {
