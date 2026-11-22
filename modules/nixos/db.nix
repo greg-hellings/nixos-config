@@ -29,7 +29,7 @@ in
     services = {
       postgresql = {
         enable = true;
-        package = pkgs.postgresql_15;
+        package = lib.mkDefault pkgs.postgresql_15;
         checkConfig = true;
         ensureDatabases = dbs;
         ensureUsers = map (db: {
@@ -71,7 +71,6 @@ in
     greg.backup.jobs.greg-postgresql-backup = {
       src = config.services.postgresqlBackup.location;
       dest = "database-${config.networking.hostName}";
-      id = "${config.networking.hostName}-postgres-backup";
     };
   };
 }
