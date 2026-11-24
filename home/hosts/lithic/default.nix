@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   pkgs',
   lib,
@@ -23,6 +24,9 @@ in
   };
 
   home = {
+    # Nushell does not read the Nix shell profile that sets this for zsh. The
+    # nixpkgs claude-code wrapper only trusts this bundle when it is set.
+    sessionVariables.NIX_SSL_CERT_FILE = "/etc/ssl/certs/ca-certificates.crt";
     packages = with pkgs; [
       ansible
       awscli2
@@ -57,6 +61,20 @@ in
   };
 
   programs = {
+    claude-code.enable = true;
+    # The lithic-cli plugin (lithic MCP server + skills). `lithic setup claude`
+    # writes its files into this directory; settings.json only registers it.
+    claude-settings = {
+      enabledPlugins = [ "lithic-cli@lithic-cli" ];
+      extraKnownMarketplaces = {
+        lithic-cli = {
+          source = {
+            source = "directory";
+            path = "${config.home.homeDirectory}/.local/share/lithic-cli/claude-plugin";
+          };
+        };
+      };
+    };
     direnv = {
       enable = true;
       enableNushellIntegration = true;

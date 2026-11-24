@@ -126,6 +126,6 @@ let
     };
 
     config = {
-      home.file.".claude/settings.json".text = builtins.toJSON configFile;
+      programs.claude-code.settings = configFile;
     };
   }
