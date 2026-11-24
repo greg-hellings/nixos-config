@@ -113,6 +113,7 @@ let
       }
 
       tab=$(herdr tab create --workspace "$HERDR_WORKSPACE_ID" --cwd "$root" --label "$prefix-team" --no-focus)
+      sleep 1
       reviewer_pane=$(jq -r .result.root_pane.pane_id <<<"$tab")
       researcher_pane=$(herdr pane split "$reviewer_pane" --direction right --cwd "$root" --no-focus | jq -r .result.pane.pane_id)
       expert_pane=$(herdr pane split "$reviewer_pane" --direction down --cwd "$root" --no-focus | jq -r .result.pane.pane_id)
